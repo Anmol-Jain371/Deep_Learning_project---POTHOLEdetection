@@ -1,0 +1,7 @@
+# RoadVision AI — Local Phone Dataset Configuration
+path: c:/Users/anmol/Downloads/DL project/dataset_phone_potholes
+train: images/train
+val: images/val
+
+names:
+  0: pothole

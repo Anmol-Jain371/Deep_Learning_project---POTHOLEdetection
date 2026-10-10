@@ -1,0 +1,53 @@
+# Python & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Node.js & Frontend builds
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+roadvision-dashboard/dist/
+roadvision-dashboard/node_modules/
+roadvision-dashboard/.vite/
+
+# Temporary user uploads and generated analysis outputs (preserve directory via .gitkeep)
+uploads/*
+!uploads/.gitkeep
+roadvision-dashboard/public/outputs/*
+!roadvision-dashboard/public/outputs/.gitkeep
+
+# Large Dataset archives and raw training dumps (> 50 MB)
+*.zip
+*.tar.gz
+*.rar
+RDD2022/
+dataset_rdd_india_potholes/
+
+# Intermediate benchmark video captures (preserve benchmark json and sample images)
+runs/benchmark/*.mp4
+runs/detect/pothole_v8_upgraded/
+
+# Scratch & temporary artifacts
+scratch_*
+*.tmp
+.tempmediaStorage/
+.gemini/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

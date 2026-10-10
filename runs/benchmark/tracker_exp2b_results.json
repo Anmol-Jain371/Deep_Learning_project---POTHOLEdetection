@@ -1,0 +1,36 @@
+{
+  "control": {
+    "tag": "CONTROL TRACKER (fuse=True)",
+    "config_file": "road_tracker.yaml",
+    "total_frames": 1005,
+    "frames_with_detections": 835,
+    "detection_coverage_pct": 83.08457711442786,
+    "total_raw_detections": 985,
+    "mean_confidence": 0.493231096198111,
+    "median_confidence": 0.5092336535453796,
+    "total_ids": 70,
+    "single_frame_blips": 42,
+    "verified_2": 28,
+    "persistent_5": 18,
+    "flicker_pct": 63.27881619937694,
+    "avg_fps": 12.474521331003437,
+    "total_time_s": 80.564213514328
+  },
+  "exp2b": {
+    "tag": "EXP #2B (fuse=False)",
+    "config_file": "road_tracker_exp2b.yaml",
+    "total_frames": 1005,
+    "frames_with_detections": 855,
+    "detection_coverage_pct": 85.07462686567165,
+    "total_raw_detections": 1104,
+    "mean_confidence": 0.47252570621777273,
+    "median_confidence": 0.4779764711856842,
+    "total_ids": 21,
+    "single_frame_blips": 1,
+    "verified_2": 20,
+    "persistent_5": 17,
+    "flicker_pct": 27.81413612565445,
+    "avg_fps": 13.468050920551084,
+    "total_time_s": 74.6210424900055
+  }
+}

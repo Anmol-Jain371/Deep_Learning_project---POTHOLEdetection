@@ -1,0 +1,27 @@
+Pothole_ID,Timestamp_Sec,Latitude,Longitude,Severity,Estimated_Depth_cm,Water_Hazard,Confidence,Municipal_Status
+P-001,4.8,12.971974,77.594946,MODERATE,5.5,YES,0.86,Scheduled Inspection
+P-002,6.1,12.972076,77.595039,SEVERE,11.2,YES,0.6,Urgent Work Order Dispatched
+P-003,2.0,12.971756,77.594744,MILD,3.1,NO,0.58,Logged / Routine Maintenance
+P-004,6.1,12.972076,77.595039,MILD,0.0,YES,0.86,Logged / Routine Maintenance
+P-005,2.1,12.971764,77.594751,SEVERE,13.4,NO,0.62,Urgent Work Order Dispatched
+P-006,2.1,12.971764,77.594751,SEVERE,23.2,NO,0.58,Urgent Work Order Dispatched
+P-007,4.0,12.971912,77.594888,SEVERE,21.3,NO,0.56,Urgent Work Order Dispatched
+P-008,4.0,12.971912,77.594888,MODERATE,4.5,NO,0.54,Scheduled Inspection
+P-009,4.0,12.971912,77.594888,SEVERE,11.5,NO,0.51,Urgent Work Order Dispatched
+P-010,2.4,12.971787,77.594773,SEVERE,17.4,NO,0.58,Urgent Work Order Dispatched
+P-011,2.1,12.971764,77.594751,SEVERE,33.4,NO,0.41,Urgent Work Order Dispatched
+P-012,2.1,12.971764,77.594751,SEVERE,14.1,NO,0.42,Urgent Work Order Dispatched
+P-013,2.4,12.971787,77.594773,SEVERE,35.0,NO,0.37,Urgent Work Order Dispatched
+P-014,4.0,12.971912,77.594888,MILD,0.0,NO,0.34,Logged / Routine Maintenance
+P-015,4.0,12.971912,77.594888,SEVERE,28.2,NO,0.43,Urgent Work Order Dispatched
+P-016,4.0,12.971912,77.594888,SEVERE,35.0,NO,0.3,Urgent Work Order Dispatched
+P-017,8.0,12.972224,77.595176,SEVERE [WATER],35.0,YES,0.57,Aquaplaning Risk / Drain Clearing
+P-018,8.0,12.972224,77.595176,SEVERE [WATER],26.6,YES,0.48,Aquaplaning Risk / Drain Clearing
+P-019,10.0,12.97238,77.59532,MODERATE,3.6,YES,0.66,Scheduled Inspection
+P-040,10.8,12.972442,77.595378,SEVERE,11.5,NO,0.82,Urgent Work Order Dispatched
+P-041,16.0,12.972848,77.595753,MILD,0.0,NO,0.51,Logged / Routine Maintenance
+P-054,14.0,12.972692,77.595609,MILD,0.0,NO,0.68,Logged / Routine Maintenance
+P-055,14.0,12.972692,77.595609,SEVERE [WATER],10.4,YES,0.48,Aquaplaning Risk / Drain Clearing
+P-056,14.0,12.972692,77.595609,SEVERE [WATER],25.9,YES,0.39,Aquaplaning Risk / Drain Clearing
+P-057,16.0,12.972848,77.595753,SEVERE,35.0,NO,0.45,Urgent Work Order Dispatched
+P-058,16.0,12.972848,77.595753,MILD,0.0,NO,0.36,Logged / Routine Maintenance

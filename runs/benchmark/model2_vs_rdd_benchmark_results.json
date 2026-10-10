@@ -1,0 +1,36 @@
+{
+  "model_2": {
+    "tag": "MODEL #2: pothole_combined_v2",
+    "model_file": "runs\\detect\\pothole_combined_v2\\weights\\best.pt",
+    "total_frames": 1005,
+    "frames_with_detections": 855,
+    "detection_coverage_pct": 85.07462686567165,
+    "total_raw_detections": 1104,
+    "mean_confidence": 0.47252570621777273,
+    "median_confidence": 0.4779764711856842,
+    "total_ids": 21,
+    "single_frame_blips": 1,
+    "verified_2": 20,
+    "persistent_5": 17,
+    "flicker_pct": 27.81413612565445,
+    "avg_fps": 20.265304486201405,
+    "total_time_s": 49.59214901924133
+  },
+  "model_rdd": {
+    "tag": "FINAL: RDD2022 India + Local V1",
+    "model_file": "pothole_rdd_india_best.pt",
+    "total_frames": 1005,
+    "frames_with_detections": 682,
+    "detection_coverage_pct": 67.86069651741293,
+    "total_raw_detections": 1176,
+    "mean_confidence": 0.35824891566267225,
+    "median_confidence": 0.28243763744831085,
+    "total_ids": 42,
+    "single_frame_blips": 4,
+    "verified_2": 38,
+    "persistent_5": 31,
+    "flicker_pct": 63.39787632729544,
+    "avg_fps": 21.372314806914215,
+    "total_time_s": 47.02345108985901
+  }
+}

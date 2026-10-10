@@ -1,0 +1,7 @@
+Pothole_ID,Timestamp_Sec,Latitude,Longitude,Severity,Estimated_Depth_cm,Water_Hazard,Confidence,Municipal_Status
+P-001,0.8,12.97180,77.59480,SEVERE,11.4,NO,0.88,Urgent Work Order Dispatched
+P-002,1.6,12.97215,77.59508,MODERATE,6.8,NO,0.79,Scheduled Inspection
+P-003,2.4,12.97252,77.59535,MILD,3.2,NO,0.84,Logged / Routine Maintenance
+P-004,3.2,12.97290,77.59562,SEVERE [WATER],13.1,YES,0.91,Aquaplaning Risk / Drain Clearing
+P-005,4.1,12.97331,77.59591,MODERATE,5.9,NO,0.75,Scheduled Inspection
+P-006,5.0,12.97375,77.59623,MILD,2.8,NO,0.81,Logged / Routine Maintenance

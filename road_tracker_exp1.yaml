@@ -1,0 +1,11 @@
+# RoadVision AI - Road Hazard Tracking Configuration (Experiment #1)
+# Hypothesis: Loosening match_thresh (0.55 -> 0.45) accommodates rapid perspective scale change
+# while tightening new_track_thresh (0.16 -> 0.24) suppresses transient track initiation.
+
+tracker_type: bytetrack
+track_high_thresh: 0.14
+track_low_thresh: 0.05
+new_track_thresh: 0.24 # Changed from 0.16 -> 0.24
+track_buffer: 75       # Kept at 75
+match_thresh: 0.45     # Changed from 0.55 -> 0.45
+fuse_score: True

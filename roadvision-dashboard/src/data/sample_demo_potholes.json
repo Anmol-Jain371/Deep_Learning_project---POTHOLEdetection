@@ -1,0 +1,68 @@
+[
+  {
+    "id": "P-001",
+    "timestamp": 0.8,
+    "lat": 12.9718,
+    "lng": 77.5948,
+    "severity": "SEVERE",
+    "depth_cm": 11.4,
+    "water": false,
+    "confidence": 0.88,
+    "status": "Urgent Work Order Dispatched"
+  },
+  {
+    "id": "P-002",
+    "timestamp": 1.6,
+    "lat": 12.97215,
+    "lng": 77.59508,
+    "severity": "MODERATE",
+    "depth_cm": 6.8,
+    "water": false,
+    "confidence": 0.79,
+    "status": "Scheduled Inspection"
+  },
+  {
+    "id": "P-003",
+    "timestamp": 2.4,
+    "lat": 12.97252,
+    "lng": 77.59535,
+    "severity": "MILD",
+    "depth_cm": 3.2,
+    "water": false,
+    "confidence": 0.84,
+    "status": "Logged / Routine Maintenance"
+  },
+  {
+    "id": "P-004",
+    "timestamp": 3.2,
+    "lat": 12.9729,
+    "lng": 77.59562,
+    "severity": "SEVERE",
+    "depth_cm": 13.1,
+    "water": true,
+    "confidence": 0.91,
+    "status": "Aquaplaning Risk / Drain Clearing"
+  },
+  {
+    "id": "P-005",
+    "timestamp": 4.1,
+    "lat": 12.97331,
+    "lng": 77.59591,
+    "severity": "MODERATE",
+    "depth_cm": 5.9,
+    "water": false,
+    "confidence": 0.75,
+    "status": "Scheduled Inspection"
+  },
+  {
+    "id": "P-006",
+    "timestamp": 5.0,
+    "lat": 12.97375,
+    "lng": 77.59623,
+    "severity": "MILD",
+    "depth_cm": 2.8,
+    "water": false,
+    "confidence": 0.81,
+    "status": "Logged / Routine Maintenance"
+  }
+]

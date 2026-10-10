@@ -1,0 +1,138 @@
+/* ═══════════════════════════════════════════════════════════════════
+   RoadVision AI — Design System
+   Theme: Construction Zone Warm Asphalt
+   Fonts: Outfit (display), Space Grotesk (body), Space Mono (data)
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Core Palette: Asphalt & Construction ── */
+  --asphalt-950: #0c0e12;
+  --asphalt-900: #12151c;
+  --asphalt-850: #1a1e27;
+  --asphalt-800: #222733;
+  --asphalt-700: #2e3545;
+  --asphalt-600: #3e475a;
+  --asphalt-500: #546077;
+  --asphalt-400: #74839e;
+  --asphalt-300: #9daec9;
+  --asphalt-200: #c8d5e8;
+  --asphalt-100: #e8f0fe;
+
+  /* ── Pothole & Road Surface Grays ── */
+  --pit-dark: #0a0b0e;
+  --pit-crater: #161920;
+  --pit-slate: #242934;
+  --pit-rim: #3d4556;
+  --pit-asphalt-grain: #4e576c;
+
+  /* ── Accent: Construction Orange & Amber ── */
+  --cone-orange: #e8651a;
+  --cone-orange-light: #f28c3e;
+  --cone-orange-glow: rgba(232, 101, 26, 0.15);
+  --amber-sign: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.12);
+
+  /* ── Severity Palette ── */
+  --severity-critical: #dc2626;
+  --severity-critical-bg: rgba(220, 38, 38, 0.10);
+  --severity-moderate: #d97706;
+  --severity-moderate-bg: rgba(217, 119, 6, 0.10);
+  --severity-mild: #16a34a;
+  --severity-mild-bg: rgba(22, 163, 74, 0.10);
+  --severity-water: #0891b2;
+  --severity-water-bg: rgba(8, 145, 178, 0.10);
+
+  /* ── Surface & Text ── */
+  --surface-primary: var(--asphalt-900);
+  --surface-card: var(--asphalt-800);
+  --surface-elevated: var(--asphalt-700);
+  --text-primary: #f5f5f0;
+  --text-secondary: #a8a8a0;
+  --text-muted: #6b6b63;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-warm: rgba(232, 101, 26, 0.20);
+
+  /* ── Typography ── */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* ── Spacing & Radius ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--asphalt-950);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--cone-orange);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--cone-orange-light);
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  outline: none;
+}
+
+::selection {
+  background: var(--cone-orange);
+  color: var(--asphalt-950);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--asphalt-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--asphalt-600);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--asphalt-500);
+}

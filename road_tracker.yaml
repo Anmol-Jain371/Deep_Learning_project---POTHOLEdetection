@@ -1,0 +1,16 @@
+# RoadVision AI - Production Road Hazard Tracking Configuration (Optimized ByteTrack)
+# Promoted from Experiment #2B: Decouples geometric IoU matching from confidence scores.
+# Results on Rangoon Road benchmark:
+# - Track IDs: 70 -> 21 (-70.0% fragmentation)
+# - 1-frame transient blips: 42 -> 1 (-97.6% noise reduction)
+# - Detection-frame coverage: 83.1% -> 85.1% (+2.0 pp)
+# - Detection flicker rate: 63.3% -> 27.8% (-35.5 pp)
+# - Persistent tracks (>= 5 frames): 17/21 (81.0% high-persistence)
+
+tracker_type: bytetrack
+track_high_thresh: 0.14 # Detection confidence to initiate/maintain tracking
+track_low_thresh: 0.05  # Secondary association threshold for low-confidence detections
+new_track_thresh: 0.16  # Confidence threshold required to register a new track
+track_buffer: 75        # Frame persistence buffer (~3.0 seconds at 25 FPS)
+match_thresh: 0.55      # Cost threshold for linear assignment (Cost = 1 - IoU <= 0.55 -> IoU >= 0.45)
+fuse_score: False       # Pure geometric IoU matching (avoids penalizing moderate-confidence detections)

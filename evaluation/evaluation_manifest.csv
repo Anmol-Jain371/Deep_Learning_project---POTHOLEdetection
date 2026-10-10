@@ -1,0 +1,41 @@
+frame_id,source_video,frame_index,timestamp_sec,image_width,image_height,annotation_status,num_ground_truth_potholes,difficulty_lighting_notes
+eval_frame_0000,Watch Video_ Terrible potholes in Rangoon Road.mp4,0,0.0,640,360,PENDING_MANUAL_LABEL,,Approach section - tree shadows & clean road surface
+eval_frame_0025,Watch Video_ Terrible potholes in Rangoon Road.mp4,25,1.0,640,360,PENDING_MANUAL_LABEL,,Approach section - tree shadows & clean road surface
+eval_frame_0050,Watch Video_ Terrible potholes in Rangoon Road.mp4,50,2.0,640,360,PENDING_MANUAL_LABEL,,Approach section - tree shadows & clean road surface
+eval_frame_0075,Watch Video_ Terrible potholes in Rangoon Road.mp4,75,3.0,640,360,PENDING_MANUAL_LABEL,,Approach section - tree shadows & clean road surface
+eval_frame_0100,Watch Video_ Terrible potholes in Rangoon Road.mp4,100,4.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0125,Watch Video_ Terrible potholes in Rangoon Road.mp4,125,5.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0150,Watch Video_ Terrible potholes in Rangoon Road.mp4,150,6.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0175,Watch Video_ Terrible potholes in Rangoon Road.mp4,175,7.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0200,Watch Video_ Terrible potholes in Rangoon Road.mp4,200,8.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0225,Watch Video_ Terrible potholes in Rangoon Road.mp4,225,9.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0250,Watch Video_ Terrible potholes in Rangoon Road.mp4,250,10.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0275,Watch Video_ Terrible potholes in Rangoon Road.mp4,275,11.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0300,Watch Video_ Terrible potholes in Rangoon Road.mp4,300,12.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0325,Watch Video_ Terrible potholes in Rangoon Road.mp4,325,13.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0350,Watch Video_ Terrible potholes in Rangoon Road.mp4,350,14.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0375,Watch Video_ Terrible potholes in Rangoon Road.mp4,375,15.0,640,360,PENDING_MANUAL_LABEL,,Mid-distance potholes & heavy asphalt wear
+eval_frame_0400,Watch Video_ Terrible potholes in Rangoon Road.mp4,400,16.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0425,Watch Video_ Terrible potholes in Rangoon Road.mp4,425,17.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0450,Watch Video_ Terrible potholes in Rangoon Road.mp4,450,18.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0475,Watch Video_ Terrible potholes in Rangoon Road.mp4,475,19.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0500,Watch Video_ Terrible potholes in Rangoon Road.mp4,500,20.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0525,Watch Video_ Terrible potholes in Rangoon Road.mp4,525,21.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0550,Watch Video_ Terrible potholes in Rangoon Road.mp4,550,22.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0575,Watch Video_ Terrible potholes in Rangoon Road.mp4,575,23.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0600,Watch Video_ Terrible potholes in Rangoon Road.mp4,600,24.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0625,Watch Video_ Terrible potholes in Rangoon Road.mp4,625,25.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0650,Watch Video_ Terrible potholes in Rangoon Road.mp4,650,26.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0675,Watch Video_ Terrible potholes in Rangoon Road.mp4,675,27.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0700,Watch Video_ Terrible potholes in Rangoon Road.mp4,700,28.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0725,Watch Video_ Terrible potholes in Rangoon Road.mp4,725,29.0,640,360,PENDING_MANUAL_LABEL,,Severe cluster - deep craters & water puddles
+eval_frame_0750,Watch Video_ Terrible potholes in Rangoon Road.mp4,750,30.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0775,Watch Video_ Terrible potholes in Rangoon Road.mp4,775,31.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0800,Watch Video_ Terrible potholes in Rangoon Road.mp4,800,32.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0825,Watch Video_ Terrible potholes in Rangoon Road.mp4,825,33.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0850,Watch Video_ Terrible potholes in Rangoon Road.mp4,850,34.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0875,Watch Video_ Terrible potholes in Rangoon Road.mp4,875,35.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0900,Watch Video_ Terrible potholes in Rangoon Road.mp4,900,36.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0925,Watch Video_ Terrible potholes in Rangoon Road.mp4,925,37.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0950,Watch Video_ Terrible potholes in Rangoon Road.mp4,950,38.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel
+eval_frame_0975,Watch Video_ Terrible potholes in Rangoon Road.mp4,975,39.0,640,360,PENDING_MANUAL_LABEL,,Exit section - varied road patchiness & roadside gravel

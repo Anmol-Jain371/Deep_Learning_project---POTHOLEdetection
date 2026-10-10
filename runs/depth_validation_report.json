@@ -1,0 +1,7 @@
+{
+  "status": "UNVALIDATED",
+  "manifest": "C:\\Users\\anmol\\Downloads\\DL project\\depth_ground_truth_manifest.csv",
+  "registered_slots": 15,
+  "physical_measurements_recorded": 0,
+  "message": "Physical depth validation pending collection of 10-15 ruler/straightedge measurements."
+}
