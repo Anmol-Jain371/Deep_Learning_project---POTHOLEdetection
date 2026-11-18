@@ -1,0 +1,26 @@
+{
+  "yolov8s": {
+    "model": "YOLOv8s (One-Stage)",
+    "frames_tested": 50,
+    "total_detections": 158,
+    "frames_with_detections": 50,
+    "coverage_pct": 100.0,
+    "avg_confidence": 0.6376111348973045,
+    "avg_latency_ms": 37.8,
+    "fps": 26.45,
+    "params_m": 11.13,
+    "weights_size_mb": 5.96
+  },
+  "faster_rcnn": {
+    "model": "Faster R-CNN ResNet-50-FPN (Two-Stage)",
+    "frames_tested": 50,
+    "total_detections": 235,
+    "frames_with_detections": 50,
+    "coverage_pct": 100.0,
+    "avg_confidence": 0.3937688288536478,
+    "avg_latency_ms": 256.55,
+    "fps": 3.9,
+    "params_m": 43.26,
+    "weights_size_mb": 329.58
+  }
+}

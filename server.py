@@ -20,17 +20,28 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "roadvision-dashboard", "public", "outputs")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Initialize Deep Learning Engine with frozen production detector (Model #2)
+# Initialize Deep Learning Engine with upgraded production detector (RDD1666 50-Epoch, 84.7% mAP50)
+UPGRADED_RDD_WEIGHTS = os.path.join(BASE_DIR, "runs", "detect", "pothole_rdd1666_50e", "weights", "best.pt")
+PROD_V2_50E = os.path.join(BASE_DIR, "runs", "detect", "pothole_combined_v2_50e", "weights", "best.pt")
 PROD_WEIGHTS = os.path.join(BASE_DIR, "runs", "detect", "pothole_combined_v2", "weights", "best.pt")
 BASELINE_WEIGHTS = os.path.join(BASE_DIR, "pothole_best.pt")
-WEIGHTS_PATH = PROD_WEIGHTS if os.path.exists(PROD_WEIGHTS) else BASELINE_WEIGHTS
+
+if os.path.exists(UPGRADED_RDD_WEIGHTS):
+    WEIGHTS_PATH = UPGRADED_RDD_WEIGHTS
+    MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+elif os.path.exists(PROD_V2_50E):
+    WEIGHTS_PATH = PROD_V2_50E
+    MODEL_LABEL = "Model #2b (Combined-V2 50e, 76.2% mAP50)"
+elif os.path.exists(PROD_WEIGHTS):
+    WEIGHTS_PATH = PROD_WEIGHTS
+    MODEL_LABEL = "Model #2 (pothole_combined_v2 25e)"
+else:
+    WEIGHTS_PATH = BASELINE_WEIGHTS
+    MODEL_LABEL = "Baseline (pothole_best.pt)"
 
 print(f"🚀 Initializing Python Flask Backend Server...")
 print(f"📦 Production Detector Checkpoint: {WEIGHTS_PATH}")
-if WEIGHTS_PATH == PROD_WEIGHTS:
-    print(f"✨ Model #2 (pothole_combined_v2) locked as Production Detector.")
-else:
-    print(f"⚠️ Warning: Model #2 not found at {PROD_WEIGHTS}, fell back to baseline {BASELINE_WEIGHTS}")
+print(f"✨ Active Model: {MODEL_LABEL}")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 pipeline = RoadVisionPipeline(yolo_weights=WEIGHTS_PATH, device=device)
@@ -41,11 +52,23 @@ def health_check():
     return jsonify({
         "status": "online",
         "device": device,
-        "detector_model": "Model #2 (pothole_combined_v2)" if WEIGHTS_PATH == PROD_WEIGHTS else "Baseline (pothole_best.pt)",
+        "detector_model": MODEL_LABEL,
         "weights": WEIGHTS_PATH,
         "tracker": "road_tracker.yaml (fuse_score: false)",
         "timestamp": time.time()
     })
+
+@app.route("/api/benchmark", methods=["GET"])
+def get_benchmark():
+    benchmark_file = os.path.join(BASE_DIR, "runs", "benchmark", "yolo_rdd1666_vs_faster_rcnn.json")
+    if not os.path.exists(benchmark_file):
+        benchmark_file = os.path.join(BASE_DIR, "runs", "benchmark", "yolo_vs_faster_rcnn.json")
+    
+    if os.path.exists(benchmark_file):
+        import json
+        with open(benchmark_file, "r") as f:
+            return jsonify(json.load(f))
+    return jsonify({"error": "Benchmark data not generated yet"}), 404
 
 @app.route("/api/detect", methods=["POST"])
 def process_video_upload():

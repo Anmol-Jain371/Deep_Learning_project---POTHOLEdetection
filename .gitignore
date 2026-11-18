@@ -39,6 +39,7 @@ dataset_rdd_india_potholes/
 # Intermediate benchmark video captures (preserve benchmark json and sample images)
 runs/benchmark/*.mp4
 runs/detect/pothole_v8_upgraded/
+runs/faster_rcnn/*.pth
 
 # Scratch & temporary artifacts
 scratch_*

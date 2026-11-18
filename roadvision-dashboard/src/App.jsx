@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import KPICards from './components/KPICards';
 import AuditTable from './components/AuditTable';
 import PipelineSection from './components/PipelineSection';
+import BenchmarkComparison from './components/BenchmarkComparison';
 import VideoUploadAnalysis from './components/VideoUploadAnalysis';
 import Footer from './components/Footer';
 import './App.css';
@@ -42,6 +43,7 @@ export default function App() {
             className="editorial-page-canvas"
           >
             <Hero onExplore={() => setActiveSection('dashboard')} />
+            <BenchmarkComparison />
             <PipelineSection />
           </motion.div>
         )}
@@ -84,6 +86,19 @@ export default function App() {
                 <AuditTable data={analysisResults.auditRecords || []} />
               </motion.div>
             )}
+          </motion.div>
+        )}
+
+        {activeSection === 'benchmark' && (
+          <motion.div
+            key="benchmark"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="editorial-page-canvas"
+          >
+            <BenchmarkComparison />
           </motion.div>
         )}
 

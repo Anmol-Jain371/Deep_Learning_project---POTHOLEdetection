@@ -5,6 +5,7 @@ export default function Navbar({ active, onNavigate, variant = 'dark' }) {
   const links = [
     { id: 'home', label: 'Home', icon: Eye },
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
+    { id: 'benchmark', label: 'Model Benchmark', icon: BarChart3 },
     { id: 'architecture', label: 'Architecture', icon: Layers },
   ];
 

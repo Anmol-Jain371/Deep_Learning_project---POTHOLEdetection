@@ -24,7 +24,9 @@ def main():
     parser.add_argument("--imgsz", type=int, default=1280, help="Input resolution (1280 preserves fine road cracks and small cavities)")
     parser.add_argument("--batch", type=int, default=8, help="Batch size (use 4-8 for 1280p on 8-16GB VRAM)")
     parser.add_argument("--device", type=str, default="0" if torch.cuda.is_available() else "cpu", help="CUDA device index or 'cpu'")
-    parser.add_argument("--name", type=str, default="pothole_combined_v2", help="Run name (output saved to runs/detect/<name>)")
+    parser.add_argument("--name", type=str, default="pothole_combined_v2_50e", help="Run name (output saved to runs/detect/<name>)")
+    parser.add_argument("--project", type=str, default="runs/detect", help="Project output folder")
+    parser.add_argument("--patience", type=int, default=25, help="Early stopping patience")
     args = parser.parse_args()
 
     print("=" * 70)
@@ -53,10 +55,13 @@ def main():
         imgsz=args.imgsz,
         batch=args.batch,
         device=args.device,
+        project=args.project,
         name=args.name,
         optimizer="AdamW",   # Adaptive learning with decoupled weight decay
         lr0=0.002,           # Gentle fine-tuning learning rate (prevents weight shock)
         lrf=0.01,            # Final learning rate fraction (0.002 * 0.01)
+        box=8.5,             # Enhanced bounding-box regression loss for irregular cavity boundaries
+        dfl=1.8,             # Distribution Focal Loss weight for crisp border alignment
         close_mosaic=10,     # Disables mosaic during the final 10 epochs
         # Heavy data augmentations to prevent overfitting and master all road types:
         scale=0.5,           # Multi-scale feature learning (0.5x to 1.5x)
@@ -67,12 +72,12 @@ def main():
         hsv_s=0.7,           # Saturation variations (wet vs dry asphalt)
         hsv_v=0.4,           # Value/brightness jitter (harsh sunlight vs deep shadows)
         fliplr=0.5,          # Horizontal flip
-        patience=10,         # Early stopping if mAP plateaus
+        patience=args.patience, # Early stopping if mAP plateaus
         save=True
     )
 
     print("\n[OK] Training Complete!")
-    best_weight = os.path.join("runs", "detect", args.name, "weights", "best.pt")
+    best_weight = os.path.join(args.project, args.name, "weights", "best.pt")
     if os.path.exists(best_weight):
         print(f"Best Upgraded Weights Saved to: {best_weight}")
         print("Note: pothole_best.pt remains untouched for baseline comparison.")
