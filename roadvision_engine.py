@@ -19,8 +19,9 @@ import sys
 import time
 import math
 import csv
+import json
 import argparse
-from typing import Tuple, Dict, Any, Optional, List
+from typing import Tuple, Dict, Any, Optional, List, Union
 
 import cv2
 import numpy as np
@@ -30,6 +31,55 @@ try:
     from ultralytics import YOLO
 except ImportError:
     YOLO = None
+
+
+# ======================================================================================
+# 0. CONFIGURABLE VEHICLE CAMERA GEOMETRY LOADER
+# ======================================================================================
+def load_camera_config(
+    config_source: Optional[Union[str, dict]] = None,
+    profile: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Loads camera calibration profile from config/camera_params.json or custom dict.
+    Supports multi-vehicle presets: sedan_dashcam, suv_crossover, commercial_truck_bus.
+    """
+    default_config = {
+        "camera_height_m": 1.25,
+        "vfov_deg": 60.0,
+        "horizon_ratio": 0.40,
+        "k_disp": 0.082,
+        "profile_name": "sedan_dashcam"
+    }
+
+    if config_source is None:
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+        candidate = os.path.join(base_dir, "config", "camera_params.json")
+        if os.path.exists(candidate):
+            config_source = candidate
+
+    if isinstance(config_source, str) and os.path.exists(config_source):
+        try:
+            with open(config_source, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            prof_name = profile or data.get("active_profile", "sedan_dashcam")
+            if "profiles" in data and prof_name in data["profiles"]:
+                res = data["profiles"][prof_name].copy()
+                res["profile_name"] = prof_name
+                return res
+        except Exception as e:
+            print(f"[!] Warning reading camera configuration ({config_source}): {e}")
+
+    elif isinstance(config_source, dict):
+        if "profiles" in config_source:
+            prof_name = profile or config_source.get("active_profile", "sedan_dashcam")
+            if prof_name in config_source["profiles"]:
+                res = config_source["profiles"][prof_name].copy()
+                res["profile_name"] = prof_name
+                return res
+        return config_source
+
+    return default_config
 
 
 # ======================================================================================
@@ -54,7 +104,8 @@ class MetricDepthCalibrator:
         camera_height_m: float = 1.25,
         vfov_deg: float = 60.0,
         horizon_ratio: float = 0.40,
-        k_disp: float = 0.082
+        k_disp: float = 0.082,
+        profile_name: str = "sedan_dashcam"
     ):
         self.H = frame_height
         self.W = frame_width
@@ -62,6 +113,26 @@ class MetricDepthCalibrator:
         self.horizon_y = int(frame_height * horizon_ratio)
         self.fy = (frame_height / 2.0) / math.tan(math.radians(vfov_deg / 2.0))
         self.k_disp = k_disp
+        self.profile_name = profile_name
+
+    @classmethod
+    def from_config(
+        cls,
+        frame_height: int,
+        frame_width: int,
+        config_source: Optional[Union[str, dict]] = None,
+        profile: Optional[str] = None
+    ):
+        cfg = load_camera_config(config_source, profile)
+        return cls(
+            frame_height=frame_height,
+            frame_width=frame_width,
+            camera_height_m=cfg.get("camera_height_m", 1.25),
+            vfov_deg=cfg.get("vfov_deg", 60.0),
+            horizon_ratio=cfg.get("horizon_ratio", 0.40),
+            k_disp=cfg.get("k_disp", 0.082),
+            profile_name=cfg.get("profile_name", "sedan_dashcam")
+        )
 
     def disparity_to_depth_cm(self, raw_disparity_delta: float, box_bottom_y: int) -> float:
         """
@@ -359,11 +430,23 @@ class RoadVisionPipeline:
         self,
         yolo_weights: str,
         device: Optional[str] = None,
-        camera_height_m: float = 1.25,
-        vfov_deg: float = 60.0
+        camera_height_m: Optional[float] = None,
+        vfov_deg: Optional[float] = None,
+        camera_config: Optional[Union[str, dict]] = None,
+        vehicle_profile: Optional[str] = None
     ):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         print(f"🚀 Initializing RoadVision Engine on [{self.device.upper()}]...")
+
+        # Load active camera calibration configuration
+        self.camera_config_source = camera_config
+        self.active_profile = vehicle_profile or "sedan_dashcam"
+        cfg = load_camera_config(self.camera_config_source, self.active_profile)
+        self.camera_height = camera_height_m if camera_height_m is not None else cfg.get("camera_height_m", 1.25)
+        self.vfov = vfov_deg if vfov_deg is not None else cfg.get("vfov_deg", 60.0)
+        self.horizon_ratio = cfg.get("horizon_ratio", 0.40)
+        self.k_disp = cfg.get("k_disp", 0.082)
+        print(f"📐 Active Vehicle Camera Profile: [{cfg.get('profile_name', self.active_profile)}] (Height: {self.camera_height}m, VFOV: {self.vfov}°, Horizon: {self.horizon_ratio})")
 
         # 1. Load YOLOv8 Model
         if YOLO is None:
@@ -379,8 +462,6 @@ class RoadVisionPipeline:
         print("✅ MiDaS Depth Estimator online.")
 
         # 3. Perception sub-modules
-        self.camera_height = camera_height_m
-        self.vfov = vfov_deg
         self.calibrator: Optional[MetricDepthCalibrator] = None
         self.depth_extractor = AnnularDonutDepthExtractor()
         self.water_detector = SpecularAquaplaneDetector()
@@ -391,7 +472,8 @@ class RoadVisionPipeline:
         self,
         input_video_path: str,
         output_video_path: str,
-        csv_audit_path: str
+        csv_audit_path: str,
+        vehicle_profile: Optional[str] = None
     ) -> Dict[str, Any]:
         cap = cv2.VideoCapture(input_video_path)
         if not cap.isOpened():
@@ -402,12 +484,18 @@ class RoadVisionPipeline:
         fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
+        # Dynamic vehicle profile override per-run
+        prof = vehicle_profile or self.active_profile
+        cfg = load_camera_config(self.camera_config_source, prof)
+
         self.calibrator = MetricDepthCalibrator(
             frame_height=H,
             frame_width=W,
-            camera_height_m=self.camera_height,
-            vfov_deg=self.vfov,
-            horizon_ratio=0.40
+            camera_height_m=cfg.get("camera_height_m", self.camera_height),
+            vfov_deg=cfg.get("vfov_deg", self.vfov),
+            horizon_ratio=cfg.get("horizon_ratio", self.horizon_ratio),
+            k_disp=cfg.get("k_disp", self.k_disp),
+            profile_name=cfg.get("profile_name", prof)
         )
 
         # Auto-detect companion SRT/GPS file if present

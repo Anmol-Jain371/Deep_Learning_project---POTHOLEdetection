@@ -1,0 +1,49 @@
+{
+  "calibrated_profiles": {
+    "Two-Wheeler / Auto (0.95m)": {
+      "camera_height_m": 0.95,
+      "vfov_deg": 55.0,
+      "mean_depth_cm": 1.5,
+      "relative_deviation_pct": 0.0,
+      "invariant_status": "GEOMETRICALLY_CALIBRATED"
+    },
+    "Sedan / Hatchback (1.25m) [Baseline]": {
+      "camera_height_m": 1.25,
+      "vfov_deg": 60.0,
+      "mean_depth_cm": 1.5,
+      "relative_deviation_pct": 0.0,
+      "invariant_status": "GEOMETRICALLY_CALIBRATED"
+    },
+    "SUV / Patrol Fleet (1.55m)": {
+      "camera_height_m": 1.55,
+      "vfov_deg": 65.0,
+      "mean_depth_cm": 1.5,
+      "relative_deviation_pct": 0.0,
+      "invariant_status": "GEOMETRICALLY_CALIBRATED"
+    },
+    "Heavy Commercial / Bus (2.20m)": {
+      "camera_height_m": 2.2,
+      "vfov_deg": 70.0,
+      "mean_depth_cm": 1.5,
+      "relative_deviation_pct": 0.0,
+      "invariant_status": "GEOMETRICALLY_CALIBRATED"
+    }
+  },
+  "uncompensated_miscalibration_ablation": {
+    "Two-Wheeler / Auto (0.95m)": {
+      "true_height_m": 0.95,
+      "assumed_height_m": 1.25,
+      "depth_scaling_error_pct": -31.0
+    },
+    "SUV / Patrol Fleet (1.55m)": {
+      "true_height_m": 1.55,
+      "assumed_height_m": 1.25,
+      "depth_scaling_error_pct": 33.7
+    },
+    "Heavy Commercial / Bus (2.20m)": {
+      "true_height_m": 2.2,
+      "assumed_height_m": 1.25,
+      "depth_scaling_error_pct": 114.5
+    }
+  }
+}

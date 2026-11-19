@@ -70,6 +70,15 @@ def get_benchmark():
             return jsonify(json.load(f))
     return jsonify({"error": "Benchmark data not generated yet"}), 404
 
+@app.route("/api/camera-config", methods=["GET"])
+def get_camera_config():
+    cfg_file = os.path.join(BASE_DIR, "config", "camera_params.json")
+    if os.path.exists(cfg_file):
+        import json
+        with open(cfg_file, "r", encoding="utf-8") as f:
+            return jsonify(json.load(f))
+    return jsonify({"error": "Camera configuration file not found"}), 404
+
 @app.route("/api/detect", methods=["POST"])
 def process_video_upload():
     if "video" not in request.files:
@@ -78,6 +87,8 @@ def process_video_upload():
     file = request.files["video"]
     if file.filename == "":
         return jsonify({"error": "Empty filename"}), 400
+
+    vehicle_profile = request.form.get("vehicle_profile") or request.args.get("vehicle_profile", "sedan_dashcam")
 
     filename = f"upload_{int(time.time())}_{file.filename.replace(' ', '_')}"
     input_path = os.path.join(UPLOAD_DIR, filename)
@@ -88,12 +99,13 @@ def process_video_upload():
     csv_path = os.path.join(OUTPUT_DIR, f"audit_{int(time.time())}.csv")
 
     print(f"\n🎬 Received Video Upload: {filename}")
+    print(f"🚗 Selected Vehicle Geometry Profile: [{vehicle_profile}]")
     print(f"⏳ Running PyTorch YOLOv8 + MiDaS Detection Pipeline...")
 
     try:
         pipeline.smoother.records = {}
         pipeline.display_id_map = {}
-        results = pipeline.process_video(input_path, output_path, csv_path)
+        results = pipeline.process_video(input_path, output_path, csv_path, vehicle_profile=vehicle_profile)
         
         # Read generated audit records with sequential display IDs
         audit_records = []
