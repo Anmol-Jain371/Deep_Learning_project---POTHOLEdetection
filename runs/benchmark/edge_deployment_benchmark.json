@@ -1,0 +1,38 @@
+{
+  "pytorch_fp32": {
+    "runtime": "PyTorch FP32 (Base)",
+    "precision": "FP32",
+    "avg_latency_ms": 13.65,
+    "fps": 73.3,
+    "model_size_mb": 5.96,
+    "total_detections": 54,
+    "edge_category": "GPU Native"
+  },
+  "pytorch_fp16": {
+    "runtime": "PyTorch FP16 (Tensor Cores)",
+    "precision": "FP16",
+    "avg_latency_ms": 12.65,
+    "fps": 79.0,
+    "model_size_mb": 5.96,
+    "total_detections": 54,
+    "edge_category": "GPU Native"
+  },
+  "onnx_runtime": {
+    "runtime": "ONNX Runtime (CPU/C++ Engine)",
+    "precision": "FP32",
+    "avg_latency_ms": 34.93,
+    "fps": 28.6,
+    "model_size_mb": 11.7,
+    "total_detections": 49,
+    "edge_category": "Cross-Platform C++"
+  },
+  "jetson_tensorrt_fp16": {
+    "runtime": "TensorRT FP16 (Target: Jetson Orin Nano 15W)",
+    "precision": "FP16 (Quantized)",
+    "avg_latency_ms": 17.08,
+    "fps": 58.5,
+    "model_size_mb": 3.1,
+    "total_detections": 54,
+    "edge_category": "Automotive Edge SoC"
+  }
+}
