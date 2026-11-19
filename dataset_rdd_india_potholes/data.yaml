@@ -1,0 +1,6 @@
+names:
+  0: pothole
+nc: 1
+path: dataset_rdd_india_potholes
+train: images/train
+val: images/val

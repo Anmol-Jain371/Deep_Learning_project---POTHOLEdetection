@@ -6,6 +6,7 @@
       "camera_height_m": 1.25,
       "vfov_deg": 60.0,
       "horizon_ratio": 0.40,
+      "horizon_cutoff_ratio": 0.15,
       "k_disp": 0.082
     },
     "suv_crossover": {
@@ -13,6 +14,7 @@
       "camera_height_m": 1.55,
       "vfov_deg": 65.0,
       "horizon_ratio": 0.42,
+      "horizon_cutoff_ratio": 0.15,
       "k_disp": 0.082
     },
     "commercial_truck_bus": {
@@ -20,6 +22,7 @@
       "camera_height_m": 2.20,
       "vfov_deg": 70.0,
       "horizon_ratio": 0.46,
+      "horizon_cutoff_ratio": 0.15,
       "k_disp": 0.082
     },
     "light_mobility_twowheeler": {
@@ -27,10 +30,12 @@
       "camera_height_m": 0.95,
       "vfov_deg": 55.0,
       "horizon_ratio": 0.38,
+      "horizon_cutoff_ratio": 0.15,
       "k_disp": 0.082
     }
   },
   "calibration_constants": {
+    "horizon_cutoff_ratio": 0.15,
     "depth_exponent": 1.35,
     "width_scale": 1.0,
     "length_exponent": 1.15,

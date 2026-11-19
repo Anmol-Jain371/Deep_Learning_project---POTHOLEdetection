@@ -181,5 +181,9 @@ def serve_output(filename):
     )
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("DEBUG", "false").lower() in ["1", "true", "yes"]
+    print(f"🚀 Starting RoadVision Server on http://{host}:{port} (debug={debug})...")
+    app.run(host=host, port=port, debug=debug)
 

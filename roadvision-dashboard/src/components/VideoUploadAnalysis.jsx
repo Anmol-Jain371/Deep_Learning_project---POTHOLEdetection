@@ -6,6 +6,8 @@ import {
   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
 } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 export default function VideoUploadAnalysis({ onAnalysisComplete }) {
   const [videoSrc, setVideoSrc] = useState(null);
   const [videoName, setVideoName] = useState('');
@@ -114,7 +116,7 @@ export default function VideoUploadAnalysis({ onAnalysisComplete }) {
     formData.append('video', file);
 
     try {
-      const res = await fetch('http://localhost:5000/api/detect', {
+      const res = await fetch(`${API_BASE}/api/detect`, {
         method: 'POST',
         body: formData
       });
@@ -124,7 +126,7 @@ export default function VideoUploadAnalysis({ onAnalysisComplete }) {
         setProcessingStatus('Analysis complete. Loading annotated survey...');
 
         setTimeout(() => {
-          const finalUrl = data.videoUrl.startsWith('http') ? data.videoUrl : `http://localhost:5000${data.videoUrl}`;
+          const finalUrl = data.videoUrl.startsWith('http') ? data.videoUrl : `${API_BASE}${data.videoUrl}`;
           setVideoSrc(finalUrl);
           setIsAnalyzing(false);
           setHasAnalyzed(true);

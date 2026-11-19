@@ -48,8 +48,13 @@ def load_camera_config(
         "camera_height_m": 1.25,
         "vfov_deg": 60.0,
         "horizon_ratio": 0.40,
+        "horizon_cutoff_ratio": 0.15,
         "k_disp": 0.082,
-        "profile_name": "sedan_dashcam"
+        "profile_name": "sedan_dashcam",
+        "depth_exponent": 1.35,
+        "width_scale": 1.0,
+        "length_exponent": 1.15,
+        "max_depth_clip_cm": 35.0
     }
 
     if config_source is None:
@@ -66,6 +71,10 @@ def load_camera_config(
             if "profiles" in data and prof_name in data["profiles"]:
                 res = data["profiles"][prof_name].copy()
                 res["profile_name"] = prof_name
+                if "calibration_constants" in data and isinstance(data["calibration_constants"], dict):
+                    for k, v in data["calibration_constants"].items():
+                        if k not in res:
+                            res[k] = v
                 return res
         except Exception as e:
             print(f"[!] Warning reading camera configuration ({config_source}): {e}")
@@ -76,6 +85,10 @@ def load_camera_config(
             if prof_name in config_source["profiles"]:
                 res = config_source["profiles"][prof_name].copy()
                 res["profile_name"] = prof_name
+                if "calibration_constants" in config_source and isinstance(config_source["calibration_constants"], dict):
+                    for k, v in config_source["calibration_constants"].items():
+                        if k not in res:
+                            res[k] = v
                 return res
         return config_source
 
@@ -105,7 +118,10 @@ class MetricDepthCalibrator:
         vfov_deg: float = 60.0,
         horizon_ratio: float = 0.40,
         k_disp: float = 0.082,
-        profile_name: str = "sedan_dashcam"
+        profile_name: str = "sedan_dashcam",
+        depth_exponent: float = 1.35,
+        length_exponent: float = 1.15,
+        max_depth_clip_cm: float = 35.0
     ):
         self.H = frame_height
         self.W = frame_width
@@ -114,6 +130,9 @@ class MetricDepthCalibrator:
         self.fy = (frame_height / 2.0) / math.tan(math.radians(vfov_deg / 2.0))
         self.k_disp = k_disp
         self.profile_name = profile_name
+        self.depth_exponent = depth_exponent
+        self.length_exponent = length_exponent
+        self.max_depth_clip_cm = max_depth_clip_cm
 
     @classmethod
     def from_config(
@@ -131,7 +150,10 @@ class MetricDepthCalibrator:
             vfov_deg=cfg.get("vfov_deg", 60.0),
             horizon_ratio=cfg.get("horizon_ratio", 0.40),
             k_disp=cfg.get("k_disp", 0.082),
-            profile_name=cfg.get("profile_name", "sedan_dashcam")
+            profile_name=cfg.get("profile_name", "sedan_dashcam"),
+            depth_exponent=cfg.get("depth_exponent", 1.35),
+            length_exponent=cfg.get("length_exponent", 1.15),
+            max_depth_clip_cm=cfg.get("max_depth_clip_cm", 35.0)
         )
 
     def disparity_to_depth_cm(self, raw_disparity_delta: float, box_bottom_y: int) -> float:
@@ -148,8 +170,8 @@ class MetricDepthCalibrator:
         Z_road_m = (self.H_cam * self.fy) / dy
 
         # Optical depth sensitivity scaling: dZ/ddisp ~ Z^2 / (f * baseline)
-        depth_cm = raw_disparity_delta * (Z_road_m ** 1.35) * self.k_disp
-        return float(np.clip(depth_cm, 0.0, 35.0))
+        depth_cm = raw_disparity_delta * (Z_road_m ** self.depth_exponent) * self.k_disp
+        return float(np.clip(depth_cm, 0.0, self.max_depth_clip_cm))
 
     def calculate_pothole_dimensions_cm(self, pw_px: int, ph_px: int, box_bottom_y: int):
         """
@@ -158,7 +180,7 @@ class MetricDepthCalibrator:
         dy = max(15.0, float(box_bottom_y - self.horizon_y))
         Z_road_m = (self.H_cam * self.fy) / dy
         width_cm = (float(pw_px) * Z_road_m / self.fy) * 100.0
-        length_cm = (float(ph_px) * (Z_road_m ** 1.15) / self.fy) * 100.0
+        length_cm = (float(ph_px) * (Z_road_m ** self.length_exponent) / self.fy) * 100.0
         return float(np.clip(width_cm, 5.0, 250.0)), float(np.clip(length_cm, 5.0, 250.0))
 
 
@@ -495,7 +517,10 @@ class RoadVisionPipeline:
             vfov_deg=cfg.get("vfov_deg", self.vfov),
             horizon_ratio=cfg.get("horizon_ratio", self.horizon_ratio),
             k_disp=cfg.get("k_disp", self.k_disp),
-            profile_name=cfg.get("profile_name", prof)
+            profile_name=cfg.get("profile_name", prof),
+            depth_exponent=cfg.get("depth_exponent", 1.35),
+            length_exponent=cfg.get("length_exponent", 1.15),
+            max_depth_clip_cm=cfg.get("max_depth_clip_cm", 35.0)
         )
 
         # Auto-detect companion SRT/GPS file if present
@@ -510,7 +535,9 @@ class RoadVisionPipeline:
             (W, H)
         )
 
-        HORIZON_Y = int(H * 0.15)  # Permissive horizon cutoff to capture road hazards at distance
+        # Configurable horizon cutoff ratio to ignore sky and non-road upper region
+        horizon_cutoff = cfg.get("horizon_cutoff_ratio", 0.15)
+        HORIZON_Y = int(H * horizon_cutoff)
         base_dir = os.path.dirname(os.path.abspath(__file__))
         prod_tracker = os.path.join(base_dir, "road_tracker.yaml")
         tracker_cfg = prod_tracker if os.path.exists(prod_tracker) else ("road_tracker.yaml" if os.path.exists("road_tracker.yaml") else "bytetrack.yaml")

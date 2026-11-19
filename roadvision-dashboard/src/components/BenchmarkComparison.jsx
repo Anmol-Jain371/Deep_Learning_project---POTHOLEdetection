@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Scale, Zap, HardDrive, Cpu, ShieldAlert, CheckCircle2,
   AlertTriangle, ArrowRight, Gauge, Layers, Info
 } from 'lucide-react';
 
-const benchmarkData = {
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
+const defaultBenchmarkData = {
   yolo: {
     name: 'YOLOv8s',
     paradigm: 'One-Stage (Single-Shot)',
@@ -16,6 +18,7 @@ const benchmarkData = {
     params: '11.13 M',
     size: '5.96 MB',
     coverage: '100.0%',
+    detections: '158 confident detections',
     status: 'PRODUCTION (84.7% mAP50)',
     statusType: 'success',
     color: '#10b981',
@@ -40,6 +43,7 @@ const benchmarkData = {
     params: '43.26 M',
     size: '329.58 MB',
     coverage: '100.0%',
+    detections: '235 dense proposals',
     status: 'BASELINE REFERENCE',
     statusType: 'warning',
     color: '#f59e0b',
@@ -59,6 +63,46 @@ const benchmarkData = {
 
 export default function BenchmarkComparison() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [benchmarkData, setBenchmarkData] = useState(defaultBenchmarkData);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchDynamicBenchmark() {
+      try {
+        const res = await fetch(`${API_BASE}/api/benchmark`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && data.yolov8s && isMounted) {
+          setBenchmarkData(prev => ({
+            yolo: {
+              ...prev.yolo,
+              latency: `${data.yolov8s.avg_latency_ms ? data.yolov8s.avg_latency_ms.toFixed(1) : '37.8'} ms`,
+              fps: `${data.yolov8s.fps ? data.yolov8s.fps.toFixed(1) : '26.5'} FPS`,
+              fpsVal: data.yolov8s.fps || 26.45,
+              params: `${data.yolov8s.params_m ? data.yolov8s.params_m.toFixed(2) : '11.13'} M`,
+              size: `${data.yolov8s.weights_size_mb ? data.yolov8s.weights_size_mb.toFixed(2) : '5.96'} MB`,
+              coverage: `${data.yolov8s.coverage_pct ? data.yolov8s.coverage_pct.toFixed(1) : '100.0'}%`,
+              detections: `${data.yolov8s.total_detections || 158} confident detections`
+            },
+            rcnn: {
+              ...prev.rcnn,
+              latency: `${data.faster_rcnn?.avg_latency_ms ? data.faster_rcnn.avg_latency_ms.toFixed(1) : '256.5'} ms`,
+              fps: `${data.faster_rcnn?.fps ? data.faster_rcnn.fps.toFixed(2) : '3.90'} FPS`,
+              fpsVal: data.faster_rcnn?.fps || 3.90,
+              params: `${data.faster_rcnn?.params_m ? data.faster_rcnn.params_m.toFixed(2) : '43.26'} M`,
+              size: `${data.faster_rcnn?.weights_size_mb ? data.faster_rcnn.weights_size_mb.toFixed(2) : '329.58'} MB`,
+              coverage: `${data.faster_rcnn?.coverage_pct ? data.faster_rcnn.coverage_pct.toFixed(1) : '100.0'}%`,
+              detections: `${data.faster_rcnn?.total_detections || 235} dense proposals`
+            }
+          }));
+        }
+      } catch (err) {
+        // Fall back gracefully to preset benchmark metrics
+      }
+    }
+    fetchDynamicBenchmark();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <section className="benchmark-section" id="benchmark-comparison">
@@ -203,38 +247,38 @@ export default function BenchmarkComparison() {
                 </tr>
                 <tr>
                   <td className="metric-name">Inference Latency</td>
-                  <td className="metric-val highlight text-emerald font-mono">37.80 ms</td>
-                  <td className="metric-val text-rose font-mono">256.55 ms</td>
-                  <td className="metric-desc">YOLOv8s is <strong>6.8× faster</strong> per frame</td>
+                  <td className="metric-val highlight text-emerald font-mono">{benchmarkData.yolo.latency}</td>
+                  <td className="metric-val text-rose font-mono">{benchmarkData.rcnn.latency}</td>
+                  <td className="metric-desc">YOLOv8s is <strong>{(parseFloat(benchmarkData.rcnn.latency) / parseFloat(benchmarkData.yolo.latency)).toFixed(1)}× faster</strong> per frame</td>
                 </tr>
                 <tr>
                   <td className="metric-name">Inference Speed (FPS)</td>
-                  <td className="metric-val highlight text-emerald font-mono">26.45 FPS</td>
-                  <td className="metric-val text-rose font-mono">3.90 FPS</td>
+                  <td className="metric-val highlight text-emerald font-mono">{benchmarkData.yolo.fps}</td>
+                  <td className="metric-val text-rose font-mono">{benchmarkData.rcnn.fps}</td>
                   <td className="metric-desc">Critical threshold for 25–30 FPS automotive video feeds</td>
                 </tr>
                 <tr>
                   <td className="metric-name">Parameter Count</td>
-                  <td className="metric-val highlight font-mono">11.13 Million</td>
-                  <td className="metric-val font-mono">43.26 Million</td>
+                  <td className="metric-val highlight font-mono">{benchmarkData.yolo.params}</td>
+                  <td className="metric-val font-mono">{benchmarkData.rcnn.params}</td>
                   <td className="metric-desc">3.9× parameter reduction; lower thermal & power draw</td>
                 </tr>
                 <tr>
                   <td className="metric-name">Checkpoint File Size</td>
-                  <td className="metric-val highlight font-mono">5.96 MB</td>
-                  <td className="metric-val font-mono">329.58 MB</td>
+                  <td className="metric-val highlight font-mono">{benchmarkData.yolo.size}</td>
+                  <td className="metric-val font-mono">{benchmarkData.rcnn.size}</td>
                   <td className="metric-desc">55× memory footprint savings on onboard storage</td>
                 </tr>
                 <tr>
                   <td className="metric-name">Detection Coverage %</td>
-                  <td className="metric-val highlight font-mono">100.0% (50/50 frames)</td>
-                  <td className="metric-val font-mono">100.0% (50/50 frames)</td>
+                  <td className="metric-val highlight font-mono">{benchmarkData.yolo.coverage}</td>
+                  <td className="metric-val font-mono">{benchmarkData.rcnn.coverage}</td>
                   <td className="metric-desc">Both architectures successfully localized hazard zones</td>
                 </tr>
                 <tr>
                   <td className="metric-name">Raw Defect Proposals</td>
-                  <td className="metric-val highlight font-mono">158 confident detections</td>
-                  <td className="metric-val font-mono">235 dense proposals</td>
+                  <td className="metric-val highlight font-mono">{benchmarkData.yolo.detections}</td>
+                  <td className="metric-val font-mono">{benchmarkData.rcnn.detections}</td>
                   <td className="metric-desc">Higher defect sensitivity with clean spatial non-redundancy</td>
                 </tr>
                 <tr>
