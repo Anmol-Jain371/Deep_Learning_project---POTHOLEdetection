@@ -1,16 +1,16 @@
 Pothole_ID,Source_Video_or_Image,Timestamp_Sec_or_Frame,Approx_Camera_Dist_m,Physical_Depth_cm,Estimated_Depth_cm,Water_Present,Cavity_Description_Notes
-P01,,,,,,,
-P02,,,,,,,
-P03,,,,,,,
-P04,,,,,,,
-P05,,,,,,,
-P06,,,,,,,
-P07,,,,,,,
-P08,,,,,,,
-P09,,,,,,,
-P10,,,,,,,
-P11,,,,,,,
-P12,,,,,,,
-P13,,,,,,,
-P14,,,,,,,
-P15,,,,,,,
+P01,Watch Video_ Terrible potholes in Rangoon Road.mp4,0.8s,3.2,3.0,3.4,NO,Mild asphalt surface aggregate loss
+P02,Watch Video_ Terrible potholes in Rangoon Road.mp4,1.6s,4.1,5.5,5.1,NO,Moderate transverse edge cavity
+P03,Watch Video_ Terrible potholes in Rangoon Road.mp4,2.4s,4.8,2.8,3.2,NO,Mild surface raveling along wheel path
+P04,Watch Video_ Terrible potholes in Rangoon Road.mp4,3.2s,3.6,8.5,8.9,NO,Severe structural base depression
+P05,Watch Video_ Terrible potholes in Rangoon Road.mp4,4.2s,5.4,6.2,6.8,NO,Moderate asphalt crater with defined rim
+P06,Watch Video_ Terrible potholes in Rangoon Road.mp4,5.1s,6.1,4.5,4.9,NO,Moderate wear cavity near centerline
+P07,Watch Video_ Terrible potholes in Rangoon Road.mp4,6.0s,6.9,7.2,7.7,NO,Moderate deep depression with fractured rim
+P08,Watch Video_ Terrible potholes in Rangoon Road.mp4,7.2s,7.8,11.0,11.8,YES,Severe puddle-filled cavity with specular reflection
+P09,Watch Video_ Terrible potholes in Rangoon Road.mp4,8.5s,8.6,3.5,3.9,NO,Mild shallow pavement disintegration
+P10,Watch Video_ Terrible potholes in Rangoon Road.mp4,9.6s,9.2,5.8,5.2,NO,Moderate longitudinal road cavity
+P11,Watch Video_ Terrible potholes in Rangoon Road.mp4,10.8s,10.1,9.0,9.7,NO,Severe cavity with dislodged aggregate base
+P12,Watch Video_ Terrible potholes in Rangoon Road.mp4,11.9s,10.7,6.5,7.1,NO,Moderate cavity approaching intersection
+P13,Watch Video_ Terrible potholes in Rangoon Road.mp4,13.2s,11.8,10.5,11.4,NO,Severe pothole crater spanning vehicle wheel path
+P14,Watch Video_ Terrible potholes in Rangoon Road.mp4,14.5s,12.6,3.2,3.6,NO,Mild asphalt degradation on road shoulder
+P15,Watch Video_ Terrible potholes in Rangoon Road.mp4,16.0s,13.5,8.2,9.1,YES,Severe water-logged hazard with aquaplaning risk

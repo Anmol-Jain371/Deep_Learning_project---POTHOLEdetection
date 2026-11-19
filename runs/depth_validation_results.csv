@@ -1,0 +1,16 @@
+id,distance_m,physical_cm,estimated_cm,water,abs_error_cm,signed_error_cm,relative_error_pct,true_category,pred_category,category_match
+P01,3.2,3.0,3.4,False,0.4,0.4,13.3,MILD,MILD,True
+P02,4.1,5.5,5.1,False,0.4,-0.4,7.3,MODERATE,MODERATE,True
+P03,4.8,2.8,3.2,False,0.4,0.4,14.3,MILD,MILD,True
+P04,3.6,8.5,8.9,False,0.4,0.4,4.7,SEVERE,SEVERE,True
+P05,5.4,6.2,6.8,False,0.6,0.6,9.7,MODERATE,MODERATE,True
+P06,6.1,4.5,4.9,False,0.4,0.4,8.9,MODERATE,MODERATE,True
+P07,6.9,7.2,7.7,False,0.5,0.5,6.9,MODERATE,MODERATE,True
+P08,7.8,11.0,11.8,True,0.8,0.8,7.3,SEVERE,SEVERE,True
+P09,8.6,3.5,3.9,False,0.4,0.4,11.4,MILD,MILD,True
+P10,9.2,5.8,5.2,False,0.6,-0.6,10.3,MODERATE,MODERATE,True
+P11,10.1,9.0,9.7,False,0.7,0.7,7.8,SEVERE,SEVERE,True
+P12,10.7,6.5,7.1,False,0.6,0.6,9.2,MODERATE,MODERATE,True
+P13,11.8,10.5,11.4,False,0.9,0.9,8.6,SEVERE,SEVERE,True
+P14,12.6,3.2,3.6,False,0.4,0.4,12.5,MILD,MILD,True
+P15,13.5,8.2,9.1,True,0.9,0.9,11.0,SEVERE,SEVERE,True
