@@ -1,0 +1,5 @@
+public/outputs/*
+!public/outputs/.gitkeep
+node_modules
+dist
+.git
