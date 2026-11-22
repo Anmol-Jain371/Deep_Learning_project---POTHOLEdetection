@@ -365,17 +365,20 @@ class DashcamKinematicGPS:
 
 
 # ======================================================================================
-# 5. TEMPORAL EXPONENTIAL MOVING AVERAGE (EMA) FILTER
+# 5. TEMPORAL OUTLIER-FILTERED STATISTICAL SMOOTHER & VOLUME ESTIMATOR
 # ======================================================================================
 class TemporalEMASmoother:
     """
     Filters out per-frame depth noise and camera pitch jitter across persistent track IDs.
-    Applies dynamic proximity weighting: as a hazard nears the bottom of the frame
-    (higher spatial resolution), alpha increases to lock in the true metric measurement.
+    Combines moving median outlier suppression with proximity-weighted EMA.
+    Tracks physical cavity 3D geometry (depth, width, length), volumetric displacement (liters),
+    and required repair asphalt mass (kg) across temporal observations.
     """
 
-    def __init__(self):
+    def __init__(self, history_len: int = 10):
+        self.history_len = history_len
         self.records: Dict[int, Dict[str, Any]] = {}
+        self.history: Dict[int, Dict[str, List[float]]] = {}
 
     def update(
         self,
@@ -384,13 +387,27 @@ class TemporalEMASmoother:
         y2: int,
         is_water: bool,
         confidence: float,
+        width_cm: float = 30.0,
+        length_cm: float = 25.0,
         timestamp: float = 0.0,
         lat: Optional[float] = None,
         lon: Optional[float] = None
     ) -> Dict[str, Any]:
         if track_id not in self.records:
+            self.history[track_id] = {
+                "depths": [calibrated_cm],
+                "widths": [width_cm],
+                "lengths": [length_cm]
+            }
+            vol_l = (math.pi / 6.0) * width_cm * length_cm * calibrated_cm * 1e-3
+            asphalt_kg = vol_l * 2.3  # Standard density of compacted hot-mix asphalt: ~2.3 t/m^3 (kg/L)
+
             self.records[track_id] = {
                 "smooth_cm": calibrated_cm,
+                "smooth_width_cm": width_cm,
+                "smooth_length_cm": length_cm,
+                "volume_liters": round(vol_l, 2),
+                "asphalt_kg": round(asphalt_kg, 1),
                 "best_y2": y2,
                 "observations": 1,
                 "water_votes": 1 if is_water else 0,
@@ -403,13 +420,36 @@ class TemporalEMASmoother:
             }
         else:
             rec = self.records[track_id]
+            hist = self.history[track_id]
             rec["observations"] += 1
             if is_water:
                 rec["water_votes"] += 1
 
-            # Higher weight when closer to hood (optical resolution is maximum)
-            alpha = 0.40 if y2 >= rec["best_y2"] else 0.15
-            rec["smooth_cm"] = alpha * calibrated_cm + (1.0 - alpha) * rec["smooth_cm"]
+            # Update rolling observation history
+            hist["depths"].append(calibrated_cm)
+            hist["widths"].append(width_cm)
+            hist["lengths"].append(length_cm)
+            if len(hist["depths"]) > self.history_len:
+                hist["depths"].pop(0)
+                hist["widths"].pop(0)
+                hist["lengths"].pop(0)
+
+            # Robust statistical aggregation: Moving Median suppresses pitch vibration outliers
+            median_depth = float(np.median(hist["depths"]))
+            median_width = float(np.median(hist["widths"]))
+            median_length = float(np.median(hist["lengths"]))
+
+            # Proximity weighting: optical resolution peaks as hazard approaches vehicle hood (high y2)
+            alpha = 0.45 if y2 >= rec["best_y2"] else 0.20
+            rec["smooth_cm"] = alpha * calibrated_cm + (1.0 - alpha) * median_depth
+            rec["smooth_width_cm"] = alpha * width_cm + (1.0 - alpha) * median_width
+            rec["smooth_length_cm"] = alpha * length_cm + (1.0 - alpha) * median_length
+
+            # Re-estimate volumetric cavity capacity & material requirement
+            vol_l = (math.pi / 6.0) * rec["smooth_width_cm"] * rec["smooth_length_cm"] * rec["smooth_cm"] * 1e-3
+            rec["volume_liters"] = round(max(0.05, vol_l), 2)
+            rec["asphalt_kg"] = round(rec["volume_liters"] * 2.3, 1)
+
             rec["confidence"] = max(rec["confidence"], confidence)
 
             if y2 > rec["best_y2"]:
@@ -418,7 +458,7 @@ class TemporalEMASmoother:
                 rec["lat"] = lat
                 rec["lon"] = lon
 
-        # Severity Classification
+        # Severity Classification according to municipal road defect safety guidelines
         rec = self.records[track_id]
         is_aquaplane = (rec["water_votes"] / max(1, rec["observations"])) > 0.30
         depth = rec["smooth_cm"]
@@ -543,6 +583,7 @@ class RoadVisionPipeline:
         tracker_cfg = prod_tracker if os.path.exists(prod_tracker) else ("road_tracker.yaml" if os.path.exists("road_tracker.yaml") else "bytetrack.yaml")
         self.display_id_map: Dict[int, int] = {}
         pothole_gps_registry: Dict[int, Dict[str, Any]] = {}
+        self.smoother = TemporalEMASmoother()  # Fresh observation registry for each survey video
         frame_idx = 0
         frames_with_detections = 0
         total_raw_detections = 0
@@ -596,21 +637,32 @@ class RoadVisionPipeline:
                             verbose=False
                         )
 
-            has_hazards = (
+            # Candidate Gating: only activate 3D depth if bounding boxes exist below horizon
+            boxes_below_horizon = []
+            if (
                 results is not None
                 and len(results) > 0
                 and results[0].boxes is not None
                 and len(results[0].boxes) > 0
-            )
+            ):
+                all_raw_boxes = results[0].boxes.xyxy.cpu().numpy()
+                boxes_below_horizon = [b for b in all_raw_boxes if b[3] > HORIZON_Y]
 
-            # --- B. Conditional 3D Depth Gating (4x Speedup) ---
+            has_hazards = len(boxes_below_horizon) > 0
+
+            # --- B. Conditional 3D Depth Gating & FP16 Acceleration (4x Speedup) ---
             depth_map = None
             if has_hazards:
                 input_batch = self.depth_transform(frame).to(self.device)
                 with torch.no_grad():
-                    depth_pred = self.midas(input_batch)
+                    if self.device == "cuda":
+                        with torch.amp.autocast("cuda"):
+                            depth_pred = self.midas(input_batch)
+                    else:
+                        depth_pred = self.midas(input_batch)
+
                     depth_pred = torch.nn.functional.interpolate(
-                        depth_pred.unsqueeze(1),
+                        depth_pred.unsqueeze(1).float(),
                         size=(H, W),
                         mode="bilinear",
                         align_corners=False
@@ -671,9 +723,10 @@ class RoadVisionPipeline:
                     # Geotag coordinate registration
                     lat, lon, t_sec = self.gps_engine.get_position(frame_idx, fps)
 
-                    # --- F. Temporal EMA Smoothing ---
+                    # --- F. Temporal Outlier-Filtered Smoothing & Volumetric Fusion ---
                     hazard_info = self.smoother.update(
                         raw_tid, calibrated_cm, y2, is_water, float(conf),
+                        width_cm=p_width_cm, length_cm=p_len_cm,
                         timestamp=t_sec, lat=lat, lon=lon
                     )
 
@@ -689,6 +742,9 @@ class RoadVisionPipeline:
                     sev = hazard_info["severity"]
                     color = hazard_info["color"]
                     depth_est = hazard_info["smooth_cm"]
+                    w_est = hazard_info["smooth_width_cm"]
+                    l_est = hazard_info["smooth_length_cm"]
+                    vol_est = hazard_info["volume_liters"]
 
                     if "SEVERE" in sev:
                         severe_in_view += 1
@@ -698,7 +754,7 @@ class RoadVisionPipeline:
                     # Bounding Box + HUD Tag with Sequential ID & Physical Dimensions
                     thickness = 3 if "SEVERE" in sev else 2
                     cv2.rectangle(frame, (x1, y1), (x2, y2), color, thickness)
-                    tag = f"#{display_id} {sev} | {p_width_cm:.0f}cm W x {depth_est:.1f}cm D ({conf:.2f})"
+                    tag = f"#{display_id} {sev} | {w_est:.0f}x{l_est:.0f}cm | {depth_est:.1f}cm D ({conf:.2f})"
                     cv2.rectangle(frame, (x1, max(0, y1 - 24)), (x1 + len(tag) * 9, max(24, y1)), color, -1)
                     cv2.putText(
                         frame, tag, (x1 + 4, max(18, y1 - 6)),
@@ -813,7 +869,8 @@ class RoadVisionPipeline:
             csv_writer = csv.writer(f)
             csv_writer.writerow([
                 "Pothole_ID", "Timestamp_Sec", "Latitude", "Longitude",
-                "Severity", "Estimated_Depth_cm", "Water_Hazard", "Confidence", "Municipal_Status"
+                "Severity", "Estimated_Depth_cm", "Width_cm", "Length_cm",
+                "Volume_Liters", "Asphalt_kg", "Water_Hazard", "Confidence", "Municipal_Status"
             ])
 
             for tid, data in verified_records.items():
@@ -825,6 +882,10 @@ class RoadVisionPipeline:
                 })
                 sev = data["severity"]
                 depth_cm = round(data["smooth_cm"], 1)
+                width_cm = round(data.get("smooth_width_cm", 30.0), 1)
+                length_cm = round(data.get("smooth_length_cm", 25.0), 1)
+                vol_liters = round(data.get("volume_liters", 1.0), 2)
+                asphalt_kg = round(data.get("asphalt_kg", 2.3), 1)
                 is_wat = "YES" if data["water_votes"] > 0 else "NO"
                 conf = round(data["confidence"], 2)
 
@@ -849,6 +910,10 @@ class RoadVisionPipeline:
                     csv_lon,
                     sev,
                     depth_cm,
+                    width_cm,
+                    length_cm,
+                    vol_liters,
+                    asphalt_kg,
                     is_wat,
                     conf,
                     status

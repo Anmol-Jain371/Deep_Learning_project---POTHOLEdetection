@@ -15,9 +15,9 @@ export default function AuditTable({ data = [] }) {
   });
 
   const exportCSV = () => {
-    const headers = 'Pothole_ID,Timestamp_Sec,Severity,Estimated_Depth_cm,Water_Hazard,Confidence,Municipal_Status\n';
+    const headers = 'Pothole_ID,Timestamp_Sec,Severity,Estimated_Depth_cm,Width_cm,Length_cm,Volume_Liters,Asphalt_kg,Water_Hazard,Confidence,Municipal_Status\n';
     const rows = safeData.map(p => {
-      return `${p.id},${p.timestamp || 0},${p.severity},${p.depth_cm},${p.water ? 'YES' : 'NO'},${p.confidence},"${p.status}"`;
+      return `${p.id},${p.timestamp || 0},${p.severity},${p.depth_cm},${p.width_cm || ''},${p.length_cm || ''},${p.volume_liters || ''},${p.asphalt_kg || ''},${p.water ? 'YES' : 'NO'},${p.confidence},"${p.status}"`;
     }).join('\n');
     const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -126,7 +126,12 @@ export default function AuditTable({ data = [] }) {
                     </span>
                   </td>
                   <td className="cell-depth">
-                    {p.depth_cm} cm
+                    <strong>{p.depth_cm} cm</strong>
+                    {p.width_cm && p.length_cm ? (
+                      <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>
+                        {p.width_cm} × {p.length_cm} cm
+                      </div>
+                    ) : null}
                   </td>
                   <td>
                     {p.water ? (
