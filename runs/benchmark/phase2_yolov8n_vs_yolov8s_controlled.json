@@ -1,0 +1,450 @@
+{
+  "experiment": "Phase 2 Controlled Architecture Comparison: YOLOv8n vs YOLOv8s",
+  "dataset_manifest_version": "dataset_unified_v1_frozen",
+  "dataset_manifest_sha256": "125384470fb2e9636349fb6de75faec998043248884d5a2b352dc1380fbaa8d7",
+  "data_yaml_sha256": "01e597ae90bf340b63f347bc4006d214895d5f957e214de1419494af41d01fd0",
+  "external_yaml_sha256": "71b8ebb5f466af95966f939e8d6a7ba691573b7162622fdd07b9468dc647349a",
+  "shared_hyperparameters": {
+    "epochs": 100,
+    "imgsz": 640,
+    "optimizer": "SGD",
+    "lr0": 0.01,
+    "cos_lr": true,
+    "close_mosaic": 10,
+    "patience": 30,
+    "amp": true,
+    "workers": 2,
+    "seed": 42,
+    "device": 0
+  },
+  "models": {
+    "yolov8n_sgd_100e": {
+      "run_name": "pothole_unified_yolov8n_100e_sgd",
+      "weights_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8n_100e_sgd\\weights\\best.pt",
+      "weights_sha256": "ddd6a5be27ac21f3ef17ffe17fbac5ea901cf2a7f7706956c5e551a669490343",
+      "weights_size_mb": 6.21,
+      "parameters": 3138003,
+      "parameters_m": 3.138,
+      "training_telemetry": {
+        "run_name": "pothole_unified_yolov8n_100e_sgd",
+        "base_weights": "yolov8n.pt",
+        "base_weights_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+        "used_batch_size": 8,
+        "training_duration_sec": 2078.68,
+        "training_duration_min": 34.64,
+        "peak_gpu_allocated_mb": 1050.37,
+        "peak_gpu_reserved_mb": 1396.0,
+        "total_gpu_vram_mb": 4095.5
+      },
+      "training_curves": {
+        "epochs_completed": 89,
+        "best_epoch_by_fitness": 59,
+        "best_epoch_by_map50": 59,
+        "best_val_at_fitness_epoch": {
+          "precision": 0.4819,
+          "recall": 0.3762,
+          "mAP50": 0.379,
+          "mAP50_95": 0.1278,
+          "train_box_loss": 1.7698,
+          "train_cls_loss": 1.4885,
+          "train_dfl_loss": 1.4654,
+          "val_box_loss": 2.2551,
+          "val_cls_loss": 1.9823,
+          "val_dfl_loss": 1.8844
+        },
+        "final_epoch_metrics": {
+          "epoch": 89,
+          "precision": 0.4151,
+          "recall": 0.4148,
+          "mAP50": 0.3568,
+          "mAP50_95": 0.115,
+          "train_box_loss": 1.6131,
+          "train_cls_loss": 1.2122,
+          "train_dfl_loss": 1.3478,
+          "val_box_loss": 2.4359,
+          "val_cls_loss": 2.0148,
+          "val_dfl_loss": 1.9869,
+          "lr_final": 0.000447606
+        }
+      },
+      "predict_latency_test_153": {
+        "no_tta_ms": 15.74,
+        "no_tta_fps": 63.54,
+        "tta_ms": 38.53,
+        "tta_fps": 25.95
+      },
+      "evaluations": {
+        "val_no_tta": {
+          "precision": 0.4876,
+          "recall": 0.3794,
+          "f1_score": 0.4267,
+          "mAP50": 0.3794,
+          "mAP50_95": 0.1287,
+          "speed_ms_per_img": {
+            "preprocess": 3.217,
+            "inference": 9.133,
+            "loss": 0.001,
+            "postprocess": 1.503
+          },
+          "total_latency_ms_per_img": 13.854,
+          "confusion_matrix": [
+            [
+              285.0,
+              13945.0
+            ],
+            [
+              26.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8n_100e_sgd_val_notta"
+        },
+        "val_tta": {
+          "precision": 0.4097,
+          "recall": 0.3955,
+          "f1_score": 0.4025,
+          "mAP50": 0.3465,
+          "mAP50_95": 0.1241,
+          "speed_ms_per_img": {
+            "preprocess": 3.346,
+            "inference": 18.778,
+            "loss": 0.001,
+            "postprocess": 1.186
+          },
+          "total_latency_ms_per_img": 23.311,
+          "confusion_matrix": [
+            [
+              293.0,
+              22412.0
+            ],
+            [
+              18.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8n_100e_sgd_val_tta"
+        },
+        "test_exploratory_no_tta": {
+          "precision": 0.5547,
+          "recall": 0.4969,
+          "f1_score": 0.5242,
+          "mAP50": 0.4865,
+          "mAP50_95": 0.196,
+          "speed_ms_per_img": {
+            "preprocess": 3.159,
+            "inference": 8.454,
+            "loss": 0.001,
+            "postprocess": 1.773
+          },
+          "total_latency_ms_per_img": 13.387,
+          "confusion_matrix": [
+            [
+              301.0,
+              13275.0
+            ],
+            [
+              21.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8n_100e_sgd_test_notta"
+        },
+        "test_exploratory_tta": {
+          "precision": 0.5339,
+          "recall": 0.4969,
+          "f1_score": 0.5147,
+          "mAP50": 0.4819,
+          "mAP50_95": 0.2102,
+          "speed_ms_per_img": {
+            "preprocess": 3.41,
+            "inference": 19.141,
+            "loss": 0.001,
+            "postprocess": 1.215
+          },
+          "total_latency_ms_per_img": 23.767,
+          "confusion_matrix": [
+            [
+              310.0,
+              20964.0
+            ],
+            [
+              12.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8n_100e_sgd_test_tta"
+        },
+        "external_rangoon_exploratory_no_tta": {
+          "precision": 0.4173,
+          "recall": 0.2895,
+          "f1_score": 0.3418,
+          "mAP50": 0.2359,
+          "mAP50_95": 0.0756,
+          "speed_ms_per_img": {
+            "preprocess": 2.126,
+            "inference": 15.404,
+            "loss": 0.001,
+            "postprocess": 1.711
+          },
+          "total_latency_ms_per_img": 19.242,
+          "confusion_matrix": [
+            [
+              51.0,
+              1309.0
+            ],
+            [
+              25.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8n_100e_sgd_ext_notta"
+        },
+        "external_rangoon_exploratory_tta": {
+          "precision": 0.4813,
+          "recall": 0.4211,
+          "f1_score": 0.4492,
+          "mAP50": 0.3488,
+          "mAP50_95": 0.1012,
+          "speed_ms_per_img": {
+            "preprocess": 2.115,
+            "inference": 18.668,
+            "loss": 0.001,
+            "postprocess": 0.94
+          },
+          "total_latency_ms_per_img": 21.723,
+          "confusion_matrix": [
+            [
+              60.0,
+              2037.0
+            ],
+            [
+              16.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8n_100e_sgd_ext_tta"
+        }
+      },
+      "training_artifacts": {
+        "results_csv": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8n_100e_sgd\\results.csv",
+        "results_png": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8n_100e_sgd\\results.png",
+        "confusion_matrix_png": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8n_100e_sgd\\confusion_matrix.png",
+        "pr_curve_png": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8n_100e_sgd\\BoxPR_curve.png"
+      }
+    },
+    "yolov8s_sgd_100e": {
+      "run_name": "pothole_unified_yolov8s_100e",
+      "weights_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8s_100e\\weights\\best.pt",
+      "weights_sha256": "038863b8542ceb8d9e4d3e9eb28612abed64ada940921f3db7c0b8742281309c",
+      "weights_size_mb": 21.48,
+      "parameters": 11135987,
+      "parameters_m": 11.136,
+      "training_telemetry": {
+        "run_name": "pothole_unified_yolov8s_100e",
+        "base_weights": "yolov8s.pt",
+        "base_weights_sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a",
+        "used_batch_size": 8,
+        "training_duration_sec": 3426.0,
+        "training_duration_min": 57.1,
+        "peak_gpu_allocated_mb": 1772.96,
+        "peak_gpu_reserved_mb": 2404.0,
+        "total_gpu_vram_mb": 4095.5
+      },
+      "training_curves": {
+        "epochs_completed": 87,
+        "best_epoch_by_fitness": 57,
+        "best_epoch_by_map50": 83,
+        "best_val_at_fitness_epoch": {
+          "precision": 0.5338,
+          "recall": 0.3826,
+          "mAP50": 0.3751,
+          "mAP50_95": 0.1331,
+          "train_box_loss": 1.6595,
+          "train_cls_loss": 1.2205,
+          "train_dfl_loss": 1.3931,
+          "val_box_loss": 2.3887,
+          "val_cls_loss": 1.9224,
+          "val_dfl_loss": 1.9929
+        },
+        "final_epoch_metrics": {
+          "epoch": 87,
+          "precision": 0.4834,
+          "recall": 0.447,
+          "mAP50": 0.384,
+          "mAP50_95": 0.1229,
+          "train_box_loss": 1.3156,
+          "train_cls_loss": 0.8718,
+          "train_dfl_loss": 1.1946,
+          "val_box_loss": 2.4668,
+          "val_cls_loss": 2.0037,
+          "val_dfl_loss": 2.0959,
+          "lr_final": 0.000571106
+        }
+      },
+      "predict_latency_test_153": {
+        "no_tta_ms": 22.88,
+        "no_tta_fps": 43.71,
+        "tta_ms": 50.01,
+        "tta_fps": 20.0
+      },
+      "evaluations": {
+        "val_no_tta": {
+          "precision": 0.5262,
+          "recall": 0.3762,
+          "f1_score": 0.4387,
+          "mAP50": 0.3646,
+          "mAP50_95": 0.1316,
+          "speed_ms_per_img": {
+            "preprocess": 3.61,
+            "inference": 16.961,
+            "loss": 0.001,
+            "postprocess": 1.374
+          },
+          "total_latency_ms_per_img": 21.947,
+          "confusion_matrix": [
+            [
+              266.0,
+              10112.0
+            ],
+            [
+              45.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8s_100e_val_notta"
+        },
+        "val_tta": {
+          "precision": 0.4354,
+          "recall": 0.3987,
+          "f1_score": 0.4162,
+          "mAP50": 0.3513,
+          "mAP50_95": 0.1298,
+          "speed_ms_per_img": {
+            "preprocess": 3.202,
+            "inference": 37.18,
+            "loss": 0.001,
+            "postprocess": 1.158
+          },
+          "total_latency_ms_per_img": 41.54,
+          "confusion_matrix": [
+            [
+              280.0,
+              16617.0
+            ],
+            [
+              31.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8s_100e_val_tta"
+        },
+        "test_exploratory_no_tta": {
+          "precision": 0.5658,
+          "recall": 0.4317,
+          "f1_score": 0.4897,
+          "mAP50": 0.4519,
+          "mAP50_95": 0.1785,
+          "speed_ms_per_img": {
+            "preprocess": 3.461,
+            "inference": 17.058,
+            "loss": 0.001,
+            "postprocess": 1.227
+          },
+          "total_latency_ms_per_img": 21.747,
+          "confusion_matrix": [
+            [
+              284.0,
+              9111.0
+            ],
+            [
+              38.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8s_100e_test_notta"
+        },
+        "test_exploratory_tta": {
+          "precision": 0.5509,
+          "recall": 0.4317,
+          "f1_score": 0.4841,
+          "mAP50": 0.4738,
+          "mAP50_95": 0.1917,
+          "speed_ms_per_img": {
+            "preprocess": 3.32,
+            "inference": 35.969,
+            "loss": 0.001,
+            "postprocess": 1.238
+          },
+          "total_latency_ms_per_img": 40.527,
+          "confusion_matrix": [
+            [
+              302.0,
+              15009.0
+            ],
+            [
+              20.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8s_100e_test_tta"
+        },
+        "external_rangoon_exploratory_no_tta": {
+          "precision": 0.4653,
+          "recall": 0.3421,
+          "f1_score": 0.3943,
+          "mAP50": 0.2758,
+          "mAP50_95": 0.0853,
+          "speed_ms_per_img": {
+            "preprocess": 1.864,
+            "inference": 15.17,
+            "loss": 0.001,
+            "postprocess": 1.36
+          },
+          "total_latency_ms_per_img": 18.394,
+          "confusion_matrix": [
+            [
+              59.0,
+              1720.0
+            ],
+            [
+              17.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8s_100e_ext_notta"
+        },
+        "external_rangoon_exploratory_tta": {
+          "precision": 0.46,
+          "recall": 0.3684,
+          "f1_score": 0.4092,
+          "mAP50": 0.3434,
+          "mAP50_95": 0.1071,
+          "speed_ms_per_img": {
+            "preprocess": 2.487,
+            "inference": 29.511,
+            "loss": 0.001,
+            "postprocess": 1.073
+          },
+          "total_latency_ms_per_img": 33.072,
+          "confusion_matrix": [
+            [
+              65.0,
+              2158.0
+            ],
+            [
+              11.0,
+              0.0
+            ]
+          ],
+          "eval_plots_dir": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase2_evals\\pothole_unified_yolov8s_100e_ext_tta"
+        }
+      },
+      "training_artifacts": {
+        "results_csv": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8s_100e\\results.csv",
+        "results_png": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8s_100e\\results.png",
+        "confusion_matrix_png": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8s_100e\\confusion_matrix.png",
+        "pr_curve_png": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\detect\\pothole_unified_yolov8s_100e\\BoxPR_curve.png"
+      }
+    }
+  }
+}

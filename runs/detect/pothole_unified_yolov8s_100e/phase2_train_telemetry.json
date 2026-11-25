@@ -1,0 +1,11 @@
+{
+  "run_name": "pothole_unified_yolov8s_100e",
+  "base_weights": "yolov8s.pt",
+  "base_weights_sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a",
+  "used_batch_size": 8,
+  "training_duration_sec": 3426.0,
+  "training_duration_min": 57.1,
+  "peak_gpu_allocated_mb": 1772.96,
+  "peak_gpu_reserved_mb": 2404.0,
+  "total_gpu_vram_mb": 4095.5
+}
