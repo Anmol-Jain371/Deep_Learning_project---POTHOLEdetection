@@ -1,0 +1,7 @@
+path: dataset_unified
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: pothole
+nc: 1

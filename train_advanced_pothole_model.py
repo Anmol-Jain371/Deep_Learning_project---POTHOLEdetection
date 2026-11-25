@@ -26,7 +26,12 @@ def main():
     parser.add_argument("--device", type=str, default="0" if torch.cuda.is_available() else "cpu", help="CUDA device index or 'cpu'")
     parser.add_argument("--name", type=str, default="pothole_combined_v2_50e", help="Run name (output saved to runs/detect/<name>)")
     parser.add_argument("--project", type=str, default="runs/detect", help="Project output folder")
-    parser.add_argument("--patience", type=int, default=25, help="Early stopping patience")
+    parser.add_argument("--patience", type=int, default=30, help="Early stopping patience")
+    parser.add_argument("--cos-lr", action="store_true", help="Enable cosine learning rate scheduler for smooth convergence")
+    parser.add_argument("--lr0", type=float, default=0.002, help="Initial learning rate")
+    parser.add_argument("--lrf", type=float, default=0.01, help="Final learning rate fraction")
+    parser.add_argument("--workers", type=int, default=4, help="DataLoader worker processes")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     args = parser.parse_args()
 
     print("=" * 70)
@@ -34,7 +39,8 @@ def main():
     print(f"Base Weights : {args.model}")
     print(f"Dataset Config: {args.data}")
     print(f"Target Res   : {args.imgsz}x{args.imgsz} (High-Definition Multi-Scale)")
-    print(f"Epochs       : {args.epochs}")
+    print(f"Epochs       : {args.epochs} (cos_lr={args.cos_lr}, patience={args.patience})")
+    print(f"Batch / LR0  : {args.batch} / {args.lr0}")
     print(f"Device       : {args.device}")
     print("=" * 70)
 
@@ -57,9 +63,13 @@ def main():
         device=args.device,
         project=args.project,
         name=args.name,
+        workers=args.workers,
+        seed=args.seed,
+        amp=True,
+        cos_lr=args.cos_lr,  # Smooth cosine decay toward minimum LR
         optimizer="AdamW",   # Adaptive learning with decoupled weight decay
-        lr0=0.002,           # Gentle fine-tuning learning rate (prevents weight shock)
-        lrf=0.01,            # Final learning rate fraction (0.002 * 0.01)
+        lr0=args.lr0,        # Gentle fine-tuning learning rate (prevents weight shock)
+        lrf=args.lrf,        # Final learning rate fraction
         box=8.5,             # Enhanced bounding-box regression loss for irregular cavity boundaries
         dfl=1.8,             # Distribution Focal Loss weight for crisp border alignment
         close_mosaic=10,     # Disables mosaic during the final 10 epochs
@@ -81,6 +91,24 @@ def main():
     if os.path.exists(best_weight):
         print(f"Best Upgraded Weights Saved to: {best_weight}")
         print("Note: pothole_best.pt remains untouched for baseline comparison.")
+
+        # Run strict evaluation on held-out test split if defined in data.yaml
+        try:
+            import yaml
+            with open(args.data, "r", encoding="utf-8") as df:
+                dcfg = yaml.safe_load(df)
+            if isinstance(dcfg, dict) and "test" in dcfg:
+                print("\n[EVAL] Evaluating best.pt on strictly held-out TEST split...")
+                best_model = YOLO(best_weight)
+                test_metrics = best_model.val(data=args.data, split="test", imgsz=args.imgsz, device=args.device)
+                print(
+                    f"[TEST] mAP50={test_metrics.box.map50:.4f}, "
+                    f"mAP50-95={test_metrics.box.map:.4f}, "
+                    f"Precision={test_metrics.box.mp:.4f}, "
+                    f"Recall={test_metrics.box.mr:.4f}"
+                )
+        except Exception as e:
+            print(f"[!] Post-training test split evaluation skipped: {e}")
 
 if __name__ == "__main__":
     main()
