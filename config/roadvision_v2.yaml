@@ -1,0 +1,125 @@
+# RoadVision AI 2.0 -- Unified Prototype Configuration
+# NOTE: Operating modes configure compute/scheduling/extraction pipelines ONLY.
+# They are NOT independently verified accuracy levels or metric cm calibrations.
+# Relative cavity scores represent uncalibrated inverse-depth residuals (null if invalid).
+
+version: "2.0.0-phase8a"
+legacy_reference:
+  engine: "roadvision_engine.py"
+  server: "server.py"
+  camera_params: "config/camera_params.json"
+  note: "Legacy V1 remains completely untouched in Phase 8A."
+
+detector:
+  model_id: "yolov8n_phase2_controlled"
+  checkpoint_path: "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt"
+  tracker_config: "road_tracker.yaml"
+  input_size: 640
+  conf_threshold: 0.25
+  iou_threshold: 0.50
+  horizon_cutoff_ratio: 0.15
+
+ransac:
+  sampling_mode: "stratified_quadrant"
+  max_ref_samples: 512
+  min_iters: 16
+  max_iters: 128
+  batch_size: 16
+  confidence: 0.99
+  enable_early_stop: true
+  seed: 42
+  min_ref_samples: 40
+  min_quadrant_samples: 5
+  min_populated_quadrants: 2
+  max_single_quadrant_frac: 0.80
+  min_annular_retention: 0.25
+  min_inlier_ratio: 0.45
+  min_positive_depress_frac: 0.35
+
+cache_temporal:
+  max_cache_age_sec: 0.45
+  max_invalid_stale_sec: 0.25
+  max_absence_reset_sec: 0.60
+  max_reuse_centroid_norm: 1.75
+  tau_sec: 0.16
+  rolling_window: 5
+  fixed_alpha: 0.35
+
+modes:
+  live:
+    description: "Detection + ByteTrack primary mode; depth disabled by default with optional candidate-gated MiDaS Small 256."
+    depth:
+      enabled: false
+      model_id: "midas_small"
+      input_size: 256
+      precision: "fp16_autocast"
+      checkpoint_path: null
+    cavity:
+      strategy: "full_box"
+      reject_water_patches: true
+    scheduler:
+      strategy: "B_candidate_gated"
+      fixed_interval_k: 3
+      refresh_interval_sec: 0.16
+      max_measurement_age_sec: 0.45
+      budget_target_ema_ms: 33.33
+      budget_min_gap_sec: 0.08
+    diagnostics:
+      enable_horizon_proxy: false
+      visualize_annular: false
+      visualize_ransac_inliers: false
+      visualize_residual_heatmap: false
+      show_rejection_reasons: false
+      show_timing_hud: true
+
+  balanced:
+    description: "YOLOv8n + ByteTrack + Depth Anything V2 Small 336 (explicit experimental FP16 weights option) + budget/track-aware scheduling."
+    depth:
+      enabled: true
+      model_id: "depth_anything_v2_small"
+      input_size: 336
+      precision: "fp16_weights"
+      checkpoint_path: null
+    cavity:
+      strategy: "elliptical_core"
+      reject_water_patches: true
+    scheduler:
+      strategy: "E_budget_aware"
+      fixed_interval_k: 3
+      refresh_interval_sec: 0.16
+      max_measurement_age_sec: 0.45
+      budget_target_ema_ms: 38.0
+      budget_min_gap_sec: 0.08
+    diagnostics:
+      enable_horizon_proxy: false
+      visualize_annular: false
+      visualize_ransac_inliers: false
+      visualize_residual_heatmap: false
+      show_rejection_reasons: true
+      show_timing_hud: true
+
+  survey:
+    description: "Offline/high-detail inspection mode: DAv2 Small 518 + candidate-gated/always-on depth + detailed reference & research diagnostics."
+    depth:
+      enabled: true
+      model_id: "depth_anything_v2_small"
+      input_size: 518
+      precision: "fp16_weights"
+      checkpoint_path: null
+    cavity:
+      strategy: "elliptical_core"
+      reject_water_patches: true
+    scheduler:
+      strategy: "B_candidate_gated"
+      fixed_interval_k: 1
+      refresh_interval_sec: 0.0
+      max_measurement_age_sec: 0.45
+      budget_target_ema_ms: 1000.0
+      budget_min_gap_sec: 0.0
+    diagnostics:
+      enable_horizon_proxy: false
+      visualize_annular: true
+      visualize_ransac_inliers: true
+      visualize_residual_heatmap: false
+      show_rejection_reasons: true
+      show_timing_hud: true

@@ -1,0 +1,408 @@
+{
+  "frame_count": 36,
+  "total_boxes": 98,
+  "results": {
+    "266": {
+      "input_size": 266,
+      "network_hw_sample0": [
+        266,
+        476
+      ],
+      "modes": {
+        "fp32": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 17.394,
+            "median_ms": 15.87,
+            "p95_ms": 24.229
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 30.591,
+            "median_ms": 30.486,
+            "p95_ms": 31.035
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 3.031,
+            "median_ms": 1.329,
+            "p95_ms": 3.396
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 51.016,
+            "median_ms": 47.717,
+            "p95_ms": 63.657
+          },
+          "vram": {
+            "base_alloc_mb": 291.3,
+            "peak_alloc_mb": 348.97,
+            "peak_reserved_mb": 376.0
+          }
+        },
+        "fp16_autocast": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 17.572,
+            "median_ms": 15.662,
+            "p95_ms": 26.623
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 27.667,
+            "median_ms": 27.118,
+            "p95_ms": 32.916
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 1.565,
+            "median_ms": 1.066,
+            "p95_ms": 2.962
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 46.804,
+            "median_ms": 46.837,
+            "p95_ms": 58.65
+          },
+          "vram": {
+            "base_alloc_mb": 291.3,
+            "peak_alloc_mb": 409.95,
+            "peak_reserved_mb": 438.0
+          }
+        },
+        "fp16_weights": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 17.332,
+            "median_ms": 15.564,
+            "p95_ms": 26.209
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 20.889,
+            "median_ms": 19.146,
+            "p95_ms": 27.79
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 1.603,
+            "median_ms": 1.252,
+            "p95_ms": 2.743
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 39.892,
+            "median_ms": 38.257,
+            "p95_ms": 52.278
+          },
+          "vram": {
+            "base_alloc_mb": 291.3,
+            "peak_alloc_mb": 335.01,
+            "peak_reserved_mb": 356.0
+          }
+        }
+      },
+      "fidelity_vs_fp32": {
+        "fp16_autocast": {
+          "nonfinite_frames": 0,
+          "mean_spearman_vs_fp32": 0.99989,
+          "min_spearman_vs_fp32": 0.997236,
+          "mean_affine_mae_vs_fp32": 0.001258,
+          "max_raw_abs_diff_vs_fp32": 0.071197,
+          "signed_cavity_p75_abs_diff_med": 0.000921,
+          "signed_cavity_p75_abs_diff_p95": 0.011223,
+          "validity_flips_vs_fp32": "2/98",
+          "validity_flips_lost_vs_gained": "0/2",
+          "matched_valid_count": 64,
+          "matched_valid_sn_p75_spearman": 0.994139,
+          "matched_valid_sn_p75_rel_diff_med_pct": 2.182,
+          "matched_valid_sn_p75_rel_diff_p95_pct": 13.411
+        },
+        "fp16_weights": {
+          "nonfinite_frames": 0,
+          "mean_spearman_vs_fp32": 0.999883,
+          "min_spearman_vs_fp32": 0.997108,
+          "mean_affine_mae_vs_fp32": 0.001307,
+          "max_raw_abs_diff_vs_fp32": 0.049366,
+          "signed_cavity_p75_abs_diff_med": 0.000778,
+          "signed_cavity_p75_abs_diff_p95": 0.01458,
+          "validity_flips_vs_fp32": "4/98",
+          "validity_flips_lost_vs_gained": "2/2",
+          "matched_valid_count": 62,
+          "matched_valid_sn_p75_spearman": 0.977487,
+          "matched_valid_sn_p75_rel_diff_med_pct": 2.721,
+          "matched_valid_sn_p75_rel_diff_p95_pct": 23.621
+        }
+      }
+    },
+    "336": {
+      "input_size": 336,
+      "network_hw_sample0": [
+        336,
+        602
+      ],
+      "modes": {
+        "fp32": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 28.474,
+            "median_ms": 21.383,
+            "p95_ms": 66.523
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 61.045,
+            "median_ms": 60.527,
+            "p95_ms": 62.943
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 2.691,
+            "median_ms": 1.366,
+            "p95_ms": 7.123
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 92.21,
+            "median_ms": 83.798,
+            "p95_ms": 137.419
+          },
+          "vram": {
+            "base_alloc_mb": 293.53,
+            "peak_alloc_mb": 385.63,
+            "peak_reserved_mb": 452.0
+          }
+        },
+        "fp16_autocast": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 25.709,
+            "median_ms": 21.389,
+            "p95_ms": 55.783
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 50.426,
+            "median_ms": 48.513,
+            "p95_ms": 57.375
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 2.114,
+            "median_ms": 1.383,
+            "p95_ms": 4.851
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 78.248,
+            "median_ms": 70.873,
+            "p95_ms": 118.372
+          },
+          "vram": {
+            "base_alloc_mb": 293.53,
+            "peak_alloc_mb": 443.9,
+            "peak_reserved_mb": 468.0
+          }
+        },
+        "fp16_weights": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 27.748,
+            "median_ms": 21.292,
+            "p95_ms": 62.71
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 42.248,
+            "median_ms": 39.098,
+            "p95_ms": 54.284
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 2.796,
+            "median_ms": 1.668,
+            "p95_ms": 6.919
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 72.903,
+            "median_ms": 62.059,
+            "p95_ms": 125.116
+          },
+          "vram": {
+            "base_alloc_mb": 293.53,
+            "peak_alloc_mb": 364.2,
+            "peak_reserved_mb": 404.0
+          }
+        }
+      },
+      "fidelity_vs_fp32": {
+        "fp16_autocast": {
+          "nonfinite_frames": 0,
+          "mean_spearman_vs_fp32": 0.999902,
+          "min_spearman_vs_fp32": 0.997753,
+          "mean_affine_mae_vs_fp32": 0.001238,
+          "max_raw_abs_diff_vs_fp32": 0.131573,
+          "signed_cavity_p75_abs_diff_med": 0.000851,
+          "signed_cavity_p75_abs_diff_p95": 0.01333,
+          "validity_flips_vs_fp32": "3/98",
+          "validity_flips_lost_vs_gained": "0/3",
+          "matched_valid_count": 70,
+          "matched_valid_sn_p75_spearman": 0.969495,
+          "matched_valid_sn_p75_rel_diff_med_pct": 2.77,
+          "matched_valid_sn_p75_rel_diff_p95_pct": 19.88
+        },
+        "fp16_weights": {
+          "nonfinite_frames": 0,
+          "mean_spearman_vs_fp32": 0.999898,
+          "min_spearman_vs_fp32": 0.998273,
+          "mean_affine_mae_vs_fp32": 0.001268,
+          "max_raw_abs_diff_vs_fp32": 0.084556,
+          "signed_cavity_p75_abs_diff_med": 0.000786,
+          "signed_cavity_p75_abs_diff_p95": 0.012384,
+          "validity_flips_vs_fp32": "3/98",
+          "validity_flips_lost_vs_gained": "0/3",
+          "matched_valid_count": 70,
+          "matched_valid_sn_p75_spearman": 0.992205,
+          "matched_valid_sn_p75_rel_diff_med_pct": 2.802,
+          "matched_valid_sn_p75_rel_diff_p95_pct": 15.548
+        }
+      }
+    },
+    "518": {
+      "input_size": 518,
+      "network_hw_sample0": [
+        518,
+        924
+      ],
+      "modes": {
+        "fp32": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 45.451,
+            "median_ms": 40.943,
+            "p95_ms": 74.47
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 179.833,
+            "median_ms": 179.703,
+            "p95_ms": 180.826
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 2.818,
+            "median_ms": 1.768,
+            "p95_ms": 3.422
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 228.102,
+            "median_ms": 221.702,
+            "p95_ms": 261.001
+          },
+          "vram": {
+            "base_alloc_mb": 300.89,
+            "peak_alloc_mb": 612.65,
+            "peak_reserved_mb": 650.0
+          }
+        },
+        "fp16_autocast": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 42.422,
+            "median_ms": 38.805,
+            "p95_ms": 64.245
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 147.246,
+            "median_ms": 147.055,
+            "p95_ms": 148.411
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 1.856,
+            "median_ms": 1.811,
+            "p95_ms": 3.25
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 191.524,
+            "median_ms": 188.71,
+            "p95_ms": 212.41
+          },
+          "vram": {
+            "base_alloc_mb": 300.89,
+            "peak_alloc_mb": 584.25,
+            "peak_reserved_mb": 658.0
+          }
+        },
+        "fp16_weights": {
+          "preprocess": {
+            "n": 36,
+            "mean_ms": 43.511,
+            "median_ms": 37.896,
+            "p95_ms": 76.483
+          },
+          "inference": {
+            "n": 36,
+            "mean_ms": 109.743,
+            "median_ms": 109.514,
+            "p95_ms": 110.788
+          },
+          "resize": {
+            "n": 36,
+            "mean_ms": 1.753,
+            "median_ms": 1.488,
+            "p95_ms": 2.963
+          },
+          "total_depth": {
+            "n": 36,
+            "mean_ms": 155.188,
+            "median_ms": 150.013,
+            "p95_ms": 188.805
+          },
+          "vram": {
+            "base_alloc_mb": 300.89,
+            "peak_alloc_mb": 466.32,
+            "peak_reserved_mb": 572.0
+          }
+        }
+      },
+      "fidelity_vs_fp32": {
+        "fp16_autocast": {
+          "nonfinite_frames": 0,
+          "mean_spearman_vs_fp32": 0.999957,
+          "min_spearman_vs_fp32": 0.999631,
+          "mean_affine_mae_vs_fp32": 0.001625,
+          "max_raw_abs_diff_vs_fp32": 0.095166,
+          "signed_cavity_p75_abs_diff_med": 0.000918,
+          "signed_cavity_p75_abs_diff_p95": 0.007035,
+          "validity_flips_vs_fp32": "2/98",
+          "validity_flips_lost_vs_gained": "0/2",
+          "matched_valid_count": 69,
+          "matched_valid_sn_p75_spearman": 0.984874,
+          "matched_valid_sn_p75_rel_diff_med_pct": 4.276,
+          "matched_valid_sn_p75_rel_diff_p95_pct": 23.546
+        },
+        "fp16_weights": {
+          "nonfinite_frames": 0,
+          "mean_spearman_vs_fp32": 0.999958,
+          "min_spearman_vs_fp32": 0.999711,
+          "mean_affine_mae_vs_fp32": 0.001652,
+          "max_raw_abs_diff_vs_fp32": 0.07523,
+          "signed_cavity_p75_abs_diff_med": 0.000815,
+          "signed_cavity_p75_abs_diff_p95": 0.008898,
+          "validity_flips_vs_fp32": "4/98",
+          "validity_flips_lost_vs_gained": "2/2",
+          "matched_valid_count": 67,
+          "matched_valid_sn_p75_spearman": 0.990622,
+          "matched_valid_sn_p75_rel_diff_med_pct": 3.971,
+          "matched_valid_sn_p75_rel_diff_p95_pct": 15.905
+        }
+      }
+    }
+  }
+}

@@ -42,6 +42,7 @@ from experiments.core_aware_cavity_extraction import (
     extract_cavity_with_strategy,
 )
 from experiments.optimized_relative_depth import OptimizedDepthConfig
+from experiments.benchmark_optimized_relative_depth import _spearman_rho, _guarded_rel_diff_pct
 
 
 def _sync_cuda(device: str) -> None:
@@ -234,7 +235,12 @@ def benchmark_fp32_vs_fp16(
             spearmans = []
             max_diffs = []
             maes = []
+            cav_abs_diffs = []
+            sn_rel_diffs = []
+            sn_refs, sn_cmps = [], []
             val_flips = 0
+            gained_flips = 0
+            lost_flips = 0
             total_boxes = 0
             for idx_f, item in enumerate(frames_with_boxes):
                 d_ref = preds_store["fp32"][idx_f]
@@ -252,15 +258,39 @@ def benchmark_fp32_vs_fp16(
                     o_ref = extract_cavity_with_strategy(d_ref, bx, strategy="elliptical_core", neighbor_boxes=nbrs, img_bgr=item["img_bgr"], opt_cfg=opt_cfg, core_cfg=core_cfg)
                     o_cmp = extract_cavity_with_strategy(d_cmp, bx, strategy="elliptical_core", neighbor_boxes=nbrs, img_bgr=item["img_bgr"], opt_cfg=opt_cfg, core_cfg=core_cfg)
                     total_boxes += 1
+                    cav_abs_diffs.append(abs(o_cmp["core_cavity_stats"]["raw_diag_p75"] - o_ref["core_cavity_stats"]["raw_diag_p75"]))
                     if o_ref["is_valid"] != o_cmp["is_valid"]:
                         val_flips += 1
+                        if o_ref["is_valid"] and not o_cmp["is_valid"]:
+                            lost_flips += 1
+                        else:
+                            gained_flips += 1
+                    if o_ref["is_valid"] and o_cmp["is_valid"]:
+                        r_sn = o_ref["core_cavity_stats"]["scale_normalized_p75"]
+                        c_sn = o_cmp["core_cavity_stats"]["scale_normalized_p75"]
+                        sn_refs.append(r_sn)
+                        sn_cmps.append(c_sn)
+                        sn_rel_diffs.append(_guarded_rel_diff_pct(c_sn, r_sn))
+
+            sp_sn = None
+            if len(sn_refs) >= 5:
+                sp_raw = _spearman_rho(np.asarray(sn_cmps, dtype=np.float64), np.asarray(sn_refs, dtype=np.float64))
+                sp_sn = round(float(sp_raw), 6) if sp_raw is not None else None
 
             fidelity[cmp_mode] = {
                 "nonfinite_frames": nonfinite_cnt,
                 "mean_spearman_vs_fp32": round(float(np.mean(spearmans)), 6) if spearmans else None,
+                "min_spearman_vs_fp32": round(float(np.min(spearmans)), 6) if spearmans else None,
                 "mean_affine_mae_vs_fp32": round(float(np.mean(maes)), 6) if maes else None,
                 "max_raw_abs_diff_vs_fp32": round(float(np.max(max_diffs)), 6) if max_diffs else None,
+                "signed_cavity_p75_abs_diff_med": round(float(np.median(cav_abs_diffs)), 6) if cav_abs_diffs else None,
+                "signed_cavity_p75_abs_diff_p95": round(float(np.percentile(cav_abs_diffs, 95.0)), 6) if cav_abs_diffs else None,
                 "validity_flips_vs_fp32": f"{val_flips}/{total_boxes}",
+                "validity_flips_lost_vs_gained": f"{lost_flips}/{gained_flips}",
+                "matched_valid_count": len(sn_refs),
+                "matched_valid_sn_p75_spearman": sp_sn,
+                "matched_valid_sn_p75_rel_diff_med_pct": round(float(np.median(sn_rel_diffs)), 3) if sn_rel_diffs else None,
+                "matched_valid_sn_p75_rel_diff_p95_pct": round(float(np.percentile(sn_rel_diffs, 95.0)), 3) if sn_rel_diffs else None,
             }
 
         results[str(sz)] = {

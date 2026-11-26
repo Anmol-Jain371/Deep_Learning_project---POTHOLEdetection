@@ -1,0 +1,509 @@
+[
+  {
+    "mode": "live",
+    "video_id": "ruralRoad_202f",
+    "video_description": "Rural road with potholes, 25fps, 640x360",
+    "label": "exploratory",
+    "source_fps": 25.0,
+    "source_wh": [
+      640,
+      360
+    ],
+    "frames_processed": 202,
+    "elapsed_total_sec": 7.418,
+    "end_to_end_fps": 27.23,
+    "frame_ms": {
+      "mean": 36.058,
+      "median": 14.13,
+      "p95": 23.006,
+      "max": 4179.91,
+      "min": 12.39
+    },
+    "depth_inf_ms": {},
+    "detect_track_ms": {
+      "mean": 35.271,
+      "median": 13.38,
+      "p95": 21.98,
+      "max": 4178.29,
+      "min": 11.42
+    },
+    "deadline_ms_target": 40.0,
+    "deadline_misses": 1,
+    "deadline_miss_rate": 0.005,
+    "depth_enabled": false,
+    "depth_model_id": "none",
+    "depth_input_size": 0,
+    "scheduler_strategy": "B_candidate_gated",
+    "depth_calls": 197,
+    "budget_skips": 0,
+    "depth_invocation_rate": 0.9752,
+    "total_hazard_observations": 784,
+    "unique_tracks": 53,
+    "measurement_state_histogram": {
+      "NOT_EVALUATED": 784
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 0,
+    "not_evaluated_observations": 784,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 25.7
+  },
+  {
+    "mode": "live",
+    "video_id": "urban_rangoon_200f",
+    "video_description": "Urban potholes, Rangoon Road, 25fps",
+    "label": "exploratory",
+    "source_fps": 25.0,
+    "source_wh": [
+      640,
+      360
+    ],
+    "frames_processed": 200,
+    "elapsed_total_sec": 3.053,
+    "end_to_end_fps": 65.5,
+    "frame_ms": {
+      "mean": 14.709,
+      "median": 13.11,
+      "p95": 23.228,
+      "max": 83.79,
+      "min": 9.95
+    },
+    "depth_inf_ms": {},
+    "detect_track_ms": {
+      "mean": 14.07,
+      "median": 12.51,
+      "p95": 22.13,
+      "max": 83.3,
+      "min": 9.66
+    },
+    "deadline_ms_target": 40.0,
+    "deadline_misses": 1,
+    "deadline_miss_rate": 0.005,
+    "depth_enabled": false,
+    "depth_model_id": "none",
+    "depth_input_size": 0,
+    "scheduler_strategy": "B_candidate_gated",
+    "depth_calls": 180,
+    "budget_skips": 0,
+    "depth_invocation_rate": 0.9,
+    "total_hazard_observations": 238,
+    "unique_tracks": 6,
+    "measurement_state_histogram": {
+      "NOT_EVALUATED": 238
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 0,
+    "not_evaluated_observations": 238,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 37.9
+  },
+  {
+    "mode": "live",
+    "video_id": "rawSurvey_160f",
+    "video_description": "Survey footage, variable FPS, 1280x720",
+    "label": "exploratory",
+    "source_fps": 10.0,
+    "source_wh": [
+      1280,
+      720
+    ],
+    "frames_processed": 160,
+    "elapsed_total_sec": 3.256,
+    "end_to_end_fps": 49.14,
+    "frame_ms": {
+      "mean": 16.757,
+      "median": 15.04,
+      "p95": 24.092,
+      "max": 82.04,
+      "min": 11.91
+    },
+    "depth_inf_ms": {},
+    "detect_track_ms": {
+      "mean": 15.504,
+      "median": 13.825,
+      "p95": 22.58,
+      "max": 80.4,
+      "min": 11.08
+    },
+    "deadline_ms_target": 100.0,
+    "deadline_misses": 0,
+    "deadline_miss_rate": 0.0,
+    "depth_enabled": false,
+    "depth_model_id": "none",
+    "depth_input_size": 0,
+    "scheduler_strategy": "B_candidate_gated",
+    "depth_calls": 116,
+    "budget_skips": 0,
+    "depth_invocation_rate": 0.725,
+    "total_hazard_observations": 280,
+    "unique_tracks": 14,
+    "measurement_state_histogram": {
+      "NOT_EVALUATED": 280
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 0,
+    "not_evaluated_observations": 280,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 37.9
+  },
+  {
+    "mode": "balanced",
+    "video_id": "ruralRoad_202f",
+    "video_description": "Rural road with potholes, 25fps, 640x360",
+    "label": "exploratory",
+    "source_fps": 25.0,
+    "source_wh": [
+      640,
+      360
+    ],
+    "frames_processed": 202,
+    "elapsed_total_sec": 8.311,
+    "end_to_end_fps": 24.3,
+    "frame_ms": {
+      "mean": 40.522,
+      "median": 16.185,
+      "p95": 100.191,
+      "max": 809.09,
+      "min": 12.31
+    },
+    "depth_inf_ms": {
+      "mean": 59.895,
+      "median": 46.37,
+      "p95": 49.702,
+      "max": 666.39,
+      "min": 46.07
+    },
+    "detect_track_ms": {
+      "mean": 15.181,
+      "median": 13.74,
+      "p95": 22.128,
+      "max": 89.56,
+      "min": 11.41
+    },
+    "deadline_ms_target": 40.0,
+    "deadline_misses": 53,
+    "deadline_miss_rate": 0.2624,
+    "depth_enabled": true,
+    "depth_model_id": "depth_anything_v2_small",
+    "depth_input_size": 336,
+    "scheduler_strategy": "E_budget_aware",
+    "depth_calls": 53,
+    "budget_skips": 30,
+    "depth_invocation_rate": 0.2624,
+    "total_hazard_observations": 784,
+    "unique_tracks": 53,
+    "measurement_state_histogram": {
+      "FRESH_INVALID": 237,
+      "NOT_EVALUATED": 547
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 237,
+    "not_evaluated_observations": 547,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 220.3
+  },
+  {
+    "mode": "balanced",
+    "video_id": "urban_rangoon_200f",
+    "video_description": "Urban potholes, Rangoon Road, 25fps",
+    "label": "exploratory",
+    "source_fps": 25.0,
+    "source_wh": [
+      640,
+      360
+    ],
+    "frames_processed": 200,
+    "elapsed_total_sec": 5.292,
+    "end_to_end_fps": 37.79,
+    "frame_ms": {
+      "mean": 25.823,
+      "median": 16.16,
+      "p95": 93.941,
+      "max": 158.17,
+      "min": 9.83
+    },
+    "depth_inf_ms": {
+      "mean": 47.019,
+      "median": 46.48,
+      "p95": 47.484,
+      "max": 58.08,
+      "min": 46.02
+    },
+    "detect_track_ms": {
+      "mean": 15.981,
+      "median": 14.58,
+      "p95": 22.674,
+      "max": 82.45,
+      "min": 9.54
+    },
+    "deadline_ms_target": 40.0,
+    "deadline_misses": 23,
+    "deadline_miss_rate": 0.115,
+    "depth_enabled": true,
+    "depth_model_id": "depth_anything_v2_small",
+    "depth_input_size": 336,
+    "scheduler_strategy": "E_budget_aware",
+    "depth_calls": 23,
+    "budget_skips": 33,
+    "depth_invocation_rate": 0.115,
+    "total_hazard_observations": 238,
+    "unique_tracks": 6,
+    "measurement_state_histogram": {
+      "FRESH_INVALID": 33,
+      "NOT_EVALUATED": 205
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 33,
+    "not_evaluated_observations": 205,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 203.2
+  },
+  {
+    "mode": "balanced",
+    "video_id": "rawSurvey_160f",
+    "video_description": "Survey footage, variable FPS, 1280x720",
+    "label": "exploratory",
+    "source_fps": 10.0,
+    "source_wh": [
+      1280,
+      720
+    ],
+    "frames_processed": 160,
+    "elapsed_total_sec": 6.613,
+    "end_to_end_fps": 24.19,
+    "frame_ms": {
+      "mean": 38.464,
+      "median": 15.52,
+      "p95": 144.045,
+      "max": 233.09,
+      "min": 11.24
+    },
+    "depth_inf_ms": {
+      "mean": 48.325,
+      "median": 47.25,
+      "p95": 53.026,
+      "max": 54.05,
+      "min": 46.03
+    },
+    "detect_track_ms": {
+      "mean": 15.226,
+      "median": 13.715,
+      "p95": 23.219,
+      "max": 77.09,
+      "min": 10.4
+    },
+    "deadline_ms_target": 100.0,
+    "deadline_misses": 28,
+    "deadline_miss_rate": 0.175,
+    "depth_enabled": true,
+    "depth_model_id": "depth_anything_v2_small",
+    "depth_input_size": 336,
+    "scheduler_strategy": "E_budget_aware",
+    "depth_calls": 30,
+    "budget_skips": 29,
+    "depth_invocation_rate": 0.1875,
+    "total_hazard_observations": 280,
+    "unique_tracks": 14,
+    "measurement_state_histogram": {
+      "FRESH_INVALID": 71,
+      "NOT_EVALUATED": 209
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 71,
+    "not_evaluated_observations": 209,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 203.9
+  },
+  {
+    "mode": "survey",
+    "video_id": "ruralRoad_202f",
+    "video_description": "Rural road with potholes, 25fps, 640x360",
+    "label": "exploratory",
+    "source_fps": 25.0,
+    "source_wh": [
+      640,
+      360
+    ],
+    "frames_processed": 202,
+    "elapsed_total_sec": 41.845,
+    "end_to_end_fps": 4.83,
+    "frame_ms": {
+      "mean": 206.415,
+      "median": 207.965,
+      "p95": 229.839,
+      "max": 320.32,
+      "min": 14.31
+    },
+    "depth_inf_ms": {
+      "mean": 145.734,
+      "median": 145.46,
+      "p95": 145.978,
+      "max": 198.06,
+      "min": 144.95
+    },
+    "detect_track_ms": {
+      "mean": 16.113,
+      "median": 14.395,
+      "p95": 24.155,
+      "max": 75.97,
+      "min": 11.8
+    },
+    "deadline_ms_target": 40.0,
+    "deadline_misses": 197,
+    "deadline_miss_rate": 0.9752,
+    "depth_enabled": true,
+    "depth_model_id": "depth_anything_v2_small",
+    "depth_input_size": 518,
+    "scheduler_strategy": "B_candidate_gated",
+    "depth_calls": 197,
+    "budget_skips": 0,
+    "depth_invocation_rate": 0.9752,
+    "total_hazard_observations": 784,
+    "unique_tracks": 53,
+    "measurement_state_histogram": {
+      "FRESH_INVALID": 784
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 784,
+    "not_evaluated_observations": 0,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 346.0
+  },
+  {
+    "mode": "survey",
+    "video_id": "urban_rangoon_200f",
+    "video_description": "Urban potholes, Rangoon Road, 25fps",
+    "label": "exploratory",
+    "source_fps": 25.0,
+    "source_wh": [
+      640,
+      360
+    ],
+    "frames_processed": 200,
+    "elapsed_total_sec": 38.213,
+    "end_to_end_fps": 5.23,
+    "frame_ms": {
+      "mean": 190.369,
+      "median": 204.945,
+      "p95": 231.068,
+      "max": 357.9,
+      "min": 10.21
+    },
+    "depth_inf_ms": {
+      "mean": 145.826,
+      "median": 145.525,
+      "p95": 146.261,
+      "max": 186.56,
+      "min": 145.07
+    },
+    "detect_track_ms": {
+      "mean": 15.583,
+      "median": 14.085,
+      "p95": 21.82,
+      "max": 117.36,
+      "min": 9.92
+    },
+    "deadline_ms_target": 40.0,
+    "deadline_misses": 180,
+    "deadline_miss_rate": 0.9,
+    "depth_enabled": true,
+    "depth_model_id": "depth_anything_v2_small",
+    "depth_input_size": 518,
+    "scheduler_strategy": "B_candidate_gated",
+    "depth_calls": 180,
+    "budget_skips": 0,
+    "depth_invocation_rate": 0.9,
+    "total_hazard_observations": 238,
+    "unique_tracks": 6,
+    "measurement_state_histogram": {
+      "FRESH_INVALID": 238
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 238,
+    "not_evaluated_observations": 0,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 346.0
+  },
+  {
+    "mode": "survey",
+    "video_id": "rawSurvey_160f",
+    "video_description": "Survey footage, variable FPS, 1280x720",
+    "label": "exploratory",
+    "source_fps": 10.0,
+    "source_wh": [
+      1280,
+      720
+    ],
+    "frames_processed": 160,
+    "elapsed_total_sec": 31.427,
+    "end_to_end_fps": 5.09,
+    "frame_ms": {
+      "mean": 192.933,
+      "median": 226.975,
+      "p95": 344.897,
+      "max": 402.21,
+      "min": 11.03
+    },
+    "depth_inf_ms": {
+      "mean": 145.746,
+      "median": 145.58,
+      "p95": 146.32,
+      "max": 156.77,
+      "min": 145.09
+    },
+    "detect_track_ms": {
+      "mean": 16.477,
+      "median": 14.205,
+      "p95": 24.883,
+      "max": 102.39,
+      "min": 10.2
+    },
+    "deadline_ms_target": 100.0,
+    "deadline_misses": 116,
+    "deadline_miss_rate": 0.725,
+    "depth_enabled": true,
+    "depth_model_id": "depth_anything_v2_small",
+    "depth_input_size": 518,
+    "scheduler_strategy": "B_candidate_gated",
+    "depth_calls": 116,
+    "budget_skips": 0,
+    "depth_invocation_rate": 0.725,
+    "total_hazard_observations": 280,
+    "unique_tracks": 14,
+    "measurement_state_histogram": {
+      "FRESH_INVALID": 280
+    },
+    "fresh_valid_observations": 0,
+    "cached_valid_observations": 0,
+    "fresh_invalid_observations": 280,
+    "not_evaluated_observations": 0,
+    "expired_observations": 0,
+    "fresh_valid_coverage_pct": 0.0,
+    "cached_availability_pct": 0.0,
+    "peak_gpu_mb": 358.6
+  }
+]
