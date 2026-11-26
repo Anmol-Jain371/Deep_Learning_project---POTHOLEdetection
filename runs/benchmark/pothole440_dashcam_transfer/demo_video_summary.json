@@ -1,0 +1,22 @@
+{
+  "input_video": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "output_video": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\demo_rangoon_300f_yolov8n_seg.mp4",
+  "weights_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\segment\\pothole440_yolov8n_seg_v1\\weights\\best.pt",
+  "conf_threshold": 0.5,
+  "iou_nms": 0.7,
+  "imgsz": 640,
+  "device": "0",
+  "preserved_dimensions": "640x360",
+  "preserved_fps": 25.0,
+  "source_total_frames": 1005,
+  "frames_processed": 300,
+  "frames_with_detections": 175,
+  "total_per_frame_raw_detections_sum": 199,
+  "mean_raw_detections_per_frame": 0.663,
+  "max_raw_detections_in_frame": 4,
+  "mean_frame_latency_ms": 14.77,
+  "median_frame_latency_ms": 13.66,
+  "p95_frame_latency_ms": 22.96,
+  "mean_throughput_fps": 67.71,
+  "note": "Per-frame raw detection sum across frames is NOT a unique physical pothole count (no tracking enabled)."
+}

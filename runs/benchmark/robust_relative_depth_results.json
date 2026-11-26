@@ -1,0 +1,857 @@
+{
+  "experiment": "Phase 5A Robust Relative Depth Extraction & Adaptive Reference Benchmark",
+  "startup_midas_load_ms_separate": 5717.62,
+  "config": {
+    "outer_margin_ratio": 0.45,
+    "min_margin_px": 16,
+    "max_margin_px": 120,
+    "inner_pad_ratio": 0.05,
+    "exclude_neighbors": true,
+    "neighbor_pad_px": 4,
+    "horizon_cutoff_ratio": 0.15,
+    "ransac_iters": 120,
+    "ransac_sample_limit": 1500,
+    "ransac_mad_mult": 2.5,
+    "huber_max_iters": 20,
+    "huber_k": 1.345,
+    "seed": 42,
+    "min_ref_samples": 40,
+    "min_quadrant_samples": 5,
+    "min_populated_quadrants": 2,
+    "max_single_quadrant_frac": 0.8,
+    "max_cond_number": 10000.0,
+    "min_annular_retention": 0.25,
+    "min_inlier_ratio": 0.45,
+    "min_positive_depress_frac": 0.35,
+    "max_ref_mad_abs": 1000000.0,
+    "max_ref_mad_vs_iqr_ratio": 3.0,
+    "reject_water_patches": true,
+    "boundary_trunc_px": 2
+  },
+  "dev_frames_count": 36,
+  "backbone_performance_rtx2050": {
+    "detector_640_ms": {
+      "mean_ms": 13.68,
+      "median_ms": 12.05,
+      "p95_ms": 20.52,
+      "min_ms": 9.22,
+      "max_ms": 28.94,
+      "fps": 73.11
+    },
+    "midas_small_active_ms": {
+      "mean_ms": 28.03,
+      "median_ms": 26.47,
+      "p95_ms": 40.54,
+      "min_ms": 18.05,
+      "max_ms": 121.73,
+      "fps": 35.67
+    },
+    "midas_small_amortized_all_frames_ms": {
+      "mean_ms": 24.92,
+      "median_ms": 25.2,
+      "p95_ms": 39.82,
+      "min_ms": 0.0,
+      "max_ms": 121.73,
+      "fps": 40.13
+    },
+    "peak_gpu_allocated_mb": 144.26,
+    "peak_gpu_reserved_mb": 164.0
+  },
+  "method_comparison_dev_36_frames": {
+    "median_baseline": {
+      "total_candidate_regions": 98,
+      "valid_count": 13,
+      "valid_coverage_pct": 13.27,
+      "invalid_count": 85,
+      "failure_reason_counts": {
+        "unexpected_residual_polarity": 85,
+        "suspected_water_reflection": 3
+      },
+      "ref_fit_mad_mean": 66.1461,
+      "ref_fit_mad_median": 56.9555,
+      "ref_fit_rmse_mean": 81.4003,
+      "inlier_ratio_mean": 0.9898,
+      "inlier_ratio_median": 1.0,
+      "valid_cavity_p75_median": 68.2604,
+      "valid_cavity_p75_iqr": 74.5707,
+      "valid_cavity_p90_median": 87.6361,
+      "valid_cavity_med_median": 35.1581,
+      "positive_depress_frac_mean": 0.3951,
+      "per_region_timing_ms": {
+        "annular_region": {
+          "mean_ms": 0.78,
+          "median_ms": 0.49,
+          "p95_ms": 2.49,
+          "min_ms": 0.16,
+          "max_ms": 6.58,
+          "fps": 1279.35
+        },
+        "ref_fit": {
+          "mean_ms": 0.9,
+          "median_ms": 0.49,
+          "p95_ms": 3.1,
+          "min_ms": 0.16,
+          "max_ms": 9.07,
+          "fps": 1111.78
+        },
+        "residual_compute": {
+          "mean_ms": 0.93,
+          "median_ms": 0.61,
+          "p95_ms": 2.33,
+          "min_ms": 0.31,
+          "max_ms": 8.21,
+          "fps": 1079.55
+        },
+        "quality_eval": {
+          "mean_ms": 0.57,
+          "median_ms": 0.34,
+          "p95_ms": 1.4,
+          "min_ms": 0.15,
+          "max_ms": 8.85,
+          "fps": 1748.11
+        },
+        "extraction_total": {
+          "mean_ms": 3.18,
+          "median_ms": 1.94,
+          "p95_ms": 8.59,
+          "min_ms": 0.81,
+          "max_ms": 23.5,
+          "fps": 314.52
+        }
+      },
+      "frame_extraction_scaling_ms": {
+        "1": {
+          "mean_ms": 3.2,
+          "median_ms": 1.8,
+          "p95_ms": 5.16,
+          "min_ms": 0.94,
+          "max_ms": 23.08,
+          "fps": 312.52
+        },
+        "2": {
+          "mean_ms": 9.44,
+          "median_ms": 5.02,
+          "p95_ms": 27.67,
+          "min_ms": 2.0,
+          "max_ms": 29.47,
+          "fps": 105.9
+        },
+        "3": {
+          "mean_ms": 12.07,
+          "median_ms": 8.84,
+          "p95_ms": 26.15,
+          "min_ms": 2.86,
+          "max_ms": 37.9,
+          "fps": 82.87
+        },
+        "4+": {
+          "mean_ms": 13.54,
+          "median_ms": 9.78,
+          "p95_ms": 32.34,
+          "min_ms": 4.21,
+          "max_ms": 33.1,
+          "fps": 73.85
+        }
+      }
+    },
+    "existing_annular": {
+      "total_candidate_regions": 98,
+      "valid_count": 39,
+      "valid_coverage_pct": 39.8,
+      "invalid_count": 59,
+      "failure_reason_counts": {
+        "unexpected_residual_polarity": 57,
+        "suspected_water_reflection": 3
+      },
+      "ref_fit_mad_mean": 5.2597,
+      "ref_fit_mad_median": 2.9218,
+      "ref_fit_rmse_mean": 7.9141,
+      "inlier_ratio_mean": 1.0,
+      "inlier_ratio_median": 1.0,
+      "valid_cavity_p75_median": 6.1245,
+      "valid_cavity_p75_iqr": 5.8994,
+      "valid_cavity_p90_median": 7.1132,
+      "valid_cavity_med_median": 3.1801,
+      "positive_depress_frac_mean": 0.4668,
+      "per_region_timing_ms": {
+        "annular_region": {
+          "mean_ms": 0.79,
+          "median_ms": 0.51,
+          "p95_ms": 2.43,
+          "min_ms": 0.16,
+          "max_ms": 4.3,
+          "fps": 1259.15
+        },
+        "ref_fit": {
+          "mean_ms": 1.86,
+          "median_ms": 1.22,
+          "p95_ms": 4.54,
+          "min_ms": 0.5,
+          "max_ms": 16.36,
+          "fps": 536.64
+        },
+        "residual_compute": {
+          "mean_ms": 0.94,
+          "median_ms": 0.64,
+          "p95_ms": 2.31,
+          "min_ms": 0.35,
+          "max_ms": 8.83,
+          "fps": 1061.7
+        },
+        "quality_eval": {
+          "mean_ms": 0.52,
+          "median_ms": 0.35,
+          "p95_ms": 1.33,
+          "min_ms": 0.16,
+          "max_ms": 4.56,
+          "fps": 1927.23
+        },
+        "extraction_total": {
+          "mean_ms": 4.12,
+          "median_ms": 2.75,
+          "p95_ms": 10.72,
+          "min_ms": 1.19,
+          "max_ms": 32.3,
+          "fps": 242.81
+        }
+      },
+      "frame_extraction_scaling_ms": {
+        "1": {
+          "mean_ms": 3.45,
+          "median_ms": 2.63,
+          "p95_ms": 6.42,
+          "min_ms": 1.29,
+          "max_ms": 14.83,
+          "fps": 290.25
+        },
+        "2": {
+          "mean_ms": 12.55,
+          "median_ms": 7.76,
+          "p95_ms": 29.34,
+          "min_ms": 2.8,
+          "max_ms": 40.01,
+          "fps": 79.67
+        },
+        "3": {
+          "mean_ms": 14.79,
+          "median_ms": 11.91,
+          "p95_ms": 31.83,
+          "min_ms": 4.18,
+          "max_ms": 46.35,
+          "fps": 67.6
+        },
+        "4+": {
+          "mean_ms": 18.46,
+          "median_ms": 13.86,
+          "p95_ms": 39.34,
+          "min_ms": 6.09,
+          "max_ms": 49.36,
+          "fps": 54.16
+        }
+      }
+    },
+    "ols_plane": {
+      "total_candidate_regions": 98,
+      "valid_count": 37,
+      "valid_coverage_pct": 37.76,
+      "invalid_count": 61,
+      "failure_reason_counts": {
+        "unexpected_residual_polarity": 58,
+        "unstable_cavity_residuals": 1,
+        "suspected_water_reflection": 3
+      },
+      "ref_fit_mad_mean": 5.909,
+      "ref_fit_mad_median": 3.9618,
+      "ref_fit_rmse_mean": 8.6729,
+      "inlier_ratio_mean": 0.9776,
+      "inlier_ratio_median": 0.9904,
+      "valid_cavity_p75_median": 8.4879,
+      "valid_cavity_p75_iqr": 11.3247,
+      "valid_cavity_p90_median": 11.1415,
+      "valid_cavity_med_median": 5.1839,
+      "positive_depress_frac_mean": 0.4067,
+      "per_region_timing_ms": {
+        "annular_region": {
+          "mean_ms": 0.85,
+          "median_ms": 0.53,
+          "p95_ms": 2.58,
+          "min_ms": 0.17,
+          "max_ms": 6.92,
+          "fps": 1172.98
+        },
+        "ref_fit": {
+          "mean_ms": 2.17,
+          "median_ms": 1.12,
+          "p95_ms": 6.98,
+          "min_ms": 0.33,
+          "max_ms": 15.75,
+          "fps": 460.85
+        },
+        "residual_compute": {
+          "mean_ms": 1.15,
+          "median_ms": 0.7,
+          "p95_ms": 2.62,
+          "min_ms": 0.34,
+          "max_ms": 19.01,
+          "fps": 872.8
+        },
+        "quality_eval": {
+          "mean_ms": 0.63,
+          "median_ms": 0.41,
+          "p95_ms": 1.49,
+          "min_ms": 0.18,
+          "max_ms": 4.32,
+          "fps": 1586.54
+        },
+        "extraction_total": {
+          "mean_ms": 4.8,
+          "median_ms": 2.79,
+          "p95_ms": 13.1,
+          "min_ms": 1.06,
+          "max_ms": 38.09,
+          "fps": 208.4
+        }
+      },
+      "frame_extraction_scaling_ms": {
+        "1": {
+          "mean_ms": 3.43,
+          "median_ms": 2.67,
+          "p95_ms": 6.3,
+          "min_ms": 1.23,
+          "max_ms": 6.68,
+          "fps": 291.53
+        },
+        "2": {
+          "mean_ms": 14.11,
+          "median_ms": 9.06,
+          "p95_ms": 38.62,
+          "min_ms": 2.54,
+          "max_ms": 44.5,
+          "fps": 70.85
+        },
+        "3": {
+          "mean_ms": 17.93,
+          "median_ms": 15.19,
+          "p95_ms": 39.67,
+          "min_ms": 3.79,
+          "max_ms": 56.89,
+          "fps": 55.76
+        },
+        "4+": {
+          "mean_ms": 21.85,
+          "median_ms": 13.26,
+          "p95_ms": 50.79,
+          "min_ms": 5.57,
+          "max_ms": 79.36,
+          "fps": 45.77
+        }
+      }
+    },
+    "ransac_plane": {
+      "total_candidate_regions": 98,
+      "valid_count": 49,
+      "valid_coverage_pct": 50.0,
+      "invalid_count": 49,
+      "failure_reason_counts": {
+        "unexpected_residual_polarity": 29,
+        "unstable_cavity_residuals": 3,
+        "low_inlier_ratio": 22,
+        "suspected_water_reflection": 3
+      },
+      "ref_fit_mad_mean": 5.149,
+      "ref_fit_mad_median": 2.5754,
+      "ref_fit_rmse_mean": 22.9679,
+      "inlier_ratio_mean": 0.5822,
+      "inlier_ratio_median": 0.5527,
+      "valid_cavity_p75_median": 7.9628,
+      "valid_cavity_p75_iqr": 9.8988,
+      "valid_cavity_p90_median": 12.2414,
+      "valid_cavity_med_median": 3.3763,
+      "positive_depress_frac_mean": 0.5936,
+      "per_region_timing_ms": {
+        "annular_region": {
+          "mean_ms": 0.78,
+          "median_ms": 0.52,
+          "p95_ms": 2.22,
+          "min_ms": 0.18,
+          "max_ms": 4.23,
+          "fps": 1275.95
+        },
+        "ref_fit": {
+          "mean_ms": 7.54,
+          "median_ms": 6.12,
+          "p95_ms": 15.06,
+          "min_ms": 4.1,
+          "max_ms": 23.65,
+          "fps": 132.66
+        },
+        "residual_compute": {
+          "mean_ms": 1.06,
+          "median_ms": 0.7,
+          "p95_ms": 2.42,
+          "min_ms": 0.38,
+          "max_ms": 7.9,
+          "fps": 945.64
+        },
+        "quality_eval": {
+          "mean_ms": 0.62,
+          "median_ms": 0.44,
+          "p95_ms": 1.52,
+          "min_ms": 0.21,
+          "max_ms": 3.71,
+          "fps": 1600.05
+        },
+        "extraction_total": {
+          "mean_ms": 10.0,
+          "median_ms": 7.74,
+          "p95_ms": 20.25,
+          "min_ms": 5.08,
+          "max_ms": 35.88,
+          "fps": 99.96
+        }
+      },
+      "frame_extraction_scaling_ms": {
+        "1": {
+          "mean_ms": 8.68,
+          "median_ms": 7.81,
+          "p95_ms": 15.34,
+          "min_ms": 5.41,
+          "max_ms": 20.12,
+          "fps": 115.2
+        },
+        "2": {
+          "mean_ms": 24.47,
+          "median_ms": 19.97,
+          "p95_ms": 47.3,
+          "min_ms": 11.0,
+          "max_ms": 47.93,
+          "fps": 40.87
+        },
+        "3": {
+          "mean_ms": 35.11,
+          "median_ms": 32.62,
+          "p95_ms": 64.13,
+          "min_ms": 16.33,
+          "max_ms": 64.79,
+          "fps": 28.48
+        },
+        "4+": {
+          "mean_ms": 49.39,
+          "median_ms": 44.08,
+          "p95_ms": 99.68,
+          "min_ms": 22.17,
+          "max_ms": 101.74,
+          "fps": 20.25
+        }
+      }
+    },
+    "huber_irls_plane": {
+      "total_candidate_regions": 98,
+      "valid_count": 35,
+      "valid_coverage_pct": 35.71,
+      "invalid_count": 63,
+      "failure_reason_counts": {
+        "unexpected_residual_polarity": 60,
+        "unstable_cavity_residuals": 1,
+        "suspected_water_reflection": 3
+      },
+      "ref_fit_mad_mean": 5.7333,
+      "ref_fit_mad_median": 3.6205,
+      "ref_fit_rmse_mean": 8.7564,
+      "inlier_ratio_mean": 0.9695,
+      "inlier_ratio_median": 0.9849,
+      "valid_cavity_p75_median": 8.4788,
+      "valid_cavity_p75_iqr": 9.661,
+      "valid_cavity_p90_median": 13.3256,
+      "valid_cavity_med_median": 5.2147,
+      "positive_depress_frac_mean": 0.3956,
+      "per_region_timing_ms": {
+        "annular_region": {
+          "mean_ms": 0.75,
+          "median_ms": 0.47,
+          "p95_ms": 2.29,
+          "min_ms": 0.18,
+          "max_ms": 4.77,
+          "fps": 1326.82
+        },
+        "ref_fit": {
+          "mean_ms": 19.62,
+          "median_ms": 10.4,
+          "p95_ms": 55.75,
+          "min_ms": 1.94,
+          "max_ms": 121.03,
+          "fps": 50.97
+        },
+        "residual_compute": {
+          "mean_ms": 1.04,
+          "median_ms": 0.69,
+          "p95_ms": 2.31,
+          "min_ms": 0.35,
+          "max_ms": 9.94,
+          "fps": 961.63
+        },
+        "quality_eval": {
+          "mean_ms": 0.61,
+          "median_ms": 0.41,
+          "p95_ms": 1.49,
+          "min_ms": 0.18,
+          "max_ms": 4.36,
+          "fps": 1628.28
+        },
+        "extraction_total": {
+          "mean_ms": 22.03,
+          "median_ms": 12.04,
+          "p95_ms": 61.61,
+          "min_ms": 2.71,
+          "max_ms": 129.68,
+          "fps": 45.4
+        }
+      },
+      "frame_extraction_scaling_ms": {
+        "1": {
+          "mean_ms": 16.9,
+          "median_ms": 13.39,
+          "p95_ms": 36.47,
+          "min_ms": 4.95,
+          "max_ms": 37.43,
+          "fps": 59.17
+        },
+        "2": {
+          "mean_ms": 63.28,
+          "median_ms": 45.06,
+          "p95_ms": 131.49,
+          "min_ms": 15.25,
+          "max_ms": 160.98,
+          "fps": 15.8
+        },
+        "3": {
+          "mean_ms": 87.21,
+          "median_ms": 79.68,
+          "p95_ms": 201.34,
+          "min_ms": 22.34,
+          "max_ms": 215.7,
+          "fps": 11.47
+        },
+        "4+": {
+          "mean_ms": 96.99,
+          "median_ms": 54.05,
+          "p95_ms": 243.85,
+          "min_ms": 23.81,
+          "max_ms": 261.58,
+          "fps": 10.31
+        }
+      }
+    }
+  },
+  "sensitivity_analyses": {
+    "annular_margin": {
+      "ols_plane": {
+        "margin_0.25": {
+          "valid_count": 40,
+          "median_rel_p75_shift_pct": 12.55
+        },
+        "margin_0.7": {
+          "valid_count": 34,
+          "median_rel_p75_shift_pct": 14.4
+        }
+      },
+      "ransac_plane": {
+        "margin_0.25": {
+          "valid_count": 53,
+          "median_rel_p75_shift_pct": 13.71
+        },
+        "margin_0.7": {
+          "valid_count": 46,
+          "median_rel_p75_shift_pct": 14.75
+        }
+      },
+      "huber_irls_plane": {
+        "margin_0.25": {
+          "valid_count": 39,
+          "median_rel_p75_shift_pct": 12.04
+        },
+        "margin_0.7": {
+          "valid_count": 33,
+          "median_rel_p75_shift_pct": 14.44
+        }
+      }
+    },
+    "box_perturbation_8pct": {
+      "ols_plane": {
+        "base_valid": 37,
+        "perturbed_valid_retained": 37,
+        "median_rel_p75_shift_pct": 5.4
+      },
+      "ransac_plane": {
+        "base_valid": 49,
+        "perturbed_valid_retained": 45,
+        "median_rel_p75_shift_pct": 11.21
+      },
+      "huber_irls_plane": {
+        "base_valid": 35,
+        "perturbed_valid_retained": 35,
+        "median_rel_p75_shift_pct": 5.74
+      }
+    },
+    "synthetic_ring_contamination": {
+      "ols_plane": {
+        "valid_retained_out_of": 37,
+        "valid_retained": 37,
+        "median_rel_p75_error_pct": 4734.81
+      },
+      "ransac_plane": {
+        "valid_retained_out_of": 49,
+        "valid_retained": 25,
+        "median_rel_p75_error_pct": 17.15
+      },
+      "huber_irls_plane": {
+        "valid_retained_out_of": 35,
+        "valid_retained": 35,
+        "median_rel_p75_error_pct": 5439.91
+      }
+    }
+  },
+  "temporal_stability_rural_video": {
+    "video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4 (frames 0..119)",
+    "unique_track_ids_seen": 22,
+    "note": "Lower within-track CV reflects temporal consistency of relative P75 residuals ONLY, NOT physical depth accuracy.",
+    "methods": {
+      "median_baseline": {
+        "valid_observations": 27,
+        "tracks_with_ge4_valid_obs": 2,
+        "mean_within_track_cv": 0.1951,
+        "median_within_track_cv": 0.1951
+      },
+      "existing_annular": {
+        "valid_observations": 131,
+        "tracks_with_ge4_valid_obs": 5,
+        "mean_within_track_cv": 0.4628,
+        "median_within_track_cv": 0.4545
+      },
+      "ols_plane": {
+        "valid_observations": 126,
+        "tracks_with_ge4_valid_obs": 5,
+        "mean_within_track_cv": 0.3542,
+        "median_within_track_cv": 0.2998
+      },
+      "ransac_plane": {
+        "valid_observations": 190,
+        "tracks_with_ge4_valid_obs": 14,
+        "mean_within_track_cv": 0.5912,
+        "median_within_track_cv": 0.5598
+      },
+      "huber_irls_plane": {
+        "valid_observations": 126,
+        "tracks_with_ge4_valid_obs": 5,
+        "mean_within_track_cv": 0.3639,
+        "median_within_track_cv": 0.355
+      }
+    }
+  },
+  "pothole440_val_feasibility": {
+    "split_inspected": "dataset_pothole440_seg_grouped/val (15 unaugmented originals; test NEVER touched)",
+    "samples_count": 15,
+    "samples_with_gt25pct_annular_in_pad": 11,
+    "valid_ordinal_ordering_agreement": "8/15",
+    "mean_spearman_rho_valid_scan": -0.0401,
+    "median_spearman_rho_valid_scan": -0.0194,
+    "physical_residual_comparison_status": "BLOCKED",
+    "blocking_reasons": [
+      "8-bit quantized Go!SCAN maps lack per-scan min/max physical scaling metadata and camera intrinsics.",
+      "11/15 validation samples have >25% of the surrounding road ring missing inside constant padding.",
+      "Border-connected flood fill separates outer padding without erasing valid interior pixels sharing dom_val, but cannot reconstruct missing surrounding pavement outside the scan crop."
+    ],
+    "per_sample": [
+      {
+        "filename": "2022_05_22_pothole_17.png",
+        "dom_pad_val": 63,
+        "border_pad_pct": 88.76,
+        "interior_matching_dom_val_pct": 0.11,
+        "annular_ring_in_pad_pct": 52.7,
+        "valid_road_ring_px": 29879,
+        "spearman_rho_valid_scan": -0.2054,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_05_22_pothole_19.png",
+        "dom_pad_val": 100,
+        "border_pad_pct": 89.91,
+        "interior_matching_dom_val_pct": 0.03,
+        "annular_ring_in_pad_pct": 51.96,
+        "valid_road_ring_px": 38933,
+        "spearman_rho_valid_scan": 0.1922,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      },
+      {
+        "filename": "2022_05_23_pothole_4.png",
+        "dom_pad_val": 73,
+        "border_pad_pct": 64.08,
+        "interior_matching_dom_val_pct": 0.05,
+        "annular_ring_in_pad_pct": 35.44,
+        "valid_road_ring_px": 108129,
+        "spearman_rho_valid_scan": -0.4709,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      },
+      {
+        "filename": "2022_06_01_pothole_16.png",
+        "dom_pad_val": 96,
+        "border_pad_pct": 67.24,
+        "interior_matching_dom_val_pct": 0.04,
+        "annular_ring_in_pad_pct": 28.22,
+        "valid_road_ring_px": 121137,
+        "spearman_rho_valid_scan": -0.2651,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      },
+      {
+        "filename": "2022_06_01_pothole_23.png",
+        "dom_pad_val": 52,
+        "border_pad_pct": 67.76,
+        "interior_matching_dom_val_pct": 0.04,
+        "annular_ring_in_pad_pct": 55.43,
+        "valid_road_ring_px": 141049,
+        "spearman_rho_valid_scan": -0.4449,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      },
+      {
+        "filename": "2022_06_01_pothole_25.png",
+        "dom_pad_val": 72,
+        "border_pad_pct": 80.83,
+        "interior_matching_dom_val_pct": 0.06,
+        "annular_ring_in_pad_pct": 72.96,
+        "valid_road_ring_px": 61998,
+        "spearman_rho_valid_scan": 0.2401,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_06_01_pothole_7.png",
+        "dom_pad_val": 120,
+        "border_pad_pct": 75.26,
+        "interior_matching_dom_val_pct": 0.04,
+        "annular_ring_in_pad_pct": 6.13,
+        "valid_road_ring_px": 91340,
+        "spearman_rho_valid_scan": -0.3335,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_06_02_pothole_4.png",
+        "dom_pad_val": 89,
+        "border_pad_pct": 46.7,
+        "interior_matching_dom_val_pct": 0.04,
+        "annular_ring_in_pad_pct": 10.94,
+        "valid_road_ring_px": 171564,
+        "spearman_rho_valid_scan": 0.4616,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_06_03_pothole_1.png",
+        "dom_pad_val": 66,
+        "border_pad_pct": 71.68,
+        "interior_matching_dom_val_pct": 0.03,
+        "annular_ring_in_pad_pct": 80.7,
+        "valid_road_ring_px": 58223,
+        "spearman_rho_valid_scan": 0.2322,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      },
+      {
+        "filename": "2022_06_03_pothole_23.png",
+        "dom_pad_val": 12,
+        "border_pad_pct": 88.04,
+        "interior_matching_dom_val_pct": 0.03,
+        "annular_ring_in_pad_pct": 89.12,
+        "valid_road_ring_px": 19872,
+        "spearman_rho_valid_scan": 0.0988,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_06_03_pothole_26.png",
+        "dom_pad_val": 117,
+        "border_pad_pct": 79.29,
+        "interior_matching_dom_val_pct": 0.0,
+        "annular_ring_in_pad_pct": 2.66,
+        "valid_road_ring_px": 72494,
+        "spearman_rho_valid_scan": 0.2523,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_06_03_pothole_5.png",
+        "dom_pad_val": 90,
+        "border_pad_pct": 71.67,
+        "interior_matching_dom_val_pct": 0.04,
+        "annular_ring_in_pad_pct": 17.27,
+        "valid_road_ring_px": 106148,
+        "spearman_rho_valid_scan": 0.1228,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_06_04_pothole_18.png",
+        "dom_pad_val": 98,
+        "border_pad_pct": 89.77,
+        "interior_matching_dom_val_pct": 0.0,
+        "annular_ring_in_pad_pct": 25.78,
+        "valid_road_ring_px": 43963,
+        "spearman_rho_valid_scan": -0.2812,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": true,
+        "ordinal_ordering_agree": true
+      },
+      {
+        "filename": "2022_05_25_pothole_3.png",
+        "dom_pad_val": 126,
+        "border_pad_pct": 67.91,
+        "interior_matching_dom_val_pct": 3.24,
+        "annular_ring_in_pad_pct": 35.99,
+        "valid_road_ring_px": 81515,
+        "spearman_rho_valid_scan": -0.0194,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      },
+      {
+        "filename": "2022_06_03_pothole_21.png",
+        "dom_pad_val": 115,
+        "border_pad_pct": 87.95,
+        "interior_matching_dom_val_pct": 0.01,
+        "annular_ring_in_pad_pct": 57.43,
+        "valid_road_ring_px": 48876,
+        "spearman_rho_valid_scan": -0.1815,
+        "goscan_cavity_deeper_than_valid_ring": true,
+        "midas_cavity_deeper_than_valid_ring": false,
+        "ordinal_ordering_agree": false
+      }
+    ]
+  },
+  "diagnostic_viz_paths": [
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_rural_f0000_r0_valid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_rural_f0015_r0_valid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_rural_f0030_r1_valid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_rural_f0060_r1_valid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_survey_f0060_r1_invalid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_survey_f0120_r0_invalid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_rural_f0030_r0_invalid.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\robust_depth_viz\\dev_rural_f0030_r2_invalid.png"
+  ]
+}

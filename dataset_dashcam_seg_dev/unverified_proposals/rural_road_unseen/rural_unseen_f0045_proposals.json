@@ -1,0 +1,47 @@
+{
+  "sample_id": "rural_unseen_f0045",
+  "session_id": "rural_road_unseen",
+  "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+  "frame_number": 45,
+  "timestamp_sec": 1.8,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        45.65,
+        153.84,
+        144.27,
+        187.24
+      ],
+      "det_conf": 0.7473,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        312.07,
+        146.43,
+        420.0,
+        173.08
+      ],
+      "det_conf": 0.6189,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

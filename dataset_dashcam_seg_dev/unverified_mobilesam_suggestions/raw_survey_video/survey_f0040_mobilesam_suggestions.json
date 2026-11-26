@@ -1,0 +1,12 @@
+{
+  "sample_id": "survey_f0040",
+  "session_id": "raw_survey_video",
+  "source_video": "roadvision-dashboard/public/videos/raw_survey.mp4",
+  "frame_number": 40,
+  "width": 1280,
+  "height": 720,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": []
+}

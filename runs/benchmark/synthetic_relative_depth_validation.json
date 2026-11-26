@@ -1,0 +1,944 @@
+{
+  "summary": {
+    "median_baseline": {
+      "validity_classification_accuracy": "10/12",
+      "mean_norm_ref_plane_rmse": 1.4926,
+      "max_norm_ref_plane_rmse": 3.2475,
+      "mean_norm_p75_abs_err": 1.2222,
+      "max_norm_p75_abs_err": 3.644,
+      "mean_norm_med_abs_err": 1.3569,
+      "mean_extraction_ms": 1.7604
+    },
+    "existing_annular": {
+      "validity_classification_accuracy": "12/12",
+      "mean_norm_ref_plane_rmse": 0.5935,
+      "max_norm_ref_plane_rmse": 3.2643,
+      "mean_norm_p75_abs_err": 0.6554,
+      "max_norm_p75_abs_err": 3.9328,
+      "mean_norm_med_abs_err": 0.6456,
+      "mean_extraction_ms": 2.7568
+    },
+    "ols_plane": {
+      "validity_classification_accuracy": "12/12",
+      "mean_norm_ref_plane_rmse": 0.5512,
+      "max_norm_ref_plane_rmse": 3.686,
+      "mean_norm_p75_abs_err": 0.6186,
+      "max_norm_p75_abs_err": 4.3566,
+      "mean_norm_med_abs_err": 0.6345,
+      "mean_extraction_ms": 2.3298
+    },
+    "ransac_plane": {
+      "validity_classification_accuracy": "12/12",
+      "mean_norm_ref_plane_rmse": 0.0003,
+      "max_norm_ref_plane_rmse": 0.0028,
+      "mean_norm_p75_abs_err": 0.0003,
+      "max_norm_p75_abs_err": 0.003,
+      "mean_norm_med_abs_err": 0.0003,
+      "mean_extraction_ms": 8.7109
+    },
+    "huber_irls_plane": {
+      "validity_classification_accuracy": "12/12",
+      "mean_norm_ref_plane_rmse": 0.4202,
+      "max_norm_ref_plane_rmse": 4.1864,
+      "mean_norm_p75_abs_err": 0.5023,
+      "max_norm_p75_abs_err": 5.0071,
+      "mean_norm_med_abs_err": 0.5022,
+      "mean_extraction_ms": 6.7634
+    }
+  },
+  "scenarios": {
+    "flat_no_depression": {
+      "expected_valid": false,
+      "true_p75": 0.0,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.9906
+        },
+        "existing_annular": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.4219
+        },
+        "ols_plane": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": -0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.23
+        },
+        "ransac_plane": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": -0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 8.1984
+        },
+        "huber_irls_plane": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": -0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 4.2689
+        }
+      }
+    },
+    "flat_with_cavity": {
+      "expected_valid": true,
+      "true_p75": 1.4287,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.7405
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.6529
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.3364
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 7.5441
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 17.1746
+        }
+      }
+    },
+    "inclined_plane_with_cavity": {
+      "expected_valid": true,
+      "true_p75": 1.4287,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": false,
+          "expected_match": false,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 1.973,
+          "ref_plane_mae": 1.6749,
+          "est_p75": 2.7374,
+          "p75_abs_err": 1.3087,
+          "p75_rel_err": 0.9161,
+          "med_abs_err": 1.1727,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.7381
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 4.2404
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.4463
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 13.7933
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 9.2226
+        }
+      }
+    },
+    "irregular_cavity_shape": {
+      "expected_valid": true,
+      "true_p75": 1.2426,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 1.2436,
+          "ref_plane_mae": 1.0533,
+          "est_p75": 1.955,
+          "p75_abs_err": 0.7124,
+          "p75_rel_err": 0.5733,
+          "med_abs_err": 1.015,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.4665
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.2426,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 4.5462
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.2426,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.3561
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.2426,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 8.0464
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.2426,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 5.32
+        }
+      }
+    },
+    "gaussian_noise": {
+      "expected_valid": true,
+      "true_p75": 1.4197,
+      "true_med": 0.2054,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 1.2436,
+          "ref_plane_mae": 1.0533,
+          "est_p75": 2.0658,
+          "p75_abs_err": 0.6461,
+          "p75_rel_err": 0.4551,
+          "med_abs_err": 0.7305,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.8542
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0018,
+          "ref_plane_mae": 0.0016,
+          "est_p75": 1.4214,
+          "p75_abs_err": 0.0016,
+          "p75_rel_err": 0.0012,
+          "med_abs_err": 0.001,
+          "inlier_ratio": 1.0,
+          "time_ms": 4.2652
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0024,
+          "ref_plane_mae": 0.0024,
+          "est_p75": 1.4224,
+          "p75_abs_err": 0.0027,
+          "p75_rel_err": 0.0019,
+          "med_abs_err": 0.0023,
+          "inlier_ratio": 0.986,
+          "time_ms": 3.4387
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0028,
+          "ref_plane_mae": 0.0028,
+          "est_p75": 1.4228,
+          "p75_abs_err": 0.003,
+          "p75_rel_err": 0.0021,
+          "med_abs_err": 0.0028,
+          "inlier_ratio": 0.9971,
+          "time_ms": 8.9154
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0028,
+          "ref_plane_mae": 0.0028,
+          "est_p75": 1.4228,
+          "p75_abs_err": 0.0031,
+          "p75_rel_err": 0.0022,
+          "med_abs_err": 0.0025,
+          "inlier_ratio": 0.9873,
+          "time_ms": 6.8476
+        }
+      }
+    },
+    "reference_outliers_20pct": {
+      "expected_valid": true,
+      "true_p75": 1.4287,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 1.6602,
+          "ref_plane_mae": 1.3558,
+          "est_p75": 3.1727,
+          "p75_abs_err": 1.744,
+          "p75_rel_err": 1.2207,
+          "med_abs_err": 2.0516,
+          "inlier_ratio": 0.921,
+          "time_ms": 1.5403
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 2.4394,
+          "ref_plane_mae": 2.439,
+          "est_p75": 3.8638,
+          "p75_abs_err": 2.4352,
+          "p75_rel_err": 1.7045,
+          "med_abs_err": 2.4971,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.0145
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 1.8236,
+          "ref_plane_mae": 1.8234,
+          "est_p75": 3.2554,
+          "p75_abs_err": 1.8267,
+          "p75_rel_err": 1.2786,
+          "med_abs_err": 1.8504,
+          "inlier_ratio": 0.0,
+          "time_ms": 2.1875
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 0.848,
+          "time_ms": 11.5232
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0126,
+          "ref_plane_mae": 0.0126,
+          "est_p75": 1.4414,
+          "p75_abs_err": 0.0127,
+          "p75_rel_err": 0.0089,
+          "med_abs_err": 0.0128,
+          "inlier_ratio": 0.848,
+          "time_ms": 11.3251
+        }
+      }
+    },
+    "missing_pixels_sparse_8pct": {
+      "expected_valid": true,
+      "true_p75": 1.4287,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 1.0328,
+          "ref_plane_mae": 0.8666,
+          "est_p75": 1.86,
+          "p75_abs_err": 0.4313,
+          "p75_rel_err": 0.3019,
+          "med_abs_err": 0.8088,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.7854
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 4.1353
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.0424
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 11.0923
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 5.3364
+        }
+      }
+    },
+    "missing_pixels_crater_fatal": {
+      "expected_valid": false,
+      "true_p75": 0.0,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "invalid_or_nonfinite_depth",
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 1.0327,
+          "ref_plane_mae": 0.8666,
+          "est_p75": -0.31,
+          "p75_abs_err": 0.31,
+          "p75_rel_err": 0.31,
+          "med_abs_err": 0.99,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.4754
+        },
+        "existing_annular": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "invalid_or_nonfinite_depth",
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.121
+        },
+        "ols_plane": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "invalid_or_nonfinite_depth",
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": -0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.1069
+        },
+        "ransac_plane": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "invalid_or_nonfinite_depth",
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": -0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 11.5443
+        },
+        "huber_irls_plane": {
+          "is_valid": false,
+          "expected_match": true,
+          "failure_reasons": [
+            "invalid_or_nonfinite_depth",
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": -0.0,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.9526
+        }
+      }
+    },
+    "neighboring_cavity": {
+      "expected_valid": true,
+      "true_p75": 1.4287,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 1.5351,
+          "ref_plane_mae": 1.2558,
+          "est_p75": 2.9727,
+          "p75_abs_err": 1.544,
+          "p75_rel_err": 1.0807,
+          "med_abs_err": 1.8516,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.1649
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.2298,
+          "ref_plane_mae": 0.19,
+          "est_p75": 1.2442,
+          "p75_abs_err": 0.1844,
+          "p75_rel_err": 0.1291,
+          "med_abs_err": 0.0042,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.02
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.6637
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 6.2133
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.4628
+        }
+      }
+    },
+    "partial_boundary_clipping": {
+      "expected_valid": true,
+      "true_p75": 1.934,
+      "true_med": 0.465,
+      "methods": {
+        "median_baseline": {
+          "is_valid": false,
+          "expected_match": false,
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "ref_plane_rmse": 1.747,
+          "ref_plane_mae": 1.5854,
+          "est_p75": 0.3866,
+          "p75_abs_err": 1.5474,
+          "p75_rel_err": 0.8001,
+          "med_abs_err": 1.035,
+          "inlier_ratio": 1.0,
+          "time_ms": 0.7563
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.934,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.0207
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.934,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 0.8435
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.934,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 4.9449
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.934,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 2.1475
+        }
+      }
+    },
+    "contaminated_curb_block": {
+      "expected_valid": true,
+      "true_p75": 1.4287,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 3.2475,
+          "ref_plane_mae": 3.0,
+          "est_p75": 5.0727,
+          "p75_abs_err": 3.644,
+          "p75_rel_err": 2.5506,
+          "med_abs_err": 3.9516,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.3106
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 3.2643,
+          "ref_plane_mae": 2.7359,
+          "est_p75": 5.3614,
+          "p75_abs_err": 3.9328,
+          "p75_rel_err": 2.7527,
+          "med_abs_err": 3.9539,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.7804
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 3.686,
+          "ref_plane_mae": 3.25,
+          "est_p75": 5.7853,
+          "p75_abs_err": 4.3566,
+          "p75_rel_err": 3.0494,
+          "med_abs_err": 4.4926,
+          "inlier_ratio": 0.9083,
+          "time_ms": 1.6307
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 1.4287,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 0.675,
+          "time_ms": 6.3025
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 4.1864,
+          "ref_plane_mae": 3.7573,
+          "est_p75": 6.4358,
+          "p75_abs_err": 5.0071,
+          "p75_rel_err": 3.5047,
+          "med_abs_err": 5.0062,
+          "inlier_ratio": 0.8917,
+          "time_ms": 8.2803
+        }
+      }
+    },
+    "affine_scale_shift_5x": {
+      "expected_valid": true,
+      "true_p75": 7.1434,
+      "true_med": 0.0,
+      "methods": {
+        "median_baseline": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 6.2178,
+          "ref_plane_mae": 5.2664,
+          "est_p75": 10.3635,
+          "p75_abs_err": 3.2201,
+          "p75_rel_err": 0.4508,
+          "med_abs_err": 4.7581,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.3014
+        },
+        "existing_annular": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 7.1434,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.8633
+        },
+        "ols_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 7.1434,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 1.6759
+        },
+        "ransac_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 7.1434,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 6.4131
+        },
+        "huber_irls_plane": {
+          "is_valid": true,
+          "expected_match": true,
+          "failure_reasons": [],
+          "ref_plane_rmse": 0.0,
+          "ref_plane_mae": 0.0,
+          "est_p75": 7.1434,
+          "p75_abs_err": 0.0,
+          "p75_rel_err": 0.0,
+          "med_abs_err": 0.0,
+          "inlier_ratio": 1.0,
+          "time_ms": 3.8225
+        }
+      }
+    }
+  }
+}

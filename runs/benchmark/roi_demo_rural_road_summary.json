@@ -1,0 +1,27 @@
+{
+  "input_video": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\uploads\\upload_1794847200_ruralRoad_potHoles.mp4",
+  "output_video": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\roi_demo_rural_road_unseen.mp4",
+  "batch_roi": true,
+  "preserved_dimensions": "640x360",
+  "preserved_fps": 25.0,
+  "source_total_frames": 202,
+  "frames_processed": 202,
+  "raw_proposals_sum": 914,
+  "accepted_roi_masks_sum": 34,
+  "bbox_fallbacks_sum": 880,
+  "acceptance_rate_pct": 3.72,
+  "rejection_reason_counts": {
+    "empty_mask_prediction": 644,
+    "outside_detector_box_spill": 230,
+    "excessive_area_ratio": 114,
+    "excessive_crop_boundary_contact": 155,
+    "no_overlap_with_detector_box": 3,
+    "low_det_box_coverage": 17,
+    "ambiguous_roi_association": 5
+  },
+  "mean_latency_ms": 71.23,
+  "median_latency_ms": 69.35,
+  "p95_latency_ms": 116.08,
+  "mean_fps": 14.04,
+  "note": "Raw per-frame proposal/mask sums are NOT unique physical pothole counts (no tracking enabled)."
+}

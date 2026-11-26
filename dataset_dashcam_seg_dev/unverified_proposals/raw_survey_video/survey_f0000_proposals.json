@@ -1,0 +1,234 @@
+{
+  "sample_id": "survey_f0000",
+  "session_id": "raw_survey_video",
+  "source_video": "roadvision-dashboard/public/videos/raw_survey.mp4",
+  "frame_number": 0,
+  "timestamp_sec": 0.0,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        150.39,
+        475.48,
+        500.53,
+        563.21
+      ],
+      "det_conf": 0.7796,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.4036,
+      "unverified_polygon_px": [
+        [
+          [
+            462,
+            498
+          ],
+          [
+            452,
+            489
+          ],
+          [
+            445,
+            487
+          ],
+          [
+            442,
+            482
+          ],
+          [
+            358,
+            482
+          ],
+          [
+            351,
+            488
+          ],
+          [
+            341,
+            489
+          ],
+          [
+            327,
+            495
+          ],
+          [
+            319,
+            495
+          ],
+          [
+            306,
+            500
+          ],
+          [
+            291,
+            501
+          ],
+          [
+            249,
+            511
+          ],
+          [
+            216,
+            515
+          ],
+          [
+            185,
+            523
+          ],
+          [
+            171,
+            523
+          ],
+          [
+            155,
+            517
+          ],
+          [
+            155,
+            548
+          ],
+          [
+            161,
+            550
+          ],
+          [
+            168,
+            563
+          ],
+          [
+            181,
+            563
+          ],
+          [
+            193,
+            559
+          ],
+          [
+            205,
+            558
+          ],
+          [
+            278,
+            560
+          ],
+          [
+            301,
+            557
+          ],
+          [
+            303,
+            555
+          ],
+          [
+            307,
+            556
+          ],
+          [
+            309,
+            554
+          ],
+          [
+            315,
+            556
+          ],
+          [
+            324,
+            555
+          ],
+          [
+            350,
+            545
+          ],
+          [
+            377,
+            540
+          ],
+          [
+            390,
+            540
+          ],
+          [
+            397,
+            536
+          ],
+          [
+            427,
+            533
+          ],
+          [
+            442,
+            527
+          ],
+          [
+            462,
+            525
+          ]
+        ],
+        [
+          [
+            188,
+            482
+          ],
+          [
+            192,
+            482
+          ],
+          [
+            193,
+            483
+          ],
+          [
+            198,
+            483
+          ],
+          [
+            199,
+            484
+          ],
+          [
+            202,
+            484
+          ],
+          [
+            203,
+            483
+          ],
+          [
+            212,
+            483
+          ],
+          [
+            213,
+            482
+          ],
+          [
+            221,
+            482
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        340.05,
+        542.97,
+        1276.79,
+        720.0
+      ],
+      "det_conf": 0.2672,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

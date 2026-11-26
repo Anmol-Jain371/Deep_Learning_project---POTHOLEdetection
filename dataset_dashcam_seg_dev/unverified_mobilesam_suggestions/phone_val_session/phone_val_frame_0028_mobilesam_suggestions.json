@@ -1,0 +1,237 @@
+{
+  "sample_id": "phone_val_frame_0028",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0028.jpg",
+  "frame_number": 28,
+  "width": 1280,
+  "height": 720,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        0.96,
+        533.56,
+        241.75,
+        715.99
+      ],
+      "det_conf": 0.9544,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9882,
+      "unverified_polygon_px": [
+        [
+          [
+            211,
+            583
+          ],
+          [
+            206,
+            581
+          ],
+          [
+            196,
+            582
+          ],
+          [
+            189,
+            579
+          ],
+          [
+            154,
+            554
+          ],
+          [
+            112,
+            555
+          ],
+          [
+            62,
+            552
+          ],
+          [
+            38,
+            558
+          ],
+          [
+            0,
+            559
+          ],
+          [
+            0,
+            717
+          ],
+          [
+            75,
+            718
+          ],
+          [
+            115,
+            716
+          ],
+          [
+            124,
+            710
+          ],
+          [
+            132,
+            696
+          ],
+          [
+            146,
+            692
+          ],
+          [
+            167,
+            681
+          ],
+          [
+            181,
+            678
+          ],
+          [
+            198,
+            660
+          ],
+          [
+            206,
+            647
+          ],
+          [
+            206,
+            641
+          ],
+          [
+            201,
+            634
+          ],
+          [
+            200,
+            624
+          ],
+          [
+            202,
+            613
+          ],
+          [
+            212,
+            596
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        701.71,
+        170.79,
+        948.34,
+        225.17
+      ],
+      "det_conf": 0.7692,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9489,
+      "unverified_polygon_px": [
+        [
+          [
+            723,
+            191
+          ],
+          [
+            732,
+            195
+          ],
+          [
+            748,
+            196
+          ],
+          [
+            765,
+            202
+          ],
+          [
+            803,
+            207
+          ],
+          [
+            844,
+            208
+          ],
+          [
+            861,
+            210
+          ],
+          [
+            910,
+            208
+          ],
+          [
+            911,
+            207
+          ],
+          [
+            915,
+            208
+          ],
+          [
+            943,
+            207
+          ],
+          [
+            942,
+            202
+          ],
+          [
+            932,
+            200
+          ],
+          [
+            926,
+            197
+          ],
+          [
+            912,
+            196
+          ],
+          [
+            898,
+            192
+          ],
+          [
+            879,
+            190
+          ],
+          [
+            862,
+            190
+          ],
+          [
+            817,
+            186
+          ],
+          [
+            787,
+            186
+          ],
+          [
+            778,
+            184
+          ],
+          [
+            749,
+            183
+          ],
+          [
+            731,
+            186
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    }
+  ]
+}

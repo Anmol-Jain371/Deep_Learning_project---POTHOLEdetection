@@ -1,0 +1,49 @@
+{
+  "sample_id": "survey_f0060",
+  "session_id": "raw_survey_video",
+  "source_video": "roadvision-dashboard/public/videos/raw_survey.mp4",
+  "frame_number": 60,
+  "timestamp_sec": 6.0,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        0.0,
+        578.43,
+        83.66,
+        651.98
+      ],
+      "det_conf": 0.3287,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "excessive_area_ratio",
+        "outside_detector_box_spill",
+        "excessive_crop_boundary_contact"
+      ],
+      "seg_conf": 0.4149,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        160.5,
+        353.5,
+        449.27,
+        418.52
+      ],
+      "det_conf": 0.3211,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

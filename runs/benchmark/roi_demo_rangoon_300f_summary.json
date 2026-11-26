@@ -1,0 +1,29 @@
+{
+  "input_video": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "output_video": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\roi_demo_rangoon_300f.mp4",
+  "batch_roi": true,
+  "preserved_dimensions": "640x360",
+  "preserved_fps": 25.0,
+  "source_total_frames": 1005,
+  "frames_processed": 300,
+  "raw_proposals_sum": 401,
+  "accepted_roi_masks_sum": 94,
+  "bbox_fallbacks_sum": 307,
+  "acceptance_rate_pct": 23.44,
+  "rejection_reason_counts": {
+    "outside_detector_box_spill": 86,
+    "low_det_box_coverage": 21,
+    "excessive_crop_boundary_contact": 65,
+    "no_overlap_with_detector_box": 16,
+    "empty_mask_prediction": 135,
+    "undersized_vs_det_box": 1,
+    "excessive_fragmentation": 34,
+    "excessive_area_ratio": 45,
+    "ambiguous_roi_association": 80
+  },
+  "mean_latency_ms": 34.75,
+  "median_latency_ms": 30.99,
+  "p95_latency_ms": 58.19,
+  "mean_fps": 28.77,
+  "note": "Raw per-frame proposal/mask sums are NOT unique physical pothole counts (no tracking enabled)."
+}

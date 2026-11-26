@@ -1,0 +1,171 @@
+{
+  "sample_id": "rangoon_unseen_f0695",
+  "session_id": "rangoon_road_unseen_temporal",
+  "source_video": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "frame_number": 695,
+  "width": 640,
+  "height": 360,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        437.0,
+        328.95,
+        640.0,
+        360.0
+      ],
+      "det_conf": 0.7117,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9607,
+      "unverified_polygon_px": [
+        [
+          [
+            624,
+            356
+          ],
+          [
+            619,
+            355
+          ],
+          [
+            614,
+            352
+          ],
+          [
+            595,
+            353
+          ],
+          [
+            591,
+            350
+          ],
+          [
+            583,
+            346
+          ],
+          [
+            581,
+            346
+          ],
+          [
+            577,
+            341
+          ],
+          [
+            568,
+            340
+          ],
+          [
+            562,
+            338
+          ],
+          [
+            554,
+            338
+          ],
+          [
+            550,
+            341
+          ],
+          [
+            536,
+            347
+          ],
+          [
+            528,
+            345
+          ],
+          [
+            519,
+            345
+          ],
+          [
+            518,
+            346
+          ],
+          [
+            507,
+            345
+          ],
+          [
+            506,
+            346
+          ],
+          [
+            492,
+            348
+          ],
+          [
+            483,
+            352
+          ],
+          [
+            478,
+            352
+          ],
+          [
+            471,
+            349
+          ],
+          [
+            467,
+            349
+          ],
+          [
+            463,
+            351
+          ],
+          [
+            458,
+            350
+          ],
+          [
+            452,
+            358
+          ],
+          [
+            454,
+            359
+          ],
+          [
+            554,
+            359
+          ],
+          [
+            555,
+            358
+          ],
+          [
+            557,
+            359
+          ],
+          [
+            591,
+            359
+          ],
+          [
+            592,
+            358
+          ],
+          [
+            619,
+            358
+          ],
+          [
+            620,
+            357
+          ],
+          [
+            624,
+            357
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    }
+  ]
+}

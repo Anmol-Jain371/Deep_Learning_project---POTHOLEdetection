@@ -1,0 +1,115 @@
+{
+  "sample_id": "phone_val_frame_0043",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0043.jpg",
+  "frame_number": 43,
+  "timestamp_sec": null,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        754.28,
+        209.87,
+        1141.23,
+        303.62
+      ],
+      "det_conf": 0.8133,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        91.24,
+        256.41,
+        410.12,
+        312.62
+      ],
+      "det_conf": 0.6079,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        0.0,
+        366.19,
+        131.86,
+        423.07
+      ],
+      "det_conf": 0.5358,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 3,
+      "det_box_xyxy": [
+        740.74,
+        507.7,
+        984.14,
+        626.8
+      ],
+      "det_conf": 0.4341,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 4,
+      "det_box_xyxy": [
+        386.21,
+        317.42,
+        536.17,
+        360.66
+      ],
+      "det_conf": 0.2996,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 5,
+      "det_box_xyxy": [
+        0.94,
+        156.52,
+        210.82,
+        210.26
+      ],
+      "det_conf": 0.2818,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

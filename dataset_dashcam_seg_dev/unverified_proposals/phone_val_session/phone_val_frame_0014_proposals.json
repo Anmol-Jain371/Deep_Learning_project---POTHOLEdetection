@@ -1,0 +1,99 @@
+{
+  "sample_id": "phone_val_frame_0014",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0014.jpg",
+  "frame_number": 14,
+  "timestamp_sec": null,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        882.22,
+        214.95,
+        1139.97,
+        293.95
+      ],
+      "det_conf": 0.9476,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        387.22,
+        457.7,
+        728.76,
+        566.05
+      ],
+      "det_conf": 0.8664,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        906.93,
+        612.88,
+        1241.39,
+        716.66
+      ],
+      "det_conf": 0.7382,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 3,
+      "det_box_xyxy": [
+        0.13,
+        294.88,
+        153.12,
+        352.46
+      ],
+      "det_conf": 0.4915,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 4,
+      "det_box_xyxy": [
+        0.0,
+        410.18,
+        240.58,
+        519.23
+      ],
+      "det_conf": 0.3352,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "excessive_area_ratio",
+        "outside_detector_box_spill"
+      ],
+      "seg_conf": 0.4128,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

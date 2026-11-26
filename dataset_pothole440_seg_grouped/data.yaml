@@ -1,0 +1,7 @@
+path: dataset_pothole440_seg_grouped
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: pothole
+nc: 1

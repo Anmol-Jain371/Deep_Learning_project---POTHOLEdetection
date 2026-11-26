@@ -1,0 +1,441 @@
+{
+  "inference_config": {
+    "imgsz": 640,
+    "visual_conf": 0.25,
+    "iou_nms": 0.7,
+    "retina_masks": true
+  },
+  "box_benchmarks": {
+    "note": "Box-only evaluation on existing bounding-box ground truth; empty evaluation/ground_truth_labels (40 PENDING_MANUAL_LABEL) excluded and NOT treated as negative GT; NO segmentation IoU/Dice computed.",
+    "rangoon_35": {
+      "source": "dataset_v2_candidates/ (35 reviewed frames from Watch Video_ Terrible potholes in Rangoon Road.mp4, 76 boxes)",
+      "caveat": "Previously inspected exploratory external set; non-consecutive temporal frames from single video.",
+      "yolov8n_phase2_detector": {
+        "images": 35,
+        "total_gt_boxes": 76,
+        "box_ap50_conf001": 0.2265,
+        "op_conf_025": {
+          "tp": 20,
+          "fp": 19,
+          "fn": 56,
+          "precision": 0.5128,
+          "recall": 0.2632,
+          "f1": 0.3478
+        },
+        "op_conf_050": {
+          "tp": 11,
+          "fp": 9,
+          "fn": 65,
+          "precision": 0.55,
+          "recall": 0.1447,
+          "f1": 0.2292
+        }
+      },
+      "yolov8n_seg_phase4a2": {
+        "images": 35,
+        "total_gt_boxes": 76,
+        "box_ap50_conf001": 0.0852,
+        "op_conf_025": {
+          "tp": 3,
+          "fp": 8,
+          "fn": 73,
+          "precision": 0.2727,
+          "recall": 0.0395,
+          "f1": 0.069
+        },
+        "op_conf_050": {
+          "tp": 2,
+          "fp": 7,
+          "fn": 74,
+          "precision": 0.2222,
+          "recall": 0.0263,
+          "f1": 0.0471
+        }
+      }
+    },
+    "phone_val_14": {
+      "source": "dataset_phone_potholes/images/val (14 frames, 52 boxes)",
+      "caveat": "Part of dataset_unified training/val provenance (YOLOv8n Phase 2 had phone images in unified pool); YOLOv8n-seg had ZERO phone/dashcam training exposure.",
+      "yolov8n_phase2_detector": {
+        "images": 14,
+        "total_gt_boxes": 52,
+        "box_ap50_conf001": 0.9609,
+        "op_conf_025": {
+          "tp": 50,
+          "fp": 16,
+          "fn": 2,
+          "precision": 0.7576,
+          "recall": 0.9615,
+          "f1": 0.8475
+        },
+        "op_conf_050": {
+          "tp": 38,
+          "fp": 2,
+          "fn": 14,
+          "precision": 0.95,
+          "recall": 0.7308,
+          "f1": 0.8261
+        }
+      },
+      "yolov8n_seg_phase4a2": {
+        "images": 14,
+        "total_gt_boxes": 52,
+        "box_ap50_conf001": 0.0888,
+        "op_conf_025": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 50,
+          "precision": 1.0,
+          "recall": 0.0385,
+          "f1": 0.0741
+        },
+        "op_conf_050": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 50,
+          "precision": 1.0,
+          "recall": 0.0385,
+          "f1": 0.0741
+        }
+      }
+    }
+  },
+  "selected_frames": [
+    {
+      "id": "dt_01_rangoon_f0000",
+      "source": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+      "type": "video",
+      "frame": 0,
+      "scenario": "Near-field cavity + approach",
+      "timestamp_sec": 0.0,
+      "resolution": "640x360",
+      "det_count_conf025": 1,
+      "det_count_conf050": 1,
+      "det_confs": [
+        0.673
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.914
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_01_rangoon_f0000.png"
+    },
+    {
+      "id": "dt_02_rangoon_f0040",
+      "source": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+      "type": "video",
+      "frame": 40,
+      "scenario": "Shadowed / low-contrast potholes (det wins, seg misses)",
+      "timestamp_sec": 1.6,
+      "resolution": "640x360",
+      "det_count_conf025": 2,
+      "det_count_conf050": 1,
+      "det_confs": [
+        0.636,
+        0.351
+      ],
+      "seg_count_conf025": 0,
+      "seg_count_conf050": 0,
+      "seg_confs": [],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_02_rangoon_f0040.png"
+    },
+    {
+      "id": "dt_03_rangoon_f0211",
+      "source": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+      "type": "video",
+      "frame": 211,
+      "scenario": "Water/mud-filled cavity boundary test",
+      "timestamp_sec": 8.44,
+      "resolution": "640x360",
+      "det_count_conf025": 1,
+      "det_count_conf050": 1,
+      "det_confs": [
+        0.761
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.618
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_03_rangoon_f0211.png"
+    },
+    {
+      "id": "dt_04_rangoon_f0255",
+      "source": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+      "type": "video",
+      "frame": 255,
+      "scenario": "Multiple water-filled potholes cluster",
+      "timestamp_sec": 10.2,
+      "resolution": "640x360",
+      "det_count_conf025": 3,
+      "det_count_conf050": 2,
+      "det_confs": [
+        0.631,
+        0.617,
+        0.406
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.658
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_04_rangoon_f0255.png"
+    },
+    {
+      "id": "dt_05_rangoon_f0715",
+      "source": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+      "type": "video",
+      "frame": 715,
+      "scenario": "Forward-corridor crater (seg fires 0.92, det misses)",
+      "timestamp_sec": 28.6,
+      "resolution": "640x360",
+      "det_count_conf025": 0,
+      "det_count_conf050": 0,
+      "det_confs": [],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.92
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_05_rangoon_f0715.png"
+    },
+    {
+      "id": "dt_06_rangoon_f0803",
+      "source": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+      "type": "video",
+      "frame": 803,
+      "scenario": "Shadowed deep craters (det wins, seg misses)",
+      "timestamp_sec": 32.12,
+      "resolution": "640x360",
+      "det_count_conf025": 2,
+      "det_count_conf050": 1,
+      "det_confs": [
+        0.834,
+        0.495
+      ],
+      "seg_count_conf025": 0,
+      "seg_count_conf050": 0,
+      "seg_confs": [],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_06_rangoon_f0803.png"
+    },
+    {
+      "id": "dt_07_phone_f0005",
+      "source": "dataset_phone_potholes/images/val/frame_0005.jpg",
+      "type": "image",
+      "frame": 5,
+      "scenario": "Phone multi-pothole oblique street view (8 GT boxes)",
+      "timestamp_sec": null,
+      "resolution": "1280x720",
+      "det_count_conf025": 8,
+      "det_count_conf050": 5,
+      "det_confs": [
+        0.892,
+        0.883,
+        0.773,
+        0.757,
+        0.598,
+        0.393,
+        0.321,
+        0.31
+      ],
+      "seg_count_conf025": 0,
+      "seg_count_conf050": 0,
+      "seg_confs": [],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_07_phone_f0005.png"
+    },
+    {
+      "id": "dt_08_phone_f0028",
+      "source": "dataset_phone_potholes/images/val/frame_0028.jpg",
+      "type": "image",
+      "frame": 28,
+      "scenario": "Phone oblique potholes (det=2, seg=1 partial)",
+      "timestamp_sec": null,
+      "resolution": "1280x720",
+      "det_count_conf025": 2,
+      "det_count_conf050": 2,
+      "det_confs": [
+        0.954,
+        0.769
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.689
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_08_phone_f0028.png"
+    },
+    {
+      "id": "dt_09_phone_f0035",
+      "source": "dataset_phone_potholes/images/val/frame_0035.jpg",
+      "type": "image",
+      "frame": 35,
+      "scenario": "Phone oblique crack/cavity (det=3, seg=1)",
+      "timestamp_sec": null,
+      "resolution": "1280x720",
+      "det_count_conf025": 3,
+      "det_count_conf050": 3,
+      "det_confs": [
+        0.821,
+        0.811,
+        0.565
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.537
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_09_phone_f0035.png"
+    },
+    {
+      "id": "dt_10_survey_f0040",
+      "source": "roadvision-dashboard/public/videos/raw_survey.mp4",
+      "type": "video",
+      "frame": 40,
+      "scenario": "Survey clip t=4.0s (seg=1 high conf, det=0 \u2014 check FP/TP)",
+      "timestamp_sec": 4.0,
+      "resolution": "1280x720",
+      "det_count_conf025": 0,
+      "det_count_conf050": 0,
+      "det_confs": [],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.855
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_10_survey_f0040.png"
+    },
+    {
+      "id": "dt_11_survey_f0080",
+      "source": "roadvision-dashboard/public/videos/raw_survey.mp4",
+      "type": "video",
+      "frame": 80,
+      "scenario": "Survey clip t=8.0s (both detect foreground feature)",
+      "timestamp_sec": 8.0,
+      "resolution": "1280x720",
+      "det_count_conf025": 2,
+      "det_count_conf050": 0,
+      "det_confs": [
+        0.469,
+        0.258
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.92
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_11_survey_f0080.png"
+    },
+    {
+      "id": "dt_12_survey_f0120",
+      "source": "roadvision-dashboard/public/videos/raw_survey.mp4",
+      "type": "video",
+      "frame": 120,
+      "scenario": "Survey clip t=12.0s (multiple oblique potholes, seg misses)",
+      "timestamp_sec": 12.0,
+      "resolution": "1280x720",
+      "det_count_conf025": 3,
+      "det_count_conf050": 2,
+      "det_confs": [
+        0.803,
+        0.64,
+        0.338
+      ],
+      "seg_count_conf025": 0,
+      "seg_count_conf050": 0,
+      "seg_confs": [],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_12_survey_f0120.png"
+    },
+    {
+      "id": "dt_13_rural_f0060",
+      "source": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+      "type": "video",
+      "frame": 60,
+      "scenario": "Rural dashcam mid-range potholes (both detect)",
+      "timestamp_sec": 2.4,
+      "resolution": "640x360",
+      "det_count_conf025": 2,
+      "det_count_conf050": 2,
+      "det_confs": [
+        0.703,
+        0.604
+      ],
+      "seg_count_conf025": 2,
+      "seg_count_conf050": 1,
+      "seg_confs": [
+        0.77,
+        0.29
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_13_rural_f0060.png"
+    },
+    {
+      "id": "dt_14_rural_f0075",
+      "source": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+      "type": "video",
+      "frame": 75,
+      "scenario": "Rural dashcam close cavities (both detect)",
+      "timestamp_sec": 3.0,
+      "resolution": "640x360",
+      "det_count_conf025": 3,
+      "det_count_conf050": 2,
+      "det_confs": [
+        0.856,
+        0.619,
+        0.295
+      ],
+      "seg_count_conf025": 2,
+      "seg_count_conf050": 2,
+      "seg_confs": [
+        0.777,
+        0.61
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_14_rural_f0075.png"
+    },
+    {
+      "id": "dt_15_rural_f0105",
+      "source": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+      "type": "video",
+      "frame": 105,
+      "scenario": "Rural dashcam small/distant potholes (det=5, seg=0)",
+      "timestamp_sec": 4.2,
+      "resolution": "640x360",
+      "det_count_conf025": 5,
+      "det_count_conf050": 2,
+      "det_confs": [
+        0.862,
+        0.678,
+        0.435,
+        0.4,
+        0.383
+      ],
+      "seg_count_conf025": 0,
+      "seg_count_conf050": 0,
+      "seg_confs": [],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_15_rural_f0105.png"
+    },
+    {
+      "id": "dt_16_rural_f0150",
+      "source": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+      "type": "video",
+      "frame": 150,
+      "scenario": "Rural dashcam sunlit multi-pothole cluster (det=5, seg=1 weak)",
+      "timestamp_sec": 6.0,
+      "resolution": "640x360",
+      "det_count_conf025": 5,
+      "det_count_conf050": 4,
+      "det_confs": [
+        0.848,
+        0.816,
+        0.793,
+        0.595,
+        0.313
+      ],
+      "seg_count_conf025": 1,
+      "seg_count_conf050": 0,
+      "seg_confs": [
+        0.254
+      ],
+      "viz_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_dashcam_transfer\\dt_16_rural_f0150.png"
+    }
+  ]
+}

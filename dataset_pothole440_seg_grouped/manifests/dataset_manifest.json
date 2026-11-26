@@ -1,0 +1,110 @@
+{
+  "manifest_version": "dataset_pothole440_seg_grouped_v1_frozen",
+  "seed": 42,
+  "polygon_conversion_settings": {
+    "contour_mode": "cv2.RETR_EXTERNAL",
+    "chain_approx": "cv2.CHAIN_APPROX_SIMPLE",
+    "approx_poly_dp_epsilon_factor": 0.0005,
+    "class_id": 0,
+    "class_name": "pothole"
+  },
+  "summary_counts": {
+    "source_total_triplets": 440,
+    "unique_base_groups": 98,
+    "dispositions": {
+      "INCLUDED_TRAIN": 301,
+      "QUARANTINED_EMPTY_MASK": 6,
+      "EXCLUDED_TEST_AUGMENTATION": 52,
+      "INCLUDED_TEST": 15,
+      "INCLUDED_VAL": 15,
+      "EXCLUDED_VAL_AUGMENTATION": 51
+    },
+    "splits": {
+      "train": {
+        "base_groups": 68,
+        "images": 301,
+        "originals": 67,
+        "augmented": 234,
+        "polygons_total": 321,
+        "sessions": {
+          "2022_05_22": 78,
+          "2022_05_23": 8,
+          "2022_05_25": 20,
+          "2022_06_01": 64,
+          "2022_06_02": 16,
+          "2022_06_03": 97,
+          "2022_06_04": 18
+        }
+      },
+      "val": {
+        "base_groups": 15,
+        "images": 15,
+        "originals": 15,
+        "augmented": 0,
+        "polygons_total": 15,
+        "sessions": {
+          "2022_05_22": 2,
+          "2022_05_23": 1,
+          "2022_05_25": 1,
+          "2022_06_01": 4,
+          "2022_06_02": 1,
+          "2022_06_03": 5,
+          "2022_06_04": 1
+        }
+      },
+      "test": {
+        "base_groups": 15,
+        "images": 15,
+        "originals": 15,
+        "augmented": 0,
+        "polygons_total": 15,
+        "sessions": {
+          "2022_05_22": 3,
+          "2022_05_23": 1,
+          "2022_05_25": 1,
+          "2022_06_01": 3,
+          "2022_06_02": 1,
+          "2022_06_03": 5,
+          "2022_06_04": 1
+        }
+      }
+    }
+  },
+  "polygon_conversion_quality": {
+    "total_masks_converted": 331,
+    "total_polygons_written": 351,
+    "iou": {
+      "mean": 0.99838,
+      "median": 0.99834,
+      "p05": 0.9962,
+      "p10": 0.99722,
+      "min": 0.99113,
+      "max": 1.0
+    },
+    "dice": {
+      "mean": 0.99919,
+      "median": 0.99917,
+      "p05": 0.9981,
+      "p10": 0.99861,
+      "min": 0.99555,
+      "max": 1.0
+    },
+    "flagged_iou_lt_0_96_count": 0,
+    "flagged_iou_lt_0_96": []
+  },
+  "leakage_and_integrity_verification": {
+    "cross_split_base_group_overlap": {
+      "train_val": [],
+      "train_test": [],
+      "val_test": []
+    },
+    "cross_split_exact_rgb_sha256_overlap": {
+      "train_val": 0,
+      "train_test": 0,
+      "val_test": 0
+    },
+    "cross_split_perceptual_matches_dhash_phash_le_6": [],
+    "image_label_pair_mismatches": [],
+    "coordinate_integrity_errors": []
+  }
+}

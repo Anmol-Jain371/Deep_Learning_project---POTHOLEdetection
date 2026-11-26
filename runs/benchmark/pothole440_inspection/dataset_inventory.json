@@ -1,0 +1,787 @@
+{
+  "dataset_root": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\Pothole440-main\\Pothole440-main",
+  "top_level_entries": [
+    "LICENSE",
+    "README.md",
+    "model",
+    "test",
+    "train",
+    "university-of-manitoba-logo.jpg",
+    "val"
+  ],
+  "annotations_dir_present": false,
+  "total_triplets": 440,
+  "splits": {
+    "train": {
+      "split": "train",
+      "rgb_count": 350,
+      "mask_count": 350,
+      "depth_count": 350,
+      "matched_triplets": 350,
+      "unmatched": [],
+      "corrupted": [],
+      "aligned_count": 350,
+      "resolutions": {
+        "1200x800": 350
+      },
+      "rgb_dtypes": {
+        "uint8": 350
+      },
+      "mask_dtypes": {
+        "uint8": 350
+      },
+      "mask_unique_values": [
+        0,
+        255
+      ],
+      "depth_dtypes": {
+        "uint8": 350
+      },
+      "depth_channels": {
+        "1": 350
+      },
+      "depth_all_channels_identical": true,
+      "depth_png_info_keys": [],
+      "sessions": {
+        "2022_05_22": 90,
+        "2022_05_23": 14,
+        "2022_05_25": 22,
+        "2022_06_01": 77,
+        "2022_06_02": 22,
+        "2022_06_03": 107,
+        "2022_06_04": 18
+      },
+      "sample_count": 350,
+      "fg_coverage_pct_stats": {
+        "min": 0.0,
+        "median": 6.245,
+        "mean": 8.679,
+        "max": 59.562
+      },
+      "connected_components_hist": {
+        "0": 3,
+        "1": 338,
+        "2": 1,
+        "3": 4,
+        "4": 4
+      },
+      "yolo_valid_contour_images": 347,
+      "depth_min_across_split": 0,
+      "depth_max_across_split": 190
+    },
+    "val": {
+      "split": "val",
+      "rgb_count": 50,
+      "mask_count": 50,
+      "depth_count": 50,
+      "matched_triplets": 50,
+      "unmatched": [],
+      "corrupted": [],
+      "aligned_count": 50,
+      "resolutions": {
+        "1200x800": 50
+      },
+      "rgb_dtypes": {
+        "uint8": 50
+      },
+      "mask_dtypes": {
+        "uint8": 50
+      },
+      "mask_unique_values": [
+        0,
+        255
+      ],
+      "depth_dtypes": {
+        "uint8": 50
+      },
+      "depth_channels": {
+        "1": 50
+      },
+      "depth_all_channels_identical": true,
+      "depth_png_info_keys": [],
+      "sessions": {
+        "2022_05_22": 13,
+        "2022_05_25": 4,
+        "2022_06_01": 12,
+        "2022_06_02": 1,
+        "2022_06_03": 16,
+        "2022_06_04": 4
+      },
+      "sample_count": 50,
+      "fg_coverage_pct_stats": {
+        "min": 0.0,
+        "median": 6.456,
+        "mean": 7.812,
+        "max": 33.336
+      },
+      "connected_components_hist": {
+        "0": 2,
+        "1": 48
+      },
+      "yolo_valid_contour_images": 48,
+      "depth_min_across_split": 0,
+      "depth_max_across_split": 183
+    },
+    "test": {
+      "split": "test",
+      "rgb_count": 40,
+      "mask_count": 40,
+      "depth_count": 40,
+      "matched_triplets": 40,
+      "unmatched": [],
+      "corrupted": [],
+      "aligned_count": 40,
+      "resolutions": {
+        "1200x800": 40
+      },
+      "rgb_dtypes": {
+        "uint8": 40
+      },
+      "mask_dtypes": {
+        "uint8": 40
+      },
+      "mask_unique_values": [
+        0,
+        255
+      ],
+      "depth_dtypes": {
+        "uint8": 40
+      },
+      "depth_channels": {
+        "1": 40
+      },
+      "depth_all_channels_identical": true,
+      "depth_png_info_keys": [],
+      "sessions": {
+        "2022_05_22": 15,
+        "2022_05_23": 2,
+        "2022_05_25": 2,
+        "2022_06_01": 3,
+        "2022_06_02": 1,
+        "2022_06_03": 14,
+        "2022_06_04": 3
+      },
+      "sample_count": 40,
+      "fg_coverage_pct_stats": {
+        "min": 0.0,
+        "median": 6.405,
+        "mean": 8.511,
+        "max": 33.748
+      },
+      "connected_components_hist": {
+        "0": 1,
+        "1": 39
+      },
+      "yolo_valid_contour_images": 39,
+      "depth_min_across_split": 0,
+      "depth_max_across_split": 189
+    }
+  },
+  "depth_encoding_summary_train_val": {
+    "images_analyzed": 400,
+    "images_with_nonempty_mask": 395,
+    "images_with_empty_mask": [
+      "train/2022_05_22_pothole_11_horizantal_aug5.png",
+      "train/2022_05_22_pothole_15_aug20.png",
+      "train/2022_05_22_pothole_21_horizantal_vertical_aug46.png",
+      "val/2022_05_22_pothole_12_vertical_aug11.png",
+      "val/2022_05_22_pothole_19_vertical_aug39.png"
+    ],
+    "outside_zero_frac_min": 0.0,
+    "outside_zero_frac_median": 0.0,
+    "outside_zero_frac_mean": 0.0037,
+    "outside_zero_frac_max": 0.2022,
+    "inside_zero_frac_median": 0.0,
+    "inside_mean_range": [
+      109.15,
+      175.75
+    ],
+    "inside_mean_median": 146.04,
+    "outside_mean_range": [
+      2.0,
+      140.88
+    ],
+    "outside_mean_median": 91.04,
+    "annular_rim_median_range": [
+      1.0,
+      149.0
+    ],
+    "count_inside_gt_outside": 395,
+    "count_inside_lt_outside": 0,
+    "count_outside_all_zero_ge99pct": 0,
+    "count_outside_mostly_nonzero_lt5pct_zero": 391
+  },
+  "quality_and_leakage_audit": {
+    "exact_rgb_sha256_duplicates": [],
+    "exact_mask_sha256_duplicates": [
+      [
+        "train/2022_05_22_pothole_11_horizantal_aug5.png",
+        "train/2022_05_22_pothole_15_aug20.png",
+        "train/2022_05_22_pothole_21_horizantal_vertical_aug46.png",
+        "val/2022_05_22_pothole_12_vertical_aug11.png",
+        "val/2022_05_22_pothole_19_vertical_aug39.png",
+        "test/2022_05_22_pothole_11_vertical_aug7.png"
+      ],
+      [
+        "train/2022_05_22_pothole_15_horizantal_vertical_aug22.png",
+        "test/2022_05_22_pothole_15_vertical_aug23.png"
+      ]
+    ],
+    "exact_depth_sha256_duplicates": [
+      [
+        "train/2022_05_22_pothole_15_horizantal_vertical_aug22.png",
+        "test/2022_05_22_pothole_15_vertical_aug23.png"
+      ],
+      [
+        "train/2022_05_22_pothole_17_horizantal_aug29.png",
+        "test/2022_05_22_pothole_17_aug28.png"
+      ],
+      [
+        "train/2022_05_22_pothole_21_aug44.png",
+        "train/2022_05_22_pothole_21_horizantal_aug45.png"
+      ]
+    ],
+    "cross_split_perceptual_near_dups_count": 10,
+    "cross_split_both_dhash_phash_le_6": [
+      {
+        "a": "train/2022_05_22_pothole_12_aug8.png",
+        "b": "test/2022_05_22_pothole_12.png",
+        "dhash_dist": 2,
+        "phash_dist": 2,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_14_horizantal.png",
+        "b": "val/2022_05_22_pothole_14_horizantal_aug17.png",
+        "dhash_dist": 1,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_15_horizantal_vertical_aug22.png",
+        "b": "test/2022_05_22_pothole_15_horizantal_vertical.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_15_horizantal_vertical_aug22.png",
+        "b": "test/2022_05_22_pothole_15_vertical_aug23.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_16.png",
+        "b": "val/2022_05_22_pothole_16_aug24.png",
+        "dhash_dist": 1,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_17.png",
+        "b": "test/2022_05_22_pothole_17_aug28.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_17_horizantal_aug29.png",
+        "b": "test/2022_05_22_pothole_17_aug28.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_20.png",
+        "b": "val/2022_05_22_pothole_20_horizantal_aug41.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_20_horizantal.png",
+        "b": "test/2022_05_22_pothole_20_aug40.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_23.png",
+        "b": "val/2022_05_22_pothole_23_horizantal_aug53.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      }
+    ],
+    "cross_split_perceptual_near_dups_sample": [
+      {
+        "a": "train/2022_05_22_pothole_12_aug8.png",
+        "b": "test/2022_05_22_pothole_12.png",
+        "dhash_dist": 2,
+        "phash_dist": 2,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_14_horizantal.png",
+        "b": "val/2022_05_22_pothole_14_horizantal_aug17.png",
+        "dhash_dist": 1,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_15_horizantal_vertical_aug22.png",
+        "b": "test/2022_05_22_pothole_15_horizantal_vertical.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_15_horizantal_vertical_aug22.png",
+        "b": "test/2022_05_22_pothole_15_vertical_aug23.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_16.png",
+        "b": "val/2022_05_22_pothole_16_aug24.png",
+        "dhash_dist": 1,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_17.png",
+        "b": "test/2022_05_22_pothole_17_aug28.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_17_horizantal_aug29.png",
+        "b": "test/2022_05_22_pothole_17_aug28.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_20.png",
+        "b": "val/2022_05_22_pothole_20_horizantal_aug41.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_20_horizantal.png",
+        "b": "test/2022_05_22_pothole_20_aug40.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      },
+      {
+        "a": "train/2022_05_22_pothole_23.png",
+        "b": "val/2022_05_22_pothole_23_horizantal_aug53.png",
+        "dhash_dist": 0,
+        "phash_dist": 0,
+        "both_le_6": true
+      }
+    ],
+    "within_split_perceptual_near_dups_counts": {
+      "train": 18,
+      "test": 2
+    },
+    "session_dates_train": [
+      "2022_05_22",
+      "2022_05_23",
+      "2022_05_25",
+      "2022_06_01",
+      "2022_06_02",
+      "2022_06_03",
+      "2022_06_04"
+    ],
+    "session_dates_val": [
+      "2022_05_22",
+      "2022_05_25",
+      "2022_06_01",
+      "2022_06_02",
+      "2022_06_03",
+      "2022_06_04"
+    ],
+    "session_dates_test": [
+      "2022_05_22",
+      "2022_05_23",
+      "2022_05_25",
+      "2022_06_01",
+      "2022_06_02",
+      "2022_06_03",
+      "2022_06_04"
+    ],
+    "session_overlap_train_val": [
+      "2022_05_22",
+      "2022_05_25",
+      "2022_06_01",
+      "2022_06_02",
+      "2022_06_03",
+      "2022_06_04"
+    ],
+    "session_overlap_train_test": [
+      "2022_05_22",
+      "2022_05_23",
+      "2022_05_25",
+      "2022_06_01",
+      "2022_06_02",
+      "2022_06_03",
+      "2022_06_04"
+    ]
+  },
+  "visualized_train_samples": [
+    {
+      "index": 1,
+      "stem": "2022_05_22_pothole_16_vertical_aug27",
+      "session_date": "2022_05_22",
+      "fg_coverage_pct": 0.524,
+      "connected_components": 2,
+      "depth_range": [
+        82,
+        131
+      ],
+      "depth_stats": {
+        "inside_mean": 109.15,
+        "inside_median": 109.0,
+        "inside_min": 106,
+        "inside_max": 113,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 104.0,
+        "outside_median": 101.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 101.0,
+        "annular_rim_mean": 106.73,
+        "annular_rim_median": 106.0,
+        "centroid": [
+          825.6,
+          8.4
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_01_2022_05_22_pothole_16_vertical_aug27.png"
+    },
+    {
+      "index": 2,
+      "stem": "2022_05_23_pothole_4",
+      "session_date": "2022_05_23",
+      "fg_coverage_pct": 7.18,
+      "connected_components": 1,
+      "depth_range": [
+        66,
+        177
+      ],
+      "depth_stats": {
+        "inside_mean": 157.15,
+        "inside_median": 158.0,
+        "inside_min": 116,
+        "inside_max": 177,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 86.33,
+        "outside_median": 73.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 73.0,
+        "annular_rim_mean": 121.39,
+        "annular_rim_median": 120.0,
+        "centroid": [
+          705.9,
+          461.4
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_02_2022_05_23_pothole_4.png"
+    },
+    {
+      "index": 3,
+      "stem": "2022_05_25_pothole_1",
+      "session_date": "2022_05_25",
+      "fg_coverage_pct": 11.649,
+      "connected_components": 1,
+      "depth_range": [
+        88,
+        162
+      ],
+      "depth_stats": {
+        "inside_mean": 133.28,
+        "inside_median": 131.0,
+        "inside_min": 95,
+        "inside_max": 162,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 105.93,
+        "outside_median": 102.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 102.0,
+        "annular_rim_mean": 121.33,
+        "annular_rim_median": 123.0,
+        "centroid": [
+          905.4,
+          434.9
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_03_2022_05_25_pothole_1.png"
+    },
+    {
+      "index": 4,
+      "stem": "2022_06_01_pothole_3",
+      "session_date": "2022_06_01",
+      "fg_coverage_pct": 1.33,
+      "connected_components": 1,
+      "depth_range": [
+        90,
+        179
+      ],
+      "depth_stats": {
+        "inside_mean": 163.69,
+        "inside_median": 169.0,
+        "inside_min": 117,
+        "inside_max": 179,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 99.29,
+        "outside_median": 95.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 95.0,
+        "annular_rim_mean": 132.22,
+        "annular_rim_median": 131.0,
+        "centroid": [
+          657.6,
+          401.0
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_04_2022_06_01_pothole_3.png"
+    },
+    {
+      "index": 5,
+      "stem": "2022_06_02_pothole_5",
+      "session_date": "2022_06_02",
+      "fg_coverage_pct": 4.795,
+      "connected_components": 1,
+      "depth_range": [
+        85,
+        177
+      ],
+      "depth_stats": {
+        "inside_mean": 143.35,
+        "inside_median": 140.0,
+        "inside_min": 85,
+        "inside_max": 176,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 103.81,
+        "outside_median": 94.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 94.0,
+        "annular_rim_mean": 130.59,
+        "annular_rim_median": 132.0,
+        "centroid": [
+          636.7,
+          303.6
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_05_2022_06_02_pothole_5.png"
+    },
+    {
+      "index": 6,
+      "stem": "2022_06_03_pothole_28_vertical",
+      "session_date": "2022_06_03",
+      "fg_coverage_pct": 33.749,
+      "connected_components": 1,
+      "depth_range": [
+        9,
+        187
+      ],
+      "depth_stats": {
+        "inside_mean": 147.59,
+        "inside_median": 158.0,
+        "inside_min": 21,
+        "inside_max": 187,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 39.6,
+        "outside_median": 29.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 29.0,
+        "annular_rim_mean": 77.94,
+        "annular_rim_median": 84.0,
+        "centroid": [
+          763.8,
+          373.8
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_06_2022_06_03_pothole_28_vertical.png"
+    },
+    {
+      "index": 7,
+      "stem": "2022_06_04_pothole_10",
+      "session_date": "2022_06_04",
+      "fg_coverage_pct": 0.826,
+      "connected_components": 1,
+      "depth_range": [
+        80,
+        164
+      ],
+      "depth_stats": {
+        "inside_mean": 151.59,
+        "inside_median": 155.0,
+        "inside_min": 135,
+        "inside_max": 164,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 91.04,
+        "outside_median": 85.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 85.0,
+        "annular_rim_mean": 137.14,
+        "annular_rim_median": 137.0,
+        "centroid": [
+          687.9,
+          357.1
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_07_2022_06_04_pothole_10.png"
+    },
+    {
+      "index": 8,
+      "stem": "2022_06_04_pothole_10_horizantal",
+      "session_date": "2022_06_04",
+      "fg_coverage_pct": 0.826,
+      "connected_components": 1,
+      "depth_range": [
+        80,
+        164
+      ],
+      "depth_stats": {
+        "inside_mean": 151.59,
+        "inside_median": 155.0,
+        "inside_min": 135,
+        "inside_max": 164,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 91.04,
+        "outside_median": 85.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 85.0,
+        "annular_rim_mean": 137.14,
+        "annular_rim_median": 137.0,
+        "centroid": [
+          511.1,
+          357.0
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_08_2022_06_04_pothole_10_horizantal.png"
+    },
+    {
+      "index": 9,
+      "stem": "2022_06_03_pothole_13_horizantal_vertical",
+      "session_date": "2022_06_03",
+      "fg_coverage_pct": 3.269,
+      "connected_components": 1,
+      "depth_range": [
+        92,
+        166
+      ],
+      "depth_stats": {
+        "inside_mean": 149.79,
+        "inside_median": 151.0,
+        "inside_min": 119,
+        "inside_max": 166,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 110.23,
+        "outside_median": 109.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 109.0,
+        "annular_rim_mean": 127.45,
+        "annular_rim_median": 128.0,
+        "centroid": [
+          531.6,
+          395.5
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_09_2022_06_03_pothole_13_horizantal_vertical.png"
+    },
+    {
+      "index": 10,
+      "stem": "2022_05_22_pothole_23_horizantal",
+      "session_date": "2022_05_22",
+      "fg_coverage_pct": 5.486,
+      "connected_components": 1,
+      "depth_range": [
+        0,
+        171
+      ],
+      "depth_stats": {
+        "inside_mean": 144.65,
+        "inside_median": 150.0,
+        "inside_min": 85,
+        "inside_max": 171,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 13.04,
+        "outside_median": 5.0,
+        "outside_zero_frac": 0.0008,
+        "outside_nonzero_median": 5.0,
+        "annular_rim_mean": 100.6,
+        "annular_rim_median": 110.0,
+        "centroid": [
+          657.5,
+          314.5
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_10_2022_05_22_pothole_23_horizantal.png"
+    },
+    {
+      "index": 11,
+      "stem": "2022_06_03_pothole_7_horizantal",
+      "session_date": "2022_06_03",
+      "fg_coverage_pct": 7.694,
+      "connected_components": 1,
+      "depth_range": [
+        62,
+        160
+      ],
+      "depth_stats": {
+        "inside_mean": 146.04,
+        "inside_median": 147.0,
+        "inside_min": 117,
+        "inside_max": 160,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 78.8,
+        "outside_median": 68.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 68.0,
+        "annular_rim_mean": 133.21,
+        "annular_rim_median": 133.0,
+        "centroid": [
+          516.0,
+          373.2
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_11_2022_06_03_pothole_7_horizantal.png"
+    },
+    {
+      "index": 12,
+      "stem": "2022_06_01_pothole_13_horizantal_vertical",
+      "session_date": "2022_06_01",
+      "fg_coverage_pct": 13.63,
+      "connected_components": 1,
+      "depth_range": [
+        0,
+        166
+      ],
+      "depth_stats": {
+        "inside_mean": 132.73,
+        "inside_median": 147.0,
+        "inside_min": 0,
+        "inside_max": 166,
+        "inside_zero_frac": 0.0,
+        "outside_mean": 36.43,
+        "outside_median": 26.0,
+        "outside_zero_frac": 0.0,
+        "outside_nonzero_median": 26.0,
+        "annular_rim_mean": 89.9,
+        "annular_rim_median": 107.0,
+        "centroid": [
+          643.3,
+          531.3
+        ]
+      },
+      "plot_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\pothole440_inspection\\sample_12_2022_06_01_pothole_13_horizantal_vertical.png"
+    }
+  ]
+}

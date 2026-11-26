@@ -1,0 +1,31 @@
+{
+  "sample_id": "rangoon_unseen_f0160",
+  "session_id": "rangoon_road_unseen_temporal",
+  "source_video": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "frame_number": 160,
+  "timestamp_sec": 6.4,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        219.66,
+        32.03,
+        404.04,
+        66.86
+      ],
+      "det_conf": 0.7366,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "outside_detector_box_spill",
+        "excessive_crop_boundary_contact"
+      ],
+      "seg_conf": 0.7374,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

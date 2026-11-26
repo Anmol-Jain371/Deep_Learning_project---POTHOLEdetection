@@ -1,0 +1,64 @@
+{
+  "sample_id": "rangoon_unseen_f0780",
+  "session_id": "rangoon_road_unseen_temporal",
+  "source_video": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "frame_number": 780,
+  "timestamp_sec": 31.2,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        247.59,
+        76.31,
+        482.46,
+        141.0
+      ],
+      "det_conf": 0.5999,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        303.57,
+        32.77,
+        426.12,
+        69.77
+      ],
+      "det_conf": 0.4473,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        241.8,
+        79.13,
+        435.93,
+        135.6
+      ],
+      "det_conf": 0.3853,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

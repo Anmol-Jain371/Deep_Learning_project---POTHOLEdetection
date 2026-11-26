@@ -1,0 +1,98 @@
+{
+  "sample_id": "rural_unseen_f0150",
+  "session_id": "rural_road_unseen",
+  "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+  "frame_number": 150,
+  "timestamp_sec": 6.0,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        460.81,
+        177.82,
+        574.07,
+        204.14
+      ],
+      "det_conf": 0.8475,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        81.99,
+        157.27,
+        199.5,
+        205.84
+      ],
+      "det_conf": 0.8163,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        542.45,
+        239.91,
+        638.92,
+        354.88
+      ],
+      "det_conf": 0.7928,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 3,
+      "det_box_xyxy": [
+        419.05,
+        128.67,
+        513.6,
+        163.14
+      ],
+      "det_conf": 0.5953,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 4,
+      "det_box_xyxy": [
+        83.23,
+        168.08,
+        195.72,
+        209.9
+      ],
+      "det_conf": 0.3134,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

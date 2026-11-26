@@ -1,0 +1,248 @@
+{
+  "sample_id": "phone_val_frame_0005",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0005.jpg",
+  "frame_number": 5,
+  "timestamp_sec": null,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        1.28,
+        316.51,
+        215.8,
+        398.44
+      ],
+      "det_conf": 0.8922,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        791.91,
+        219.25,
+        1134.96,
+        296.67
+      ],
+      "det_conf": 0.883,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        892.66,
+        397.6,
+        1088.18,
+        461.11
+      ],
+      "det_conf": 0.7729,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 3,
+      "det_box_xyxy": [
+        819.11,
+        312.42,
+        1053.28,
+        368.76
+      ],
+      "det_conf": 0.7569,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "excessive_area_ratio",
+        "outside_detector_box_spill",
+        "excessive_crop_boundary_contact"
+      ],
+      "seg_conf": 0.3023,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 4,
+      "det_box_xyxy": [
+        0.0,
+        474.52,
+        622.82,
+        663.75
+      ],
+      "det_conf": 0.5978,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.3934,
+      "unverified_polygon_px": [
+        [
+          [
+            8,
+            494
+          ],
+          [
+            8,
+            679
+          ],
+          [
+            232,
+            679
+          ],
+          [
+            238,
+            673
+          ],
+          [
+            256,
+            669
+          ],
+          [
+            337,
+            677
+          ],
+          [
+            377,
+            671
+          ],
+          [
+            421,
+            679
+          ],
+          [
+            599,
+            679
+          ],
+          [
+            599,
+            521
+          ],
+          [
+            548,
+            504
+          ],
+          [
+            525,
+            507
+          ],
+          [
+            511,
+            500
+          ],
+          [
+            484,
+            506
+          ],
+          [
+            446,
+            494
+          ],
+          [
+            384,
+            494
+          ],
+          [
+            370,
+            500
+          ],
+          [
+            330,
+            502
+          ],
+          [
+            319,
+            494
+          ],
+          [
+            300,
+            494
+          ],
+          [
+            292,
+            507
+          ],
+          [
+            277,
+            510
+          ],
+          [
+            254,
+            506
+          ],
+          [
+            239,
+            494
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 5,
+      "det_box_xyxy": [
+        205.81,
+        234.74,
+        418.31,
+        279.22
+      ],
+      "det_conf": 0.3926,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 6,
+      "det_box_xyxy": [
+        649.17,
+        283.48,
+        770.39,
+        320.88
+      ],
+      "det_conf": 0.321,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 7,
+      "det_box_xyxy": [
+        851.22,
+        612.98,
+        1074.3,
+        712.99
+      ],
+      "det_conf": 0.3103,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

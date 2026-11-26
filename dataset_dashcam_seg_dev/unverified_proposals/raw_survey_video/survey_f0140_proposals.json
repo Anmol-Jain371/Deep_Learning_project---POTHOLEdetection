@@ -1,0 +1,177 @@
+{
+  "sample_id": "survey_f0140",
+  "session_id": "raw_survey_video",
+  "source_video": "roadvision-dashboard/public/videos/raw_survey.mp4",
+  "frame_number": 140,
+  "timestamp_sec": 14.0,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        381.76,
+        380.12,
+        871.33,
+        526.84
+      ],
+      "det_conf": 0.7794,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.8328,
+      "unverified_polygon_px": [
+        [
+          [
+            261,
+            513
+          ],
+          [
+            747,
+            513
+          ],
+          [
+            767,
+            494
+          ],
+          [
+            799,
+            493
+          ],
+          [
+            834,
+            483
+          ],
+          [
+            856,
+            458
+          ],
+          [
+            857,
+            433
+          ],
+          [
+            831,
+            407
+          ],
+          [
+            816,
+            398
+          ],
+          [
+            792,
+            393
+          ],
+          [
+            766,
+            372
+          ],
+          [
+            370,
+            372
+          ],
+          [
+            368,
+            379
+          ],
+          [
+            377,
+            383
+          ],
+          [
+            377,
+            389
+          ],
+          [
+            356,
+            398
+          ],
+          [
+            349,
+            412
+          ],
+          [
+            351,
+            417
+          ],
+          [
+            345,
+            422
+          ],
+          [
+            352,
+            430
+          ],
+          [
+            341,
+            444
+          ],
+          [
+            320,
+            442
+          ],
+          [
+            314,
+            436
+          ],
+          [
+            298,
+            433
+          ],
+          [
+            293,
+            419
+          ],
+          [
+            283,
+            413
+          ],
+          [
+            268,
+            411
+          ],
+          [
+            261,
+            418
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        250.07,
+        265.77,
+        728.81,
+        389.12
+      ],
+      "det_conf": 0.6774,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "ambiguous_roi_association"
+      ],
+      "seg_conf": 0.6981,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        9.82,
+        384.05,
+        884.22,
+        529.6
+      ],
+      "det_conf": 0.2928,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "ambiguous_roi_association"
+      ],
+      "seg_conf": 0.689,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "sample_id": "rural_unseen_f0000",
+  "session_id": "rural_road_unseen",
+  "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+  "frame_number": 0,
+  "width": 640,
+  "height": 360,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        281.75,
+        226.19,
+        636.83,
+        359.89
+      ],
+      "det_conf": 0.506,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9198,
+      "unverified_polygon_px": [
+        [
+          [
+            363,
+            225
+          ],
+          [
+            366,
+            245
+          ],
+          [
+            390,
+            266
+          ],
+          [
+            393,
+            273
+          ],
+          [
+            403,
+            281
+          ],
+          [
+            408,
+            301
+          ],
+          [
+            405,
+            347
+          ],
+          [
+            408,
+            358
+          ],
+          [
+            632,
+            358
+          ],
+          [
+            639,
+            355
+          ],
+          [
+            639,
+            335
+          ],
+          [
+            634,
+            322
+          ],
+          [
+            602,
+            289
+          ],
+          [
+            587,
+            284
+          ],
+          [
+            585,
+            278
+          ],
+          [
+            576,
+            272
+          ],
+          [
+            575,
+            268
+          ],
+          [
+            566,
+            264
+          ],
+          [
+            562,
+            258
+          ],
+          [
+            551,
+            252
+          ],
+          [
+            551,
+            248
+          ],
+          [
+            528,
+            242
+          ],
+          [
+            532,
+            239
+          ],
+          [
+            529,
+            236
+          ],
+          [
+            497,
+            235
+          ],
+          [
+            492,
+            237
+          ],
+          [
+            473,
+            232
+          ],
+          [
+            466,
+            234
+          ],
+          [
+            462,
+            231
+          ],
+          [
+            521,
+            228
+          ],
+          [
+            471,
+            225
+          ],
+          [
+            443,
+            227
+          ],
+          [
+            441,
+            218
+          ],
+          [
+            423,
+            217
+          ],
+          [
+            420,
+            213
+          ],
+          [
+            400,
+            213
+          ],
+          [
+            388,
+            218
+          ],
+          [
+            376,
+            218
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    }
+  ]
+}

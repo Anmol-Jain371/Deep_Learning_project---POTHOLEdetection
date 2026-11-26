@@ -1,0 +1,264 @@
+{
+  "sample_id": "rangoon_unseen_f0655",
+  "session_id": "rangoon_road_unseen_temporal",
+  "source_video": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "frame_number": 655,
+  "timestamp_sec": 26.2,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        323.16,
+        96.05,
+        478.46,
+        167.8
+      ],
+      "det_conf": 0.4788,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        0.63,
+        195.49,
+        385.06,
+        348.96
+      ],
+      "det_conf": 0.2759,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.5072,
+      "unverified_polygon_px": [
+        [
+          [
+            104,
+            238
+          ],
+          [
+            104,
+            252
+          ],
+          [
+            111,
+            255
+          ],
+          [
+            110,
+            259
+          ],
+          [
+            104,
+            262
+          ],
+          [
+            104,
+            277
+          ],
+          [
+            110,
+            277
+          ],
+          [
+            115,
+            283
+          ],
+          [
+            114,
+            301
+          ],
+          [
+            109,
+            312
+          ],
+          [
+            109,
+            320
+          ],
+          [
+            104,
+            326
+          ],
+          [
+            104,
+            345
+          ],
+          [
+            122,
+            352
+          ],
+          [
+            110,
+            359
+          ],
+          [
+            318,
+            359
+          ],
+          [
+            321,
+            357
+          ],
+          [
+            322,
+            335
+          ],
+          [
+            318,
+            329
+          ],
+          [
+            315,
+            312
+          ],
+          [
+            306,
+            298
+          ],
+          [
+            299,
+            278
+          ],
+          [
+            295,
+            275
+          ],
+          [
+            291,
+            277
+          ],
+          [
+            277,
+            267
+          ],
+          [
+            264,
+            266
+          ],
+          [
+            261,
+            262
+          ],
+          [
+            287,
+            259
+          ],
+          [
+            291,
+            266
+          ],
+          [
+            295,
+            266
+          ],
+          [
+            298,
+            260
+          ],
+          [
+            314,
+            259
+          ],
+          [
+            322,
+            264
+          ],
+          [
+            322,
+            238
+          ],
+          [
+            209,
+            238
+          ],
+          [
+            203,
+            255
+          ],
+          [
+            199,
+            254
+          ],
+          [
+            194,
+            245
+          ],
+          [
+            197,
+            238
+          ],
+          [
+            172,
+            238
+          ],
+          [
+            169,
+            242
+          ],
+          [
+            164,
+            241
+          ],
+          [
+            163,
+            246
+          ],
+          [
+            151,
+            254
+          ],
+          [
+            143,
+            255
+          ],
+          [
+            140,
+            263
+          ],
+          [
+            121,
+            259
+          ],
+          [
+            114,
+            245
+          ],
+          [
+            118,
+            238
+          ],
+          [
+            128,
+            238
+          ],
+          [
+            132,
+            242
+          ],
+          [
+            141,
+            243
+          ],
+          [
+            150,
+            242
+          ],
+          [
+            148,
+            238
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

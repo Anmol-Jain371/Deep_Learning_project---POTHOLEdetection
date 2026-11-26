@@ -1,0 +1,12 @@
+{
+  "sample_id": "survey_f0040",
+  "session_id": "raw_survey_video",
+  "source_video": "roadvision-dashboard/public/videos/raw_survey.mp4",
+  "frame_number": 40,
+  "timestamp_sec": 4.0,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": []
+}

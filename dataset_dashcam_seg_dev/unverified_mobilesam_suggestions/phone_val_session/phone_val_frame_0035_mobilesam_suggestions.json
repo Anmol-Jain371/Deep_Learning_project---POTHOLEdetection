@@ -1,0 +1,338 @@
+{
+  "sample_id": "phone_val_frame_0035",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0035.jpg",
+  "frame_number": 35,
+  "width": 1280,
+  "height": 720,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        922.74,
+        266.15,
+        1280.0,
+        423.82
+      ],
+      "det_conf": 0.8207,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9811,
+      "unverified_polygon_px": [
+        [
+          [
+            960,
+            295
+          ],
+          [
+            959,
+            312
+          ],
+          [
+            962,
+            316
+          ],
+          [
+            976,
+            322
+          ],
+          [
+            999,
+            339
+          ],
+          [
+            1039,
+            354
+          ],
+          [
+            1061,
+            357
+          ],
+          [
+            1095,
+            368
+          ],
+          [
+            1133,
+            374
+          ],
+          [
+            1157,
+            372
+          ],
+          [
+            1183,
+            376
+          ],
+          [
+            1205,
+            385
+          ],
+          [
+            1253,
+            393
+          ],
+          [
+            1279,
+            393
+          ],
+          [
+            1279,
+            310
+          ],
+          [
+            1257,
+            303
+          ],
+          [
+            1218,
+            300
+          ],
+          [
+            1165,
+            291
+          ],
+          [
+            1134,
+            291
+          ],
+          [
+            1103,
+            286
+          ],
+          [
+            1053,
+            286
+          ],
+          [
+            1027,
+            279
+          ],
+          [
+            983,
+            276
+          ],
+          [
+            970,
+            278
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        359.86,
+        437.57,
+        992.93,
+        586.75
+      ],
+      "det_conf": 0.8114,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.959,
+      "unverified_polygon_px": [
+        [
+          [
+            385,
+            512
+          ],
+          [
+            387,
+            518
+          ],
+          [
+            395,
+            510
+          ],
+          [
+            402,
+            517
+          ],
+          [
+            399,
+            537
+          ],
+          [
+            405,
+            548
+          ],
+          [
+            406,
+            565
+          ],
+          [
+            416,
+            572
+          ],
+          [
+            428,
+            574
+          ],
+          [
+            443,
+            570
+          ],
+          [
+            457,
+            574
+          ],
+          [
+            462,
+            567
+          ],
+          [
+            477,
+            572
+          ],
+          [
+            529,
+            573
+          ],
+          [
+            592,
+            566
+          ],
+          [
+            604,
+            576
+          ],
+          [
+            637,
+            575
+          ],
+          [
+            646,
+            581
+          ],
+          [
+            655,
+            578
+          ],
+          [
+            676,
+            583
+          ],
+          [
+            721,
+            573
+          ],
+          [
+            743,
+            578
+          ],
+          [
+            786,
+            564
+          ],
+          [
+            792,
+            557
+          ],
+          [
+            936,
+            539
+          ],
+          [
+            976,
+            524
+          ],
+          [
+            979,
+            518
+          ],
+          [
+            978,
+            507
+          ],
+          [
+            970,
+            502
+          ],
+          [
+            899,
+            492
+          ],
+          [
+            860,
+            498
+          ],
+          [
+            772,
+            496
+          ],
+          [
+            741,
+            481
+          ],
+          [
+            727,
+            450
+          ],
+          [
+            685,
+            447
+          ],
+          [
+            647,
+            432
+          ],
+          [
+            589,
+            431
+          ],
+          [
+            561,
+            441
+          ],
+          [
+            475,
+            445
+          ],
+          [
+            450,
+            450
+          ],
+          [
+            431,
+            465
+          ],
+          [
+            420,
+            481
+          ],
+          [
+            400,
+            488
+          ],
+          [
+            394,
+            509
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        1021.02,
+        539.3,
+        1273.2,
+        706.28
+      ],
+      "det_conf": 0.5651,
+      "mobilesam_accepted": false,
+      "rejection_reasons": [
+        "excessive_fragmentation"
+      ],
+      "sam_iou_pred": 0.8655,
+      "unverified_polygon_px": [],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    }
+  ]
+}

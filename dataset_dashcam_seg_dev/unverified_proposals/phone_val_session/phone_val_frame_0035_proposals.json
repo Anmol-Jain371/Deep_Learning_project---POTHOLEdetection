@@ -1,0 +1,303 @@
+{
+  "sample_id": "phone_val_frame_0035",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0035.jpg",
+  "frame_number": 35,
+  "timestamp_sec": null,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        922.74,
+        266.15,
+        1280.0,
+        423.82
+      ],
+      "det_conf": 0.8207,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.5515,
+      "unverified_polygon_px": [
+        [
+          [
+            890,
+            210
+          ],
+          [
+            889,
+            209
+          ],
+          [
+            889,
+            208
+          ],
+          [
+            879,
+            208
+          ],
+          [
+            875,
+            212
+          ],
+          [
+            873,
+            212
+          ],
+          [
+            872,
+            213
+          ],
+          [
+            871,
+            213
+          ],
+          [
+            869,
+            215
+          ],
+          [
+            874,
+            215
+          ],
+          [
+            875,
+            216
+          ],
+          [
+            876,
+            216
+          ],
+          [
+            877,
+            217
+          ],
+          [
+            885,
+            217
+          ],
+          [
+            887,
+            215
+          ],
+          [
+            888,
+            215
+          ],
+          [
+            888,
+            214
+          ],
+          [
+            890,
+            212
+          ]
+        ],
+        [
+          [
+            847,
+            208
+          ],
+          [
+            847,
+            380
+          ],
+          [
+            853,
+            374
+          ],
+          [
+            863,
+            380
+          ],
+          [
+            860,
+            362
+          ],
+          [
+            872,
+            355
+          ],
+          [
+            885,
+            356
+          ],
+          [
+            885,
+            380
+          ],
+          [
+            958,
+            379
+          ],
+          [
+            945,
+            359
+          ],
+          [
+            920,
+            349
+          ],
+          [
+            892,
+            349
+          ],
+          [
+            874,
+            338
+          ],
+          [
+            872,
+            326
+          ],
+          [
+            909,
+            330
+          ],
+          [
+            931,
+            348
+          ],
+          [
+            970,
+            348
+          ],
+          [
+            982,
+            365
+          ],
+          [
+            1005,
+            380
+          ],
+          [
+            1278,
+            380
+          ],
+          [
+            1278,
+            208
+          ],
+          [
+            1271,
+            208
+          ],
+          [
+            1266,
+            226
+          ],
+          [
+            1261,
+            208
+          ],
+          [
+            902,
+            208
+          ],
+          [
+            914,
+            217
+          ],
+          [
+            943,
+            214
+          ],
+          [
+            979,
+            225
+          ],
+          [
+            973,
+            231
+          ],
+          [
+            961,
+            226
+          ],
+          [
+            940,
+            228
+          ],
+          [
+            944,
+            231
+          ],
+          [
+            930,
+            253
+          ],
+          [
+            922,
+            240
+          ],
+          [
+            919,
+            248
+          ],
+          [
+            898,
+            252
+          ],
+          [
+            892,
+            247
+          ],
+          [
+            895,
+            230
+          ],
+          [
+            891,
+            225
+          ],
+          [
+            863,
+            219
+          ],
+          [
+            863,
+            208
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        359.86,
+        437.57,
+        992.93,
+        586.75
+      ],
+      "det_conf": 0.8114,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        1021.02,
+        539.3,
+        1273.2,
+        706.28
+      ],
+      "det_conf": 0.5651,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

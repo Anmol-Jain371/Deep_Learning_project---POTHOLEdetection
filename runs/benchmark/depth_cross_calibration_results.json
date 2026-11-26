@@ -1,0 +1,1021 @@
+{
+  "experiment": "Phase 3A Independent Physical Depth Calibration Validation",
+  "manifest_path": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\depth_ground_truth_manifest.csv",
+  "manifest_sha256": "7f4761a3fbcbb84cc1427f0e95aa6a90d288ace5cb8bbd013d7826e1dc493b48",
+  "baseline_report_sha256": "348b453468e19690644e44626aa7301a83c14f54a7bbaec72062b18605554c98",
+  "camera_params_sha256": "0c7633f330a8b5c15a1696b85d81e9ca6d32e3cac1c1c237cfff8e576e789af1",
+  "fixed_exponent": 1.35,
+  "sample_independence_audit": {
+    "total_manifest_rows": 15,
+    "independent_physical_identity_verified": false,
+    "verified_independent_pothole_groups": null,
+    "reason": "No physical pothole group IDs, field ruler logs, raw disparity deltas, or bounding-box pixel coordinates are recorded; all 15 timestamps fall monotonically within 0.8s-16.0s of a single continuous 40.2s video; P01/P02 match synthetic test rows T01/T02; and live pipeline predictions at those timestamps do not match Estimated_Depth_cm."
+  },
+  "baseline_reproduction_check": {
+    "prior_mae_cm": 0.56,
+    "reproduced_mae_cm": 0.56,
+    "prior_rmse_cm": 0.59,
+    "reproduced_rmse_cm": 0.59,
+    "prior_mape_pct": 9.5,
+    "reproduced_mape_pct": 9.5,
+    "prior_concordance_pct": 100.0,
+    "reproduced_concordance_pct": 100.0
+  },
+  "loo_coefficient_variation": {
+    "mean": 0.07664,
+    "std": 0.000214,
+    "min": 0.076123,
+    "max": 0.07695,
+    "median": 0.076697,
+    "coeff_of_variation_pct": 0.279
+  },
+  "methods": {
+    "fixed_0.082": {
+      "method": "Fixed k_disp = 0.082 (Baseline)",
+      "provenance": "Pre-existing engine constant predating manifest population",
+      "sample_count": 15,
+      "mae_cm": 0.56,
+      "mae_ci95_bootstrap": [
+        0.4733,
+        0.6533
+      ],
+      "rmse_cm": 0.5888,
+      "rmse_ci95_bootstrap": [
+        0.4906,
+        0.6861
+      ],
+      "mape_pct": 9.55,
+      "mape_pct_1dec": 9.5,
+      "mbe_cm": 0.4267,
+      "mbe_ci95_bootstrap": [
+        0.2067,
+        0.6133
+      ],
+      "medae_cm": 0.5,
+      "maxae_cm": 0.9,
+      "severity_concordance_with_water_pct": 100.0,
+      "severity_concordance_depth_only_pct": 100.0,
+      "confusion_matrix_with_water": {
+        "MILD": {
+          "MILD": 4,
+          "MODERATE": 0,
+          "SEVERE": 0
+        },
+        "MODERATE": {
+          "MILD": 0,
+          "MODERATE": 6,
+          "SEVERE": 0
+        },
+        "SEVERE": {
+          "MILD": 0,
+          "MODERATE": 0,
+          "SEVERE": 5
+        }
+      },
+      "distance_bands": {
+        "2-5m": {
+          "samples": 4,
+          "mae_cm": 0.4,
+          "rmse_cm": 0.4,
+          "mbe_cm": 0.2,
+          "concordance_pct": 100.0
+        },
+        "5-8m": {
+          "samples": 4,
+          "mae_cm": 0.575,
+          "rmse_cm": 0.5937,
+          "mbe_cm": 0.575,
+          "concordance_pct": 100.0
+        },
+        "8-11m": {
+          "samples": 4,
+          "mae_cm": 0.575,
+          "rmse_cm": 0.5852,
+          "mbe_cm": 0.275,
+          "concordance_pct": 100.0
+        },
+        "11-15m": {
+          "samples": 3,
+          "mae_cm": 0.7333,
+          "rmse_cm": 0.7703,
+          "mbe_cm": 0.7333,
+          "concordance_pct": 100.0
+        }
+      },
+      "dry_vs_water": {
+        "dry": {
+          "count": 13,
+          "mae_cm": 0.5154,
+          "rmse_cm": 0.5371,
+          "mbe_cm": 0.3615,
+          "medae_cm": 0.4,
+          "maxae_cm": 0.9
+        },
+        "water": {
+          "count": 2,
+          "mae_cm": 0.85,
+          "rmse_cm": 0.8515,
+          "mbe_cm": 0.85,
+          "medae_cm": 0.85,
+          "maxae_cm": 0.9
+        }
+      },
+      "predictions": [
+        3.4,
+        5.1,
+        3.2,
+        8.9,
+        6.8,
+        4.9,
+        7.7,
+        11.8,
+        3.9,
+        5.2,
+        9.7,
+        7.1,
+        11.4,
+        3.6,
+        9.1
+      ],
+      "signed_errors": [
+        0.4,
+        -0.4,
+        0.4,
+        0.4,
+        0.6,
+        0.4,
+        0.5,
+        0.8,
+        0.4,
+        -0.6,
+        0.7,
+        0.6,
+        0.9,
+        0.4,
+        0.9
+      ],
+      "abs_errors": [
+        0.4,
+        0.4,
+        0.4,
+        0.4,
+        0.6,
+        0.4,
+        0.5,
+        0.8,
+        0.4,
+        0.6,
+        0.7,
+        0.6,
+        0.9,
+        0.4,
+        0.9
+      ]
+    },
+    "insample_0.07664_leaky": {
+      "method": "In-Sample Rescaled k_disp = 0.07664",
+      "provenance": "IN-SAMPLE / LEAKY: derived across all 15 rows in validate_physical_depth.py",
+      "sample_count": 15,
+      "mae_cm": 0.2308,
+      "mae_ci95_bootstrap": [
+        0.1216,
+        0.3711
+      ],
+      "rmse_cm": 0.3408,
+      "rmse_ci95_bootstrap": [
+        0.14,
+        0.5096
+      ],
+      "mape_pct": 4.42,
+      "mape_pct_1dec": 4.4,
+      "mbe_cm": -0.0169,
+      "mbe_ci95_bootstrap": [
+        -0.2116,
+        0.1295
+      ],
+      "medae_cm": 0.1555,
+      "maxae_cm": 0.9399,
+      "severity_concordance_with_water_pct": 100.0,
+      "severity_concordance_depth_only_pct": 100.0,
+      "confusion_matrix_with_water": {
+        "MILD": {
+          "MILD": 4,
+          "MODERATE": 0,
+          "SEVERE": 0
+        },
+        "MODERATE": {
+          "MILD": 0,
+          "MODERATE": 6,
+          "SEVERE": 0
+        },
+        "SEVERE": {
+          "MILD": 0,
+          "MODERATE": 0,
+          "SEVERE": 5
+        }
+      },
+      "distance_bands": {
+        "2-5m": {
+          "samples": 4,
+          "mae_cm": 0.3209,
+          "rmse_cm": 0.3996,
+          "mbe_cm": -0.1366,
+          "concordance_pct": 100.0
+        },
+        "5-8m": {
+          "samples": 4,
+          "mae_cm": 0.0668,
+          "rmse_cm": 0.0886,
+          "mbe_cm": 0.0651,
+          "concordance_pct": 100.0
+        },
+        "8-11m": {
+          "samples": 4,
+          "mae_cm": 0.3217,
+          "rmse_cm": 0.4815,
+          "mbe_cm": -0.1482,
+          "concordance_pct": 100.0
+        },
+        "11-15m": {
+          "samples": 3,
+          "mae_cm": 0.2082,
+          "rmse_cm": 0.2193,
+          "mbe_cm": 0.2082,
+          "concordance_pct": 100.0
+        }
+      },
+      "dry_vs_water": {
+        "dry": {
+          "count": 13,
+          "mae_cm": 0.2407,
+          "rmse_cm": 0.356,
+          "mbe_cm": -0.0452,
+          "medae_cm": 0.1555,
+          "maxae_cm": 0.9399
+        },
+        "water": {
+          "count": 2,
+          "mae_cm": 0.1669,
+          "rmse_cm": 0.2167,
+          "mbe_cm": 0.1669,
+          "medae_cm": 0.1669,
+          "maxae_cm": 0.3052
+        }
+      },
+      "predictions": [
+        3.1778,
+        4.7666,
+        2.9908,
+        8.3182,
+        6.3555,
+        4.5797,
+        7.1967,
+        11.0287,
+        3.6451,
+        4.8601,
+        9.066,
+        6.6359,
+        10.6548,
+        3.3647,
+        8.5052
+      ],
+      "signed_errors": [
+        0.1778,
+        -0.7334,
+        0.1908,
+        -0.1818,
+        0.1555,
+        0.0797,
+        -0.0033,
+        0.0287,
+        0.1451,
+        -0.9399,
+        0.066,
+        0.1359,
+        0.1548,
+        0.1647,
+        0.3052
+      ],
+      "abs_errors": [
+        0.1778,
+        0.7334,
+        0.1908,
+        0.1818,
+        0.1555,
+        0.0797,
+        0.0033,
+        0.0287,
+        0.1451,
+        0.9399,
+        0.066,
+        0.1359,
+        0.1548,
+        0.1647,
+        0.3052
+      ]
+    },
+    "loo_cv_proportional": {
+      "method": "LOO-CV Proportional k_disp (exp=1.35)",
+      "provenance": "Leave-one-row-out zero-intercept OLS (independent physical identity unverified)",
+      "sample_count": 15,
+      "mae_cm": 0.2432,
+      "mae_ci95_bootstrap": [
+        0.1303,
+        0.3883
+      ],
+      "rmse_cm": 0.3551,
+      "rmse_ci95_bootstrap": [
+        0.1493,
+        0.5286
+      ],
+      "mape_pct": 4.6,
+      "mape_pct_1dec": 4.6,
+      "mbe_cm": -0.015,
+      "mbe_ci95_bootstrap": [
+        -0.2174,
+        0.1381
+      ],
+      "medae_cm": 0.1672,
+      "maxae_cm": 0.9727,
+      "severity_concordance_with_water_pct": 100.0,
+      "severity_concordance_depth_only_pct": 100.0,
+      "confusion_matrix_with_water": {
+        "MILD": {
+          "MILD": 4,
+          "MODERATE": 0,
+          "SEVERE": 0
+        },
+        "MODERATE": {
+          "MILD": 0,
+          "MODERATE": 6,
+          "SEVERE": 0
+        },
+        "SEVERE": {
+          "MILD": 0,
+          "MODERATE": 0,
+          "SEVERE": 5
+        }
+      },
+      "distance_bands": {
+        "2-5m": {
+          "samples": 4,
+          "mae_cm": 0.3333,
+          "rmse_cm": 0.4139,
+          "mbe_cm": -0.1467,
+          "concordance_pct": 100.0
+        },
+        "5-8m": {
+          "samples": 4,
+          "mae_cm": 0.0711,
+          "rmse_cm": 0.0935,
+          "mbe_cm": 0.0692,
+          "concordance_pct": 100.0
+        },
+        "8-11m": {
+          "samples": 4,
+          "mae_cm": 0.3348,
+          "rmse_cm": 0.4986,
+          "mbe_cm": -0.1516,
+          "concordance_pct": 100.0
+        },
+        "11-15m": {
+          "samples": 3,
+          "mae_cm": 0.2302,
+          "rmse_cm": 0.2429,
+          "mbe_cm": 0.2302,
+          "concordance_pct": 100.0
+        }
+      },
+      "dry_vs_water": {
+        "dry": {
+          "count": 13,
+          "mae_cm": 0.2518,
+          "rmse_cm": 0.3695,
+          "mbe_cm": -0.0461,
+          "medae_cm": 0.1672,
+          "maxae_cm": 0.9727
+        },
+        "water": {
+          "count": 2,
+          "mae_cm": 0.1868,
+          "rmse_cm": 0.2413,
+          "mbe_cm": 0.1868,
+          "medae_cm": 0.1868,
+          "maxae_cm": 0.3396
+        }
+      },
+      "predictions": [
+        3.1802,
+        4.742,
+        2.9931,
+        8.2981,
+        6.3646,
+        4.5819,
+        7.196,
+        11.034,
+        3.6477,
+        4.8273,
+        9.0741,
+        6.6446,
+        10.6839,
+        3.3672,
+        8.5396
+      ],
+      "signed_errors": [
+        0.1802,
+        -0.758,
+        0.1931,
+        -0.2019,
+        0.1646,
+        0.0819,
+        -0.004,
+        0.034,
+        0.1477,
+        -0.9727,
+        0.0741,
+        0.1446,
+        0.1839,
+        0.1672,
+        0.3396
+      ],
+      "abs_errors": [
+        0.1802,
+        0.758,
+        0.1931,
+        0.2019,
+        0.1646,
+        0.0819,
+        0.004,
+        0.034,
+        0.1477,
+        0.9727,
+        0.0741,
+        0.1446,
+        0.1839,
+        0.1672,
+        0.3396
+      ]
+    },
+    "loo_cv_affine_baseline": {
+      "method": "LOO-CV Affine Linear Baseline (a + b*X)",
+      "provenance": "Leave-one-row-out affine OLS baseline",
+      "sample_count": 15,
+      "mae_cm": 0.2743,
+      "mae_ci95_bootstrap": [
+        0.1592,
+        0.4162
+      ],
+      "rmse_cm": 0.3761,
+      "rmse_ci95_bootstrap": [
+        0.1896,
+        0.5431
+      ],
+      "mape_pct": 5.63,
+      "mape_pct_1dec": 5.6,
+      "mbe_cm": 0.0067,
+      "mbe_ci95_bootstrap": [
+        -0.2039,
+        0.1723
+      ],
+      "medae_cm": 0.2195,
+      "maxae_cm": 0.986,
+      "severity_concordance_with_water_pct": 100.0,
+      "severity_concordance_depth_only_pct": 100.0,
+      "confusion_matrix_with_water": {
+        "MILD": {
+          "MILD": 4,
+          "MODERATE": 0,
+          "SEVERE": 0
+        },
+        "MODERATE": {
+          "MILD": 0,
+          "MODERATE": 6,
+          "SEVERE": 0
+        },
+        "SEVERE": {
+          "MILD": 0,
+          "MODERATE": 0,
+          "SEVERE": 5
+        }
+      },
+      "distance_bands": {
+        "2-5m": {
+          "samples": 4,
+          "mae_cm": 0.3978,
+          "rmse_cm": 0.4509,
+          "mbe_cm": -0.0921,
+          "concordance_pct": 100.0
+        },
+        "5-8m": {
+          "samples": 4,
+          "mae_cm": 0.091,
+          "rmse_cm": 0.1172,
+          "mbe_cm": 0.0704,
+          "concordance_pct": 100.0
+        },
+        "8-11m": {
+          "samples": 4,
+          "mae_cm": 0.3571,
+          "rmse_cm": 0.5139,
+          "mbe_cm": -0.1359,
+          "concordance_pct": 100.0
+        },
+        "11-15m": {
+          "samples": 3,
+          "mae_cm": 0.2437,
+          "rmse_cm": 0.2561,
+          "mbe_cm": 0.2437,
+          "concordance_pct": 100.0
+        }
+      },
+      "dry_vs_water": {
+        "dry": {
+          "count": 13,
+          "mae_cm": 0.2885,
+          "rmse_cm": 0.3937,
+          "mbe_cm": -0.014,
+          "medae_cm": 0.2195,
+          "maxae_cm": 0.986
+        },
+        "water": {
+          "count": 2,
+          "mae_cm": 0.1824,
+          "rmse_cm": 0.2308,
+          "mbe_cm": 0.1413,
+          "medae_cm": 0.1824,
+          "maxae_cm": 0.3237
+        }
+      },
+      "predictions": [
+        3.2938,
+        4.7398,
+        3.1176,
+        8.2805,
+        6.3846,
+        4.6384,
+        7.1999,
+        10.9589,
+        3.7381,
+        4.814,
+        9.0455,
+        6.6589,
+        10.6364,
+        3.4709,
+        8.5237
+      ],
+      "signed_errors": [
+        0.2938,
+        -0.7602,
+        0.3176,
+        -0.2195,
+        0.1846,
+        0.1384,
+        -0.0001,
+        -0.0411,
+        0.2381,
+        -0.986,
+        0.0455,
+        0.1589,
+        0.1364,
+        0.2709,
+        0.3237
+      ],
+      "abs_errors": [
+        0.2938,
+        0.7602,
+        0.3176,
+        0.2195,
+        0.1846,
+        0.1384,
+        0.0001,
+        0.0411,
+        0.2381,
+        0.986,
+        0.0455,
+        0.1589,
+        0.1364,
+        0.2709,
+        0.3237
+      ]
+    },
+    "loo_cv_mean_baseline": {
+      "method": "LOO-CV Mean-Depth Dummy Baseline",
+      "provenance": "Distance/disparity-agnostic sample mean baseline",
+      "sample_count": 15,
+      "mae_cm": 2.34,
+      "mae_ci95_bootstrap": [
+        1.5729,
+        3.0829
+      ],
+      "rmse_cm": 2.7802,
+      "rmse_ci95_bootstrap": [
+        2.031,
+        3.4014
+      ],
+      "mape_pct": 47.23,
+      "mape_pct_1dec": 47.2,
+      "mbe_cm": 0.0,
+      "mbe_ci95_bootstrap": [
+        -1.4429,
+        1.35
+      ],
+      "medae_cm": 2.2929,
+      "maxae_cm": 4.9714,
+      "severity_concordance_with_water_pct": 53.3,
+      "severity_concordance_depth_only_pct": 40.0,
+      "confusion_matrix_with_water": {
+        "MILD": {
+          "MILD": 0,
+          "MODERATE": 4,
+          "SEVERE": 0
+        },
+        "MODERATE": {
+          "MILD": 0,
+          "MODERATE": 6,
+          "SEVERE": 0
+        },
+        "SEVERE": {
+          "MILD": 0,
+          "MODERATE": 3,
+          "SEVERE": 2
+        }
+      },
+      "distance_bands": {
+        "2-5m": {
+          "samples": 4,
+          "mae_cm": 2.6571,
+          "rmse_cm": 2.8989,
+          "mbe_cm": 1.5107,
+          "concordance_pct": 25.0
+        },
+        "5-8m": {
+          "samples": 4,
+          "mae_cm": 2.0089,
+          "rmse_cm": 2.7169,
+          "mbe_cm": -0.9268,
+          "concordance_pct": 100.0
+        },
+        "8-11m": {
+          "samples": 4,
+          "mae_cm": 1.6607,
+          "rmse_cm": 2.1079,
+          "mbe_cm": 0.1714,
+          "concordance_pct": 50.0
+        },
+        "11-15m": {
+          "samples": 3,
+          "mae_cm": 3.2643,
+          "rmse_cm": 3.4169,
+          "mbe_cm": -1.0071,
+          "concordance_pct": 33.3
+        }
+      },
+      "dry_vs_water": {
+        "dry": {
+          "count": 13,
+          "mae_cm": 2.1659,
+          "rmse_cm": 2.592,
+          "mbe_cm": 0.5341,
+          "medae_cm": 2.2929,
+          "maxae_cm": 4.4357
+        },
+        "water": {
+          "count": 2,
+          "mae_cm": 3.4714,
+          "rmse_cm": 3.7816,
+          "mbe_cm": -3.4714,
+          "medae_cm": 3.4714,
+          "maxae_cm": 4.9714
+        }
+      },
+      "predictions": [
+        6.6,
+        6.4214,
+        6.6143,
+        6.2071,
+        6.3714,
+        6.4929,
+        6.3,
+        6.0286,
+        6.5643,
+        6.4,
+        6.1714,
+        6.35,
+        6.0643,
+        6.5857,
+        6.2286
+      ],
+      "signed_errors": [
+        3.6,
+        0.9214,
+        3.8143,
+        -2.2929,
+        0.1714,
+        1.9929,
+        -0.9,
+        -4.9714,
+        3.0643,
+        0.6,
+        -2.8286,
+        -0.15,
+        -4.4357,
+        3.3857,
+        -1.9714
+      ],
+      "abs_errors": [
+        3.6,
+        0.9214,
+        3.8143,
+        2.2929,
+        0.1714,
+        1.9929,
+        0.9,
+        4.9714,
+        3.0643,
+        0.6,
+        2.8286,
+        0.15,
+        4.4357,
+        3.3857,
+        1.9714
+      ]
+    }
+  },
+  "fold_records": [
+    {
+      "fold_idx": 1,
+      "excluded_id": "P01",
+      "timestamp_sec": 0.8,
+      "distance_m": 3.2,
+      "water": false,
+      "measured_cm": 3.0,
+      "pred_fixed_082_cm": 3.4,
+      "pred_insample_07664_cm": 3.1778,
+      "fitted_k_cv": 0.076698,
+      "pred_loo_cv_cm": 3.1802,
+      "err_loo_cv_cm": 0.1802,
+      "abs_err_loo_cv_cm": 0.1802,
+      "pred_loo_affine_cm": 3.2938,
+      "err_loo_affine_cm": 0.2938,
+      "pred_loo_mean_cm": 6.6,
+      "err_loo_mean_cm": 3.6
+    },
+    {
+      "fold_idx": 2,
+      "excluded_id": "P02",
+      "timestamp_sec": 1.6,
+      "distance_m": 4.1,
+      "water": false,
+      "measured_cm": 5.5,
+      "pred_fixed_082_cm": 5.1,
+      "pred_insample_07664_cm": 4.7666,
+      "fitted_k_cv": 0.076244,
+      "pred_loo_cv_cm": 4.742,
+      "err_loo_cv_cm": -0.758,
+      "abs_err_loo_cv_cm": 0.758,
+      "pred_loo_affine_cm": 4.7398,
+      "err_loo_affine_cm": -0.7602,
+      "pred_loo_mean_cm": 6.4214,
+      "err_loo_mean_cm": 0.9214
+    },
+    {
+      "fold_idx": 3,
+      "excluded_id": "P03",
+      "timestamp_sec": 2.4,
+      "distance_m": 4.8,
+      "water": false,
+      "measured_cm": 2.8,
+      "pred_fixed_082_cm": 3.2,
+      "pred_insample_07664_cm": 2.9908,
+      "fitted_k_cv": 0.076699,
+      "pred_loo_cv_cm": 2.9931,
+      "err_loo_cv_cm": 0.1931,
+      "abs_err_loo_cv_cm": 0.1931,
+      "pred_loo_affine_cm": 3.1176,
+      "err_loo_affine_cm": 0.3176,
+      "pred_loo_mean_cm": 6.6143,
+      "err_loo_mean_cm": 3.8143
+    },
+    {
+      "fold_idx": 4,
+      "excluded_id": "P04",
+      "timestamp_sec": 3.2,
+      "distance_m": 3.6,
+      "water": false,
+      "measured_cm": 8.5,
+      "pred_fixed_082_cm": 8.9,
+      "pred_insample_07664_cm": 8.3182,
+      "fitted_k_cv": 0.076454,
+      "pred_loo_cv_cm": 8.2981,
+      "err_loo_cv_cm": -0.2019,
+      "abs_err_loo_cv_cm": 0.2019,
+      "pred_loo_affine_cm": 8.2805,
+      "err_loo_affine_cm": -0.2195,
+      "pred_loo_mean_cm": 6.2071,
+      "err_loo_mean_cm": -2.2929
+    },
+    {
+      "fold_idx": 5,
+      "excluded_id": "P05",
+      "timestamp_sec": 4.2,
+      "distance_m": 5.4,
+      "water": false,
+      "measured_cm": 6.2,
+      "pred_fixed_082_cm": 6.8,
+      "pred_insample_07664_cm": 6.3555,
+      "fitted_k_cv": 0.07675,
+      "pred_loo_cv_cm": 6.3646,
+      "err_loo_cv_cm": 0.1646,
+      "abs_err_loo_cv_cm": 0.1646,
+      "pred_loo_affine_cm": 6.3846,
+      "err_loo_affine_cm": 0.1846,
+      "pred_loo_mean_cm": 6.3714,
+      "err_loo_mean_cm": 0.1714
+    },
+    {
+      "fold_idx": 6,
+      "excluded_id": "P06",
+      "timestamp_sec": 5.1,
+      "distance_m": 6.1,
+      "water": false,
+      "measured_cm": 4.5,
+      "pred_fixed_082_cm": 4.9,
+      "pred_insample_07664_cm": 4.5797,
+      "fitted_k_cv": 0.076677,
+      "pred_loo_cv_cm": 4.5819,
+      "err_loo_cv_cm": 0.0819,
+      "abs_err_loo_cv_cm": 0.0819,
+      "pred_loo_affine_cm": 4.6384,
+      "err_loo_affine_cm": 0.1384,
+      "pred_loo_mean_cm": 6.4929,
+      "err_loo_mean_cm": 1.9929
+    },
+    {
+      "fold_idx": 7,
+      "excluded_id": "P07",
+      "timestamp_sec": 6.0,
+      "distance_m": 6.9,
+      "water": false,
+      "measured_cm": 7.2,
+      "pred_fixed_082_cm": 7.7,
+      "pred_insample_07664_cm": 7.1967,
+      "fitted_k_cv": 0.076633,
+      "pred_loo_cv_cm": 7.196,
+      "err_loo_cv_cm": -0.004,
+      "abs_err_loo_cv_cm": 0.004,
+      "pred_loo_affine_cm": 7.1999,
+      "err_loo_affine_cm": -0.0001,
+      "pred_loo_mean_cm": 6.3,
+      "err_loo_mean_cm": -0.9
+    },
+    {
+      "fold_idx": 8,
+      "excluded_id": "P08",
+      "timestamp_sec": 7.2,
+      "distance_m": 7.8,
+      "water": true,
+      "measured_cm": 11.0,
+      "pred_fixed_082_cm": 11.8,
+      "pred_insample_07664_cm": 11.0287,
+      "fitted_k_cv": 0.076677,
+      "pred_loo_cv_cm": 11.034,
+      "err_loo_cv_cm": 0.034,
+      "abs_err_loo_cv_cm": 0.034,
+      "pred_loo_affine_cm": 10.9589,
+      "err_loo_affine_cm": -0.0411,
+      "pred_loo_mean_cm": 6.0286,
+      "err_loo_mean_cm": -4.9714
+    },
+    {
+      "fold_idx": 9,
+      "excluded_id": "P09",
+      "timestamp_sec": 8.5,
+      "distance_m": 8.6,
+      "water": false,
+      "measured_cm": 3.5,
+      "pred_fixed_082_cm": 3.9,
+      "pred_insample_07664_cm": 3.6451,
+      "fitted_k_cv": 0.076695,
+      "pred_loo_cv_cm": 3.6477,
+      "err_loo_cv_cm": 0.1477,
+      "abs_err_loo_cv_cm": 0.1477,
+      "pred_loo_affine_cm": 3.7381,
+      "err_loo_affine_cm": 0.2381,
+      "pred_loo_mean_cm": 6.5643,
+      "err_loo_mean_cm": 3.0643
+    },
+    {
+      "fold_idx": 10,
+      "excluded_id": "P10",
+      "timestamp_sec": 9.6,
+      "distance_m": 9.2,
+      "water": false,
+      "measured_cm": 5.8,
+      "pred_fixed_082_cm": 5.2,
+      "pred_insample_07664_cm": 4.8601,
+      "fitted_k_cv": 0.076123,
+      "pred_loo_cv_cm": 4.8273,
+      "err_loo_cv_cm": -0.9727,
+      "abs_err_loo_cv_cm": 0.9727,
+      "pred_loo_affine_cm": 4.814,
+      "err_loo_affine_cm": -0.986,
+      "pred_loo_mean_cm": 6.4,
+      "err_loo_mean_cm": 0.6
+    },
+    {
+      "fold_idx": 11,
+      "excluded_id": "P11",
+      "timestamp_sec": 10.8,
+      "distance_m": 10.1,
+      "water": false,
+      "measured_cm": 9.0,
+      "pred_fixed_082_cm": 9.7,
+      "pred_insample_07664_cm": 9.066,
+      "fitted_k_cv": 0.076709,
+      "pred_loo_cv_cm": 9.0741,
+      "err_loo_cv_cm": 0.0741,
+      "abs_err_loo_cv_cm": 0.0741,
+      "pred_loo_affine_cm": 9.0455,
+      "err_loo_affine_cm": 0.0455,
+      "pred_loo_mean_cm": 6.1714,
+      "err_loo_mean_cm": -2.8286
+    },
+    {
+      "fold_idx": 12,
+      "excluded_id": "P12",
+      "timestamp_sec": 11.9,
+      "distance_m": 10.7,
+      "water": false,
+      "measured_cm": 6.5,
+      "pred_fixed_082_cm": 7.1,
+      "pred_insample_07664_cm": 6.6359,
+      "fitted_k_cv": 0.07674,
+      "pred_loo_cv_cm": 6.6446,
+      "err_loo_cv_cm": 0.1446,
+      "abs_err_loo_cv_cm": 0.1446,
+      "pred_loo_affine_cm": 6.6589,
+      "err_loo_affine_cm": 0.1589,
+      "pred_loo_mean_cm": 6.35,
+      "err_loo_mean_cm": -0.15
+    },
+    {
+      "fold_idx": 13,
+      "excluded_id": "P13",
+      "timestamp_sec": 13.2,
+      "distance_m": 11.8,
+      "water": false,
+      "measured_cm": 10.5,
+      "pred_fixed_082_cm": 11.4,
+      "pred_insample_07664_cm": 10.6548,
+      "fitted_k_cv": 0.076849,
+      "pred_loo_cv_cm": 10.6839,
+      "err_loo_cv_cm": 0.1839,
+      "abs_err_loo_cv_cm": 0.1839,
+      "pred_loo_affine_cm": 10.6364,
+      "err_loo_affine_cm": 0.1364,
+      "pred_loo_mean_cm": 6.0643,
+      "err_loo_mean_cm": -4.4357
+    },
+    {
+      "fold_idx": 14,
+      "excluded_id": "P14",
+      "timestamp_sec": 14.5,
+      "distance_m": 12.6,
+      "water": false,
+      "measured_cm": 3.2,
+      "pred_fixed_082_cm": 3.6,
+      "pred_insample_07664_cm": 3.3647,
+      "fitted_k_cv": 0.076697,
+      "pred_loo_cv_cm": 3.3672,
+      "err_loo_cv_cm": 0.1672,
+      "abs_err_loo_cv_cm": 0.1672,
+      "pred_loo_affine_cm": 3.4709,
+      "err_loo_affine_cm": 0.2709,
+      "pred_loo_mean_cm": 6.5857,
+      "err_loo_mean_cm": 3.3857
+    },
+    {
+      "fold_idx": 15,
+      "excluded_id": "P15",
+      "timestamp_sec": 16.0,
+      "distance_m": 13.5,
+      "water": true,
+      "measured_cm": 8.2,
+      "pred_fixed_082_cm": 9.1,
+      "pred_insample_07664_cm": 8.5052,
+      "fitted_k_cv": 0.07695,
+      "pred_loo_cv_cm": 8.5396,
+      "err_loo_cv_cm": 0.3396,
+      "abs_err_loo_cv_cm": 0.3396,
+      "pred_loo_affine_cm": 8.5237,
+      "err_loo_affine_cm": 0.3237,
+      "pred_loo_mean_cm": 6.2286,
+      "err_loo_mean_cm": -1.9714
+    }
+  ],
+  "plots": {
+    "scatter": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\depth_pred_vs_measured_scatter.png",
+    "residuals": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\depth_residual_error_plot.png",
+    "fold_variation": "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\depth_kdisp_fold_variation.png"
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "sample_id": "rural_unseen_f0075",
+  "session_id": "rural_road_unseen",
+  "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+  "frame_number": 75,
+  "timestamp_sec": 3.0,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        16.16,
+        174.06,
+        122.24,
+        214.68
+      ],
+      "det_conf": 0.8557,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        348.1,
+        218.76,
+        546.04,
+        285.17
+      ],
+      "det_conf": 0.6185,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        348.35,
+        222.36,
+        633.43,
+        331.7
+      ],
+      "det_conf": 0.2952,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.7998,
+      "unverified_polygon_px": [
+        [
+          [
+            480,
+            339
+          ],
+          [
+            480,
+            344
+          ],
+          [
+            481,
+            345
+          ],
+          [
+            482,
+            345
+          ],
+          [
+            486,
+            349
+          ],
+          [
+            486,
+            351
+          ],
+          [
+            485,
+            352
+          ],
+          [
+            485,
+            353
+          ],
+          [
+            484,
+            354
+          ],
+          [
+            483,
+            354
+          ],
+          [
+            482,
+            355
+          ],
+          [
+            521,
+            355
+          ],
+          [
+            519,
+            355
+          ],
+          [
+            518,
+            354
+          ],
+          [
+            514,
+            354
+          ],
+          [
+            513,
+            353
+          ],
+          [
+            512,
+            353
+          ],
+          [
+            511,
+            352
+          ],
+          [
+            509,
+            352
+          ],
+          [
+            508,
+            351
+          ],
+          [
+            506,
+            351
+          ],
+          [
+            497,
+            342
+          ],
+          [
+            494,
+            342
+          ],
+          [
+            493,
+            341
+          ],
+          [
+            492,
+            341
+          ],
+          [
+            491,
+            340
+          ],
+          [
+            489,
+            340
+          ],
+          [
+            487,
+            342
+          ],
+          [
+            485,
+            342
+          ],
+          [
+            482,
+            339
+          ]
+        ],
+        [
+          [
+            480,
+            194
+          ],
+          [
+            480,
+            235
+          ],
+          [
+            494,
+            240
+          ],
+          [
+            503,
+            252
+          ],
+          [
+            502,
+            259
+          ],
+          [
+            499,
+            262
+          ],
+          [
+            483,
+            262
+          ],
+          [
+            481,
+            264
+          ],
+          [
+            480,
+            276
+          ],
+          [
+            490,
+            282
+          ],
+          [
+            500,
+            295
+          ],
+          [
+            516,
+            291
+          ],
+          [
+            528,
+            303
+          ],
+          [
+            530,
+            311
+          ],
+          [
+            544,
+            339
+          ],
+          [
+            556,
+            349
+          ],
+          [
+            544,
+            355
+          ],
+          [
+            639,
+            355
+          ],
+          [
+            639,
+            194
+          ],
+          [
+            631,
+            201
+          ],
+          [
+            627,
+            201
+          ],
+          [
+            623,
+            194
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "sample_id": "phone_val_frame_0028",
+  "session_id": "phone_val_session",
+  "source_video": "dataset_phone_potholes/images/val/frame_0028.jpg",
+  "frame_number": 28,
+  "timestamp_sec": null,
+  "width": 1280,
+  "height": 720,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        0.96,
+        533.56,
+        241.75,
+        715.99
+      ],
+      "det_conf": 0.9544,
+      "roi_seg_suggestion_accepted": true,
+      "rejection_reasons": [],
+      "seg_conf": 0.9126,
+      "unverified_polygon_px": [
+        [
+          [
+            0,
+            549
+          ],
+          [
+            0,
+            701
+          ],
+          [
+            132,
+            701
+          ],
+          [
+            142,
+            692
+          ],
+          [
+            158,
+            689
+          ],
+          [
+            162,
+            686
+          ],
+          [
+            170,
+            690
+          ],
+          [
+            178,
+            689
+          ],
+          [
+            191,
+            675
+          ],
+          [
+            194,
+            667
+          ],
+          [
+            208,
+            655
+          ],
+          [
+            211,
+            642
+          ],
+          [
+            203,
+            630
+          ],
+          [
+            201,
+            617
+          ],
+          [
+            212,
+            599
+          ],
+          [
+            212,
+            588
+          ],
+          [
+            215,
+            582
+          ],
+          [
+            202,
+            583
+          ],
+          [
+            195,
+            578
+          ],
+          [
+            191,
+            578
+          ],
+          [
+            184,
+            570
+          ],
+          [
+            167,
+            562
+          ],
+          [
+            156,
+            549
+          ],
+          [
+            53,
+            549
+          ],
+          [
+            50,
+            552
+          ],
+          [
+            28,
+            552
+          ],
+          [
+            15,
+            555
+          ],
+          [
+            10,
+            553
+          ],
+          [
+            10,
+            549
+          ]
+        ]
+      ],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        701.71,
+        170.79,
+        948.34,
+        225.17
+      ],
+      "det_conf": 0.7692,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

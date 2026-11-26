@@ -1,0 +1,37 @@
+frame_id,source_video,session_id,frame_number,timestamp_sec,num_proposals,roi_seg_accepted,roi_seg_empty,roi_seg_fallbacks,roi_seg_cov_pct,roi_seg_ms,sam_full_accepted,sam_full_empty,sam_full_fallbacks,sam_full_cov_pct,sam_full_det_ms,sam_full_pre_ms,sam_full_enc_ms,sam_full_dec_ms,sam_full_rec_ms,sam_full_qa_ms,sam_full_total_ms,sam_crop_accepted,sam_crop_fallbacks,sam_crop_cov_pct,sam_crop_total_ms
+dev_rural_f0000,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,0,0.0,1,0,1,1,0.0,27.509,1,0,0,11.76,10.104,6.294,88.231,10.415,1.196,4.239,120.479,1,0,12.083,121.947
+dev_rural_f0015,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,15,0.6,1,0,1,1,0.0,24.319,1,0,0,0.223,10.929,6.266,88.477,7.612,0.635,2.17,116.089,1,0,0.182,113.228
+dev_rural_f0030,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,30,1.2,3,0,3,3,0.0,95.034,3,0,0,1.36,9.479,6.534,88.262,21.113,1.511,6.481,133.38,3,0,1.301,321.693
+dev_rural_f0045,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,45,1.8,2,0,2,2,0.0,118.166,2,0,0,0.846,9.702,6.435,89.973,13.769,1.1,4.748,125.727,2,0,0.818,216.899
+dev_rural_f0060,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,60,2.4,2,0,1,2,0.0,60.54,2,0,0,1.072,15.032,6.97,88.513,13.272,1.045,4.567,129.399,2,0,1.044,218.7
+dev_rural_f0075,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,75,3.0,3,1,2,2,9.535,49.722,3,0,0,2.853,9.22,6.198,88.416,19.536,4.602,9.148,137.118,3,0,2.799,335.257
+dev_rural_f0090,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,90,3.6,7,0,4,7,0.0,155.237,7,0,0,7.344,11.331,6.407,88.415,42.592,6.911,16.659,172.315,7,0,7.762,782.098
+dev_rural_f0105,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,105,4.2,5,0,5,5,0.0,97.84,5,0,0,3.607,12.215,5.894,88.562,29.133,2.65,11.134,149.587,5,0,3.849,561.823
+dev_rural_f0120,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,120,4.8,4,0,3,4,0.0,94.353,4,0,0,2.127,12.283,6.337,88.56,24.817,2.18,8.909,143.086,4,0,2.405,460.07
+dev_rural_f0135,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,135,5.4,7,0,3,7,0.0,96.824,7,0,0,6.564,12.203,7.149,88.381,39.384,3.575,16.125,166.818,7,0,6.461,757.962
+dev_rural_f0150,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,150,6.0,5,0,5,5,0.0,76.292,5,0,0,3.175,9.692,6.324,88.415,28.962,2.472,11.615,147.48,5,0,3.345,558.142
+dev_rural_f0180,uploads/upload_1794847200_ruralRoad_potHoles.mp4,rural_road_unseen,180,7.2,4,0,3,4,0.0,55.596,4,0,0,2.921,12.555,5.955,88.527,25.29,2.169,8.705,143.202,4,0,2.887,451.75
+dev_rangoon_f0020,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,20,0.8,2,0,2,2,0.0,34.328,2,0,0,6.241,9.443,5.881,88.384,13.673,1.072,6.8,125.254,2,0,6.378,235.763
+dev_rangoon_f0080,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,80,3.2,1,0,1,1,0.0,32.926,1,0,0,4.773,11.936,5.891,88.523,9.711,0.702,4.142,120.906,1,0,4.844,129.822
+dev_rangoon_f0160,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,160,6.4,1,0,0,1,0.0,22.447,1,0,0,1.397,12.162,5.913,88.467,7.523,0.635,2.618,117.318,1,0,1.062,128.703
+dev_rangoon_f0230,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,230,9.2,1,0,0,1,0.0,28.995,1,0,0,4.328,9.272,6.194,88.189,7.651,0.726,3.719,115.751,1,0,4.479,124.086
+dev_rangoon_f0270,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,270,10.8,2,1,0,1,7.079,46.394,2,0,0,20.32,9.757,5.871,88.559,13.266,1.04,13.505,131.998,2,0,18.661,249.573
+dev_rangoon_f0340,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,340,13.6,0,0,0,0,0.0,8.448,0,0,0,0.0,9.226,0.0,0.0,0.0,0.0,0.0,9.226,0,0,0.0,20.317
+dev_rangoon_f0440,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,440,17.6,3,0,3,3,0.0,43.672,3,0,0,6.503,9.158,6.178,88.536,18.8,1.398,10.754,134.823,3,0,6.8,369.687
+dev_rangoon_f0505,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,505,20.2,1,0,1,1,0.0,26.753,1,0,0,1.937,9.022,6.066,88.796,7.709,0.648,2.823,115.065,1,0,2.053,128.816
+dev_rangoon_f0605,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,605,24.2,1,0,1,1,0.0,20.164,1,0,0,1.521,9.67,6.029,88.575,8.232,0.813,2.452,115.77,1,0,1.504,126.19
+dev_rangoon_f0695,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,695,27.8,1,0,1,1,0.0,20.129,1,0,0,0.938,9.126,6.065,88.668,7.625,0.76,2.278,114.521,1,0,1.031,130.61
+dev_rangoon_f0740,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,740,29.6,0,0,0,0,0.0,8.102,0,0,0,0.0,8.251,0.0,0.0,0.0,0.0,0.0,8.251,0,0,0.0,12.43
+dev_rangoon_f0780,Watch Video_ Terrible potholes in Rangoon Road.mp4,rangoon_road_unseen_temporal,780,31.2,3,0,3,3,0.0,46.422,3,0,0,2.158,8.945,5.926,88.418,18.783,1.87,8.071,132.013,3,0,2.945,344.288
+dev_survey_f0000,roadvision-dashboard/public/videos/raw_survey.mp4,raw_survey_video,0,0.0,2,1,1,1,1.715,52.412,2,0,0,11.619,9.931,6.393,88.232,13.248,2.748,25.804,146.357,2,0,14.605,266.959
+dev_survey_f0020,roadvision-dashboard/public/videos/raw_survey.mp4,raw_survey_video,20,2.0,4,3,1,1,4.393,83.365,4,0,0,5.003,9.619,6.633,88.381,24.872,6.038,38.223,173.764,2,2,1.993,506.128
+dev_survey_f0040,roadvision-dashboard/public/videos/raw_survey.mp4,raw_survey_video,40,4.0,0,0,0,0,0.0,10.007,0,0,0,0.0,11.644,0.0,0.0,0.0,0.0,0.0,11.644,0,0,0.0,16.533
+dev_survey_f0060,roadvision-dashboard/public/videos/raw_survey.mp4,raw_survey_video,60,6.0,2,0,1,2,0.0,42.82,2,0,0,1.427,13.535,6.365,88.613,13.354,2.729,15.469,140.064,2,0,1.284,262.853
+dev_survey_f0100,roadvision-dashboard/public/videos/raw_survey.mp4,raw_survey_video,100,10.0,0,0,0,0,0.0,10.762,0,0,0,0.0,9.536,0.0,0.0,0.0,0.0,0.0,9.536,0,0,0.0,20.346
+dev_survey_f0120,roadvision-dashboard/public/videos/raw_survey.mp4,raw_survey_video,120,12.0,3,1,0,2,4.399,58.969,3,0,0,4.257,9.863,6.873,88.417,18.823,3.968,26.696,154.64,3,0,3.967,380.114
+dev_phone_frame_0005,dataset_phone_potholes/images/val/frame_0005.jpg,phone_val_session,5,-1.0,8,1,6,7,11.517,110.404,8,0,0,8.18,10.208,6.394,88.465,44.597,15.686,70.38,235.73,7,1,5.998,1073.717
+dev_phone_frame_0014,dataset_phone_potholes/images/val/frame_0014.jpg,phone_val_session,14,-1.0,5,0,4,5,0.0,76.277,5,0,0,6.397,12.823,7.334,88.51,29.251,6.828,42.297,187.044,5,0,7.698,1742.031
+dev_phone_frame_0027,dataset_phone_potholes/images/val/frame_0027.jpg,phone_val_session,27,-1.0,3,1,1,2,2.442,59.942,3,0,0,3.246,12.046,6.511,88.442,19.957,4.758,24.589,156.304,3,0,3.271,603.534
+dev_phone_frame_0028,dataset_phone_potholes/images/val/frame_0028.jpg,phone_val_session,28,-1.0,2,1,1,1,3.178,46.541,2,0,0,3.657,18.333,7.071,88.382,14.126,3.966,20.593,152.472,2,0,3.865,255.629
+dev_phone_frame_0035,dataset_phone_potholes/images/val/frame_0035.jpg,phone_val_session,35,-1.0,3,1,2,2,7.548,53.117,2,0,1,8.844,9.737,7.69,88.426,18.89,4.579,38.578,167.9,2,1,8.481,392.503
+dev_phone_frame_0043,dataset_phone_potholes/images/val/frame_0043.jpg,phone_val_session,43,-1.0,6,0,6,6,0.0,98.566,6,0,0,5.254,10.188,8.677,88.448,34.057,8.632,46.791,196.793,6,0,6.602,732.702

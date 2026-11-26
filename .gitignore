@@ -37,9 +37,14 @@ RDD2022/
 dataset_rdd_india_potholes/
 dataset_unified/images/
 dataset_unified/labels/
+/Pothole440-main/
+dataset_pothole440_seg_grouped/images/
+dataset_pothole440_seg_grouped/labels/
 
-# Intermediate benchmark video captures (preserve benchmark json and sample images)
+# Intermediate benchmark video captures & large third-party weights (preserve benchmark json, reports, and plots)
 runs/benchmark/*.mp4
+runs/benchmark/**/*.mp4
+mobile_sam.pt
 runs/detect/pothole_v8_upgraded/
 runs/faster_rcnn/*.pth
 

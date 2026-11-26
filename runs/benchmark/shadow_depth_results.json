@@ -1,0 +1,963 @@
+{
+  "experiment": "Phase 5C Shadow-Mode Integration & Production Readiness Evaluation",
+  "peak_gpu_allocated_mb": 178.14,
+  "peak_gpu_reserved_mb": 194.0,
+  "preprocessing_ablation_task3": {
+    "frames_evaluated": 32,
+    "total_regions": 98,
+    "midas_timing_ms": {
+      "preprocess_bgr_mean_ms": 6.3004,
+      "preprocess_rgb_mean_ms": 6.8005,
+      "inference_bgr_mean_ms": 19.4482,
+      "inference_rgb_mean_ms": 19.6366
+    },
+    "depth_map_divergence_bgr_vs_rgb": {
+      "mean_l1": 32.8659,
+      "mean_rmse": 39.6308,
+      "mean_pearson_r": 0.9953,
+      "mean_spearman_rho": 0.996
+    },
+    "factorial_2x2": {
+      "bgr_legacy_plus_legacy_annular": {
+        "total_regions": 98,
+        "valid_count": 41,
+        "valid_pct": 41.84,
+        "admitted_ref_mad": {
+          "count": 41,
+          "mean": 2.7091,
+          "median": 1.8842,
+          "iqr": 2.1083,
+          "mad": 0.8698,
+          "p95": 6.2147,
+          "max": 23.1743
+        },
+        "admitted_p75": {
+          "count": 41,
+          "mean": 4.6888,
+          "median": 3.1102,
+          "iqr": 3.2827,
+          "mad": 1.3623,
+          "p95": 10.0388,
+          "max": 31.7131
+        },
+        "common_valid_count": 19,
+        "common_ref_mad": {
+          "count": 19,
+          "mean": 1.9299,
+          "median": 1.832,
+          "iqr": 1.6553,
+          "mad": 0.9348,
+          "p95": 3.5307,
+          "max": 6.2147
+        },
+        "common_p75": {
+          "count": 19,
+          "mean": 4.1734,
+          "median": 3.15,
+          "iqr": 3.5272,
+          "mad": 1.9201,
+          "p95": 8.5707,
+          "max": 17.7179
+        },
+        "mean_extraction_ms": 3.8628
+      },
+      "rgb_corrected_plus_legacy_annular": {
+        "total_regions": 98,
+        "valid_count": 39,
+        "valid_pct": 39.8,
+        "admitted_ref_mad": {
+          "count": 39,
+          "mean": 3.2668,
+          "median": 2.652,
+          "iqr": 3.3348,
+          "mad": 1.5056,
+          "p95": 7.4611,
+          "max": 8.8471
+        },
+        "admitted_p75": {
+          "count": 39,
+          "mean": 7.8185,
+          "median": 6.1245,
+          "iqr": 5.8994,
+          "mad": 2.9431,
+          "p95": 21.5387,
+          "max": 22.8243
+        },
+        "common_valid_count": 19,
+        "common_ref_mad": {
+          "count": 19,
+          "mean": 3.0716,
+          "median": 2.652,
+          "iqr": 1.8197,
+          "mad": 1.1053,
+          "p95": 7.4611,
+          "max": 8.491
+        },
+        "common_p75": {
+          "count": 19,
+          "mean": 7.9312,
+          "median": 5.4359,
+          "iqr": 5.1645,
+          "mad": 2.5309,
+          "p95": 22.3588,
+          "max": 22.8243
+        },
+        "mean_extraction_ms": 3.903
+      },
+      "bgr_legacy_plus_optimized_ransac": {
+        "total_regions": 98,
+        "valid_count": 40,
+        "valid_pct": 40.82,
+        "admitted_ref_mad": {
+          "count": 40,
+          "mean": 2.9741,
+          "median": 1.8293,
+          "iqr": 2.4861,
+          "mad": 0.8674,
+          "p95": 8.8522,
+          "max": 14.9471
+        },
+        "admitted_p75": {
+          "count": 40,
+          "mean": 26.5329,
+          "median": 6.0277,
+          "iqr": 7.8213,
+          "mad": 2.8408,
+          "p95": 61.1489,
+          "max": 490.3251
+        },
+        "common_valid_count": 19,
+        "common_ref_mad": {
+          "count": 19,
+          "mean": 1.474,
+          "median": 1.1044,
+          "iqr": 1.0048,
+          "mad": 0.4224,
+          "p95": 2.7676,
+          "max": 2.9129
+        },
+        "common_p75": {
+          "count": 19,
+          "mean": 5.3542,
+          "median": 3.945,
+          "iqr": 4.9433,
+          "mad": 2.2963,
+          "p95": 11.2864,
+          "max": 14.4966
+        },
+        "mean_extraction_ms": 2.8332
+      },
+      "rgb_corrected_plus_optimized_ransac": {
+        "total_regions": 98,
+        "valid_count": 50,
+        "valid_pct": 51.02,
+        "admitted_ref_mad": {
+          "count": 50,
+          "mean": 3.6729,
+          "median": 2.7359,
+          "iqr": 2.7096,
+          "mad": 1.3159,
+          "p95": 10.2301,
+          "max": 12.9192
+        },
+        "admitted_p75": {
+          "count": 50,
+          "mean": 15.216,
+          "median": 8.6276,
+          "iqr": 9.1623,
+          "mad": 4.1578,
+          "p95": 46.775,
+          "max": 81.9241
+        },
+        "common_valid_count": 19,
+        "common_ref_mad": {
+          "count": 19,
+          "mean": 2.1909,
+          "median": 1.9568,
+          "iqr": 1.2172,
+          "mad": 0.6392,
+          "p95": 4.7764,
+          "max": 7.77
+        },
+        "common_p75": {
+          "count": 19,
+          "mean": 12.5995,
+          "median": 7.6321,
+          "iqr": 4.0871,
+          "mad": 1.9155,
+          "p95": 52.9869,
+          "max": 69.4561
+        },
+        "mean_extraction_ms": 2.8005
+      }
+    },
+    "paired_preprocessing_effect": {
+      "legacy_extractor_pair_count": 36,
+      "legacy_abs_p75_shift_median": 2.2968,
+      "opt_ransac_pair_count": 31,
+      "opt_ransac_abs_p75_shift_median": 2.8865
+    },
+    "note": "Channel order correction aligns input with ImageNet RGB weights; without physical ground truth, depthmap shift alone is NOT proof of metric accuracy gain."
+  },
+  "video_shadow_evaluation_task5_9": {
+    "sequences": {
+      "ruralRoad_202f": {
+        "resolution": "640x360",
+        "fps_source": 25.0,
+        "frames_processed": 202,
+        "total_detections": 690,
+        "prior_exposure": "UNSEEN in detector/seg training (used for Phase 4A.4/5A/5B dev analysis)",
+        "conditions": "Sparse & dense potholes, grass verges, puddles, approach/departure, track gaps",
+        "measured_shadow_throughput_fps": 16.93,
+        "valid_counts": {
+          "A_legacy_annular_ema": 542,
+          "B_opt_ransac_valid_ema": 441,
+          "C_opt_ransac_rollmed_ema": 441,
+          "D_opt_ransac_adaptive_1024": 446
+        },
+        "status_counts": {
+          "A_legacy_annular_ema": {
+            "VALID": 542,
+            "INVALID": 148
+          },
+          "B_opt_ransac_valid_ema": {
+            "INVALID": 65,
+            "VALID": 441,
+            "STALE": 141,
+            "EXPIRED": 43
+          },
+          "C_opt_ransac_rollmed_ema": {
+            "INVALID": 65,
+            "VALID": 441,
+            "STALE": 141,
+            "EXPIRED": 43
+          },
+          "D_opt_ransac_adaptive_1024": {
+            "VALID": 446,
+            "INVALID": 53,
+            "STALE": 136,
+            "EXPIRED": 55
+          }
+        }
+      },
+      "rangoonRoad_180f": {
+        "resolution": "640x360",
+        "fps_source": 25.0,
+        "frames_processed": 180,
+        "total_detections": 214,
+        "prior_exposure": "6/180 isolated frames (0,40,61,100,120,143) in dataset_v2_candidates; 174 unseen temporal frames",
+        "conditions": "Heavy shadows, curb contamination, puddles, multi-pothole urban clusters",
+        "measured_shadow_throughput_fps": 19.74,
+        "valid_counts": {
+          "A_legacy_annular_ema": 187,
+          "B_opt_ransac_valid_ema": 47,
+          "C_opt_ransac_rollmed_ema": 47,
+          "D_opt_ransac_adaptive_1024": 45
+        },
+        "status_counts": {
+          "A_legacy_annular_ema": {
+            "VALID": 187,
+            "INVALID": 27
+          },
+          "B_opt_ransac_valid_ema": {
+            "VALID": 47,
+            "STALE": 50,
+            "EXPIRED": 110,
+            "INVALID": 7
+          },
+          "C_opt_ransac_rollmed_ema": {
+            "VALID": 47,
+            "STALE": 50,
+            "EXPIRED": 110,
+            "INVALID": 7
+          },
+          "D_opt_ransac_adaptive_1024": {
+            "VALID": 45,
+            "STALE": 45,
+            "EXPIRED": 113,
+            "INVALID": 11
+          }
+        }
+      },
+      "rawSurvey_720p_160f": {
+        "resolution": "1280x720",
+        "fps_source": 10.0,
+        "frames_processed": 160,
+        "total_detections": 249,
+        "prior_exposure": "0 exact MD5 matches in detector training; 720p urban dev sequence",
+        "conditions": "1280x720@10fps resolution test, oblique shadows, wet asphalt, traffic clutter",
+        "measured_shadow_throughput_fps": 14.76,
+        "valid_counts": {
+          "A_legacy_annular_ema": 192,
+          "B_opt_ransac_valid_ema": 19,
+          "C_opt_ransac_rollmed_ema": 19,
+          "D_opt_ransac_adaptive_1024": 19
+        },
+        "status_counts": {
+          "A_legacy_annular_ema": {
+            "VALID": 192,
+            "INVALID": 57
+          },
+          "B_opt_ransac_valid_ema": {
+            "INVALID": 230,
+            "VALID": 19
+          },
+          "C_opt_ransac_rollmed_ema": {
+            "INVALID": 230,
+            "VALID": 19
+          },
+          "D_opt_ransac_adaptive_1024": {
+            "INVALID": 230,
+            "VALID": 19
+          }
+        }
+      },
+      "testClip_25f": {
+        "resolution": "640x360",
+        "fps_source": 25.0,
+        "frames_processed": 25,
+        "total_detections": 25,
+        "prior_exposure": "Development upload clip",
+        "conditions": "Short contiguous sanity clip",
+        "measured_shadow_throughput_fps": 19.88,
+        "valid_counts": {
+          "A_legacy_annular_ema": 25,
+          "B_opt_ransac_valid_ema": 3,
+          "C_opt_ransac_rollmed_ema": 3,
+          "D_opt_ransac_adaptive_1024": 2
+        },
+        "status_counts": {
+          "A_legacy_annular_ema": {
+            "VALID": 25
+          },
+          "B_opt_ransac_valid_ema": {
+            "VALID": 3,
+            "STALE": 9,
+            "EXPIRED": 13
+          },
+          "C_opt_ransac_rollmed_ema": {
+            "VALID": 3,
+            "STALE": 9,
+            "EXPIRED": 13
+          },
+          "D_opt_ransac_adaptive_1024": {
+            "VALID": 2,
+            "STALE": 6,
+            "EXPIRED": 17
+          }
+        }
+      }
+    },
+    "common_valid_abc_regions": 442,
+    "methods": {
+      "A_legacy_annular_ema": {
+        "total_detections": 1178,
+        "status_counts": {
+          "VALID": 946,
+          "INVALID": 232
+        },
+        "valid_pct": 80.31,
+        "stale_pct": 0.0,
+        "expired_pct": 0.0,
+        "invalid_pct": 19.69,
+        "failure_reason_counts": {
+          "legacy_zero_clamped": 232
+        },
+        "admitted_raw_p75": {
+          "count": 946,
+          "mean": 8.8405,
+          "median": 4.1562,
+          "iqr": 7.9514,
+          "mad": 3.035,
+          "p95": 36.3839,
+          "max": 168.7102
+        },
+        "admitted_ref_mad": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "iqr": null,
+          "mad": null,
+          "p95": null,
+          "max": null
+        },
+        "common_abc_count": 442,
+        "common_abc_raw_p75": {
+          "count": 442,
+          "mean": 9.2843,
+          "median": 6.302,
+          "iqr": 7.5406,
+          "mad": 3.7179,
+          "p95": 26.9075,
+          "max": 121.9045
+        },
+        "common_abc_ref_mad": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "iqr": null,
+          "mad": null,
+          "p95": null,
+          "max": null
+        },
+        "track_level": {
+          "tracks_total": 57,
+          "mean_track_med_delta_raw": 2.5805,
+          "mean_track_med_delta_smooth": 0.6655,
+          "mean_track_smooth_mad": 1.3397,
+          "mean_track_smooth_cv": 0.4341,
+          "mean_approach_spearman_rho": 0.2123
+        },
+        "extraction_latency_ms": {
+          "mean_ms": 1.07,
+          "median_ms": 0.67,
+          "p95_ms": 2.84,
+          "min_ms": 0.26,
+          "max_ms": 11.59,
+          "fps": 933.11
+        },
+        "filtering_latency_ms": {
+          "mean_ms": 0.1,
+          "median_ms": 0.1,
+          "p95_ms": 0.15,
+          "min_ms": 0.02,
+          "max_ms": 0.85,
+          "fps": 9743.99
+        }
+      },
+      "B_opt_ransac_valid_ema": {
+        "total_detections": 1178,
+        "status_counts": {
+          "INVALID": 302,
+          "VALID": 510,
+          "STALE": 200,
+          "EXPIRED": 166
+        },
+        "valid_pct": 43.29,
+        "stale_pct": 16.98,
+        "expired_pct": 14.09,
+        "invalid_pct": 25.64,
+        "failure_reason_counts": {
+          "low_inlier_ratio": 190,
+          "unexpected_residual_polarity": 511,
+          "suspected_water_reflection": 65,
+          "unstable_cavity_residuals": 1
+        },
+        "admitted_raw_p75": {
+          "count": 510,
+          "mean": 21.8615,
+          "median": 8.1345,
+          "iqr": 11.2478,
+          "mad": 4.5643,
+          "p95": 64.2345,
+          "max": 616.1739
+        },
+        "admitted_ref_mad": {
+          "count": 510,
+          "mean": 3.5926,
+          "median": 2.7239,
+          "iqr": 2.2002,
+          "mad": 1.0098,
+          "p95": 8.1238,
+          "max": 26.7794
+        },
+        "common_abc_count": 442,
+        "common_abc_raw_p75": {
+          "count": 442,
+          "mean": 21.9614,
+          "median": 8.2332,
+          "iqr": 12.0382,
+          "mad": 4.7447,
+          "p95": 63.0756,
+          "max": 616.1739
+        },
+        "common_abc_ref_mad": {
+          "count": 442,
+          "mean": 3.4588,
+          "median": 2.6068,
+          "iqr": 1.9332,
+          "mad": 0.8927,
+          "p95": 8.4735,
+          "max": 26.7794
+        },
+        "track_level": {
+          "tracks_total": 57,
+          "mean_track_med_delta_raw": 11.8653,
+          "mean_track_med_delta_smooth": 2.0981,
+          "mean_track_smooth_mad": 7.8607,
+          "mean_track_smooth_cv": 0.3863,
+          "mean_approach_spearman_rho": 0.3441
+        },
+        "extraction_latency_ms": {
+          "mean_ms": 3.49,
+          "median_ms": 2.31,
+          "p95_ms": 8.67,
+          "min_ms": 1.17,
+          "max_ms": 27.47,
+          "fps": 286.49
+        },
+        "filtering_latency_ms": {
+          "mean_ms": 0.01,
+          "median_ms": 0.01,
+          "p95_ms": 0.02,
+          "min_ms": 0.0,
+          "max_ms": 0.07,
+          "fps": 92623.17
+        }
+      },
+      "C_opt_ransac_rollmed_ema": {
+        "total_detections": 1178,
+        "status_counts": {
+          "INVALID": 302,
+          "VALID": 510,
+          "STALE": 200,
+          "EXPIRED": 166
+        },
+        "valid_pct": 43.29,
+        "stale_pct": 16.98,
+        "expired_pct": 14.09,
+        "invalid_pct": 25.64,
+        "failure_reason_counts": {
+          "low_inlier_ratio": 190,
+          "unexpected_residual_polarity": 511,
+          "suspected_water_reflection": 65,
+          "unstable_cavity_residuals": 1
+        },
+        "admitted_raw_p75": {
+          "count": 510,
+          "mean": 21.8615,
+          "median": 8.1345,
+          "iqr": 11.2478,
+          "mad": 4.5643,
+          "p95": 64.2345,
+          "max": 616.1739
+        },
+        "admitted_ref_mad": {
+          "count": 510,
+          "mean": 3.5926,
+          "median": 2.7239,
+          "iqr": 2.2002,
+          "mad": 1.0098,
+          "p95": 8.1238,
+          "max": 26.7794
+        },
+        "common_abc_count": 442,
+        "common_abc_raw_p75": {
+          "count": 442,
+          "mean": 21.9614,
+          "median": 8.2332,
+          "iqr": 12.0382,
+          "mad": 4.7447,
+          "p95": 63.0756,
+          "max": 616.1739
+        },
+        "common_abc_ref_mad": {
+          "count": 442,
+          "mean": 3.4588,
+          "median": 2.6068,
+          "iqr": 1.9332,
+          "mad": 0.8927,
+          "p95": 8.4735,
+          "max": 26.7794
+        },
+        "track_level": {
+          "tracks_total": 57,
+          "mean_track_med_delta_raw": 11.8653,
+          "mean_track_med_delta_smooth": 1.1011,
+          "mean_track_smooth_mad": 2.9764,
+          "mean_track_smooth_cv": 0.3423,
+          "mean_approach_spearman_rho": 0.3441
+        },
+        "extraction_latency_ms": {
+          "mean_ms": 3.49,
+          "median_ms": 2.31,
+          "p95_ms": 8.67,
+          "min_ms": 1.17,
+          "max_ms": 27.47,
+          "fps": 286.49
+        },
+        "filtering_latency_ms": {
+          "mean_ms": 0.02,
+          "median_ms": 0.01,
+          "p95_ms": 0.03,
+          "min_ms": 0.0,
+          "max_ms": 0.15,
+          "fps": 62326.06
+        }
+      },
+      "D_opt_ransac_adaptive_1024": {
+        "total_detections": 1178,
+        "status_counts": {
+          "VALID": 512,
+          "INVALID": 294,
+          "STALE": 187,
+          "EXPIRED": 185
+        },
+        "valid_pct": 43.46,
+        "stale_pct": 15.87,
+        "expired_pct": 15.7,
+        "invalid_pct": 24.96,
+        "failure_reason_counts": {
+          "low_inlier_ratio": 190,
+          "unexpected_residual_polarity": 507,
+          "suspected_water_reflection": 65,
+          "unstable_cavity_residuals": 1
+        },
+        "admitted_raw_p75": {
+          "count": 512,
+          "mean": 23.9697,
+          "median": 8.3806,
+          "iqr": 11.5442,
+          "mad": 4.7152,
+          "p95": 68.0323,
+          "max": 611.9298
+        },
+        "admitted_ref_mad": {
+          "count": 512,
+          "mean": 3.7012,
+          "median": 2.7404,
+          "iqr": 2.2692,
+          "mad": 0.9964,
+          "p95": 9.18,
+          "max": 41.0048
+        },
+        "common_abc_count": 442,
+        "common_abc_raw_p75": {
+          "count": 415,
+          "mean": 21.4811,
+          "median": 8.1951,
+          "iqr": 10.894,
+          "mad": 4.576,
+          "p95": 57.2122,
+          "max": 611.9298
+        },
+        "common_abc_ref_mad": {
+          "count": 442,
+          "mean": 3.7481,
+          "median": 2.6101,
+          "iqr": 1.9467,
+          "mad": 0.8905,
+          "p95": 9.2526,
+          "max": 130.7529
+        },
+        "track_level": {
+          "tracks_total": 57,
+          "mean_track_med_delta_raw": 7.9431,
+          "mean_track_med_delta_smooth": 1.5398,
+          "mean_track_smooth_mad": 3.427,
+          "mean_track_smooth_cv": 0.2595,
+          "mean_approach_spearman_rho": 0.3559
+        },
+        "extraction_latency_ms": {
+          "mean_ms": 5.6,
+          "median_ms": 3.31,
+          "p95_ms": 16.9,
+          "min_ms": 1.17,
+          "max_ms": 55.98,
+          "fps": 178.62
+        },
+        "filtering_latency_ms": {
+          "mean_ms": 0.02,
+          "median_ms": 0.01,
+          "p95_ms": 0.04,
+          "min_ms": 0.0,
+          "max_ms": 0.2,
+          "fps": 61116.07
+        }
+      }
+    }
+  },
+  "temporal_lifecycle_failure_suite_task6": {
+    "1_2_invalid_and_stale_expiry": {
+      "initial_valid_score": 9.643855,
+      "stale_sequence_status_score_age": [
+        [
+          "STALE",
+          9.643855,
+          1
+        ],
+        [
+          "STALE",
+          9.643855,
+          2
+        ],
+        [
+          "STALE",
+          9.643855,
+          3
+        ],
+        [
+          "EXPIRED",
+          null,
+          4
+        ],
+        [
+          "EXPIRED",
+          null,
+          5
+        ]
+      ],
+      "passed": true
+    },
+    "3_4_5_loss_expiry_id_reuse": {
+      "short_loss_smoothed_blended": 7.026238,
+      "short_loss_raw": 12.399241,
+      "long_loss_reset_age": 0,
+      "long_loss_zero_leak_diff": 0.0,
+      "passed": true
+    },
+    "6_abrupt_step_lag_frames": {
+      "B_opt_ransac_valid_ema": 5,
+      "C_opt_ransac_rollmed_ema": 7
+    },
+    "7_8_missing_nan_and_outliers": {
+      "none_depth_C_status": "NOT_EVALUATED",
+      "nan_crater_C_status": "INVALID",
+      "extreme_ring_outlier_C_valid": true,
+      "extreme_ring_outlier_C_mad": 7e-06
+    },
+    "9_10_11_resolution_neighbor_profile_fault": {
+      "neighbor_C_valid": true,
+      "res_720p_truck_C_status": "VALID",
+      "fault_A_status": "VALID",
+      "fault_B_status": "NOT_EVALUATED",
+      "fault_C_status": "VALID"
+    }
+  },
+  "adaptive_512_1024_synthetic_ablation_task7": {
+    "valid_synthetic_cases": 27,
+    "adaptive_triggers": 0,
+    "fixed_512_mean_p75_err": 0.00072,
+    "adaptive_mean_p75_err": 0.00072,
+    "high_noise_fixed_512_mean_p75_err": 0.00651,
+    "high_noise_adaptive_mean_p75_err": 0.00651,
+    "mean_ms_512": 2.5097,
+    "mean_ms_adaptive": 2.5097
+  },
+  "end_to_end_runtime_task8": {
+    "total_video_frames": 567,
+    "total_video_regions": 1178,
+    "adaptive_1024_triggers": 513,
+    "adaptive_1024_trigger_pct": 43.55,
+    "stage_latencies_ms": {
+      "video_decode": {
+        "mean_ms": 1.2,
+        "median_ms": 0.5,
+        "p95_ms": 3.08,
+        "min_ms": 0.29,
+        "max_ms": 21.87,
+        "fps": 836.04
+      },
+      "det_and_bytetrack": {
+        "mean_ms": 14.93,
+        "median_ms": 13.57,
+        "p95_ms": 20.54,
+        "min_ms": 9.7,
+        "max_ms": 105.63,
+        "fps": 66.99
+      },
+      "midas_preprocess_active": {
+        "mean_ms": 6.29,
+        "median_ms": 4.3,
+        "p95_ms": 13.01,
+        "min_ms": 3.13,
+        "max_ms": 19.01,
+        "fps": 158.92
+      },
+      "midas_inference_active": {
+        "mean_ms": 20.01,
+        "median_ms": 17.84,
+        "p95_ms": 28.4,
+        "min_ms": 14.57,
+        "max_ms": 59.76,
+        "fps": 49.98
+      },
+      "annular_sampling_standalone": {
+        "mean_ms": 0.4,
+        "median_ms": 0.34,
+        "p95_ms": 0.72,
+        "min_ms": 0.23,
+        "max_ms": 1.27,
+        "fps": 2518.71
+      },
+      "ref_fitting_standalone": {
+        "mean_ms": 0.81,
+        "median_ms": 0.75,
+        "p95_ms": 1.22,
+        "min_ms": 0.57,
+        "max_ms": 2.14,
+        "fps": 1230.54
+      },
+      "cavity_extraction_standalone": {
+        "mean_ms": 0.26,
+        "median_ms": 0.23,
+        "p95_ms": 0.5,
+        "min_ms": 0.17,
+        "max_ms": 0.9,
+        "fps": 3816.4
+      },
+      "quality_gating_standalone": {
+        "mean_ms": 0.2,
+        "median_ms": 0.17,
+        "p95_ms": 0.39,
+        "min_ms": 0.13,
+        "max_ms": 0.68,
+        "fps": 4931.65
+      },
+      "csv_logging_per_frame": {
+        "mean_ms": 0.11,
+        "median_ms": 0.1,
+        "p95_ms": 0.25,
+        "min_ms": 0.0,
+        "max_ms": 0.51,
+        "fps": 8986.04
+      },
+      "demo_rendering_per_frame": {
+        "mean_ms": 4.07,
+        "median_ms": 3.8,
+        "p95_ms": 5.34,
+        "min_ms": 2.9,
+        "max_ms": 40.22,
+        "fps": 245.94
+      }
+    },
+    "frame_scaling_end_to_end_ms": {
+      "shadow_mode_all_branches": {
+        "0": {
+          "mean_ms": 14.66,
+          "median_ms": 14.31,
+          "p95_ms": 18.33,
+          "min_ms": 10.11,
+          "max_ms": 24.05,
+          "fps": 68.19
+        },
+        "1": {
+          "mean_ms": 54.07,
+          "median_ms": 47.35,
+          "p95_ms": 103.05,
+          "min_ms": 31.53,
+          "max_ms": 152.46,
+          "fps": 18.49
+        },
+        "2": {
+          "mean_ms": 67.01,
+          "median_ms": 55.99,
+          "p95_ms": 109.72,
+          "min_ms": 35.64,
+          "max_ms": 186.09,
+          "fps": 14.92
+        },
+        "3": {
+          "mean_ms": 62.98,
+          "median_ms": 63.51,
+          "p95_ms": 79.22,
+          "min_ms": 41.82,
+          "max_ms": 111.89,
+          "fps": 15.88
+        },
+        "4+": {
+          "mean_ms": 58.77,
+          "median_ms": 55.43,
+          "p95_ms": 74.29,
+          "min_ms": 46.57,
+          "max_ms": 165.69,
+          "fps": 17.02
+        }
+      },
+      "standalone_optimized_C_projected": {
+        "0": {
+          "mean_ms": 14.65,
+          "median_ms": 14.29,
+          "p95_ms": 18.31,
+          "min_ms": 10.1,
+          "max_ms": 24.03,
+          "fps": 68.28
+        },
+        "1": {
+          "mean_ms": 46.47,
+          "median_ms": 41.21,
+          "p95_ms": 75.98,
+          "min_ms": 30.84,
+          "max_ms": 144.84,
+          "fps": 21.52
+        },
+        "2": {
+          "mean_ms": 55.69,
+          "median_ms": 50.33,
+          "p95_ms": 78.78,
+          "min_ms": 33.39,
+          "max_ms": 158.56,
+          "fps": 17.96
+        },
+        "3": {
+          "mean_ms": 56.56,
+          "median_ms": 57.35,
+          "p95_ms": 73.7,
+          "min_ms": 37.9,
+          "max_ms": 83.83,
+          "fps": 17.68
+        },
+        "4+": {
+          "mean_ms": 51.85,
+          "median_ms": 47.82,
+          "p95_ms": 63.55,
+          "min_ms": 41.85,
+          "max_ms": 135.95,
+          "fps": 19.29
+        }
+      },
+      "standalone_legacy_A_projected": {
+        "0": {
+          "mean_ms": 14.65,
+          "median_ms": 14.29,
+          "p95_ms": 18.31,
+          "min_ms": 10.1,
+          "max_ms": 24.03,
+          "fps": 68.28
+        },
+        "1": {
+          "mean_ms": 42.44,
+          "median_ms": 37.78,
+          "p95_ms": 63.34,
+          "min_ms": 30.01,
+          "max_ms": 141.53,
+          "fps": 23.56
+        },
+        "2": {
+          "mean_ms": 49.56,
+          "median_ms": 47.03,
+          "p95_ms": 64.99,
+          "min_ms": 31.4,
+          "max_ms": 146.67,
+          "fps": 20.18
+        },
+        "3": {
+          "mean_ms": 49.92,
+          "median_ms": 49.98,
+          "p95_ms": 64.56,
+          "min_ms": 34.07,
+          "max_ms": 76.21,
+          "fps": 20.03
+        },
+        "4+": {
+          "mean_ms": 45.51,
+          "median_ms": 42.11,
+          "p95_ms": 55.58,
+          "min_ms": 37.24,
+          "max_ms": 110.89,
+          "fps": 21.97
+        }
+      }
+    },
+    "shadow_pipeline_peak_cpu_kb": 3415.04
+  },
+  "visualization_paths": [
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase5c_shadow_viz\\shadow_preprocessing_ablation.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase5c_shadow_viz\\shadow_latency_scaling_and_stages.png",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase5c_shadow_viz\\shadow_ab_status_and_dispersion.png"
+  ],
+  "demo_video_paths": [
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase5c_shadow_viz\\shadow_demo_ruralRoad_202f.mp4",
+    "D:\\DeepLearning\\Deep_Learning_project---POTHOLEdetection\\runs\\benchmark\\phase5c_shadow_viz\\shadow_demo_rangoonRoad_180f.mp4"
+  ]
+}

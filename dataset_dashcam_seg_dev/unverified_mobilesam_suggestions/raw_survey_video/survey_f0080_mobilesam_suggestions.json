@@ -1,0 +1,168 @@
+{
+  "sample_id": "survey_f0080",
+  "session_id": "raw_survey_video",
+  "source_video": "roadvision-dashboard/public/videos/raw_survey.mp4",
+  "frame_number": 80,
+  "width": 1280,
+  "height": 720,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        381.83,
+        399.22,
+        886.44,
+        697.05
+      ],
+      "det_conf": 0.4692,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9979,
+      "unverified_polygon_px": [
+        [
+          [
+            807,
+            515
+          ],
+          [
+            786,
+            493
+          ],
+          [
+            762,
+            485
+          ],
+          [
+            737,
+            461
+          ],
+          [
+            702,
+            441
+          ],
+          [
+            694,
+            428
+          ],
+          [
+            694,
+            422
+          ],
+          [
+            686,
+            417
+          ],
+          [
+            663,
+            415
+          ],
+          [
+            614,
+            419
+          ],
+          [
+            585,
+            427
+          ],
+          [
+            500,
+            427
+          ],
+          [
+            481,
+            439
+          ],
+          [
+            454,
+            449
+          ],
+          [
+            446,
+            459
+          ],
+          [
+            443,
+            493
+          ],
+          [
+            448,
+            524
+          ],
+          [
+            427,
+            553
+          ],
+          [
+            430,
+            593
+          ],
+          [
+            439,
+            618
+          ],
+          [
+            460,
+            637
+          ],
+          [
+            482,
+            650
+          ],
+          [
+            493,
+            653
+          ],
+          [
+            578,
+            656
+          ],
+          [
+            601,
+            647
+          ],
+          [
+            653,
+            640
+          ],
+          [
+            709,
+            613
+          ],
+          [
+            744,
+            611
+          ],
+          [
+            788,
+            599
+          ],
+          [
+            814,
+            563
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        444.61,
+        371.55,
+        1279.05,
+        716.34
+      ],
+      "det_conf": 0.2583,
+      "mobilesam_accepted": false,
+      "rejection_reasons": [
+        "excessive_fragmentation"
+      ],
+      "sam_iou_pred": 0.8827,
+      "unverified_polygon_px": [],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    }
+  ]
+}

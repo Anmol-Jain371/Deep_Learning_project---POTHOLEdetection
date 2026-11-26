@@ -1,0 +1,135 @@
+{
+  "sample_id": "rural_unseen_f0135",
+  "session_id": "rural_road_unseen",
+  "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+  "frame_number": 135,
+  "timestamp_sec": 5.4,
+  "width": 640,
+  "height": 360,
+  "verified_ground_truth": false,
+  "warning": "Model-generated proposals & ROI mask suggestions require full manual verification before use.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        117.09,
+        139.96,
+        210.64,
+        174.08
+      ],
+      "det_conf": 0.784,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "outside_detector_box_spill",
+        "low_det_box_coverage"
+      ],
+      "seg_conf": 0.4764,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 1,
+      "det_box_xyxy": [
+        107.77,
+        323.13,
+        251.25,
+        359.56
+      ],
+      "det_conf": 0.729,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "outside_detector_box_spill"
+      ],
+      "seg_conf": 0.2668,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 2,
+      "det_box_xyxy": [
+        0.0,
+        221.37,
+        82.07,
+        272.62
+      ],
+      "det_conf": 0.6277,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "outside_detector_box_spill"
+      ],
+      "seg_conf": 0.3043,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 3,
+      "det_box_xyxy": [
+        496.5,
+        192.13,
+        639.08,
+        355.73
+      ],
+      "det_conf": 0.5654,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 4,
+      "det_box_xyxy": [
+        206.44,
+        266.59,
+        383.35,
+        309.96
+      ],
+      "det_conf": 0.4728,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 5,
+      "det_box_xyxy": [
+        424.05,
+        153.11,
+        519.38,
+        174.81
+      ],
+      "det_conf": 0.4062,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "empty_mask_prediction"
+      ],
+      "seg_conf": 0.0,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    },
+    {
+      "proposal_idx": 6,
+      "det_box_xyxy": [
+        0.36,
+        219.67,
+        83.91,
+        302.45
+      ],
+      "det_conf": 0.2757,
+      "roi_seg_suggestion_accepted": false,
+      "rejection_reasons": [
+        "excessive_area_ratio",
+        "outside_detector_box_spill",
+        "excessive_crop_boundary_contact"
+      ],
+      "seg_conf": 0.4705,
+      "unverified_polygon_px": [],
+      "status": "UNVERIFIED_MODEL_SUGGESTION_DO_NOT_USE_AS_GT"
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "sample_id": "rangoon_unseen_f0080",
+  "session_id": "rangoon_road_unseen_temporal",
+  "source_video": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "frame_number": 80,
+  "width": 640,
+  "height": 360,
+  "label_status": "UNVERIFIED_MODEL_SUGGESTION",
+  "verified_ground_truth": false,
+  "warning": "Optional MobileSAM mask suggestions only; requires human inspection of ALL visible potholes, detector misses, and negative frames.",
+  "proposals": [
+    {
+      "proposal_idx": 0,
+      "det_box_xyxy": [
+        202.91,
+        77.11,
+        411.89,
+        183.35
+      ],
+      "det_conf": 0.5088,
+      "mobilesam_accepted": true,
+      "rejection_reasons": [],
+      "sam_iou_pred": 0.9601,
+      "unverified_polygon_px": [
+        [
+          [
+            224,
+            110
+          ],
+          [
+            225,
+            125
+          ],
+          [
+            230,
+            143
+          ],
+          [
+            242,
+            153
+          ],
+          [
+            253,
+            155
+          ],
+          [
+            263,
+            165
+          ],
+          [
+            268,
+            167
+          ],
+          [
+            276,
+            167
+          ],
+          [
+            280,
+            169
+          ],
+          [
+            282,
+            176
+          ],
+          [
+            295,
+            176
+          ],
+          [
+            300,
+            171
+          ],
+          [
+            308,
+            171
+          ],
+          [
+            310,
+            169
+          ],
+          [
+            338,
+            169
+          ],
+          [
+            353,
+            167
+          ],
+          [
+            366,
+            155
+          ],
+          [
+            376,
+            151
+          ],
+          [
+            381,
+            151
+          ],
+          [
+            388,
+            146
+          ],
+          [
+            391,
+            148
+          ],
+          [
+            393,
+            146
+          ],
+          [
+            395,
+            147
+          ],
+          [
+            403,
+            141
+          ],
+          [
+            402,
+            138
+          ],
+          [
+            403,
+            133
+          ],
+          [
+            398,
+            128
+          ],
+          [
+            390,
+            124
+          ],
+          [
+            382,
+            124
+          ],
+          [
+            372,
+            116
+          ],
+          [
+            366,
+            115
+          ],
+          [
+            363,
+            111
+          ],
+          [
+            356,
+            110
+          ],
+          [
+            347,
+            98
+          ],
+          [
+            333,
+            91
+          ],
+          [
+            300,
+            92
+          ],
+          [
+            291,
+            91
+          ],
+          [
+            287,
+            88
+          ],
+          [
+            280,
+            86
+          ],
+          [
+            267,
+            86
+          ],
+          [
+            258,
+            88
+          ],
+          [
+            246,
+            95
+          ],
+          [
+            233,
+            98
+          ],
+          [
+            226,
+            104
+          ]
+        ]
+      ],
+      "label_status": "UNVERIFIED_MODEL_SUGGESTION"
+    }
+  ]
+}
