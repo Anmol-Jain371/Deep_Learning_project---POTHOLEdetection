@@ -108,6 +108,75 @@ class DiagnosticsConfig:
 
 
 @dataclass
+class QualityConfig:
+    enabled: bool = True
+    min_fresh_samples_for_stability: int = 3
+    max_cache_age_sec: float = 0.45
+    cached_freshness_penalty_max: float = 0.35
+    min_confidence_for_full_score: float = 0.70
+    min_ref_samples: int = 40
+    ideal_ref_samples: int = 256
+    min_cavity_px: int = 25
+    ideal_cavity_px: int = 250
+    min_inlier_ratio: float = 0.45
+    ideal_inlier_ratio: float = 0.85
+    mad_reference_scale: float = 0.08
+    rel_cv_reference_scale: float = 0.50
+    w_detection: float = 0.15
+    w_geometric_ref: float = 0.30
+    w_cavity_extraction: float = 0.20
+    w_temporal_consistency: float = 0.15
+    w_freshness: float = 0.10
+    w_environmental: float = 0.10
+    high_quality_min: float = 0.75
+    moderate_quality_min: float = 0.50
+    min_component_coverage_for_index: float = 0.50
+
+
+@dataclass
+class GeometrySnapshotConfig:
+    enabled: bool = False
+    max_grid_size: int = 48
+    max_snapshots_per_track: int = 3
+    max_snapshots_per_job: int = 24
+    include_source_crop: bool = True
+    min_quality_for_snapshot: float = 0.0
+
+
+@dataclass
+class GeospatialConfig:
+    max_sync_gap_sec: float = 2.0
+    exact_match_threshold_sec: float = 0.05
+    allow_extrapolation: bool = False
+    max_gps_file_bytes: int = 10485760
+    max_gps_rows: int = 100000
+    max_match_distance_m: float = 15.0
+    max_cluster_diameter_m: float = 25.0
+    max_horizontal_accuracy_m: float = 25.0
+    max_heading_diff_deg: float = 45.0
+    min_quality_index_for_auto_match: float = 0.45
+    relative_depth_diff_limit: float = 0.50
+
+
+@dataclass
+class MaintenancePriorityConfig:
+    scoring_version: str = "heuristic_review_priority_v1"
+    w_persistence: float = 0.18
+    w_detector_confidence: float = 0.16
+    w_fresh_coverage: float = 0.12
+    w_quality_index: float = 0.16
+    w_relative_signal: float = 0.14
+    w_temporal_stability: float = 0.10
+    w_cross_trip: float = 0.08
+    w_gps_sync: float = 0.06
+    priority_review_min: float = 0.65
+    persistence_full_obs: int = 10
+    fresh_full_count: int = 5
+    relative_signal_ref_scale: float = 0.15
+    default_segment_length_m: float = 50.0
+
+
+@dataclass
 class RoadVisionV2Config:
     mode: str = "balanced"
     detector: DetectorConfig = field(default_factory=DetectorConfig)
@@ -117,6 +186,10 @@ class RoadVisionV2Config:
     scheduler: SchedulerConfig = field(default_factory=SchedulerConfig)
     cache_temporal: CacheTemporalConfig = field(default_factory=CacheTemporalConfig)
     diagnostics: DiagnosticsConfig = field(default_factory=DiagnosticsConfig)
+    quality: QualityConfig = field(default_factory=QualityConfig)
+    geometry_snapshot: GeometrySnapshotConfig = field(default_factory=GeometrySnapshotConfig)
+    geospatial: GeospatialConfig = field(default_factory=GeospatialConfig)
+    maintenance: MaintenancePriorityConfig = field(default_factory=MaintenancePriorityConfig)
     project_root: str = ""
 
     def resolve_path(self, rel_or_abs: Optional[str]) -> Optional[str]:
@@ -164,6 +237,18 @@ class RoadVisionV2Config:
             raise ValueError(f"Invalid scheduler.strategy '{self.scheduler.strategy}'; expected {VALID_STRATEGIES}")
         if self.cache_temporal.max_cache_age_sec <= 0.0 or self.cache_temporal.tau_sec <= 0.0:
             raise ValueError("cache_temporal.max_cache_age_sec and tau_sec must be positive")
+        if self.quality.min_fresh_samples_for_stability < 2:
+            raise ValueError("quality.min_fresh_samples_for_stability must be >= 2")
+        if not (0.0 <= self.quality.moderate_quality_min <= self.quality.high_quality_min <= 1.0):
+            raise ValueError("quality thresholds must satisfy 0 <= moderate_quality_min <= high_quality_min <= 1")
+        if not (16 <= self.geometry_snapshot.max_grid_size <= 128):
+            raise ValueError("geometry_snapshot.max_grid_size must be in [16, 128]")
+        if self.geometry_snapshot.max_snapshots_per_track < 1 or self.geometry_snapshot.max_snapshots_per_job < 1:
+            raise ValueError("geometry_snapshot snapshot limits must be >= 1")
+        if self.geospatial.max_sync_gap_sec <= 0.0 or self.geospatial.max_match_distance_m <= 0.0:
+            raise ValueError("geospatial.max_sync_gap_sec and max_match_distance_m must be > 0")
+        if self.geospatial.max_cluster_diameter_m < self.geospatial.max_match_distance_m:
+            raise ValueError("geospatial.max_cluster_diameter_m must be >= max_match_distance_m")
 
         if check_assets:
             det_ckpt = self.resolve_path(self.detector.checkpoint_path)
@@ -207,6 +292,9 @@ def load_v2_config(
     det_cfg = DetectorConfig(**(raw.get("detector") or {}))
     ransac_cfg = RansacConfig(**(raw.get("ransac") or {}))
     cache_cfg = CacheTemporalConfig(**(raw.get("cache_temporal") or {}))
+    quality_cfg = QualityConfig(**(raw.get("quality") or {}))
+    geom_cfg = GeometrySnapshotConfig(**(raw.get("geometry_snapshot") or {}))
+    geo_cfg = GeospatialConfig(**(raw.get("geospatial") or {}))
     depth_cfg = DepthConfig(**(mraw.get("depth") or {}))
     cav_cfg = CavityConfig(**(mraw.get("cavity") or {}))
     sched_cfg = SchedulerConfig(**(mraw.get("scheduler") or {}))
@@ -225,6 +313,9 @@ def load_v2_config(
                 "scheduler": sched_cfg,
                 "cache_temporal": cache_cfg,
                 "diagnostics": diag_cfg,
+                "quality": quality_cfg,
+                "geometry_snapshot": geom_cfg,
+                "geospatial": geo_cfg,
             }.get(sec_name)
             if target is not None and isinstance(sec_vals, dict):
                 for k, v in sec_vals.items():
@@ -244,6 +335,9 @@ def load_v2_config(
         scheduler=sched_cfg,
         cache_temporal=cache_cfg,
         diagnostics=diag_cfg,
+        quality=quality_cfg,
+        geometry_snapshot=geom_cfg,
+        geospatial=geo_cfg,
         project_root=root,
     )
     cfg.validate(check_assets=check_assets)

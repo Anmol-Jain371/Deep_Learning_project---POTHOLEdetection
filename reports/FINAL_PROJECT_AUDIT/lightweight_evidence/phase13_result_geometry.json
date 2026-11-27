@@ -1,0 +1,71 @@
+{
+  "status": "COMPLETED",
+  "reference_plane_ablation": {
+    "A_legacy_annular": {
+      "total_cases": 45,
+      "valid_count": 45,
+      "gate_concordance_pct": 77.78,
+      "invalid_rejection_rate_pct": 0.0,
+      "mean_plane_rmse": null,
+      "outlier_mean_plane_rmse": null,
+      "mean_inlier_ratio": null,
+      "mean_latency_ms": 0.638,
+      "median_latency_ms": 0.529
+    },
+    "B_ols_plane": {
+      "total_cases": 45,
+      "valid_count": 35,
+      "gate_concordance_pct": 100.0,
+      "invalid_rejection_rate_pct": 100.0,
+      "mean_plane_rmse": 0.00063,
+      "outlier_mean_plane_rmse": 0.001065,
+      "mean_inlier_ratio": 0.9839,
+      "mean_latency_ms": 2.67,
+      "median_latency_ms": 2.207
+    },
+    "C_ransac_baseline": {
+      "total_cases": 45,
+      "valid_count": 35,
+      "gate_concordance_pct": 100.0,
+      "invalid_rejection_rate_pct": 100.0,
+      "mean_plane_rmse": 0.000285,
+      "outlier_mean_plane_rmse": 2.9e-05,
+      "mean_inlier_ratio": 0.9965,
+      "mean_latency_ms": 9.014,
+      "median_latency_ms": 8.221
+    },
+    "D_optimized_msac_ransac": {
+      "total_cases": 45,
+      "valid_count": 35,
+      "gate_concordance_pct": 100.0,
+      "invalid_rejection_rate_pct": 100.0,
+      "mean_plane_rmse": 0.000396,
+      "outlier_mean_plane_rmse": 0.000131,
+      "mean_inlier_ratio": 0.9961,
+      "mean_latency_ms": 4.514,
+      "median_latency_ms": 4.233
+    }
+  },
+  "phase10_geometry_evaluation": {
+    "raw_mean_residual": 0.010664,
+    "downsampled_mean_residual": 0.011059,
+    "mean_resampling_abs_diff": 0.000396,
+    "raw_min_max": [
+      -0.010703,
+      0.23785
+    ],
+    "downsampled_min_max": [
+      -0.003422,
+      0.23148
+    ],
+    "reference_mask_true_cells": 1141,
+    "cavity_mask_true_cells": 304,
+    "null_cells_preserved": 9,
+    "cross_section_gap_preserved": true,
+    "snapshot_json_kb": 91.03,
+    "generation_overhead_ms": 98.38,
+    "extra_depth_inference_calls": 0,
+    "note": "Corrected reference_mask_grid (>0 cells) verified on new snapshots; 42 historical snapshots remain unmasked legacy artifacts."
+  },
+  "synthetic_disclaimer": "Synthetic reference-plane RMSE tests geometric plane recovery ONLY; it does NOT establish physical metric pothole depth accuracy."
+}

@@ -1,0 +1,215 @@
+server.py:8 [cors]: from flask_cors import CORS
+server.py:20 [cors]: CORS(app)
+server.py:37 [84.7]: # Initialize Deep Learning Engine with upgraded production detector (RDD1666 50-Epoch, 84.7% mAP50)
+server.py:45 [84.7,92.4]: MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+server.py:156 [lat]: raw_lat = data.get("lat")
+server.py:157 [lon]: raw_lon = data.get("lon")
+server.py:169 [lat]: "lat": round(raw_lat, 5) if (has_gps and raw_lat is not None) else None,
+server.py:170 [lng]: "lng": round(raw_lon, 5) if (has_gps and raw_lon is not None) else None,
+roadvision_engine.py:52 [0.082]: "k_disp": 0.082,
+roadvision_engine.py:54 [1.35]: "depth_exponent": 1.35,
+roadvision_engine.py:110 [1.35]: Delta_Z_cm = Delta_d_raw * (Z(y)^1.35) * k_disp
+roadvision_engine.py:120 [0.082]: k_disp: float = 0.082,
+roadvision_engine.py:122 [1.35]: depth_exponent: float = 1.35,
+roadvision_engine.py:152 [0.082]: k_disp=cfg.get("k_disp", 0.082),
+roadvision_engine.py:154 [1.35]: depth_exponent=cfg.get("depth_exponent", 1.35),
+roadvision_engine.py:255 [fallback]: # Fallback for boundary detections with limited donut pixels
+roadvision_engine.py:330 [lat,lon]: # Match timestamps like 00:00:04,000 and GPS like 12.9718 N, 77.5948 E or lat/lon numbers
+roadvision_engine.py:348 [lat,lon]: lat, lon = self.srt_data[sec_int]
+roadvision_engine.py:349 [lat,lon]: return round(lat, 6), round(lon, 6), round(t_sec, 2)
+roadvision_engine.py:355 [fallback]: # Dead reckoning fallback (only when real GPS origin was loaded from SRT)
+roadvision_engine.py:393 [lat]: lat: Optional[float] = None,
+roadvision_engine.py:394 [lon]: lon: Optional[float] = None
+roadvision_engine.py:418 [lat]: "lat": lat,
+roadvision_engine.py:419 [lon]: "lon": lon
+roadvision_engine.py:458 [lat]: rec["lat"] = lat
+roadvision_engine.py:459 [lon]: rec["lon"] = lon
+roadvision_engine.py:510 [0.082]: self.k_disp = cfg.get("k_disp", 0.082)
+roadvision_engine.py:561 [1.35]: depth_exponent=cfg.get("depth_exponent", 1.35),
+roadvision_engine.py:683 [fallback]: # Resilient track ID assignment (fallback to index if ByteTrack ID is None)
+roadvision_engine.py:724 [lat,lon]: lat, lon, t_sec = self.gps_engine.get_position(frame_idx, fps)
+roadvision_engine.py:730 [lat,lon]: timestamp=t_sec, lat=lat, lon=lon
+roadvision_engine.py:735 [lat]: "lat": lat,
+roadvision_engine.py:736 [lon]: "lon": lon,
+roadvision_engine.py:879 [lat]: "lat": data.get("lat"),
+roadvision_engine.py:880 [lon]: "lon": data.get("lon"),
+roadvision_engine.py:892 [lat]: raw_lat = gps.get("lat") if gps.get("lat") is not None else data.get("lat")
+roadvision_engine.py:893 [lon]: raw_lon = gps.get("lon") if gps.get("lon") is not None else data.get("lon")
+roadvision_v2/geometry/surface.py:212 [fallback]: # Fallback: place crater ref plane & fill surround with NaN so nothing is fabricated
+roadvision_v2/geospatial/gps.py:5 [lat,lon]: - Strict WGS84 coordinate bounds checking (lat in [-90, 90], lon in [-180, 180]).
+roadvision_v2/geospatial/gps.py:57 [lat,lon]: def _validate_coord(lat: Optional[float], lon: Optional[float], row_idx: int) -> Tuple[float, float]:
+roadvision_v2/geospatial/gps.py:58 [lat,lon]: if lat is None or lon is None:
+roadvision_v2/geospatial/gps.py:60 [lat]: if not (-90.0 <= lat <= 90.0):
+roadvision_v2/geospatial/gps.py:61 [lat]: raise ValueError(f"Row {row_idx}: latitude {lat} out of WGS84 bounds [-90, 90]")
+roadvision_v2/geospatial/gps.py:62 [lon]: if not (-180.0 <= lon <= 180.0):
+roadvision_v2/geospatial/gps.py:63 [lon]: raise ValueError(f"Row {row_idx}: longitude {lon} out of WGS84 bounds [-180, 180]")
+roadvision_v2/geospatial/gps.py:64 [lat,lon]: return float(lat), float(lon)
+roadvision_v2/geospatial/gps.py:110 [lat]: lat_col = _pick("latitude", "lat")
+roadvision_v2/geospatial/gps.py:111 [lng,lon]: lon_col = _pick("longitude", "lon", "lng")
+roadvision_v2/geospatial/gps.py:127 [lat,lon]: lat, lon = _validate_coord(_safe_float(row.get(lat_col)), _safe_float(row.get(lon_col)), idx)
+roadvision_v2/geospatial/gps.py:137 [lat]: "lat": lat,
+roadvision_v2/geospatial/gps.py:138 [lon]: "lon": lon,
+roadvision_v2/geospatial/gps.py:180 [lat,lon]: lat, lon = _validate_coord(_safe_float(pt.attrib.get("lat")), _safe_float(pt.attrib.get("lon")), idx)
+roadvision_v2/geospatial/gps.py:197 [lat]: "lat": lat,
+roadvision_v2/geospatial/gps.py:198 [lon]: "lon": lon,
+roadvision_v2/geospatial/gps.py:228 [lat,lon]: lon, lat = _validate_coord(_safe_float(coords[1]), _safe_float(coords[0]), idx)
+roadvision_v2/geospatial/gps.py:237 [lat]: "lat": lat,
+roadvision_v2/geospatial/gps.py:238 [lon]: "lon": lon,
+roadvision_v2/geospatial/gps.py:253 [lat,lon]: lon, lat = _validate_coord(_safe_float(c[1]), _safe_float(c[0]), idx)
+roadvision_v2/geospatial/gps.py:261 [lat]: "lat": lat,
+roadvision_v2/geospatial/gps.py:262 [lon]: "lon": lon,
+roadvision_v2/geospatial/gps.py:331 [lat]: "lat": round(r["lat"], 7),
+roadvision_v2/geospatial/gps.py:332 [lon]: "lon": round(r["lon"], 7),
+roadvision_v2/geospatial/gps.py:351 [sample]: # Keep the sample with better (smaller) accuracy if available, otherwise latest
+roadvision_v2/geospatial/gps.py:364 [lat,lon]: s["heading_deg"] = round(initial_bearing_deg(s["lat"], s["lon"], nxt["lat"], nxt["lon"]), 2)
+roadvision_v2/geospatial/gps.py:367 [lat,lon]: s["heading_deg"] = round(initial_bearing_deg(prv["lat"], prv["lon"], s["lat"], s["lon"]), 2)
+roadvision_v2/geospatial/gps.py:421 [lat]: "lat": None,
+roadvision_v2/geospatial/gps.py:422 [lon]: "lon": None,
+roadvision_v2/geospatial/gps.py:444 [lat]: "lat": None,
+roadvision_v2/geospatial/gps.py:445 [lon]: "lon": None,
+roadvision_v2/geospatial/gps.py:459 [lat]: "lat": edge["lat"],
+roadvision_v2/geospatial/gps.py:460 [lon]: "lon": edge["lon"],
+roadvision_v2/geospatial/gps.py:481 [lat]: "lat": s["lat"],
+roadvision_v2/geospatial/gps.py:482 [lon]: "lon": s["lon"],
+roadvision_v2/geospatial/gps.py:498 [lat]: "lat": s["lat"],
+roadvision_v2/geospatial/gps.py:499 [lon]: "lon": s["lon"],
+roadvision_v2/geospatial/gps.py:520 [lat]: "lat": None,
+roadvision_v2/geospatial/gps.py:521 [lon]: "lon": None,
+roadvision_v2/geospatial/gps.py:535 [lat]: lat = round(_lerp(s0["lat"], s1["lat"], alpha), 7)
+roadvision_v2/geospatial/gps.py:536 [lon]: lon = round(_lerp(s0["lon"], s1["lon"], alpha), 7)
+roadvision_v2/geospatial/gps.py:543 [lat]: "lat": lat,
+roadvision_v2/geospatial/gps.py:544 [lon]: "lon": lon,
+roadvision_v2/geospatial/matching.py:4 [lat,lon]: Uses exact Haversine distance (never Euclidean lat/lon degrees) and prevents
+roadvision_v2/geospatial/matching.py:57 [lat,lon]: if cand.get("lat") is None or cand.get("lon") is None:
+roadvision_v2/geospatial/matching.py:76 [lat,lon]: dist_m = haversine_distance_m(a["lat"], a["lon"], b["lat"], b["lon"])
+roadvision_v2/geospatial/matching.py:161 [lat,lon]: candidates[u]["lat"], candidates[u]["lon"], candidates[v]["lat"], candidates[v]["lon"]
+roadvision_v2/geospatial/matching.py:202 [lat]: "centroid_lat": m0.get("lat"),
+roadvision_v2/geospatial/matching.py:203 [lon]: "centroid_lon": m0.get("lon"),
+roadvision_v2/geospatial/matching.py:204 [lat]: "diameter_m": 0.0 if m0.get("lat") is not None else None,
+roadvision_v2/geospatial/matching.py:210 [lat]: "distance_to_centroid_m": 0.0 if m0.get("lat") is not None else None,
+roadvision_v2/geospatial/matching.py:218 [lat]: c_lat = round(sum(float(m["lat"]) for m in members) / len(members), 7)
+roadvision_v2/geospatial/matching.py:219 [lon]: c_lon = round(sum(float(m["lon"]) for m in members) / len(members), 7)
+roadvision_v2/geospatial/matching.py:223 [lat,lon]: d_ab = haversine_distance_m(members[a_i]["lat"], members[a_i]["lon"], members[b_i]["lat"], members[b_i]["lon"])
+roadvision_v2/geospatial/matching.py:251 [lat,lon]: d_cen = round(haversine_distance_m(m["lat"], m["lon"], c_lat, c_lon), 3)
+roadvision_v2/geospatial/matching.py:300 [lat,lon]: coords = [[p["lon"], p["lat"]] for p in route_points if p.get("lat") is not None and p.get("lon") is not None]
+roadvision_v2/geospatial/matching.py:314 [lat,lon]: if loc.get("lat") is None or loc.get("lon") is None:
+roadvision_v2/geospatial/matching.py:319 [lat,lon]: "geometry": {"type": "Point", "coordinates": [loc["lon"], loc["lat"]]},
+roadvision_v2/maintenance/analytics.py:231 [synthetic]: reasons.append("Associated geospatial cluster includes synthetic GPS fixture data; excluded from automated cross-trip boost.")
+roadvision_v2/maintenance/analytics.py:292 [fallback]: # Build canonical track list (fallback to obs_by_track keys if tracks JSON missing)
+roadvision_v2/maintenance/analytics.py:374 [lat,lon]: has_gps = bool(geo and geo.get("lat") is not None and geo.get("lon") is not None)
+roadvision_v2/maintenance/analytics.py:420 [lat]: "lat": geo.get("lat") if has_gps else None,
+roadvision_v2/maintenance/analytics.py:421 [lon]: "lon": geo.get("lon") if has_gps else None,
+roadvision_v2/maintenance/analytics.py:506 [lat,lon]: pts = [p for p in (route_points or []) if p.get("lat") is not None and p.get("lon") is not None]
+roadvision_v2/maintenance/analytics.py:537 [lat]: float(pts_sorted[i - 1]["lat"]),
+roadvision_v2/maintenance/analytics.py:538 [lon]: float(pts_sorted[i - 1]["lon"]),
+roadvision_v2/maintenance/analytics.py:539 [lat]: float(pts_sorted[i]["lat"]),
+roadvision_v2/maintenance/analytics.py:540 [lon]: float(pts_sorted[i]["lon"]),
+roadvision_v2/maintenance/analytics.py:548 [lat,lon]: geolocated_cands = [c for c in candidates if c.get("has_gps") and c.get("lat") is not None and c.get("lon") is not None]
+roadvision_v2/maintenance/analytics.py:578 [lat,lon]: clat, clon = float(cand["lat"]), float(cand["lon"])
+roadvision_v2/maintenance/analytics.py:582 [lat,lon]: d = haversine_distance_m(clat, clon, float(pt["lat"]), float(pt["lon"]))
+roadvision_v2/maintenance/analytics.py:606 [lat]: coords_lat = [float(p["lat"]) for p in rpts] or [float(c["lat"]) for c in cands_in_seg]
+roadvision_v2/maintenance/analytics.py:607 [lon]: coords_lon = [float(p["lon"]) for p in rpts] or [float(c["lon"]) for c in cands_in_seg]
+roadvision_v2/maintenance/reports.py:139 [lat]: "lat",
+roadvision_v2/maintenance/reports.py:140 [lon]: "lon",
+roadvision_v2/pipeline.py:983 [fallback]: msg = f"Depth model unavailable; explicit fallback active ({depth_load_err})"
+roadvision_v2/quality/assessment.py:13 [sample]: - Correlated diagnostics (e.g., RANSAC inlier ratio, residual MAD, sample count) are
+roadvision_api_v2/configuration.py:32 [127.0.0.1,localhost]: if host in ("localhost", "127.0.0.1", "::1"):
+roadvision_api_v2/configuration.py:45 [127.0.0.1]: host: str = "127.0.0.1"
+roadvision_api_v2/configuration.py:64 [localhost]: "http://localhost:3000",
+roadvision_api_v2/configuration.py:65 [127.0.0.1]: "http://127.0.0.1:3000",
+roadvision_api_v2/configuration.py:66 [localhost]: "http://localhost:5173",
+roadvision_api_v2/configuration.py:67 [127.0.0.1]: "http://127.0.0.1:5173",
+roadvision_api_v2/configuration.py:109 [localhost]: f"V2 research backend must bind to localhost/loopback only, got host={self.host!r}"
+roadvision_api_v2/configuration.py:183 [cors]: f"Wildcard or invalid CORS origin not permitted for V2 local API: {origin!r}"
+roadvision_api_v2/geospatial_store.py:84 [lat,lon]: lat, lon, altitude, speed_mps, horizontal_accuracy_m, heading_deg
+roadvision_api_v2/geospatial_store.py:93 [lat]: float(s["lat"]),
+roadvision_api_v2/geospatial_store.py:94 [lon]: float(s["lon"]),
+roadvision_api_v2/geospatial_store.py:190 [fallback]: # Fallback from frame index & source FPS if frames_json disabled
+roadvision_api_v2/geospatial_store.py:218 [lat]: "lat": sync_res["lat"],
+roadvision_api_v2/geospatial_store.py:219 [lon]: "lon": sync_res["lon"],
+roadvision_api_v2/geospatial_store.py:245 [lat,lon]: lat, lon, horizontal_accuracy_m, heading_deg,
+roadvision_api_v2/geospatial_store.py:258 [lat]: r["lat"],
+roadvision_api_v2/geospatial_store.py:259 [lon]: r["lon"],
+roadvision_api_v2/geospatial_store.py:298 [lat,lon]: "SELECT sample_idx, timestamp_sec, raw_timestamp, lat, lon, altitude, speed_mps, horizontal_accuracy_m, heading_deg "
+roadvision_api_v2/geospatial_store.py:385 [lat,lon]: synced_cnt = sum(1 for l in locations if l.get("lat") is not None and l.get("lon") is not None)
+roadvision_api_v2/maintenance_store.py:468 [lat]: "lat": matched.get("lat"),
+roadvision_api_v2/maintenance_store.py:469 [lon]: "lon": matched.get("lon"),
+roadvision_api_v2/openapi.yaml:18 [127.0.0.1,localhost]: - Localhost research prototype only (`127.0.0.1` by default); Flask debug mode disabled for V2.
+roadvision_api_v2/openapi.yaml:23 [127.0.0.1]: - url: http://127.0.0.1:5000
+roadvision_api_v2/openapi.yaml:24 [localhost]: description: Localhost Flask development/research server (requires ROADVISION_V2_ENABLED=true or config enabled=true)
+roadvision_api_v2/routes.py:70 [cors]: """Restrict V2 CORS origins strictly to allowed_cors_origins (never wildcard *)."""
+roadvision_api_v2/routes.py:256 [localhost]: "to localhost can query local jobs."
+roadvision_api_v2/routes.py:820 [lat]: synced_count = sum(1 for r in synced_rows if r.get("lat") is not None)
+roadvision_api_v2/storage.py:76 [lat]: lat REAL NOT NULL,
+roadvision_api_v2/storage.py:77 [lon]: lon REAL NOT NULL,
+roadvision_api_v2/storage.py:92 [lat]: lat REAL,
+roadvision_api_v2/storage.py:93 [lon]: lon REAL,
+roadvision_api_v2/storage.py:113 [lat,lon]: CREATE INDEX IF NOT EXISTS idx_track_geo_coords ON track_geolocations(lat, lon);
+roadvision-dashboard/src/components/AuditTable.jsx:77 [placeholder]: placeholder="Search hazard ID or status..."
+roadvision-dashboard/src/components/BenchmarkComparison.jsx:22 [84.7]: status: 'PRODUCTION (84.7% mAP50)',
+roadvision-dashboard/src/components/BenchmarkComparison.jsx:27 [84.7,92.4]: 'High empirical accuracy (84.7% mAP@50 with TTA, 92.4% precision)',
+roadvision-dashboard/src/components/BenchmarkComparison.jsx:244 [84.7]: <td className="metric-val highlight text-emerald font-mono">84.7% (with TTA) / 82.1%</td>
+roadvision-dashboard/src/components/BenchmarkComparison.jsx:246 [92.4]: <td className="metric-desc">High precision (92.4%) eliminates false alarm fatigue</td>
+roadvision-dashboard/src/components/PipelineSection.jsx:94 [1.35]: { label: 'Scale Gain', val: 'ΔZ = Δd · (Z^1.35) · k_disp' }
+roadvision-dashboard/src/components/PipelineSection.jsx:478 [1.35]: Scale Conversion Equation:  ΔZ_est = Δd · (Z_road^1.35) · k_disp  [cm]
+roadvision-dashboard/src/data/sample_demo_potholes.json:5 [lat]: "lat": 12.9718,
+roadvision-dashboard/src/data/sample_demo_potholes.json:6 [lng]: "lng": 77.5948,
+roadvision-dashboard/src/data/sample_demo_potholes.json:16 [lat]: "lat": 12.97215,
+roadvision-dashboard/src/data/sample_demo_potholes.json:17 [lng]: "lng": 77.59508,
+roadvision-dashboard/src/data/sample_demo_potholes.json:27 [lat]: "lat": 12.97252,
+roadvision-dashboard/src/data/sample_demo_potholes.json:28 [lng]: "lng": 77.59535,
+roadvision-dashboard/src/data/sample_demo_potholes.json:38 [lat]: "lat": 12.9729,
+roadvision-dashboard/src/data/sample_demo_potholes.json:39 [lng]: "lng": 77.59562,
+roadvision-dashboard/src/data/sample_demo_potholes.json:49 [lat]: "lat": 12.97331,
+roadvision-dashboard/src/data/sample_demo_potholes.json:50 [lng]: "lng": 77.59591,
+roadvision-dashboard/src/data/sample_demo_potholes.json:60 [lat]: "lat": 12.97375,
+roadvision-dashboard/src/data/sample_demo_potholes.json:61 [lng]: "lng": 77.59623,
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:42 [lat,lon]: ...(routePoints || []).map((p) => ({ lat: p.lat, lon: p.lon })),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:43 [lat,lon]: ...(locations || []).filter((l) => l.lat !== null && l.lon !== null).map((l) => ({ lat: l.lat, lon: l.lon })),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:54 [lat]: const lats = coords.map((c) => c.lat);
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:55 [lon]: const lons = coords.map((c) => c.lon);
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:66 [lat,lon]: const proj = (lat, lon) => ({
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:67 [lon]: x: PAD + ((lon - minLon) / dLon) * (W - 2 * PAD),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:68 [lat]: y: H - PAD - ((lat - minLat) / dLat) * (H - 2 * PAD),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:73 [lat,lon]: const pt = proj(p.lat, p.lon);
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:88 [lat,lon]: .filter((l) => l.lat !== null && l.lon !== null)
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:90 [lat,lon]: const pt = proj(loc.lat, loc.lon);
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:104 [lat,lon]: <title>{`Track #${loc.track_id} (${loc.lat}, ${loc.lon})`}</title>
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:185 [lat,lon]: const locs = (locData?.locations || []).filter((l) => l.lat !== null && l.lon !== null);
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:187 [lat,lon]: ...routePts.map((p) => [p.lat, p.lon]),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:188 [lat,lon]: ...locs.map((l) => [l.lat, l.lon]),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:215 [lat,lon]: routePts.map((p) => [p.lat, p.lon]),
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:221 [lat,lon]: const marker = L.circleMarker([loc.lat, loc.lon], {
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:482 [lat,lon]: <span className="rv-kv-value">{formatNullable(selectedLoc.lat, 6)}, {formatNullable(selectedLoc.lon, 6)}</span>
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:513 [lat,lon]: <th>Lat, Lon (Approx. Vehicle)</th>
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:531 [lat,lon]: {loc.lat !== null && loc.lon !== null
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:532 [lat,lon]: ? `${loc.lat.toFixed(6)}, ${loc.lon.toFixed(6)}`
+roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:618 [synthetic]: <span className="rv-badge rv-badge-warning" style={{ marginLeft: 6 }}>SYNTHETIC</span>
+roadvision-dashboard/src/pages/HazardExplorer.jsx:116 [placeholder]: placeholder="Any track"
+roadvision-dashboard/src/pages/HazardExplorer.jsx:135 [placeholder]: placeholder="e.g. 0.30"
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:56 [lat,lon]: const pts = (routePoints || []).filter((p) => p.lat !== null && p.lon !== null);
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:59 [lat,lon]: ...pts.map((p) => ({ lat: p.lat, lon: p.lon })),
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:60 [lat,lon]: ...segPts.map((s) => ({ lat: s.centroid_lat, lon: s.centroid_lon })),
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:64 [lat]: const lats = all.map((c) => c.lat);
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:65 [lon]: const lons = all.map((c) => c.lon);
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:76 [lat,lon]: const proj = (lat, lon) => ({
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:77 [lon]: x: PAD + ((lon - minLon) / dLon) * (W - 2 * PAD),
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:78 [lat]: y: H - PAD - ((lat - minLat) / dLat) * (H - 2 * PAD),
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:83 [lat,lon]: const xy = proj(p.lat, p.lon);
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:744 [placeholder]: placeholder="Local inspector note / tag"
+roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx:759 [placeholder]: placeholder="Confirm visual pothole appearance or false-positive cause (original automated evidence remains immutable)…"
+roadvision-dashboard/src/pages/NewInspection.jsx:325 [placeholder]: placeholder="All frames"
+roadvision-dashboard/src/pages/TrackAnalysis.jsx:238 [lat]: {activeLoc?.lat !== null && activeLoc?.lat !== undefined && (
+roadvision-dashboard/src/pages/TrackAnalysis.jsx:293 [lat,lon]: {activeLoc.lat !== null && activeLoc.lon !== null
+roadvision-dashboard/src/pages/TrackAnalysis.jsx:294 [lat,lon]: ? `${activeLoc.lat.toFixed(6)}, ${activeLoc.lon.toFixed(6)}`
+config/camera_params.json:10 [0.082]: "k_disp": 0.082
+config/camera_params.json:18 [0.082]: "k_disp": 0.082
+config/camera_params.json:26 [0.082]: "k_disp": 0.082
+config/camera_params.json:34 [0.082]: "k_disp": 0.082
+config/camera_params.json:39 [1.35]: "depth_exponent": 1.35,
+config/roadvision_api_v2.yaml:6 [127.0.0.1]: host: "127.0.0.1"
+config/roadvision_api_v2.yaml:34 [cors]: # CORS & API pagination limits
+config/roadvision_api_v2.yaml:36 [localhost]: - "http://localhost:3000"
+config/roadvision_api_v2.yaml:37 [127.0.0.1]: - "http://127.0.0.1:3000"
+config/roadvision_api_v2.yaml:38 [localhost]: - "http://localhost:5173"
+config/roadvision_api_v2.yaml:39 [127.0.0.1]: - "http://127.0.0.1:5173"

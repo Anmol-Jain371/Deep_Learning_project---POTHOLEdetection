@@ -1,0 +1,39 @@
+{
+  "file": "artifacts_v2/0f286074-9655-4d5a-abb8-fab934954e84/geometry/snap_t15_g0_f000048.json",
+  "min_residual": -0.018146,
+  "max_residual": 0.015456,
+  "residual_stats": null,
+  "quality_assessment": {
+    "quality_index": 0.8516,
+    "quality_category": "HIGH_QUALITY",
+    "methodology": "heuristic_weighted_composite_v1",
+    "is_experimental_heuristic": true,
+    "is_calibrated_probability": false,
+    "components": {
+      "detection_quality": 0.4133,
+      "geometric_reference_quality": 0.9898,
+      "cavity_extraction_quality": 0.8247,
+      "temporal_consistency": null,
+      "measurement_freshness": 1.0,
+      "environmental_risk": 1.0
+    },
+    "component_weights": {
+      "detection_quality": 0.15,
+      "geometric_reference_quality": 0.3,
+      "cavity_extraction_quality": 0.2,
+      "temporal_consistency": 0.15,
+      "measurement_freshness": 0.1,
+      "environmental_risk": 0.1
+    },
+    "evidence_coverage_ratio": 0.85,
+    "missing_evidence": [
+      "insufficient_fresh_temporal_history"
+    ],
+    "is_cached_inherited": false,
+    "source_fresh_quality_index": null,
+    "source_fresh_timestamp_sec": null,
+    "measurement_age_sec": 0.0,
+    "diagnostic_explanations": [],
+    "disclaimer": "Heuristic measurement-quality index (0-1) reflecting geometric & temporal evidence only; NOT a calibrated probability or physical severity rating."
+  }
+}

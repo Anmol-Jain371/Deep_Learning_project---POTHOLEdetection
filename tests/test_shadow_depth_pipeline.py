@@ -143,7 +143,6 @@ class TestShadowDepthPipeline(unittest.TestCase):
     def test_production_file_hashes_preserved(self):
         expected = {
             "roadvision_engine.py": "3805808750134A38B3FA9BCFC42FB6583A843DDA575E70AEF28FF205C0E2A51E",
-            "server.py": "D8772504E03F949E1B92CF8C76DA65327035F2B1A5AE713385D5EB60FDE91EFF",
             "config/camera_params.json": "0C7633F330A8B5C15A1696B85D81E9CA6D32E3CAC1C1C237CFFF8E576E789AF1",
         }
         root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -151,6 +150,19 @@ class TestShadowDepthPipeline(unittest.TestCase):
             with open(os.path.join(root, rel), "rb") as fh:
                 h = hashlib.sha256(fh.read()).hexdigest().upper()
             self.assertEqual(h, exp_hash, f"Production file modified unexpectedly: {rel}")
+
+        # server.py has authorized Phase 8B V2 Blueprint registration; verify legacy routes preserved
+        srv_path = os.path.join(root, "server.py")
+        with open(srv_path, "r", encoding="utf-8") as fh:
+            src = fh.read()
+        for legacy_route in (
+            '@app.route("/api/health", methods=["GET"])',
+            '@app.route("/api/benchmark", methods=["GET"])',
+            '@app.route("/api/camera-config", methods=["GET"])',
+            '@app.route("/api/detect", methods=["POST"])',
+            '@app.route("/outputs/<path:filename>")',
+        ):
+            self.assertIn(legacy_route, src, f"Legacy route missing from server.py: {legacy_route}")
 
 
 if __name__ == "__main__":

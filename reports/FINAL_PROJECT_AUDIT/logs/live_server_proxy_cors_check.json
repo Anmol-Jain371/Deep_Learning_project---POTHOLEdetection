@@ -1,0 +1,38 @@
+{
+  "http://localhost:5173/api/v2/health": {
+    "status": 200,
+    "acao": "http://localhost:5173"
+  },
+  "http://localhost:5173/api/v2/modes": {
+    "status": 200,
+    "acao": "http://localhost:5173"
+  },
+  "http://localhost:5173/api/v2/capabilities": {
+    "status": 200,
+    "acao": "http://localhost:5173"
+  },
+  "http://localhost:5173/api/v2/jobs": {
+    "status": 200,
+    "acao": "http://localhost:5173"
+  },
+  "http://localhost:5173/api/v2/jobs/0f286074-9655-4d5a-abb8-fab934954e84/geometry": {
+    "status": 200,
+    "acao": "http://localhost:5173"
+  },
+  "http://localhost:5173/api/v2/maintenance/overview": {
+    "status": 200,
+    "acao": "http://localhost:5173"
+  },
+  "EVIL_http://127.0.0.1:5000/api/v2/health": {
+    "status": 200,
+    "acao": "https://evil.example.com"
+  },
+  "EVIL_http://127.0.0.1:5000/api/v2/nonexistent_404": {
+    "status": 404,
+    "acao": "https://evil.example.com"
+  },
+  "EVIL_http://127.0.0.1:5000/api/health": {
+    "status": 200,
+    "acao": "https://evil.example.com"
+  }
+}

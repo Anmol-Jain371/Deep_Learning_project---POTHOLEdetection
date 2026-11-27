@@ -8,9 +8,23 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 from roadvision_engine import RoadVisionPipeline
+from roadvision_api_v2 import (
+    gpu_inference_lock,
+    load_api_config,
+    register_v2_api,
+    start_v2_worker,
+    stop_v2_worker,
+)
 
 app = Flask(__name__)
 CORS(app)
+
+api_cfg = load_api_config()
+if api_cfg.enabled:
+    register_v2_api(app, api_cfg)
+    print("✅ RoadVision V2 API registered under /api/v2 (worker starts on server run)")
+else:
+    print("ℹ️ RoadVision V2 API disabled (feature flag off)")
 
 # Base directories
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -103,9 +117,10 @@ def process_video_upload():
     print(f"⏳ Running PyTorch YOLOv8 + MiDaS Detection Pipeline...")
 
     try:
-        pipeline.smoother.records = {}
-        pipeline.display_id_map = {}
-        results = pipeline.process_video(input_path, output_path, csv_path, vehicle_profile=vehicle_profile)
+        with gpu_inference_lock():
+            pipeline.smoother.records = {}
+            pipeline.display_id_map = {}
+            results = pipeline.process_video(input_path, output_path, csv_path, vehicle_profile=vehicle_profile)
         
         # Read generated audit records with sequential display IDs
         audit_records = []
@@ -185,9 +200,18 @@ def serve_output(filename):
     )
 
 if __name__ == "__main__":
-    host = os.environ.get("HOST", "0.0.0.0")
-    port = int(os.environ.get("PORT", 5000))
-    debug = os.environ.get("DEBUG", "false").lower() in ["1", "true", "yes"]
+    default_host = api_cfg.host if api_cfg.enabled else "0.0.0.0"
+    default_port = api_cfg.port if api_cfg.enabled else 5000
+    host = os.environ.get("HOST", default_host)
+    port = int(os.environ.get("PORT", default_port))
+    # Disable Flask debug mode for normal V2 operation to avoid reloader & surface exposure
+    debug = False if api_cfg.enabled else (os.environ.get("DEBUG", "false").lower() in ["1", "true", "yes"])
+    if api_cfg.enabled and (not debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
+        start_v2_worker(app)
     print(f"🚀 Starting RoadVision Server on http://{host}:{port} (debug={debug})...")
-    app.run(host=host, port=port, debug=debug)
+    try:
+        app.run(host=host, port=port, debug=debug)
+    finally:
+        if api_cfg.enabled:
+            stop_v2_worker(app)
 

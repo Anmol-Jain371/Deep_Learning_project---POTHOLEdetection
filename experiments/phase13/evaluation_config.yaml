@@ -1,0 +1,60 @@
+# Phase 13 Reproducible Scientific Evaluation Configuration
+version: "phase13_eval_v1"
+seed: 42
+device: "auto" # cuda if available else cpu
+
+detector_checkpoints:
+  yolov8n_100e_sgd: "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt"
+  yolov8s_100e: "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt"
+
+segmentation_checkpoint:
+  yolov8n_seg: "runs/segment/pothole440_yolov8n_seg_v1/weights/best.pt"
+
+detection_eval:
+  conf_threshold: 0.25
+  iou_threshold: 0.50
+  imgsz: 640
+  smoke_max_images: 40
+  full_max_images: 500
+  splits:
+    - id: "dataset_unified_val"
+      data_yaml: "dataset_unified/data.yaml"
+      split: "val"
+      role: "development_validation"
+      independent: false
+    - id: "dataset_unified_test"
+      data_yaml: "dataset_unified/data.yaml"
+      split: "test"
+      role: "exploratory_contaminated_test"
+      independent: false
+    - id: "dataset_unified_external_rangoon"
+      data_yaml: "dataset_unified/data_external_rangoon.yaml"
+      split: "val"
+      role: "exploratory_external_video"
+      independent: false
+
+exploratory_videos:
+  - id: "ruralRoad_202f"
+    path: "uploads/upload_1794847200_ruralRoad_potHoles.mp4"
+    source_group: "rural_road_dashcam"
+    fps: 25.0
+  - id: "rawSurvey_160f"
+    path: "roadvision-dashboard/public/videos/raw_survey.mp4"
+    source_group: "urban_survey_dashcam"
+    fps: 10.0
+  - id: "rangoon_clip"
+    path: "Watch Video_ Terrible potholes in Rangoon Road.mp4"
+    source_group: "rangoon_flooded_corridor"
+    fps: 25.0
+
+smoke_limits:
+  ref_plane_synthetic_n: 16
+  depth_frames_per_video: 4
+  scheduler_frames: 36
+  cavity_frames: 6
+
+full_limits:
+  ref_plane_synthetic_n: 48
+  depth_frames_per_video: 12
+  scheduler_frames: 150
+  cavity_frames: 18

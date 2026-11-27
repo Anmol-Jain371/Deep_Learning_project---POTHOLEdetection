@@ -1,0 +1,194 @@
+{
+  "total_test_methods": 185,
+  "files": [
+    {
+      "file": "test_adaptive_depth_scheduler.py",
+      "test_methods": 6,
+      "assert_calls": 27,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_core_aware_cavity_extraction.py",
+      "test_methods": 4,
+      "assert_calls": 15,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_dav2_resolution_scaling.py",
+      "test_methods": 5,
+      "assert_calls": 22,
+      "skip_markers": 0,
+      "mock_refs": 4
+    },
+    {
+      "file": "test_depth_model_comparison.py",
+      "test_methods": 1,
+      "assert_calls": 7,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_dynamic_horizon_estimator.py",
+      "test_methods": 5,
+      "assert_calls": 22,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_optimized_relative_depth.py",
+      "test_methods": 5,
+      "assert_calls": 21,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_phase10_geometry_visualization.py",
+      "test_methods": 4,
+      "assert_calls": 18,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_phase11_geospatial_intelligence.py",
+      "test_methods": 6,
+      "assert_calls": 50,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_phase12_maintenance_intelligence.py",
+      "test_methods": 5,
+      "assert_calls": 54,
+      "skip_markers": 0,
+      "mock_refs": 1
+    },
+    {
+      "file": "test_phase13_evaluation_harness.py",
+      "test_methods": 3,
+      "assert_calls": 21,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_phase9_quality_assessment.py",
+      "test_methods": 7,
+      "assert_calls": 40,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_prompt_guided_segmentation.py",
+      "test_methods": 4,
+      "assert_calls": 16,
+      "skip_markers": 0,
+      "mock_refs": 18
+    },
+    {
+      "file": "test_roadvision_v2_config.py",
+      "test_methods": 22,
+      "assert_calls": 20,
+      "skip_markers": 0,
+      "mock_refs": 3
+    },
+    {
+      "file": "test_roadvision_v2_pipeline.py",
+      "test_methods": 19,
+      "assert_calls": 41,
+      "skip_markers": 2,
+      "mock_refs": 19
+    },
+    {
+      "file": "test_roadvision_v2_schemas.py",
+      "test_methods": 24,
+      "assert_calls": 44,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_robust_relative_depth.py",
+      "test_methods": 5,
+      "assert_calls": 24,
+      "skip_markers": 0,
+      "mock_refs": 1
+    },
+    {
+      "file": "test_roi_guided_segmentation.py",
+      "test_methods": 9,
+      "assert_calls": 46,
+      "skip_markers": 0,
+      "mock_refs": 15
+    },
+    {
+      "file": "test_shadow_depth_pipeline.py",
+      "test_methods": 6,
+      "assert_calls": 36,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_track_depth_cache.py",
+      "test_methods": 4,
+      "assert_calls": 36,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_v2_api.py",
+      "test_methods": 2,
+      "assert_calls": 34,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_v2_api_artifacts.py",
+      "test_methods": 2,
+      "assert_calls": 14,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_v2_api_foundation.py",
+      "test_methods": 8,
+      "assert_calls": 26,
+      "skip_markers": 0,
+      "mock_refs": 11
+    },
+    {
+      "file": "test_v2_api_security.py",
+      "test_methods": 4,
+      "assert_calls": 8,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_v2_api_uploads.py",
+      "test_methods": 6,
+      "assert_calls": 21,
+      "skip_markers": 0,
+      "mock_refs": 0
+    },
+    {
+      "file": "test_v2_job_manager.py",
+      "test_methods": 8,
+      "assert_calls": 29,
+      "skip_markers": 0,
+      "mock_refs": 1
+    },
+    {
+      "file": "test_v2_worker.py",
+      "test_methods": 6,
+      "assert_calls": 23,
+      "skip_markers": 0,
+      "mock_refs": 20
+    },
+    {
+      "file": "test_validity_aware_temporal_filter.py",
+      "test_methods": 5,
+      "assert_calls": 30,
+      "skip_markers": 0,
+      "mock_refs": 0
+    }
+  ]
+}

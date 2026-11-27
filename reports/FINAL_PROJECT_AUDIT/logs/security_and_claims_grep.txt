@@ -1,0 +1,48 @@
+[ElementTree] build_rdd2022_india_dataset.py:18: import xml.etree.ElementTree as ET
+[allow_nan] experiments/phase13/geometry_ablation.py:268: json_bytes = len(json.dumps(snap, allow_nan=False).encode("utf-8"))
+[ElementTree] rdd_faster_rcnn_dataset.py:18: import xml.etree.ElementTree as ET
+[84.7] roadvision-dashboard/dist/assets/index-Zr8AI9-d.js:11: `+e],{type:`text/csv;charset=utf-8;`}),n=URL.createObjectURL(t),r=document.createElement(`a`);r.href=n,r.download=`road_hazard_audit_${new D
+[92.4] roadvision-dashboard/dist/assets/index-Zr8AI9-d.js:11: `+e],{type:`text/csv;charset=utf-8;`}),n=URL.createObjectURL(t),r=document.createElement(`a`);r.href=n,r.download=`road_hazard_audit_${new D
+[84.7] roadvision-dashboard/src/components/BenchmarkComparison.jsx:22: status: 'PRODUCTION (84.7% mAP50)',
+[84.7] roadvision-dashboard/src/components/BenchmarkComparison.jsx:27: 'High empirical accuracy (84.7% mAP@50 with TTA, 92.4% precision)',
+[84.7] roadvision-dashboard/src/components/BenchmarkComparison.jsx:244: <td className="metric-val highlight text-emerald font-mono">84.7% (with TTA) / 82.1%</td>
+[92.4] roadvision-dashboard/src/components/BenchmarkComparison.jsx:27: 'High empirical accuracy (84.7% mAP@50 with TTA, 92.4% precision)',
+[92.4] roadvision-dashboard/src/components/BenchmarkComparison.jsx:246: <td className="metric-desc">High precision (92.4%) eliminates false alarm fatigue</td>
+[allow_nan] roadvision_api_v2/geospatial_store.py:464: allow_nan=False,
+[allow_nan] roadvision_api_v2/geospatial_store.py:503: json.dumps(sanitize_json_value(m), allow_nan=False),
+[allow_nan] roadvision_api_v2/job_manager.py:175: state_counts_json = json.dumps(empty_measurement_state_counts(), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:176: config_json = json.dumps(sanitize_json_value(config_snapshot), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:177: avail_json = json.dumps(_default_artifact_availability(), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:437: json.dumps(sanitize_json_value(measurement_state_counts), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:656: json.dumps(sanitize_json_value(measurement_state_counts), allow_nan=False),
+[allow_nan] roadvision_api_v2/job_manager.py:659: json.dumps(sanitize_json_value(artifact_manifest), allow_nan=False),
+[allow_nan] roadvision_api_v2/job_manager.py:660: json.dumps(sanitize_json_value(artifact_availability), allow_nan=False),
+[allow_nan] roadvision_api_v2/job_manager.py:661: json.dumps(sanitize_json_value(summary), allow_nan=False),
+[allow_nan] roadvision_api_v2/job_manager.py:662: json.dumps(sanitize_json_value(telemetry), allow_nan=False) if telemetry is not None else None,
+[allow_nan] roadvision_api_v2/job_manager.py:751: json.dumps(sanitize_json_value(measurement_state_counts), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:756: json.dumps(sanitize_json_value(artifact_manifest), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:759: json.dumps(sanitize_json_value(artifact_availability), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:762: json.dumps(sanitize_json_value(summary), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:765: json.dumps(sanitize_json_value(telemetry), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:822: json.dumps(sanitize_json_value(telemetry), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:825: json.dumps(sanitize_json_value(artifact_manifest), allow_nan=False)
+[allow_nan] roadvision_api_v2/job_manager.py:828: json.dumps(sanitize_json_value(artifact_availability), allow_nan=False)
+[allow_nan] roadvision_api_v2/maintenance_store.py:495: json.dumps(sanitize_json_value(frozen_evidence), allow_nan=False),
+[allow_nan] roadvision_api_v2/maintenance_store.py:498: json.dumps(matched["priority_reasons"], allow_nan=False),
+[allow_nan] roadvision_api_v2/routes.py:57: body = json.dumps(clean, allow_nan=False)
+[allow_nan] roadvision_api_v2/routes.py:1074: resp = Response(json.dumps(gj, indent=2, allow_nan=False), status=200, mimetype="application/geo+json")
+[allow_nan] roadvision_api_v2/routes.py:1094: resp = Response(json.dumps(clean, indent=2, allow_nan=False), status=200, mimetype="application/json")
+[allow_nan] roadvision_v2/geometry/surface.py:432: tmp.write_text(json.dumps(snapshot, allow_nan=False), encoding="utf-8")
+[allow_nan] roadvision_v2/geometry/surface.py:484: tmp.write_text(json.dumps(manifest, indent=2, allow_nan=False), encoding="utf-8")
+[ElementTree] roadvision_v2/geospatial/gps.py:20: import xml.etree.ElementTree as ET
+[allow_nan] roadvision_v2/pipeline.py:1159: self._atomic_write_text(jpath, json.dumps(all_hazards, indent=2, allow_nan=False))
+[allow_nan] roadvision_v2/pipeline.py:1167: self._atomic_write_text(tp, json.dumps(track_summary, indent=2, allow_nan=False))
+[allow_nan] roadvision_v2/pipeline.py:1181: self._atomic_write_text(sp, json.dumps(summary, indent=2, allow_nan=False))
+[84.7] server.py:37: # Initialize Deep Learning Engine with upgraded production detector (RDD1666 50-Epoch, 84.7% mAP50)
+[84.7] server.py:45: MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+[92.4] server.py:45: MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+[allow_nan] tests/test_phase10_geometry_visualization.py:89: json.dumps(snap_cav, allow_nan=False)
+[allow_nan] tests/test_phase9_quality_assessment.py:351: dumped = json.dumps(ts, allow_nan=False)
+[allow_nan] tests/test_phase9_quality_assessment.py:356: json.dumps(ss, allow_nan=False)
+[allow_nan] tests/test_v2_api.py:108: json.dump(observations, fh, allow_nan=False)
+[allow_nan] tests/test_v2_api.py:236: dumped = json.dumps(sanitized, allow_nan=False)

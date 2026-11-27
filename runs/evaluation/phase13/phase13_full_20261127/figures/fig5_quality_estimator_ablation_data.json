@@ -1,0 +1,29 @@
+{
+  "categories": [
+    "HIGH_QUALITY",
+    "MODERATE_QUALITY",
+    "LOW_QUALITY",
+    "INVALID",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "distributions": {
+    "C_deployed": {
+      "INVALID": 73,
+      "INSUFFICIENT_EVIDENCE": 31,
+      "HIGH_QUALITY": 145,
+      "MODERATE_QUALITY": 51
+    },
+    "D_missing_penalized": {
+      "INVALID": 73,
+      "INSUFFICIENT_EVIDENCE": 31,
+      "MODERATE_QUALITY": 38,
+      "HIGH_QUALITY": 158
+    },
+    "E_conservative_gated": {
+      "INVALID": 73,
+      "INSUFFICIENT_EVIDENCE": 31,
+      "MODERATE_QUALITY": 91,
+      "HIGH_QUALITY": 105
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "dataset_unified": {
+    "counts": {
+      "train": 1294,
+      "val": 153,
+      "test": 153,
+      "external_rangoon": 35
+    },
+    "instances": {
+      "train": 2798,
+      "val": 311,
+      "test": 322,
+      "external_rangoon": 76
+    },
+    "bad_images": [],
+    "bad_boxes_count": 0,
+    "bad_boxes_sample": [],
+    "empty_labels": [
+      "train/v1_frame_0059.jpg",
+      "train/v1_frame_0069.jpg"
+    ],
+    "exact_sha256_cross_split_matches": 0,
+    "dhash_le6_cross_split_pairs": 328,
+    "dhash_le2_cross_split_pairs": 15,
+    "sample_near_dups": [
+      [
+        "train",
+        "rdd_in_India_000131.jpg",
+        "val",
+        "rdd_in_India_006899.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000223.jpg",
+        "val",
+        "rdd_in_India_005059.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000316.jpg",
+        "val",
+        "rdd_in_India_006167.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000323.jpg",
+        "val",
+        "rdd_in_India_002549.jpg",
+        4
+      ],
+      [
+        "train",
+        "rdd_in_India_000323.jpg",
+        "val",
+        "rdd_in_India_009225.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000439.jpg",
+        "val",
+        "rdd_in_India_004759.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000439.jpg",
+        "val",
+        "rdd_in_India_005219.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000517.jpg",
+        "val",
+        "rdd_in_India_001005.jpg",
+        6
+      ],
+      [
+        "train",
+        "rdd_in_India_000517.jpg",
+        "val",
+        "rdd_in_India_002549.jpg",
+        5
+      ],
+      [
+        "train",
+        "rdd_in_India_000517.jpg",
+        "val",
+        "rdd_in_India_005350.jpg",
+        6
+      ]
+    ]
+  },
+  "pothole440_grouped": {
+    "counts": {},
+    "cross_split_group_overlap": 0
+  },
+  "phase13_reconcile_errors": [],
+  "scheduler_math": {
+    "A_always_on": {
+      "sum_ok": true,
+      "fresh_cov_match": true,
+      "eff_cov_match": true,
+      "red_match": true,
+      "fps_recomputed": 11.5,
+      "fps_reported": 11.5
+    },
+    "B_candidate_gated": {
+      "sum_ok": true,
+      "fresh_cov_match": true,
+      "eff_cov_match": true,
+      "red_match": true,
+      "fps_recomputed": 11.86,
+      "fps_reported": 11.86
+    },
+    "C_fixed_interval": {
+      "sum_ok": true,
+      "fresh_cov_match": true,
+      "eff_cov_match": true,
+      "red_match": true,
+      "fps_recomputed": 26.25,
+      "fps_reported": 26.25
+    },
+    "D_track_aware": {
+      "sum_ok": true,
+      "fresh_cov_match": true,
+      "eff_cov_match": true,
+      "red_match": true,
+      "fps_recomputed": 16.4,
+      "fps_reported": 16.4
+    },
+    "E_budget_aware": {
+      "sum_ok": true,
+      "fresh_cov_match": true,
+      "eff_cov_match": true,
+      "red_match": true,
+      "fps_recomputed": 18.63,
+      "fps_reported": 18.63
+    }
+  }
+}

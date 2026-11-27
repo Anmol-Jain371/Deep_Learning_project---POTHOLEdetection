@@ -1,0 +1,72 @@
+=== pothole_combined_v2 (epochs_logged=25) ===
+  model: pothole_best.pt
+  data: dataset_combined_v2/data.yaml
+  epochs: 25
+  imgsz: 1280
+  batch: 8
+  optimizer: AdamW
+  lr0: 0.002
+  seed: 0
+  cos_lr: false
+  BEST val mAP50=0.752 at epoch 25: P=0.70081 R=0.68473 mAP50-95=0.39392
+  LAST epoch=25: mAP50=0.752
+=== pothole_combined_v2_50e (epochs_logged=50) ===
+  model: pothole_best.pt
+  data: dataset_combined_v2/data.yaml
+  epochs: 50
+  imgsz: 1280
+  batch: 4
+  optimizer: AdamW
+  lr0: 0.002
+  seed: 0
+  cos_lr: false
+  BEST val mAP50=0.76231 at epoch 50: P=0.79638 R=0.72205 mAP50-95=0.37228
+  LAST epoch=50: mAP50=0.76231
+=== pothole_rdd1666_50e (epochs_logged=50) ===
+  model: pothole_best.pt
+  data: dataset_rdd_india_potholes/data.yaml
+  epochs: 50
+  imgsz: 640
+  batch: 8
+  optimizer: AdamW
+  lr0: 0.002
+  seed: 0
+  cos_lr: false
+  BEST val mAP50=0.45765 at epoch 50: P=0.56055 R=0.43922 mAP50-95=0.17119
+  LAST epoch=50: mAP50=0.45765
+=== pothole_unified_100e (epochs_logged=100) ===
+  model: pothole_best.pt
+  data: dataset_unified/data.yaml
+  epochs: 100
+  imgsz: 640
+  batch: 8
+  optimizer: AdamW
+  lr0: 0.002
+  seed: 42
+  cos_lr: true
+  BEST val mAP50=0.36055 at epoch 78: P=0.49535 R=0.39228 mAP50-95=0.11863
+  LAST epoch=100: mAP50=0.32452
+=== pothole_unified_yolov8n_100e_sgd (epochs_logged=89) ===
+  model: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\yolov8n.pt
+  data: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\dataset_unified\data.yaml
+  epochs: 100
+  imgsz: 640
+  batch: 8
+  optimizer: SGD
+  lr0: 0.01
+  seed: 42
+  cos_lr: true
+  BEST val mAP50=0.37896 at epoch 59: P=0.48193 R=0.37621 mAP50-95=0.12778
+  LAST epoch=89: mAP50=0.35678
+=== pothole_unified_yolov8s_100e (epochs_logged=87) ===
+  model: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\yolov8s.pt
+  data: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\dataset_unified\data.yaml
+  epochs: 100
+  imgsz: 640
+  batch: 8
+  optimizer: SGD
+  lr0: 0.01
+  seed: 42
+  cos_lr: true
+  BEST val mAP50=0.38999 at epoch 83: P=0.47938 R=0.41479 mAP50-95=0.11939
+  LAST epoch=87: mAP50=0.38404

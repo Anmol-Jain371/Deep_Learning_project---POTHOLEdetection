@@ -1,0 +1,142 @@
+{
+  "frozen_at": "2026-11-27T05:38:33.220797+00:00",
+  "git_head": "50d37f37f24f28976ca8124ba2027d020f3b0ef3",
+  "git_status_count": 50,
+  "git_status": [
+    " M .gitignore",
+    " M README_v2.md",
+    " M config/roadvision_v2.yaml",
+    " M roadvision-dashboard/src/App.jsx",
+    " M roadvision-dashboard/src/components/Footer.jsx",
+    " M roadvision-dashboard/vite.config.js",
+    " M roadvision_v2/config.py",
+    " M roadvision_v2/geometry/__init__.py",
+    " M roadvision_v2/pipeline.py",
+    " M roadvision_v2/quality/__init__.py",
+    " M roadvision_v2/schemas.py",
+    " M server.py",
+    " M tests/test_roadvision_v2_pipeline.py",
+    " M tests/test_shadow_depth_pipeline.py",
+    "?? config/roadvision_api_v2.yaml",
+    "?? reports/phase10_relative_3d_visualization.md",
+    "?? reports/phase11_geospatial_intelligence.md",
+    "?? reports/phase12_maintenance_intelligence.md",
+    "?? reports/phase8b2_job_management.md",
+    "?? reports/phase8b3_video_processing.md",
+    "?? reports/phase8b4_api_contracts.md",
+    "?? reports/phase8b5_security_and_testing.md",
+    "?? reports/phase8b_checklist.md",
+    "?? reports/phase8b_legacy_compatibility.md",
+    "?? reports/phase9_uncertainty_assessment.md",
+    "?? roadvision-dashboard/src/api/",
+    "?? roadvision-dashboard/src/components/InspectionSelector.jsx",
+    "?? roadvision-dashboard/src/components/Sidebar.jsx",
+    "?? roadvision-dashboard/src/components/StateBanner.jsx",
+    "?? roadvision-dashboard/src/components/TopBar.jsx",
+    "?? roadvision-dashboard/src/pages/",
+    "?? roadvision-dashboard/src/styles/",
+    "?? roadvision-dashboard/src/utils/",
+    "?? roadvision_api_v2/",
+    "?? roadvision_v2/geometry/surface.py",
+    "?? roadvision_v2/geospatial/",
+    "?? roadvision_v2/maintenance/",
+    "?? roadvision_v2/quality/assessment.py",
+    "?? runs/benchmark/phase8b_api_results.json",
+    "?? tests/test_phase10_geometry_visualization.py",
+    "?? tests/test_phase11_geospatial_intelligence.py",
+    "?? tests/test_phase12_maintenance_intelligence.py",
+    "?? tests/test_phase9_quality_assessment.py",
+    "?? tests/test_v2_api.py",
+    "?? tests/test_v2_api_artifacts.py",
+    "?? tests/test_v2_api_foundation.py",
+    "?? tests/test_v2_api_security.py",
+    "?? tests/test_v2_api_uploads.py",
+    "?? tests/test_v2_job_manager.py",
+    "?? tests/test_v2_worker.py"
+  ],
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "torch_version": "2.6.0+cu124",
+  "cuda_available": true,
+  "gpu_name": "NVIDIA GeForce RTX 2050",
+  "checkpoints": {
+    "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt": {
+      "sha256": "ddd6a5be27ac21f3ef17ffe17fbac5ea901cf2a7f7706956c5e551a669490343",
+      "bytes": 6512419
+    },
+    "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt": {
+      "sha256": "038863b8542ceb8d9e4d3e9eb28612abed64ada940921f3db7c0b8742281309c",
+      "bytes": 22523107
+    },
+    "runs/detect/pothole_unified_100e/weights/best.pt": {
+      "sha256": "adc51953f53301465d77873dd07b673545a3f963bcb2288bb155998e8304a55c",
+      "bytes": 6255587
+    },
+    "runs/detect/pothole_rdd1666_50e/weights/best.pt": {
+      "sha256": "614881da4a42b444bd30c3c4f7a2d71124986ae2c3a0188bcfcaa419314ecc4e",
+      "bytes": 6249123
+    },
+    "runs/detect/pothole_combined_v2/weights/best.pt": {
+      "sha256": "ac5ee424df802213ec6af2b49b34552d6adbae4532bffbc6153df1e825f7ae12",
+      "bytes": 6310954
+    },
+    "runs/detect/pothole_combined_v2_50e/weights/best.pt": {
+      "sha256": "0134fbcff9929612469949ae6f099917017436806c2ee4f1697859593651304b",
+      "bytes": 6312355
+    },
+    "runs/segment/pothole440_yolov8n_seg_v1/weights/best.pt": {
+      "sha256": "73f525322681468322dd129589279b016eeeab1197879a8876e3071e8e0d6d6d",
+      "bytes": 7026861
+    },
+    "pothole_best.pt": {
+      "sha256": "0b8cf7570db7cfe2fd09a3ba0831f4851768e97dd8cfd11d65ac53000ebb5919",
+      "bytes": 24480547
+    },
+    "pothole_rdd_india_best.pt": {
+      "sha256": "fad79114d66afa6abd15518946590168faa79ea6f2e82278c93f86e641afe3d4",
+      "bytes": 6247466
+    }
+  },
+  "configs_and_manifests": {
+    "config/roadvision_v2.yaml": {
+      "sha256": "7226773c366e520bf88407f83501da6f6af9b5a98001cff8e434659b77b4b5f0",
+      "bytes": 5164
+    },
+    "config/roadvision_api_v2.yaml": {
+      "sha256": "03840cad459265c629b024aeda22d0d202394a5514d50d52025e6ab7d1a98b6b",
+      "bytes": 1308
+    },
+    "config/camera_params.json": {
+      "sha256": "0c7633f330a8b5c15a1696b85d81e9ca6d32e3cac1c1c237cfff8e576e789af1",
+      "bytes": 1286
+    },
+    "road_tracker.yaml": {
+      "sha256": "28122be9b3cda03fca65df5ecc76a95568dc70e5fe50ff7991feff85fdada621",
+      "bytes": 1068
+    },
+    "dataset_unified/data.yaml": {
+      "sha256": "01e597ae90bf340b63f347bc4006d214895d5f957e214de1419494af41d01fd0",
+      "bytes": 109
+    },
+    "dataset_rdd_india_potholes/data.yaml": {
+      "sha256": "8f1b0a7d145c2928001fbea3b39d1b10bcfc2937081805b598fa20f196a4ad7f",
+      "bytes": 95
+    },
+    "dataset_combined_v2/data.yaml": {
+      "sha256": "5f4481013668518e373f0dce6a1d3c5c3e8efbcd5a2e7d5e9cfd284eb0a41f3d",
+      "bytes": 82
+    },
+    "dataset_phone_potholes/data.yaml": {
+      "sha256": "6fecfefae758315fe3abcdc6c1cb4c0e4a8f795b04ab60ddd4581a0743a7762e",
+      "bytes": 140
+    },
+    "dataset_pothole440_seg_grouped/data.yaml": {
+      "sha256": "bd97956a2912ece0a30500ac040c86380aae6b8327d696ec170688a027cb8cfc",
+      "bytes": 124
+    },
+    "roadvision_engine.py": {
+      "sha256": "3805808750134a38b3fa9bcfc42fb6583a843dda575e70aef28ff205c0e2a51e",
+      "bytes": 45411
+    }
+  }
+}

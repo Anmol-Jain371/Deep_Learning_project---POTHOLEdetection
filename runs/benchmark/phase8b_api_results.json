@@ -1,0 +1,1316 @@
+{
+  "timestamp_utc": "2026-11-26T20:42:03Z",
+  "source_video": "Watch Video_ Terrible potholes in Rangoon Road.mp4",
+  "legacy_health_status": 200,
+  "v2_health": {
+    "status": "online",
+    "api_version": "2.0.0-phase8b",
+    "api_enabled": true,
+    "device": "cuda",
+    "worker_running": true,
+    "active_job_id": null,
+    "gpu_busy": false,
+    "queue_counts": {
+      "QUEUED": 0,
+      "INITIALIZING": 0,
+      "RUNNING": 0,
+      "CANCELLING": 0,
+      "COMPLETED": 0,
+      "FAILED": 0,
+      "CANCELLED": 0
+    }
+  },
+  "v2_capabilities": {
+    "gpu_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 2050",
+    "detector_checkpoint_available": true,
+    "models": {
+      "detector": "yolov8n_phase2_controlled",
+      "midas_small": true,
+      "depth_anything_v2_small": true
+    },
+    "supported_modes": [
+      "live",
+      "balanced",
+      "survey"
+    ],
+    "limits": {
+      "maximum_upload_size_bytes": 268435456,
+      "allowed_video_formats": [
+        ".mp4",
+        ".avi",
+        ".mov",
+        ".mkv"
+      ],
+      "maximum_video_resolution": [
+        1920,
+        1080
+      ],
+      "maximum_video_duration_sec": 300.0,
+      "maximum_processed_frames": 9000,
+      "max_queued_jobs": 5,
+      "max_gpu_concurrency": 1,
+      "default_page_size": 100,
+      "max_page_size": 500
+    },
+    "security_note": "Local research prototype API without user authentication; any client with access to localhost can query local jobs."
+  },
+  "modes_keys": [
+    "balanced",
+    "live",
+    "survey"
+  ],
+  "runs": {
+    "live_no_depth": {
+      "job_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce",
+      "http_accept_status": 202,
+      "http_request_latency_sec": 0.0813,
+      "total_client_wall_sec": 2.318,
+      "observed_state_transitions": [
+        "QUEUED",
+        "INITIALIZING",
+        "RUNNING",
+        "COMPLETED"
+      ],
+      "progress_samples_count": 9,
+      "status_payload": {
+        "job_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce",
+        "original_filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "status": "COMPLETED",
+        "mode": "live",
+        "created_at": "2026-11-26T20:42:03.812544+00:00",
+        "started_at": "2026-11-26T20:42:03.817967+00:00",
+        "updated_at": "2026-11-26T20:42:05.895487+00:00",
+        "completed_at": "2026-11-26T20:42:05.895487+00:00",
+        "frames_processed": 40,
+        "total_frames": 40,
+        "progress_percentage": 100.0,
+        "throughput_fps": 24.8,
+        "candidate_observation_count": 61,
+        "unique_candidate_track_count": 2,
+        "depth_invocation_count": 0,
+        "scheduler_request_count": 40,
+        "failed_depth_count": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 61
+        },
+        "measurement_coverage": {
+          "denominator_total_observations": 61,
+          "denominator_keyframe_attempts": 0,
+          "counts_by_state": {
+            "FRESH_VALID": 0,
+            "FRESH_INVALID": 0,
+            "CACHED_VALID": 0,
+            "EXPIRED": 0,
+            "NOT_EVALUATED": 61
+          },
+          "fresh_valid_rate_over_observations": 0.0,
+          "fresh_valid_rate_over_keyframes": null,
+          "cached_valid_rate_over_observations": 0.0
+        },
+        "cancel_requested": false,
+        "latest_warning": null,
+        "error": null,
+        "artifact_availability": {
+          "annotated_video": true,
+          "frames_json": true,
+          "tracks_json": true,
+          "performance_csv": true,
+          "session_summary_json": true
+        },
+        "pipeline_version": "2.0.0-phase8b",
+        "scientific_disclaimer": "RoadVision AI 2.0 depth outputs are uncalibrated relative inverse-depth observations. They are NOT metric centimetres, millimetres, physical area, or physical volume, and must NOT be mapped to physical severity classes. Track counts represent unique session track IDs, not independently confirmed unique physical potholes."
+      },
+      "telemetry": {
+        "queue_wait_sec": 0.0054,
+        "model_init_sec": 0.0704,
+        "video_processing_sec": 1.613,
+        "artifact_generation_sec": 0.3662,
+        "total_worker_execution_sec": 2.071,
+        "processed_frames": 40,
+        "sustained_processing_fps": 24.8,
+        "actual_depth_executions": 0,
+        "scheduler_depth_requests": 40,
+        "failed_depth_inferences": 0,
+        "peak_allocated_gpu_mb": 108.59,
+        "peak_reserved_gpu_mb": 132.0
+      },
+      "measurement_coverage": {
+        "denominator_total_observations": 61,
+        "denominator_keyframe_attempts": 0,
+        "counts_by_state": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 61
+        },
+        "fresh_valid_rate_over_observations": 0.0,
+        "fresh_valid_rate_over_keyframes": null,
+        "cached_valid_rate_over_observations": 0.0
+      },
+      "session_summary": {
+        "session_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce",
+        "mode": "live",
+        "source": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "total_frames": 40,
+        "source_fps": 25.0,
+        "elapsed_sec": 1.613,
+        "end_to_end_fps": 24.8,
+        "depth_enabled": false,
+        "depth_model_id": "none",
+        "depth_input_size": 0,
+        "scheduler_strategy": "B_candidate_gated",
+        "scheduler_depth_requests": 40,
+        "depth_calls": 0,
+        "failed_depth_inferences": 0,
+        "budget_skips": 0,
+        "depth_invocation_rate": 0.0,
+        "unique_tracks": 2,
+        "total_hazard_observations": 61,
+        "measurement_state_counts": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 61
+        },
+        "cancelled": false,
+        "fallback_used": false,
+        "fallback_reason": null,
+        "model_init_sec": 0.0704,
+        "peak_allocated_gpu_mb": 108.59,
+        "peak_reserved_gpu_mb": 132.0,
+        "video_codec": "h264",
+        "video_browser_compatible": true,
+        "video_transcode_note": "libx264_yuv420p_faststart",
+        "artifact_generation_sec": 0.3662
+      },
+      "observation_total": 61,
+      "sample_observation": {
+        "frame_context": {
+          "source_session_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce",
+          "frame_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "frame_wh": [
+            640,
+            360
+          ],
+          "mode": "live",
+          "camera_profile": "sedan_dashcam",
+          "gps_lat": null,
+          "gps_lon": null,
+          "has_gps": false
+        },
+        "detection": {
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "class_id": 0,
+          "model_identity": "yolov8n_phase2_controlled",
+          "detector_input_size": 640,
+          "is_below_horizon_cutoff": true
+        },
+        "measurement": {
+          "source_session_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce",
+          "frame_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "model_identity": "none",
+          "depth_input_resolution": null,
+          "inference_precision": null,
+          "raw_relative_cavity_score": null,
+          "normalized_relative_score": null,
+          "smoothed_relative_score": null,
+          "measurement_validity": false,
+          "measurement_state": "NOT_EVALUATED",
+          "measurement_age_sec": null,
+          "ref_diagnostics": {
+            "used_ref_samples": null,
+            "available_ref_samples": null,
+            "populated_quadrants": null,
+            "inlier_ratio": null,
+            "ref_fit_mad": null,
+            "ref_fit_rmse": null,
+            "annular_retention_ratio": null,
+            "plane_degenerate": null
+          },
+          "failure_reasons": [],
+          "warnings": [],
+          "is_water_suspected": false,
+          "fallback_used": true,
+          "fallback_reason": "depth_disabled"
+        },
+        "horizon_diag": null
+      },
+      "unique_session_track_count": 2,
+      "artifacts": [
+        {
+          "artifact_id": "annotated_video",
+          "filename": "phase8a_live_179cfb20-a52c-4cf8-9c9f-ee15b860efce_input_annotated.mp4",
+          "artifact_type": "annotated_video",
+          "mime_type": "video/mp4",
+          "size_bytes": 173978,
+          "created_at": "2026-11-26T20:42:05.846705+00:00",
+          "download_url": "/api/v2/jobs/179cfb20-a52c-4cf8-9c9f-ee15b860efce/artifacts/annotated_video",
+          "available": true,
+          "partial": false,
+          "codec": "h264",
+          "browser_compatible": true
+        },
+        {
+          "artifact_id": "frames_json",
+          "filename": "phase8a_live_179cfb20-a52c-4cf8-9c9f-ee15b860efce_input_frames.json",
+          "artifact_type": "observations_json",
+          "mime_type": "application/json",
+          "size_bytes": 132909,
+          "created_at": "2026-11-26T20:42:05.891082+00:00",
+          "download_url": "/api/v2/jobs/179cfb20-a52c-4cf8-9c9f-ee15b860efce/artifacts/frames_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "tracks_json",
+          "filename": "phase8a_live_179cfb20-a52c-4cf8-9c9f-ee15b860efce_input_tracks.json",
+          "artifact_type": "tracks_json",
+          "mime_type": "application/json",
+          "size_bytes": 793,
+          "created_at": "2026-11-26T20:42:05.891082+00:00",
+          "download_url": "/api/v2/jobs/179cfb20-a52c-4cf8-9c9f-ee15b860efce/artifacts/tracks_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "performance_csv",
+          "filename": "phase8a_live_179cfb20-a52c-4cf8-9c9f-ee15b860efce_input_performance.csv",
+          "artifact_type": "performance_csv",
+          "mime_type": "text/csv",
+          "size_bytes": 4144,
+          "created_at": "2026-11-26T20:42:05.892083+00:00",
+          "download_url": "/api/v2/jobs/179cfb20-a52c-4cf8-9c9f-ee15b860efce/artifacts/performance_csv",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "session_summary_json",
+          "filename": "phase8a_live_179cfb20-a52c-4cf8-9c9f-ee15b860efce_input_session_summary.json",
+          "artifact_type": "session_summary_json",
+          "mime_type": "application/json",
+          "size_bytes": 1170,
+          "created_at": "2026-11-26T20:42:05.893482+00:00",
+          "download_url": "/api/v2/jobs/179cfb20-a52c-4cf8-9c9f-ee15b860efce/artifacts/session_summary_json",
+          "available": true,
+          "partial": false
+        }
+      ],
+      "downloaded_video_readable": true,
+      "video_range_206_ok": true
+    },
+    "live_midas": {
+      "job_id": "19f45bcf-ef32-4ab8-932f-46768cabb910",
+      "http_accept_status": 202,
+      "http_request_latency_sec": 0.0817,
+      "total_client_wall_sec": 3.9957,
+      "observed_state_transitions": [
+        "QUEUED",
+        "INITIALIZING",
+        "RUNNING",
+        "COMPLETED"
+      ],
+      "progress_samples_count": 16,
+      "status_payload": {
+        "job_id": "19f45bcf-ef32-4ab8-932f-46768cabb910",
+        "original_filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "status": "COMPLETED",
+        "mode": "live",
+        "created_at": "2026-11-26T20:42:06.291573+00:00",
+        "started_at": "2026-11-26T20:42:06.299581+00:00",
+        "updated_at": "2026-11-26T20:42:10.081872+00:00",
+        "completed_at": "2026-11-26T20:42:10.081872+00:00",
+        "frames_processed": 40,
+        "total_frames": 40,
+        "progress_percentage": 100.0,
+        "throughput_fps": 15.52,
+        "candidate_observation_count": 61,
+        "unique_candidate_track_count": 2,
+        "depth_invocation_count": 40,
+        "scheduler_request_count": 40,
+        "failed_depth_count": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 24,
+          "FRESH_INVALID": 37,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "measurement_coverage": {
+          "denominator_total_observations": 61,
+          "denominator_keyframe_attempts": 61,
+          "counts_by_state": {
+            "FRESH_VALID": 24,
+            "FRESH_INVALID": 37,
+            "CACHED_VALID": 0,
+            "EXPIRED": 0,
+            "NOT_EVALUATED": 0
+          },
+          "fresh_valid_rate_over_observations": 0.3934,
+          "fresh_valid_rate_over_keyframes": 0.3934,
+          "cached_valid_rate_over_observations": 0.0
+        },
+        "cancel_requested": false,
+        "latest_warning": null,
+        "error": null,
+        "artifact_availability": {
+          "annotated_video": true,
+          "frames_json": true,
+          "tracks_json": true,
+          "performance_csv": true,
+          "session_summary_json": true
+        },
+        "pipeline_version": "2.0.0-phase8b",
+        "scientific_disclaimer": "RoadVision AI 2.0 depth outputs are uncalibrated relative inverse-depth observations. They are NOT metric centimetres, millimetres, physical area, or physical volume, and must NOT be mapped to physical severity classes. Track counts represent unique session track IDs, not independently confirmed unique physical potholes."
+      },
+      "telemetry": {
+        "queue_wait_sec": 0.008,
+        "model_init_sec": 1.0202,
+        "video_processing_sec": 2.577,
+        "artifact_generation_sec": 0.1496,
+        "total_worker_execution_sec": 3.776,
+        "processed_frames": 40,
+        "sustained_processing_fps": 15.52,
+        "actual_depth_executions": 40,
+        "scheduler_depth_requests": 40,
+        "failed_depth_inferences": 0,
+        "peak_allocated_gpu_mb": 227.7,
+        "peak_reserved_gpu_mb": 236.0
+      },
+      "measurement_coverage": {
+        "denominator_total_observations": 61,
+        "denominator_keyframe_attempts": 61,
+        "counts_by_state": {
+          "FRESH_VALID": 24,
+          "FRESH_INVALID": 37,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "fresh_valid_rate_over_observations": 0.3934,
+        "fresh_valid_rate_over_keyframes": 0.3934,
+        "cached_valid_rate_over_observations": 0.0
+      },
+      "session_summary": {
+        "session_id": "19f45bcf-ef32-4ab8-932f-46768cabb910",
+        "mode": "live",
+        "source": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "total_frames": 40,
+        "source_fps": 25.0,
+        "elapsed_sec": 2.577,
+        "end_to_end_fps": 15.52,
+        "depth_enabled": true,
+        "depth_model_id": "midas_small",
+        "depth_input_size": 256,
+        "scheduler_strategy": "B_candidate_gated",
+        "scheduler_depth_requests": 40,
+        "depth_calls": 40,
+        "failed_depth_inferences": 0,
+        "budget_skips": 0,
+        "depth_invocation_rate": 1.0,
+        "unique_tracks": 2,
+        "total_hazard_observations": 61,
+        "measurement_state_counts": {
+          "FRESH_VALID": 24,
+          "FRESH_INVALID": 37,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "cancelled": false,
+        "fallback_used": false,
+        "fallback_reason": null,
+        "model_init_sec": 1.0202,
+        "peak_allocated_gpu_mb": 227.7,
+        "peak_reserved_gpu_mb": 236.0,
+        "video_codec": "h264",
+        "video_browser_compatible": true,
+        "video_transcode_note": "libx264_yuv420p_faststart",
+        "artifact_generation_sec": 0.1496
+      },
+      "observation_total": 61,
+      "sample_observation": {
+        "frame_context": {
+          "source_session_id": "19f45bcf-ef32-4ab8-932f-46768cabb910",
+          "frame_id": "19f45bcf-ef32-4ab8-932f-46768cabb910_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "frame_wh": [
+            640,
+            360
+          ],
+          "mode": "live",
+          "camera_profile": "sedan_dashcam",
+          "gps_lat": null,
+          "gps_lon": null,
+          "has_gps": false
+        },
+        "detection": {
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "class_id": 0,
+          "model_identity": "yolov8n_phase2_controlled",
+          "detector_input_size": 640,
+          "is_below_horizon_cutoff": true
+        },
+        "measurement": {
+          "source_session_id": "19f45bcf-ef32-4ab8-932f-46768cabb910",
+          "frame_id": "19f45bcf-ef32-4ab8-932f-46768cabb910_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "model_identity": "midas_small",
+          "depth_input_resolution": 256,
+          "inference_precision": "fp16_autocast",
+          "raw_relative_cavity_score": 8.418039,
+          "normalized_relative_score": 1.5971,
+          "smoothed_relative_score": 8.418039,
+          "measurement_validity": true,
+          "measurement_state": "FRESH_VALID",
+          "measurement_age_sec": 0.0,
+          "ref_diagnostics": {
+            "used_ref_samples": 512,
+            "available_ref_samples": 38740,
+            "populated_quadrants": 4,
+            "inlier_ratio": 0.6309,
+            "ref_fit_mad": 3.555065,
+            "ref_fit_rmse": 14.818169,
+            "annular_retention_ratio": null,
+            "plane_degenerate": null
+          },
+          "failure_reasons": [],
+          "warnings": [],
+          "is_water_suspected": false,
+          "fallback_used": false,
+          "fallback_reason": null
+        },
+        "horizon_diag": null
+      },
+      "unique_session_track_count": 2,
+      "artifacts": [
+        {
+          "artifact_id": "annotated_video",
+          "filename": "phase8a_live_19f45bcf-ef32-4ab8-932f-46768cabb910_input_annotated.mp4",
+          "artifact_type": "annotated_video",
+          "mime_type": "video/mp4",
+          "size_bytes": 203364,
+          "created_at": "2026-11-26T20:42:10.040977+00:00",
+          "download_url": "/api/v2/jobs/19f45bcf-ef32-4ab8-932f-46768cabb910/artifacts/annotated_video",
+          "available": true,
+          "partial": false,
+          "codec": "h264",
+          "browser_compatible": true
+        },
+        {
+          "artifact_id": "frames_json",
+          "filename": "phase8a_live_19f45bcf-ef32-4ab8-932f-46768cabb910_input_frames.json",
+          "artifact_type": "observations_json",
+          "mime_type": "application/json",
+          "size_bytes": 138506,
+          "created_at": "2026-11-26T20:42:10.077517+00:00",
+          "download_url": "/api/v2/jobs/19f45bcf-ef32-4ab8-932f-46768cabb910/artifacts/frames_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "tracks_json",
+          "filename": "phase8a_live_19f45bcf-ef32-4ab8-932f-46768cabb910_input_tracks.json",
+          "artifact_type": "tracks_json",
+          "mime_type": "application/json",
+          "size_bytes": 791,
+          "created_at": "2026-11-26T20:42:10.077517+00:00",
+          "download_url": "/api/v2/jobs/19f45bcf-ef32-4ab8-932f-46768cabb910/artifacts/tracks_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "performance_csv",
+          "filename": "phase8a_live_19f45bcf-ef32-4ab8-932f-46768cabb910_input_performance.csv",
+          "artifact_type": "performance_csv",
+          "mime_type": "text/csv",
+          "size_bytes": 4290,
+          "created_at": "2026-11-26T20:42:10.078865+00:00",
+          "download_url": "/api/v2/jobs/19f45bcf-ef32-4ab8-932f-46768cabb910/artifacts/performance_csv",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "session_summary_json",
+          "filename": "phase8a_live_19f45bcf-ef32-4ab8-932f-46768cabb910_input_session_summary.json",
+          "artifact_type": "session_summary_json",
+          "mime_type": "application/json",
+          "size_bytes": 1180,
+          "created_at": "2026-11-26T20:42:10.078865+00:00",
+          "download_url": "/api/v2/jobs/19f45bcf-ef32-4ab8-932f-46768cabb910/artifacts/session_summary_json",
+          "available": true,
+          "partial": false
+        }
+      ],
+      "downloaded_video_readable": true,
+      "video_range_206_ok": true
+    },
+    "balanced_dav2_336": {
+      "job_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925",
+      "http_accept_status": 202,
+      "http_request_latency_sec": 0.0785,
+      "total_client_wall_sec": 2.7503,
+      "observed_state_transitions": [
+        "QUEUED",
+        "INITIALIZING",
+        "RUNNING",
+        "COMPLETED"
+      ],
+      "progress_samples_count": 11,
+      "status_payload": {
+        "job_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925",
+        "original_filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "status": "COMPLETED",
+        "mode": "balanced",
+        "created_at": "2026-11-26T20:42:10.474092+00:00",
+        "started_at": "2026-11-26T20:42:10.479949+00:00",
+        "updated_at": "2026-11-26T20:42:12.974654+00:00",
+        "completed_at": "2026-11-26T20:42:12.974654+00:00",
+        "frames_processed": 40,
+        "total_frames": 40,
+        "progress_percentage": 100.0,
+        "throughput_fps": 30.62,
+        "candidate_observation_count": 61,
+        "unique_candidate_track_count": 2,
+        "depth_invocation_count": 4,
+        "scheduler_request_count": 4,
+        "failed_depth_count": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 4,
+          "FRESH_INVALID": 2,
+          "CACHED_VALID": 38,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 17
+        },
+        "measurement_coverage": {
+          "denominator_total_observations": 61,
+          "denominator_keyframe_attempts": 6,
+          "counts_by_state": {
+            "FRESH_VALID": 4,
+            "FRESH_INVALID": 2,
+            "CACHED_VALID": 38,
+            "EXPIRED": 0,
+            "NOT_EVALUATED": 17
+          },
+          "fresh_valid_rate_over_observations": 0.0656,
+          "fresh_valid_rate_over_keyframes": 0.6667,
+          "cached_valid_rate_over_observations": 0.623
+        },
+        "cancel_requested": false,
+        "latest_warning": null,
+        "error": null,
+        "artifact_availability": {
+          "annotated_video": true,
+          "frames_json": true,
+          "tracks_json": true,
+          "performance_csv": true,
+          "session_summary_json": true
+        },
+        "pipeline_version": "2.0.0-phase8b",
+        "scientific_disclaimer": "RoadVision AI 2.0 depth outputs are uncalibrated relative inverse-depth observations. They are NOT metric centimetres, millimetres, physical area, or physical volume, and must NOT be mapped to physical severity classes. Track counts represent unique session track IDs, not independently confirmed unique physical potholes."
+      },
+      "telemetry": {
+        "queue_wait_sec": 0.0059,
+        "model_init_sec": 1.0205,
+        "video_processing_sec": 1.306,
+        "artifact_generation_sec": 0.141,
+        "total_worker_execution_sec": 2.4891,
+        "processed_frames": 40,
+        "sustained_processing_fps": 30.62,
+        "actual_depth_executions": 4,
+        "scheduler_depth_requests": 4,
+        "failed_depth_inferences": 0,
+        "peak_allocated_gpu_mb": 276.3,
+        "peak_reserved_gpu_mb": 320.0
+      },
+      "measurement_coverage": {
+        "denominator_total_observations": 61,
+        "denominator_keyframe_attempts": 6,
+        "counts_by_state": {
+          "FRESH_VALID": 4,
+          "FRESH_INVALID": 2,
+          "CACHED_VALID": 38,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 17
+        },
+        "fresh_valid_rate_over_observations": 0.0656,
+        "fresh_valid_rate_over_keyframes": 0.6667,
+        "cached_valid_rate_over_observations": 0.623
+      },
+      "session_summary": {
+        "session_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925",
+        "mode": "balanced",
+        "source": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "total_frames": 40,
+        "source_fps": 25.0,
+        "elapsed_sec": 1.306,
+        "end_to_end_fps": 30.62,
+        "depth_enabled": true,
+        "depth_model_id": "depth_anything_v2_small",
+        "depth_input_size": 336,
+        "scheduler_strategy": "E_budget_aware",
+        "scheduler_depth_requests": 4,
+        "depth_calls": 4,
+        "failed_depth_inferences": 0,
+        "budget_skips": 20,
+        "depth_invocation_rate": 0.1,
+        "unique_tracks": 2,
+        "total_hazard_observations": 61,
+        "measurement_state_counts": {
+          "FRESH_VALID": 4,
+          "FRESH_INVALID": 2,
+          "CACHED_VALID": 38,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 17
+        },
+        "cancelled": false,
+        "fallback_used": false,
+        "fallback_reason": null,
+        "model_init_sec": 1.0205,
+        "peak_allocated_gpu_mb": 276.3,
+        "peak_reserved_gpu_mb": 320.0,
+        "video_codec": "h264",
+        "video_browser_compatible": true,
+        "video_transcode_note": "libx264_yuv420p_faststart",
+        "artifact_generation_sec": 0.141
+      },
+      "observation_total": 61,
+      "sample_observation": {
+        "frame_context": {
+          "source_session_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925",
+          "frame_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "frame_wh": [
+            640,
+            360
+          ],
+          "mode": "balanced",
+          "camera_profile": "sedan_dashcam",
+          "gps_lat": null,
+          "gps_lon": null,
+          "has_gps": false
+        },
+        "detection": {
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "class_id": 0,
+          "model_identity": "yolov8n_phase2_controlled",
+          "detector_input_size": 640,
+          "is_below_horizon_cutoff": true
+        },
+        "measurement": {
+          "source_session_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925",
+          "frame_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "model_identity": "depth_anything_v2_small",
+          "depth_input_resolution": 336,
+          "inference_precision": "fp16_weights",
+          "raw_relative_cavity_score": null,
+          "normalized_relative_score": null,
+          "smoothed_relative_score": null,
+          "measurement_validity": false,
+          "measurement_state": "FRESH_INVALID",
+          "measurement_age_sec": null,
+          "ref_diagnostics": {
+            "used_ref_samples": 512,
+            "available_ref_samples": 38740,
+            "populated_quadrants": 4,
+            "inlier_ratio": 0.7109,
+            "ref_fit_mad": 0.013823,
+            "ref_fit_rmse": 0.062777,
+            "annular_retention_ratio": null,
+            "plane_degenerate": null
+          },
+          "failure_reasons": [
+            "unexpected_residual_polarity"
+          ],
+          "warnings": [],
+          "is_water_suspected": false,
+          "fallback_used": false,
+          "fallback_reason": null
+        },
+        "horizon_diag": null
+      },
+      "unique_session_track_count": 2,
+      "artifacts": [
+        {
+          "artifact_id": "annotated_video",
+          "filename": "phase8a_balanced_71dad45f-7ac2-4cc2-89b0-2411331a7925_input_annotated.mp4",
+          "artifact_type": "annotated_video",
+          "mime_type": "video/mp4",
+          "size_bytes": 194457,
+          "created_at": "2026-11-26T20:42:12.930893+00:00",
+          "download_url": "/api/v2/jobs/71dad45f-7ac2-4cc2-89b0-2411331a7925/artifacts/annotated_video",
+          "available": true,
+          "partial": false,
+          "codec": "h264",
+          "browser_compatible": true
+        },
+        {
+          "artifact_id": "frames_json",
+          "filename": "phase8a_balanced_71dad45f-7ac2-4cc2-89b0-2411331a7925_input_frames.json",
+          "artifact_type": "observations_json",
+          "mime_type": "application/json",
+          "size_bytes": 134677,
+          "created_at": "2026-11-26T20:42:12.969393+00:00",
+          "download_url": "/api/v2/jobs/71dad45f-7ac2-4cc2-89b0-2411331a7925/artifacts/frames_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "tracks_json",
+          "filename": "phase8a_balanced_71dad45f-7ac2-4cc2-89b0-2411331a7925_input_tracks.json",
+          "artifact_type": "tracks_json",
+          "mime_type": "application/json",
+          "size_bytes": 791,
+          "created_at": "2026-11-26T20:42:12.970394+00:00",
+          "download_url": "/api/v2/jobs/71dad45f-7ac2-4cc2-89b0-2411331a7925/artifacts/tracks_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "performance_csv",
+          "filename": "phase8a_balanced_71dad45f-7ac2-4cc2-89b0-2411331a7925_input_performance.csv",
+          "artifact_type": "performance_csv",
+          "mime_type": "text/csv",
+          "size_bytes": 4316,
+          "created_at": "2026-11-26T20:42:12.971648+00:00",
+          "download_url": "/api/v2/jobs/71dad45f-7ac2-4cc2-89b0-2411331a7925/artifacts/performance_csv",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "session_summary_json",
+          "filename": "phase8a_balanced_71dad45f-7ac2-4cc2-89b0-2411331a7925_input_session_summary.json",
+          "artifact_type": "session_summary_json",
+          "mime_type": "application/json",
+          "size_bytes": 1191,
+          "created_at": "2026-11-26T20:42:12.972656+00:00",
+          "download_url": "/api/v2/jobs/71dad45f-7ac2-4cc2-89b0-2411331a7925/artifacts/session_summary_json",
+          "available": true,
+          "partial": false
+        }
+      ],
+      "downloaded_video_readable": true,
+      "video_range_206_ok": true
+    },
+    "survey_dav2_518": {
+      "job_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5",
+      "http_accept_status": 202,
+      "http_request_latency_sec": 0.0797,
+      "total_client_wall_sec": 10.4187,
+      "observed_state_transitions": [
+        "QUEUED",
+        "INITIALIZING",
+        "RUNNING",
+        "COMPLETED"
+      ],
+      "progress_samples_count": 39,
+      "status_payload": {
+        "job_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5",
+        "original_filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "status": "COMPLETED",
+        "mode": "survey",
+        "created_at": "2026-11-26T20:42:13.400493+00:00",
+        "started_at": "2026-11-26T20:42:13.407487+00:00",
+        "updated_at": "2026-11-26T20:42:23.421705+00:00",
+        "completed_at": "2026-11-26T20:42:23.421705+00:00",
+        "frames_processed": 40,
+        "total_frames": 40,
+        "progress_percentage": 100.0,
+        "throughput_fps": 4.46,
+        "candidate_observation_count": 61,
+        "unique_candidate_track_count": 2,
+        "depth_invocation_count": 40,
+        "scheduler_request_count": 40,
+        "failed_depth_count": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 51,
+          "FRESH_INVALID": 10,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "measurement_coverage": {
+          "denominator_total_observations": 61,
+          "denominator_keyframe_attempts": 61,
+          "counts_by_state": {
+            "FRESH_VALID": 51,
+            "FRESH_INVALID": 10,
+            "CACHED_VALID": 0,
+            "EXPIRED": 0,
+            "NOT_EVALUATED": 0
+          },
+          "fresh_valid_rate_over_observations": 0.8361,
+          "fresh_valid_rate_over_keyframes": 0.8361,
+          "cached_valid_rate_over_observations": 0.0
+        },
+        "cancel_requested": false,
+        "latest_warning": null,
+        "error": null,
+        "artifact_availability": {
+          "annotated_video": true,
+          "frames_json": true,
+          "tracks_json": true,
+          "performance_csv": true,
+          "session_summary_json": true
+        },
+        "pipeline_version": "2.0.0-phase8b",
+        "scientific_disclaimer": "RoadVision AI 2.0 depth outputs are uncalibrated relative inverse-depth observations. They are NOT metric centimetres, millimetres, physical area, or physical volume, and must NOT be mapped to physical severity classes. Track counts represent unique session track IDs, not independently confirmed unique physical potholes."
+      },
+      "telemetry": {
+        "queue_wait_sec": 0.007,
+        "model_init_sec": 0.8509,
+        "video_processing_sec": 8.97,
+        "artifact_generation_sec": 0.1666,
+        "total_worker_execution_sec": 10.0068,
+        "processed_frames": 40,
+        "sustained_processing_fps": 4.46,
+        "actual_depth_executions": 40,
+        "scheduler_depth_requests": 40,
+        "failed_depth_inferences": 0,
+        "peak_allocated_gpu_mb": 411.77,
+        "peak_reserved_gpu_mb": 510.0
+      },
+      "measurement_coverage": {
+        "denominator_total_observations": 61,
+        "denominator_keyframe_attempts": 61,
+        "counts_by_state": {
+          "FRESH_VALID": 51,
+          "FRESH_INVALID": 10,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "fresh_valid_rate_over_observations": 0.8361,
+        "fresh_valid_rate_over_keyframes": 0.8361,
+        "cached_valid_rate_over_observations": 0.0
+      },
+      "session_summary": {
+        "session_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5",
+        "mode": "survey",
+        "source": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+        "total_frames": 40,
+        "source_fps": 25.0,
+        "elapsed_sec": 8.97,
+        "end_to_end_fps": 4.46,
+        "depth_enabled": true,
+        "depth_model_id": "depth_anything_v2_small",
+        "depth_input_size": 518,
+        "scheduler_strategy": "B_candidate_gated",
+        "scheduler_depth_requests": 40,
+        "depth_calls": 40,
+        "failed_depth_inferences": 0,
+        "budget_skips": 0,
+        "depth_invocation_rate": 1.0,
+        "unique_tracks": 2,
+        "total_hazard_observations": 61,
+        "measurement_state_counts": {
+          "FRESH_VALID": 51,
+          "FRESH_INVALID": 10,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "cancelled": false,
+        "fallback_used": false,
+        "fallback_reason": null,
+        "model_init_sec": 0.8509,
+        "peak_allocated_gpu_mb": 411.77,
+        "peak_reserved_gpu_mb": 510.0,
+        "video_codec": "h264",
+        "video_browser_compatible": true,
+        "video_transcode_note": "libx264_yuv420p_faststart",
+        "artifact_generation_sec": 0.1666
+      },
+      "observation_total": 61,
+      "sample_observation": {
+        "frame_context": {
+          "source_session_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5",
+          "frame_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "frame_wh": [
+            640,
+            360
+          ],
+          "mode": "survey",
+          "camera_profile": "sedan_dashcam",
+          "gps_lat": null,
+          "gps_lon": null,
+          "has_gps": false
+        },
+        "detection": {
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "class_id": 0,
+          "model_identity": "yolov8n_phase2_controlled",
+          "detector_input_size": 640,
+          "is_below_horizon_cutoff": true
+        },
+        "measurement": {
+          "source_session_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5",
+          "frame_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5_f000000",
+          "frame_idx": 0,
+          "timestamp_sec": 0.0,
+          "track_id": 1,
+          "track_generation_id": 0,
+          "box_xyxy": [
+            51.52505874633789,
+            118.96395874023438,
+            275.1673278808594,
+            204.02713012695312
+          ],
+          "detector_confidence": 0.6731600761413574,
+          "model_identity": "depth_anything_v2_small",
+          "depth_input_resolution": 518,
+          "inference_precision": "fp16_weights",
+          "raw_relative_cavity_score": 0.045608,
+          "normalized_relative_score": 1.4017,
+          "smoothed_relative_score": 0.045608,
+          "measurement_validity": true,
+          "measurement_state": "FRESH_VALID",
+          "measurement_age_sec": 0.0,
+          "ref_diagnostics": {
+            "used_ref_samples": 512,
+            "available_ref_samples": 38740,
+            "populated_quadrants": 4,
+            "inlier_ratio": 0.6426,
+            "ref_fit_mad": 0.021946,
+            "ref_fit_rmse": 0.087888,
+            "annular_retention_ratio": null,
+            "plane_degenerate": null
+          },
+          "failure_reasons": [],
+          "warnings": [],
+          "is_water_suspected": false,
+          "fallback_used": false,
+          "fallback_reason": null
+        },
+        "horizon_diag": null
+      },
+      "unique_session_track_count": 2,
+      "artifacts": [
+        {
+          "artifact_id": "annotated_video",
+          "filename": "phase8a_survey_be7d6bb9-ef85-41fd-937e-d46c78296bc5_input_annotated.mp4",
+          "artifact_type": "annotated_video",
+          "mime_type": "video/mp4",
+          "size_bytes": 203067,
+          "created_at": "2026-11-26T20:42:23.366726+00:00",
+          "download_url": "/api/v2/jobs/be7d6bb9-ef85-41fd-937e-d46c78296bc5/artifacts/annotated_video",
+          "available": true,
+          "partial": false,
+          "codec": "h264",
+          "browser_compatible": true
+        },
+        {
+          "artifact_id": "frames_json",
+          "filename": "phase8a_survey_be7d6bb9-ef85-41fd-937e-d46c78296bc5_input_frames.json",
+          "artifact_type": "observations_json",
+          "mime_type": "application/json",
+          "size_bytes": 138125,
+          "created_at": "2026-11-26T20:42:23.412703+00:00",
+          "download_url": "/api/v2/jobs/be7d6bb9-ef85-41fd-937e-d46c78296bc5/artifacts/frames_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "tracks_json",
+          "filename": "phase8a_survey_be7d6bb9-ef85-41fd-937e-d46c78296bc5_input_tracks.json",
+          "artifact_type": "tracks_json",
+          "mime_type": "application/json",
+          "size_bytes": 791,
+          "created_at": "2026-11-26T20:42:23.414707+00:00",
+          "download_url": "/api/v2/jobs/be7d6bb9-ef85-41fd-937e-d46c78296bc5/artifacts/tracks_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "performance_csv",
+          "filename": "phase8a_survey_be7d6bb9-ef85-41fd-937e-d46c78296bc5_input_performance.csv",
+          "artifact_type": "performance_csv",
+          "mime_type": "text/csv",
+          "size_bytes": 4526,
+          "created_at": "2026-11-26T20:42:23.416707+00:00",
+          "download_url": "/api/v2/jobs/be7d6bb9-ef85-41fd-937e-d46c78296bc5/artifacts/performance_csv",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "session_summary_json",
+          "filename": "phase8a_survey_be7d6bb9-ef85-41fd-937e-d46c78296bc5_input_session_summary.json",
+          "artifact_type": "session_summary_json",
+          "mime_type": "application/json",
+          "size_bytes": 1193,
+          "created_at": "2026-11-26T20:42:23.417703+00:00",
+          "download_url": "/api/v2/jobs/be7d6bb9-ef85-41fd-937e-d46c78296bc5/artifacts/session_summary_json",
+          "available": true,
+          "partial": false
+        }
+      ],
+      "downloaded_video_readable": true,
+      "video_range_206_ok": true
+    },
+    "negative_control_blank": {
+      "job_id": "3b454cb8-2d13-4058-b024-2e17f03bdd85",
+      "http_accept_status": 202,
+      "http_request_latency_sec": 0.0402,
+      "total_client_wall_sec": 1.6294,
+      "observed_state_transitions": [
+        "QUEUED",
+        "INITIALIZING",
+        "RUNNING",
+        "COMPLETED"
+      ],
+      "progress_samples_count": 7,
+      "status_payload": {
+        "job_id": "3b454cb8-2d13-4058-b024-2e17f03bdd85",
+        "original_filename": "blank_negative_control.mp4",
+        "status": "COMPLETED",
+        "mode": "balanced",
+        "created_at": "2026-11-26T20:42:23.987527+00:00",
+        "started_at": "2026-11-26T20:42:23.995532+00:00",
+        "updated_at": "2026-11-26T20:42:25.414143+00:00",
+        "completed_at": "2026-11-26T20:42:25.414143+00:00",
+        "frames_processed": 20,
+        "total_frames": 20,
+        "progress_percentage": 100.0,
+        "throughput_fps": 41.24,
+        "candidate_observation_count": 0,
+        "unique_candidate_track_count": 0,
+        "depth_invocation_count": 0,
+        "scheduler_request_count": 0,
+        "failed_depth_count": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "measurement_coverage": {
+          "denominator_total_observations": 0,
+          "denominator_keyframe_attempts": 0,
+          "counts_by_state": {
+            "FRESH_VALID": 0,
+            "FRESH_INVALID": 0,
+            "CACHED_VALID": 0,
+            "EXPIRED": 0,
+            "NOT_EVALUATED": 0
+          },
+          "fresh_valid_rate_over_observations": null,
+          "fresh_valid_rate_over_keyframes": null,
+          "cached_valid_rate_over_observations": null
+        },
+        "cancel_requested": false,
+        "latest_warning": null,
+        "error": null,
+        "artifact_availability": {
+          "annotated_video": false,
+          "frames_json": true,
+          "tracks_json": true,
+          "performance_csv": true,
+          "session_summary_json": true
+        },
+        "pipeline_version": "2.0.0-phase8b",
+        "scientific_disclaimer": "RoadVision AI 2.0 depth outputs are uncalibrated relative inverse-depth observations. They are NOT metric centimetres, millimetres, physical area, or physical volume, and must NOT be mapped to physical severity classes. Track counts represent unique session track IDs, not independently confirmed unique physical potholes."
+      },
+      "telemetry": {
+        "queue_wait_sec": 0.008,
+        "model_init_sec": 0.9081,
+        "video_processing_sec": 0.485,
+        "artifact_generation_sec": 0.0018,
+        "total_worker_execution_sec": 1.4117,
+        "processed_frames": 20,
+        "sustained_processing_fps": 41.24,
+        "actual_depth_executions": 0,
+        "scheduler_depth_requests": 0,
+        "failed_depth_inferences": 0,
+        "peak_allocated_gpu_mb": 192.9,
+        "peak_reserved_gpu_mb": 240.0
+      },
+      "measurement_coverage": {
+        "denominator_total_observations": 0,
+        "denominator_keyframe_attempts": 0,
+        "counts_by_state": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "fresh_valid_rate_over_observations": null,
+        "fresh_valid_rate_over_keyframes": null,
+        "cached_valid_rate_over_observations": null
+      },
+      "session_summary": {
+        "session_id": "3b454cb8-2d13-4058-b024-2e17f03bdd85",
+        "mode": "balanced",
+        "source": "blank_negative_control.mp4",
+        "total_frames": 20,
+        "source_fps": 25.0,
+        "elapsed_sec": 0.485,
+        "end_to_end_fps": 41.24,
+        "depth_enabled": true,
+        "depth_model_id": "depth_anything_v2_small",
+        "depth_input_size": 336,
+        "scheduler_strategy": "E_budget_aware",
+        "scheduler_depth_requests": 0,
+        "depth_calls": 0,
+        "failed_depth_inferences": 0,
+        "budget_skips": 0,
+        "depth_invocation_rate": 0.0,
+        "unique_tracks": 0,
+        "total_hazard_observations": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "cancelled": false,
+        "fallback_used": false,
+        "fallback_reason": null,
+        "model_init_sec": 0.9081,
+        "peak_allocated_gpu_mb": 192.9,
+        "peak_reserved_gpu_mb": 240.0,
+        "video_codec": null,
+        "video_browser_compatible": null,
+        "video_transcode_note": null,
+        "artifact_generation_sec": 0.0018
+      },
+      "observation_total": 0,
+      "sample_observation": null,
+      "unique_session_track_count": 0,
+      "artifacts": [
+        {
+          "artifact_id": "frames_json",
+          "filename": "phase8a_balanced_3b454cb8-2d13-4058-b024-2e17f03bdd85_input_frames.json",
+          "artifact_type": "observations_json",
+          "mime_type": "application/json",
+          "size_bytes": 2,
+          "created_at": "2026-11-26T20:42:25.410143+00:00",
+          "download_url": "/api/v2/jobs/3b454cb8-2d13-4058-b024-2e17f03bdd85/artifacts/frames_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "tracks_json",
+          "filename": "phase8a_balanced_3b454cb8-2d13-4058-b024-2e17f03bdd85_input_tracks.json",
+          "artifact_type": "tracks_json",
+          "mime_type": "application/json",
+          "size_bytes": 2,
+          "created_at": "2026-11-26T20:42:25.410143+00:00",
+          "download_url": "/api/v2/jobs/3b454cb8-2d13-4058-b024-2e17f03bdd85/artifacts/tracks_json",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "performance_csv",
+          "filename": "phase8a_balanced_3b454cb8-2d13-4058-b024-2e17f03bdd85_input_performance.csv",
+          "artifact_type": "performance_csv",
+          "mime_type": "text/csv",
+          "size_bytes": 2202,
+          "created_at": "2026-11-26T20:42:25.411143+00:00",
+          "download_url": "/api/v2/jobs/3b454cb8-2d13-4058-b024-2e17f03bdd85/artifacts/performance_csv",
+          "available": true,
+          "partial": false
+        },
+        {
+          "artifact_id": "session_summary_json",
+          "filename": "phase8a_balanced_3b454cb8-2d13-4058-b024-2e17f03bdd85_input_session_summary.json",
+          "artifact_type": "session_summary_json",
+          "mime_type": "application/json",
+          "size_bytes": 1163,
+          "created_at": "2026-11-26T20:42:25.411143+00:00",
+          "download_url": "/api/v2/jobs/3b454cb8-2d13-4058-b024-2e17f03bdd85/artifacts/session_summary_json",
+          "available": true,
+          "partial": false
+        }
+      ],
+      "downloaded_video_readable": null,
+      "video_range_206_ok": null
+    }
+  },
+  "sequential_isolation_verified": true,
+  "cancellation_smoke": {
+    "job_id": "760b3f15-1a47-4677-8b68-652af61ee434",
+    "cancel_http_status": 202,
+    "final_status": "CANCELLED",
+    "processed_frames": 1
+  },
+  "restart_persistence_verified": true
+}

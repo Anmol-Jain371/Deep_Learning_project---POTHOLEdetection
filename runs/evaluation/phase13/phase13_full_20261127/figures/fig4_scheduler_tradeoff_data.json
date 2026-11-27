@@ -1,0 +1,30 @@
+{
+  "strategies": [
+    "A_always_on",
+    "B_candidate_gated",
+    "C_fixed_interval",
+    "D_track_aware",
+    "E_budget_aware"
+  ],
+  "reduction_pct": [
+    0.0,
+    4.0,
+    68.0,
+    36.67,
+    46.67
+  ],
+  "fresh_pct": [
+    66.59,
+    66.59,
+    22.2,
+    45.91,
+    36.21
+  ],
+  "effective_pct": [
+    66.59,
+    66.59,
+    68.32,
+    69.61,
+    71.34
+  ]
+}

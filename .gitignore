@@ -54,6 +54,19 @@ scratch_*
 .tempmediaStorage/
 .gemini/
 
+# RoadVision V2 API runtime state, databases, uploads, and generated job artifacts
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+uploads_v2/
+artifacts_v2/
+runs/v2_api/
+runs/verification/
+runs/v2_outputs/
+RoadVision_Research_Package/
+
 # OS and IDE files
 .DS_Store
 Thumbs.db

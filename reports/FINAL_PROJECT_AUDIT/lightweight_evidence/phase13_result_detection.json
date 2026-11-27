@@ -1,0 +1,282 @@
+{
+  "status": "COMPLETED",
+  "independent_generalization_status": "BLOCKED",
+  "independent_generalization_reason": "No untouched independent annotated pothole detection dataset exists (evaluation/ground_truth_labels/ has 0 annotations and dataset_unified contains cross-split perceptual near-duplicates). Reported dataset_unified metrics are EXPLORATORY ONLY.",
+  "evaluation_settings": {
+    "conf_threshold": 0.25,
+    "iou_threshold": 0.5,
+    "imgsz": 640,
+    "device": "cuda"
+  },
+  "models": {
+    "yolov8n_100e_sgd": {
+      "checkpoint": "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt",
+      "parameters": 3138003,
+      "splits": {
+        "dataset_unified_val": {
+          "role": "development_validation",
+          "independent": false,
+          "precision": 0.5236,
+          "recall": 0.3569,
+          "f1_score": 0.4245,
+          "map50": 0.2533,
+          "map50_95": 0.0884,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "dataset_unified_test": {
+          "role": "exploratory_contaminated_test",
+          "independent": false,
+          "precision": 0.61,
+          "recall": 0.4565,
+          "f1_score": 0.5222,
+          "map50": 0.3643,
+          "map50_95": 0.1442,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "dataset_unified_external_rangoon": {
+          "role": "exploratory_external_video",
+          "independent": false,
+          "precision": 0.5588,
+          "recall": 0.25,
+          "f1_score": 0.3455,
+          "map50": 0.156,
+          "map50_95": 0.0493,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "runtime_benchmark": {
+        "n": 60,
+        "mean_ms": 12.383,
+        "median_ms": 11.021,
+        "p95_ms": 18.955,
+        "throughput_fps": 80.75,
+        "peak_allocated_mb": 68.49,
+        "peak_reserved_mb": 646.0
+      }
+    },
+    "yolov8s_100e": {
+      "checkpoint": "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt",
+      "parameters": 11135987,
+      "splits": {
+        "dataset_unified_val": {
+          "role": "development_validation",
+          "independent": false,
+          "precision": 0.4888,
+          "recall": 0.4212,
+          "f1_score": 0.4525,
+          "map50": 0.2885,
+          "map50_95": 0.1073,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "dataset_unified_test": {
+          "role": "exploratory_contaminated_test",
+          "independent": false,
+          "precision": 0.5404,
+          "recall": 0.4783,
+          "f1_score": 0.5074,
+          "map50": 0.3581,
+          "map50_95": 0.1427,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "dataset_unified_external_rangoon": {
+          "role": "exploratory_external_video",
+          "independent": false,
+          "precision": 0.5366,
+          "recall": 0.2895,
+          "f1_score": 0.3761,
+          "map50": 0.1728,
+          "map50_95": 0.0541,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "runtime_benchmark": {
+        "n": 60,
+        "mean_ms": 25.71,
+        "median_ms": 24.629,
+        "p95_ms": 33.058,
+        "throughput_fps": 38.9,
+        "peak_allocated_mb": 200.77,
+        "peak_reserved_mb": 1074.0
+      }
+    }
+  },
+  "qualitative_exploratory_proposals": [
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 60,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 3,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.467,
+      "min_conf": 0.3797,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 150,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 0,
+      "clipped_boundary_proposals": 0,
+      "small_distant_proposals": 0,
+      "max_conf": null,
+      "min_conf": null,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 330,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 1,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.4393,
+      "min_conf": 0.4393,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 500,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 1,
+      "clipped_boundary_proposals": 0,
+      "small_distant_proposals": 0,
+      "max_conf": 0.6893,
+      "min_conf": 0.6893,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 15,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 1,
+      "clipped_boundary_proposals": 0,
+      "small_distant_proposals": 0,
+      "max_conf": 0.3278,
+      "min_conf": 0.3278,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 60,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 2,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.7034,
+      "min_conf": 0.6037,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 120,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 4,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.8779,
+      "min_conf": 0.3092,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 175,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 5,
+      "clipped_boundary_proposals": 2,
+      "small_distant_proposals": 0,
+      "max_conf": 0.7604,
+      "min_conf": 0.4617,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rawSurvey_160f",
+      "frame_idx": 20,
+      "frame_wh": [
+        1280,
+        720
+      ],
+      "proposal_count": 3,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.7558,
+      "min_conf": 0.4863,
+      "potential_failure_tags": "road_patch/roadside_shadow",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rawSurvey_160f",
+      "frame_idx": 75,
+      "frame_wh": [
+        1280,
+        720
+      ],
+      "proposal_count": 2,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.3262,
+      "min_conf": 0.319,
+      "potential_failure_tags": "road_patch/roadside_shadow",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rawSurvey_160f",
+      "frame_idx": 130,
+      "frame_wh": [
+        1280,
+        720
+      ],
+      "proposal_count": 3,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.8031,
+      "min_conf": 0.338,
+      "potential_failure_tags": "road_patch/roadside_shadow",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    }
+  ]
+}

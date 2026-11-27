@@ -218,4 +218,116 @@ roadvision_v2/
 
 ---
 
-*Phase 8A — RoadVision AI 2.0 Integration Complete*
+## Backend REST API (Phase 8B)
+
+The modular V2 pipeline is exposed through an isolated Flask Blueprint under `/api/v2` (`roadvision_api_v2/`), backed by SQLite WAL persistence and a bounded single-GPU worker (`max_gpu_concurrency: 1`). Legacy V1 routes (`/api/health`, `/api/detect`, etc.) remain preserved and coordinate GPU access via `gpu_inference_lock()`.
+
+### Feature Flag & Startup
+
+By default, `config/roadvision_api_v2.yaml` commits `enabled: false`. Enable V2 locally either via environment variable (recommended for temporary testing without altering tracked config) or YAML:
+
+```powershell
+# PowerShell: enable V2 API on localhost only (debug forced off)
+$env:ROADVISION_V2_ENABLED = "true"
+python server.py
+```
+
+Default V2 listen address: `http://127.0.0.1:5000`.
+
+### PowerShell Examples
+
+Using existing repository road footage (`Watch Video_ Terrible potholes in Rangoon Road.mp4`):
+
+```powershell
+# 1. Health & capabilities
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/health"
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/capabilities"
+
+# 2. Submit a BALANCED inspection job (multipart upload)
+$form = @{
+    video        = Get-Item "Watch Video_ Terrible potholes in Rangoon Road.mp4"
+    mode         = "balanced"
+    enable_depth = "true"
+    save_video   = "true"
+    save_json    = "true"
+    save_csv     = "true"
+    max_frames   = "40"
+}
+$job = Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs" -Method Post -Form $form
+$jobId = $job.job_id
+
+# 3. Poll status
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId"
+
+# 4. Cancel an active or queued job
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/cancel" -Method Post
+
+# 5. Fetch summary, paginated observations, tracks, performance, and artifacts
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/summary"
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/observations?page=1&page_size=50"
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/tracks?page=1&page_size=50"
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/performance?page=1&page_size=50"
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/artifacts"
+
+# 6. Download annotated video
+Invoke-WebRequest -Uri "http://127.0.0.1:5000/api/v2/jobs/$jobId/artifacts/annotated_video?download=1" -OutFile "annotated.mp4"
+```
+
+### curl Examples
+
+```bash
+curl -s http://127.0.0.1:5000/api/v2/health
+curl -s -X POST http://127.0.0.1:5000/api/v2/jobs \
+  -F "video=@Watch Video_ Terrible potholes in Rangoon Road.mp4" \
+  -F "mode=balanced" -F "enable_depth=true" -F "max_frames=40"
+curl -s http://127.0.0.1:5000/api/v2/jobs/<job_id>
+curl -s -X POST http://127.0.0.1:5000/api/v2/jobs/<job_id>/cancel
+curl -L http://127.0.0.1:5000/api/v2/jobs/<job_id>/artifacts/annotated_video -o annotated.mp4
+```
+
+### Python `requests` Example
+
+```python
+import time, requests
+
+BASE = "http://127.0.0.1:5000/api/v2"
+with open("Watch Video_ Terrible potholes in Rangoon Road.mp4", "rb") as fh:
+    r = requests.post(
+        f"{BASE}/jobs",
+        files={"video": ("rangoon.mp4", fh, "video/mp4")},
+        data={"mode": "balanced", "enable_depth": "true", "max_frames": "40"},
+    )
+job_id = r.json()["job_id"]
+while True:
+    st = requests.get(f"{BASE}/jobs/{job_id}").json()
+    if st["status"] in ("COMPLETED", "FAILED", "CANCELLED"):
+        break
+    time.sleep(0.5)
+print(requests.get(f"{BASE}/jobs/{job_id}/summary").json())
+```
+
+### API Configuration Reference (`config/roadvision_api_v2.yaml`)
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `enabled` | `false` | Committed default; enable via `ROADVISION_V2_ENABLED=true` or YAML |
+| `host` / `port` | `127.0.0.1` / `5000` | Loopback-only bind enforced for local research |
+| `database_path` | `runs/v2_api/roadvision_v2_jobs.db` | SQLite WAL database path |
+| `upload_directory` / `artifact_directory` | `uploads_v2` / `artifacts_v2` | Isolated per-job media & output roots |
+| `maximum_upload_size` | `268435456` (256 MiB) | Streamed upload size cap |
+| `allowed_video_formats` | `[.mp4, .avi, .mov, .mkv]` | Permitted extensions (verified via OpenCV decode) |
+| `maximum_video_resolution` | `[1920, 1080]` | Maximum width × height |
+| `maximum_video_duration` / `maximum_processed_frames` | `300.0`s / `9000` | Conservative caps for RTX 2050 |
+| `max_queued_jobs` / `max_gpu_concurrency` | `5` / `1` | Bounded queue & single active GPU job |
+| `progress_update_interval` / `worker_shutdown_timeout` | `0.5`s / `15.0`s | Throttled DB writes & cooperative stop timeout |
+| `allowed_cors_origins` | Localhost Vite/React origins | Wildcard `*` rejected |
+
+### Known API Limitations
+
+- **No authentication or user authorization**: Anyone able to reach `127.0.0.1:5000` can list/poll jobs and download artifacts. UUID job IDs are identifiers, not authorization. Not safe for public deployment.
+- **Single-process worker boundary**: Enforced via `SingleProcessWorkerGuard` file lock; multi-worker WSGI scaling is unsupported for local GPU execution.
+- **OpenAPI specification**: Full machine-readable specification is in [roadvision_api_v2/openapi.yaml](roadvision_api_v2/openapi.yaml).
+
+---
+
+*Phase 8A + Phase 8B — RoadVision AI 2.0 Backend Complete*

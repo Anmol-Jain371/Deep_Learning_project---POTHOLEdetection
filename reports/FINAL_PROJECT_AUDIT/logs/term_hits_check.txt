@@ -1,0 +1,25 @@
+[contains_synthetic] roadvision-dashboard/src/pages/GeospatialIntelligence.jsx:617: {cl.contains_synthetic && (
+[contains_synthetic] roadvision_v2/geospatial/matching.py:206: "contains_synthetic": bool(m0.get("is_synthetic", False)),
+[contains_synthetic] roadvision_v2/geospatial/matching.py:265: "contains_synthetic": any(bool(m.get("is_synthetic", False)) for m in members),
+[contains_synthetic] roadvision_v2/maintenance/analytics.py:114: contains_synth_gps = bool(candidate.get("contains_synthetic_gps", False))
+[contains_synthetic] roadvision_v2/maintenance/analytics.py:429: "contains_synthetic_gps": bool(cl.get("contains_synthetic", False)) if cl else False,
+[contains_synthetic] roadvision_api_v2/geospatial_store.py:471: distinct_trip_count, contains_synthetic, diagnostics_json
+[contains_synthetic] roadvision_api_v2/geospatial_store.py:485: 1 if cl.get("contains_synthetic") else 0,
+[contains_synthetic] roadvision_api_v2/geospatial_store.py:545: d["contains_synthetic"] = bool(d.get("contains_synthetic"))
+[contains_synthetic] roadvision_api_v2/geospatial_store.py:577: d["contains_synthetic"] = bool(d.get("contains_synthetic"))
+[contains_synthetic] roadvision_api_v2/storage.py:126: contains_synthetic INTEGER NOT NULL DEFAULT 0,
+[is_synthetic] roadvision_v2/geospatial/matching.py:206: "contains_synthetic": bool(m0.get("is_synthetic", False)),
+[is_synthetic] roadvision_v2/geospatial/matching.py:265: "contains_synthetic": any(bool(m.get("is_synthetic", False)) for m in members),
+[76.2] server.py:48: MODEL_LABEL = "Model #2b (Combined-V2 50e, 76.2% mAP50)"
+[82.1] roadvision-dashboard/src/components/BenchmarkComparison.jsx:244: <td className="metric-val highlight text-emerald font-mono">84.7% (with TTA) / 82.1%</td>
+[84.7] roadvision-dashboard/src/components/BenchmarkComparison.jsx:22: status: 'PRODUCTION (84.7% mAP50)',
+[84.7] roadvision-dashboard/src/components/BenchmarkComparison.jsx:27: 'High empirical accuracy (84.7% mAP@50 with TTA, 92.4% precision)',
+[84.7] roadvision-dashboard/src/components/BenchmarkComparison.jsx:244: <td className="metric-val highlight text-emerald font-mono">84.7% (with TTA) / 82.1%</td>
+[84.7] server.py:37: # Initialize Deep Learning Engine with upgraded production detector (RDD1666 50-Epoch, 84.7% mAP50)
+[84.7] server.py:45: MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+[92.4] roadvision-dashboard/src/components/BenchmarkComparison.jsx:27: 'High empirical accuracy (84.7% mAP@50 with TTA, 92.4% precision)',
+[92.4] roadvision-dashboard/src/components/BenchmarkComparison.jsx:246: <td className="metric-desc">High precision (92.4%) eliminates false alarm fatigue</td>
+[92.4] server.py:45: MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+[12.971] roadvision-dashboard/src/data/sample_demo_potholes.json:5: "lat": 12.9718,
+[12.971] roadvision_engine.py:308: origin_lat: float = 12.97160,
+[12.971] roadvision_engine.py:330: # Match timestamps like 00:00:04,000 and GPS like 12.9718 N, 77.5948 E or lat/lon numbers

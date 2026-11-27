@@ -173,16 +173,24 @@ class TestLegacyHashIntegrity(unittest.TestCase):
             f"roadvision_engine.py has been modified!\n  expected: {expected}\n  actual  : {actual}"
         )
 
-    def test_server_hash_unchanged(self):
-        path = os.path.join(self._root(), "server.py")
-        if not os.path.exists(path):
-            self.skipTest("server.py not found")
-        actual = _sha256(path)
-        expected = _EXPECTED_HASHES["server.py"]
-        self.assertEqual(
-            actual, expected,
-            f"server.py has been modified!\n  expected: {expected}\n  actual  : {actual}"
-        )
+    def test_legacy_server_routes_preserved(self):
+        """Legacy server routes, methods, and default-disabled V2 flag must be preserved."""
+        srv_path = os.path.join(self._root(), "server.py")
+        with open(srv_path, "r", encoding="utf-8") as fh:
+            src = fh.read()
+        for expected_sig in (
+            '@app.route("/api/health", methods=["GET"])',
+            '@app.route("/api/benchmark", methods=["GET"])',
+            '@app.route("/api/camera-config", methods=["GET"])',
+            '@app.route("/api/detect", methods=["POST"])',
+            '@app.route("/outputs/<path:filename>")',
+        ):
+            self.assertIn(expected_sig, src)
+
+        from roadvision_api_v2.configuration import load_api_config
+        cfg = load_api_config(ensure_dirs=False, apply_env_overrides=False)
+        self.assertFalse(cfg.enabled, "Committed V2 API default must be enabled: false")
+
 
     def test_camera_params_hash_unchanged(self):
         path = os.path.join(self._root(), "config", "camera_params.json")
@@ -394,6 +402,38 @@ class TestDetectionErrorIsolation(unittest.TestCase):
         hazards, perf = pipeline.process_frame(frame, 0, 0.0)
         self.assertEqual(hazards, [])
         self.assertIsInstance(perf, PipelinePerformance)
+
+    def test_cavity_extractor_schema_mapping_flows_to_measurement(self):
+        pipeline = _build_pipeline_no_gpu()
+        pipeline.cfg.depth.enabled = True
+        pipeline._depth_model_id = "depth_anything_v2_small"
+        pipeline._depth_input_size = 336
+        pipeline._depth_precision = "fp16_weights"
+        pipeline._yolo.track.return_value = _make_fake_yolo_result_with_det(
+            box=(100, 150, 250, 300), tid=12, conf=0.80
+        )
+        fake_dmap = np.zeros((480, 640), dtype=np.float32)
+        pipeline._run_depth_inference = mock.MagicMock(return_value=(fake_dmap, {"inference_ms": 10.0}))
+        pipeline._extract_relative_score = mock.MagicMock(return_value={
+            "is_valid": True,
+            "failure_reasons": [],
+            "warnings": [],
+            "is_water_suspected": False,
+            "core_cavity_stats": {"p75_residual": 0.42, "scale_normalized_p75": 2.1},
+            "ref_diagnostics": {
+                "used_ref_samples": 200, "available_ref_samples": 300,
+                "populated_quadrants": 4, "inlier_ratio": 0.85,
+                "ref_fit_mad": 0.05, "ref_fit_rmse": 0.07,
+            },
+        })
+        hazards, _ = pipeline.process_frame(_black_frame(), 0, 0.0)
+        self.assertEqual(len(hazards), 1)
+        m = hazards[0].measurement
+        self.assertEqual(m.measurement_state, "FRESH_VALID")
+        self.assertAlmostEqual(m.raw_relative_cavity_score, 0.42, places=4)
+        self.assertAlmostEqual(m.normalized_relative_score, 2.1, places=4)
+        self.assertEqual(m.ref_diagnostics.used_ref_samples, 200)
+        self.assertAlmostEqual(m.ref_diagnostics.inlier_ratio, 0.85, places=4)
 
 
 if __name__ == "__main__":

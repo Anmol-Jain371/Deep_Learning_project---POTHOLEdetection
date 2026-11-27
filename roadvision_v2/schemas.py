@@ -4,6 +4,7 @@ Every unavailable value is explicitly `None` (`null` in JSON) — never `0.0`.
 No physical metric cm or physical severity categories are assigned from relative scores.
 """
 
+import math
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -17,12 +18,16 @@ MEASUREMENT_STATES = (
 
 
 def _clean_json(obj: Any) -> Any:
+    if isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return None
+        return obj
     if isinstance(obj, dict):
         return {str(k): _clean_json(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple)):
         return [_clean_json(v) for v in obj]
     if hasattr(obj, "item") and callable(obj.item):
-        return obj.item()
+        return _clean_json(obj.item())
     return obj
 
 
@@ -68,6 +73,7 @@ class TrackObservation:
     observation_count: int
     box_xyxy: Tuple[float, float, float, float]
     latest_state: str
+    quality_summary: Optional[Dict[str, Any]] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return _clean_json(asdict(self))
@@ -129,6 +135,9 @@ class RelativeDepthMeasurement:
     is_water_suspected: bool = False
     fallback_used: bool = False
     fallback_reason: Optional[str] = None
+    quality_assessment: Optional[Dict[str, Any]] = None
+    geometry_snapshot_id: Optional[str] = None
+    geometry_snapshot_timestamp_sec: Optional[float] = None
 
     def __post_init__(self) -> None:
         if self.measurement_state not in MEASUREMENT_STATES:

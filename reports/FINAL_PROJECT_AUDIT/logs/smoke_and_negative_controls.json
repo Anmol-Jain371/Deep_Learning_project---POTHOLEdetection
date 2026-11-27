@@ -1,0 +1,196 @@
+{
+  "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+  "smoke_tests": {
+    "Test_A_live_no_depth": {
+      "http_create_status": 202,
+      "job_status": "COMPLETED",
+      "frames_processed": 25,
+      "depth_invocation_count": 0,
+      "throughput_fps": 5.28,
+      "depth_model_id": "none",
+      "depth_input_size": 0,
+      "peak_allocated_gpu_mb": 24.26,
+      "summary_obs_count": 28,
+      "api_obs_total": 28,
+      "summary_tracks_count": 8,
+      "api_tracks_total": 8,
+      "measurement_state_counts": {
+        "FRESH_VALID": 0,
+        "FRESH_INVALID": 0,
+        "CACHED_VALID": 0,
+        "EXPIRED": 0,
+        "NOT_EVALUATED": 28
+      },
+      "states_reconcile_nonzeros": true,
+      "geometry_snapshots_returned": 0,
+      "geometry_checked_nonempty_ref_mask": "0/0",
+      "artifacts_available": {
+        "annotated_video": true,
+        "frames_json": true,
+        "tracks_json": true,
+        "performance_csv": true,
+        "session_summary_json": true,
+        "geometry_manifest_json": false
+      }
+    },
+    "Test_B_live_midas": {
+      "http_create_status": 202,
+      "job_status": "COMPLETED",
+      "frames_processed": 25,
+      "depth_invocation_count": 20,
+      "throughput_fps": 10.35,
+      "depth_model_id": "midas_small",
+      "depth_input_size": 256,
+      "peak_allocated_gpu_mb": 144.26,
+      "summary_obs_count": 28,
+      "api_obs_total": 28,
+      "summary_tracks_count": 8,
+      "api_tracks_total": 8,
+      "measurement_state_counts": {
+        "FRESH_VALID": 14,
+        "FRESH_INVALID": 14,
+        "CACHED_VALID": 0,
+        "EXPIRED": 0,
+        "NOT_EVALUATED": 0
+      },
+      "states_reconcile_nonzeros": true,
+      "geometry_snapshots_returned": 8,
+      "geometry_checked_nonempty_ref_mask": "5/5",
+      "artifacts_available": {
+        "annotated_video": true,
+        "frames_json": true,
+        "tracks_json": true,
+        "performance_csv": true,
+        "session_summary_json": true,
+        "geometry_manifest_json": true
+      }
+    },
+    "Test_C_balanced_dav2_336": {
+      "http_create_status": 202,
+      "job_status": "COMPLETED",
+      "frames_processed": 30,
+      "depth_invocation_count": 10,
+      "throughput_fps": 14.67,
+      "depth_model_id": "depth_anything_v2_small",
+      "depth_input_size": 336,
+      "peak_allocated_gpu_mb": 194.15,
+      "summary_obs_count": 39,
+      "api_obs_total": 39,
+      "summary_tracks_count": 9,
+      "api_tracks_total": 9,
+      "measurement_state_counts": {
+        "FRESH_VALID": 7,
+        "FRESH_INVALID": 12,
+        "CACHED_VALID": 9,
+        "EXPIRED": 0,
+        "NOT_EVALUATED": 11
+      },
+      "states_reconcile_nonzeros": true,
+      "geometry_snapshots_returned": 5,
+      "geometry_checked_nonempty_ref_mask": "5/5",
+      "artifacts_available": {
+        "annotated_video": true,
+        "frames_json": true,
+        "tracks_json": true,
+        "performance_csv": true,
+        "session_summary_json": true,
+        "geometry_manifest_json": true
+      }
+    },
+    "Test_D_survey_dav2_518": {
+      "http_create_status": 202,
+      "job_status": "COMPLETED",
+      "frames_processed": 20,
+      "depth_invocation_count": 15,
+      "throughput_fps": 5.29,
+      "depth_model_id": "depth_anything_v2_small",
+      "depth_input_size": 518,
+      "peak_allocated_gpu_mb": 329.84,
+      "summary_obs_count": 20,
+      "api_obs_total": 20,
+      "summary_tracks_count": 6,
+      "api_tracks_total": 6,
+      "measurement_state_counts": {
+        "FRESH_VALID": 4,
+        "FRESH_INVALID": 16,
+        "CACHED_VALID": 0,
+        "EXPIRED": 0,
+        "NOT_EVALUATED": 0
+      },
+      "states_reconcile_nonzeros": true,
+      "geometry_snapshots_returned": 2,
+      "geometry_checked_nonempty_ref_mask": "2/2",
+      "artifacts_available": {
+        "annotated_video": true,
+        "frames_json": true,
+        "tracks_json": true,
+        "performance_csv": true,
+        "session_summary_json": true,
+        "geometry_manifest_json": true
+      }
+    }
+  },
+  "negative_controls": {
+    "blank_video": {
+      "status": "COMPLETED",
+      "obs": 0,
+      "tracks": 0,
+      "depth_calls": 0
+    },
+    "empty_upload": {
+      "status_code": 400,
+      "error_code": "EMPTY_UPLOAD"
+    },
+    "corrupted_video": {
+      "status_code": 415,
+      "error_code": "UNSUPPORTED_MEDIA"
+    },
+    "unsupported_filetype": {
+      "status_code": 415,
+      "error_code": "UNSUPPORTED_MEDIA"
+    },
+    "invalid_mode": {
+      "status_code": 400,
+      "error_code": "INVALID_MODE"
+    },
+    "invalid_max_frames": {
+      "status_code": 400,
+      "error_code": "INVALID_PARAMETER"
+    },
+    "unknown_job": 404,
+    "invalid_uuid": 400,
+    "artifact_traversal_attempt": {
+      "status_code": 404,
+      "error_code": null
+    },
+    "invalid_obs_filter": {
+      "status_code": 400,
+      "error_code": "INVALID_FILTER"
+    },
+    "missing_gps_locations": {
+      "status_code": 200,
+      "gps_available": false
+    },
+    "invalid_gps_coords": {
+      "status_code": 400,
+      "error_code": "INVALID_GPS_TELEMETRY"
+    },
+    "invalid_gps_naive_iso": {
+      "status_code": 400,
+      "error_code": "INVALID_GPS_TELEMETRY"
+    },
+    "duplicate_review": {
+      "first_status": 201,
+      "second_status": 409,
+      "second_code": "DUPLICATE_REVIEW"
+    },
+    "incompatible_comparison": {
+      "warnings": [
+        "One or more selected inspections ran with depth inference disabled; relative-depth distributions are unavailable/incomparable.",
+        "GPS telemetry is missing on at least one inspection; routes may be different corridors/viewpoints. Do NOT interpret candidate-count differences as road deterioration or improvement."
+      ],
+      "compatible": null
+    }
+  },
+  "worker_started": true
+}

@@ -1,0 +1,17 @@
+{
+  "methods": [
+    "B_ols_plane",
+    "C_ransac_baseline",
+    "D_optimized_msac_ransac"
+  ],
+  "outlier_rmse": [
+    0.001065,
+    2.9e-05,
+    0.000131
+  ],
+  "mean_ms": [
+    2.67,
+    9.014,
+    4.514
+  ]
+}

@@ -1,0 +1,141 @@
+=== fig1_detection_comparison_data.json ===
+{
+  "models": [
+    "yolov8n_100e_sgd",
+    "yolov8s_100e"
+  ],
+  "precision": [
+    0.61,
+    0.5404
+  ],
+  "recall": [
+    0.4565,
+    0.4783
+  ],
+  "map50": [
+    0.3643,
+    0.3581
+  ],
+  "fps": [
+    80.75,
+    38.9
+  ]
+}
+=== fig2_ref_plane_ablation_data.json ===
+{
+  "methods": [
+    "B_ols_plane",
+    "C_ransac_baseline",
+    "D_optimized_msac_ransac"
+  ],
+  "outlier_rmse": [
+    0.001065,
+    2.9e-05,
+    0.000131
+  ],
+  "mean_ms": [
+    2.67,
+    9.014,
+    4.514
+  ]
+}
+=== fig3_depth_resolution_ablation_data.json ===
+{
+  "arms": [
+    "dav2_518_fp16",
+    "midas_256_fp32",
+    "midas_256_fp16",
+    "dav2_266_fp16",
+    "dav2_336_fp16",
+    "dav2_336_fp32",
+    "dav2_392_fp16"
+  ],
+  "inf_ms": [
+    147.008,
+    16.451,
+    21.41,
+    25.801,
+    48.175,
+    60.256,
+    68.817
+  ],
+  "coverage_pct": [
+    66.67,
+    28.57,
+    28.57,
+    50.0,
+    59.52,
+    61.9,
+    66.67
+  ],
+  "vram_mb": [
+    409.69,
+    127.43,
+    163.49,
+    243.42,
+    274.69,
+    218.41,
+    313.59
+  ]
+}
+=== fig4_scheduler_tradeoff_data.json ===
+{
+  "strategies": [
+    "A_always_on",
+    "B_candidate_gated",
+    "C_fixed_interval",
+    "D_track_aware",
+    "E_budget_aware"
+  ],
+  "reduction_pct": [
+    0.0,
+    4.0,
+    68.0,
+    36.67,
+    46.67
+  ],
+  "fresh_pct": [
+    66.59,
+    66.59,
+    22.2,
+    45.91,
+    36.21
+  ],
+  "effective_pct": [
+    66.59,
+    66.59,
+    68.32,
+    69.61,
+    71.34
+  ]
+}
+=== fig5_quality_estimator_ablation_data.json ===
+{
+  "categories": [
+    "HIGH_QUALITY",
+    "MODERATE_QUALITY",
+    "LOW_QUALITY",
+    "INVALID",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "distributions": {
+    "C_deployed": {
+      "INVALID": 73,
+      "INSUFFICIENT_EVIDENCE": 31,
+      "HIGH_QUALITY": 145,
+      "MODERATE_QUALITY": 51
+    },
+    "D_missing_penalized": {
+      "INVALID": 73,
+      "INSUFFICIENT_EVIDENCE": 31,
+      "MODERATE_QUALITY": 38,
+      "HIGH_QUALITY": 158
+    },
+    "E_conservative_gated": {
+      "INVALID": 73,
+      "INSUFFICIENT_EVIDENCE": 31,
+      "MODERATE_QUALITY": 91,
+      "HIGH_QUALITY": 105
+    }
+  }
+}

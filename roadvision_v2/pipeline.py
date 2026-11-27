@@ -22,12 +22,14 @@ import csv
 import json
 import logging
 import os
+import shutil
+import subprocess
 import sys
 import time
 import uuid
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import cv2
 import numpy as np
@@ -57,6 +59,13 @@ from roadvision_v2.schemas import (
     HazardObservation,
     PipelinePerformance,
 )
+from roadvision_v2.quality import (
+    assess_observation_quality,
+    build_track_quality_summary,
+    compute_track_temporal_stability,
+    summarize_session_quality,
+)
+from roadvision_v2.geometry import GeometrySnapshotManager
 
 logger = logging.getLogger("roadvision_v2.pipeline")
 
@@ -201,10 +210,16 @@ class RoadVisionV2Pipeline:
         session_id: Optional[str] = None,
         device: Optional[str] = None,
     ) -> None:
+        t_init_start = time.perf_counter()
         self.cfg = cfg
         self.session_id = session_id or str(uuid.uuid4())[:12]
         self.device = device or ("cuda" if self._cuda_available() else "cpu")
         self._frame_generation: int = 0
+        self._depth_load_error: Optional[str] = None
+        self._last_sched_decision: Dict[str, Any] = {}
+        self._last_depth_attempt_ran: bool = False
+        self._last_depth_attempt_ok: bool = False
+        self._last_depth_error: Optional[str] = None
 
         # --- Detector + tracker ---
         from ultralytics import YOLO
@@ -300,15 +315,28 @@ class RoadVisionV2Pipeline:
 
         # --- Per-session track registry ---
         self._track_registry: Dict[int, TrackObservation] = {}
+        self._track_obs_history: Dict[int, List[Dict[str, Any]]] = {}
+        self._track_last_fresh_quality: Dict[Tuple[int, int], Dict[str, Any]] = {}
+        self._geometry_manager: Optional[GeometrySnapshotManager] = None
+        self._model_init_sec: float = round(time.perf_counter() - t_init_start, 4)
         logger.info(
-            "RoadVisionV2Pipeline ready | session=%s mode=%s device=%s depth=%s",
+            "RoadVisionV2Pipeline ready | session=%s mode=%s device=%s depth=%s init=%.3fs",
             self.session_id, cfg.mode, self.device,
             self._depth_model_id if cfg.depth.enabled else "off",
+            self._model_init_sec,
         )
 
     # ------------------------------------------------------------------
     # Private helpers
     # ------------------------------------------------------------------
+
+    def _ensure_tracking_state(self) -> None:
+        if not hasattr(self, "_track_obs_history"):
+            self._track_obs_history = {}
+        if not hasattr(self, "_track_last_fresh_quality"):
+            self._track_last_fresh_quality = {}
+        if not hasattr(self, "_geometry_manager"):
+            self._geometry_manager = None
 
     @staticmethod
     def _cuda_available() -> bool:
@@ -347,13 +375,17 @@ class RoadVisionV2Pipeline:
                 logger.info("DAv2 Small loaded (input_size=%d, precision=%s)", dcfg.input_size, dcfg.precision)
             else:
                 logger.warning("Unknown depth model_id '%s'; depth disabled.", dcfg.model_id)
+                self._depth_load_error = f"unknown_depth_model:{dcfg.model_id}"
         except Exception as exc:
             logger.error("Failed to load depth model: %s", exc)
             self._depth_model = None
+            self._depth_load_error = f"{type(exc).__name__}: {exc}"
 
     def _run_depth_inference(self, img_bgr: np.ndarray) -> Tuple[Optional[np.ndarray], Dict[str, float]]:
         """Run depth inference with failure isolation. Returns (depth_map, timings_ms)."""
+        self._last_depth_error = None
         if self._depth_model is None:
+            self._last_depth_error = self._depth_load_error or "depth_model_not_loaded"
             return None, {}
         try:
             import torch
@@ -361,11 +393,13 @@ class RoadVisionV2Pipeline:
             dmap = pred.depth_map
             if not np.any(np.isfinite(dmap)):
                 logger.warning("Depth prediction returned all non-finite values.")
+                self._last_depth_error = "non_finite_depth_map"
                 return None, pred.timings_ms
             return dmap, pred.timings_ms
         except RuntimeError as exc:
             if "out of memory" in str(exc).lower():
                 logger.error("GPU OOM during depth inference; skipping frame.")
+                self._last_depth_error = "gpu_oom_depth_inference"
                 try:
                     import torch
                     torch.cuda.empty_cache()
@@ -373,9 +407,11 @@ class RoadVisionV2Pipeline:
                     pass
             else:
                 logger.error("Depth inference error: %s", exc)
+                self._last_depth_error = f"{type(exc).__name__}: {exc}"
             return None, {}
         except Exception as exc:
             logger.error("Unexpected depth error: %s", exc)
+            self._last_depth_error = f"{type(exc).__name__}: {exc}"
             return None, {}
 
     def _extract_relative_score(
@@ -397,20 +433,22 @@ class RoadVisionV2Pipeline:
             img_bgr=img_bgr,
             opt_cfg=self._opt_cfg,
             core_cfg=self._core_cfg,
+            return_arrays=bool(getattr(self.cfg, "geometry_snapshot", None) and self.cfg.geometry_snapshot.enabled),
         )
 
     def _build_ref_diagnostics(self, extract_out: Dict[str, Any]) -> ReferenceFitDiagnostics:
+        rd = extract_out.get("ref_diagnostics") or {}
         fo = extract_out.get("fit_out") or {}
         region = extract_out.get("region") or {}
         return ReferenceFitDiagnostics(
-            used_ref_samples=fo.get("used_ref_samples"),
-            available_ref_samples=region.get("available_ref_samples"),
-            populated_quadrants=region.get("populated_quadrants"),
-            inlier_ratio=fo.get("inlier_ratio"),
-            ref_fit_mad=fo.get("ref_fit_mad"),
-            ref_fit_rmse=fo.get("ref_fit_rmse"),
-            annular_retention_ratio=region.get("annular_retention_ratio"),
-            plane_degenerate=fo.get("plane_degenerate"),
+            used_ref_samples=rd.get("used_ref_samples", fo.get("used_ref_samples")),
+            available_ref_samples=rd.get("available_ref_samples", region.get("available_ref_samples")),
+            populated_quadrants=rd.get("populated_quadrants", region.get("populated_quadrants")),
+            inlier_ratio=rd.get("inlier_ratio", fo.get("inlier_ratio")),
+            ref_fit_mad=rd.get("ref_fit_mad", fo.get("ref_fit_mad")),
+            ref_fit_rmse=rd.get("ref_fit_rmse", fo.get("ref_fit_rmse")),
+            annular_retention_ratio=rd.get("annular_retention_ratio", region.get("annular_retention_ratio")),
+            plane_degenerate=rd.get("plane_degenerate", fo.get("plane_degenerate")),
         )
 
     def _build_measurement(
@@ -435,22 +473,44 @@ class RoadVisionV2Pipeline:
         ref_diag = ReferenceFitDiagnostics()
         fallback_used = False
         fallback_reason: Optional[str] = None
+        cavity_diag: Optional[Dict[str, Any]] = None
+        truncated_edges: List[str] = []
 
         if was_keyframe and extract_out is not None:
-            raw_score = extract_out.get("iqr_norm_p75") if is_valid else None
-            norm_score = extract_out.get("scale_norm_p75") if is_valid else None
-            is_water = bool(extract_out.get("is_water", False))
+            core = extract_out.get("core_cavity_stats") or {}
+            raw_cand = core.get("p75_residual", extract_out.get("iqr_norm_p75"))
+            norm_cand = core.get("scale_normalized_p75", extract_out.get("scale_norm_p75"))
+            raw_score = raw_cand if is_valid else None
+            norm_score = norm_cand if is_valid else None
+            is_water = bool(
+                extract_out.get("is_water_suspected", extract_out.get("is_water", False))
+            )
             ref_diag = self._build_ref_diagnostics(extract_out)
+            cavity_diag = {
+                "cavity_sample_count": core.get("px"),
+                "positive_frac": core.get("positive_frac"),
+                "iqr_residual": core.get("iqr_residual"),
+                "p75_residual": core.get("raw_diag_p75", core.get("p75_residual")),
+            }
             if extract_out.get("warnings"):
                 warnings = list(extract_out["warnings"])
+                for w in warnings:
+                    if isinstance(w, str) and w.startswith("boundary_truncated:"):
+                        truncated_edges = [e for e in w.split(":", 1)[1].split("+") if e]
             if not is_valid and not failure_reasons:
-                failure_reasons = list(extract_out.get("reasons") or [])
+                failure_reasons = list(
+                    extract_out.get("failure_reasons") or extract_out.get("reasons") or []
+                )
 
+        depth_load_err = getattr(self, "_depth_load_error", None)
         if state == "NOT_EVALUATED" and not self.cfg.depth.enabled:
             fallback_used = True
             fallback_reason = "depth_disabled"
+        elif state == "NOT_EVALUATED" and self.cfg.depth.enabled and self._depth_model is None:
+            fallback_used = True
+            fallback_reason = depth_load_err or "depth_model_unavailable"
 
-        return RelativeDepthMeasurement(
+        meas = RelativeDepthMeasurement(
             source_session_id=frame_ctx.source_session_id,
             frame_id=frame_ctx.frame_id,
             frame_idx=frame_ctx.frame_idx,
@@ -475,6 +535,72 @@ class RoadVisionV2Pipeline:
             fallback_used=fallback_used,
             fallback_reason=fallback_reason,
         )
+
+        if self.cfg.quality.enabled:
+            self._ensure_tracking_state()
+            track_key = (det.track_id, det.track_generation_id)
+            history = self._track_obs_history.get(det.track_id, [])
+            temp_hist = history + [{"measurement": meas.to_dict()}]
+            temp_stab = compute_track_temporal_stability(temp_hist, cfg=self.cfg.quality)
+            src_fresh = self._track_last_fresh_quality.get(track_key)
+            qa = assess_observation_quality(
+                measurement_state=meas.measurement_state,
+                measurement_validity=meas.measurement_validity,
+                detector_confidence=det.detector_confidence,
+                ref_diagnostics=ref_diag.to_dict() if was_keyframe else None,
+                cavity_diagnostics=cavity_diag,
+                temporal_stability=temp_stab,
+                measurement_age_sec=meas.measurement_age_sec,
+                is_water_suspected=is_water if was_keyframe else None,
+                box_xyxy=det.box_xyxy,
+                frame_wh=frame_ctx.frame_wh,
+                truncated_edges=truncated_edges,
+                failure_reasons=failure_reasons,
+                warnings=warnings,
+                fallback_reason=fallback_reason,
+                source_fresh_quality=src_fresh,
+                cfg=self.cfg.quality,
+            )
+            meas.quality_assessment = qa
+            if meas.measurement_state == "FRESH_VALID":
+                self._track_last_fresh_quality[track_key] = {
+                    **qa,
+                    "raw_ref_diagnostics": ref_diag.to_dict(),
+                    "raw_cavity_diagnostics": cavity_diag,
+                    "is_water_suspected": is_water,
+                    "source_timestamp_sec": frame_ctx.timestamp_sec,
+                }
+
+        geom_mgr = getattr(self, "_geometry_manager", None)
+        if geom_mgr is not None:
+            tkey = (det.track_id, det.track_generation_id)
+            if meas.measurement_state == "FRESH_VALID" and extract_out is not None and hasattr(self, "_current_depth_map"):
+                try:
+                    snap_id, snap_ts = geom_mgr.maybe_capture(
+                        frame_idx=frame_ctx.frame_idx,
+                        timestamp_sec=frame_ctx.timestamp_sec,
+                        track_id=det.track_id,
+                        track_generation_id=det.track_generation_id,
+                        depth_map=self._current_depth_map,
+                        extract_out=extract_out,
+                        img_bgr=getattr(self, "_current_img_bgr", None),
+                        model_identity=self._depth_model_id,
+                        depth_input_resolution=meas.depth_input_resolution,
+                        inference_precision=meas.inference_precision,
+                        quality_assessment=meas.quality_assessment,
+                    )
+                    if snap_id:
+                        meas.geometry_snapshot_id = snap_id
+                        meas.geometry_snapshot_timestamp_sec = snap_ts
+                except Exception as exc:
+                    logger.warning("Geometry snapshot capture skipped for track %d: %s", det.track_id, exc)
+            elif meas.measurement_state == "CACHED_VALID":
+                prev_snap = geom_mgr.last_snapshot_by_track.get(tkey)
+                if prev_snap:
+                    meas.geometry_snapshot_id = prev_snap[0]
+                    meas.geometry_snapshot_timestamp_sec = round(float(prev_snap[1]), 4)
+
+        return meas
 
     # ------------------------------------------------------------------
     # Public API
@@ -580,20 +706,28 @@ class RoadVisionV2Pipeline:
                 "scheduler_ms": 0.0,
             }
         perf.scheduler_ms = round((time.perf_counter() - t1) * 1000.0, 2)
+        self._last_sched_decision = sched_dict
 
         run_depth = bool(sched_dict.get("run_depth", False))
+        self._last_depth_attempt_ran = False
+        self._last_depth_attempt_ok = False
 
         # -------- Depth inference (keyframe) --------
         depth_map: Optional[np.ndarray] = None
         depth_timings: Dict[str, float] = {}
         if run_depth and self.cfg.depth.enabled:
+            self._last_depth_attempt_ran = True
             t2 = time.perf_counter()
             depth_map, depth_timings = self._run_depth_inference(img_bgr)
+            self._last_depth_attempt_ok = depth_map is not None
             elapsed_ms = (time.perf_counter() - t2) * 1000.0
             perf.depth_pre_ms = round(float(depth_timings.get("preprocess_ms", 0.0)), 2)
             perf.depth_inf_ms = round(float(depth_timings.get("inference_ms", elapsed_ms)), 2)
             perf.depth_resize_ms = round(float(depth_timings.get("resize_ms", 0.0)), 2)
             self._scheduler.update_observed_latency(elapsed_ms)
+
+        self._current_depth_map = depth_map
+        self._current_img_bgr = img_bgr
 
         # -------- Optional horizon diagnostics --------
         horizon_diag: Optional[Dict[str, Any]] = None
@@ -649,16 +783,23 @@ class RoadVisionV2Pipeline:
                     extract_out = self._extract_relative_score(depth_map, box, boxes_xyxy, img_bgr)
                 except Exception as exc:
                     logger.debug("Extraction error track %d: %s", tid, exc)
-                    extract_out = {"valid": False, "reasons": [f"extraction_error:{type(exc).__name__}"]}
+                    extract_out = {"is_valid": False, "failure_reasons": [f"extraction_error:{type(exc).__name__}"]}
 
-                valid_extract = bool(extract_out.get("valid", False))
-                rel_score = extract_out.get("iqr_norm_p75") if valid_extract else None
-                raw_p75 = extract_out.get("raw_p75") if valid_extract else None
-                iqr_p75 = extract_out.get("iqr_norm_p75") if valid_extract else None
-                ref_diags_dict = {}
-                if "fit_out" in extract_out:
-                    ref_diags_dict = dict(extract_out.get("fit_out") or {})
-                failure_reasons = tuple(extract_out.get("reasons") or [])
+                valid_extract = bool(extract_out.get("is_valid", extract_out.get("valid", False)))
+                core = extract_out.get("core_cavity_stats") or {}
+                raw_p75 = core.get("p75_residual", extract_out.get("raw_p75")) if valid_extract else None
+                iqr_p75 = (
+                    core.get("scale_normalized_p75", extract_out.get("iqr_norm_p75"))
+                    if valid_extract
+                    else None
+                )
+                rel_score = raw_p75 if raw_p75 is not None else iqr_p75
+                ref_diags_dict = dict(
+                    extract_out.get("ref_diagnostics") or extract_out.get("fit_out") or {}
+                )
+                failure_reasons = tuple(
+                    extract_out.get("failure_reasons") or extract_out.get("reasons") or []
+                )
 
                 cache_out = self._cache.record_fresh_measurement(
                     track_id=tid,
@@ -688,17 +829,73 @@ class RoadVisionV2Pipeline:
             if self._track_registry.get(tid):
                 self._track_registry[tid].latest_state = meas.measurement_state
 
-            hazards.append(HazardObservation(
+            hz_obs = HazardObservation(
                 frame_context=frame_ctx,
                 detection=det,
                 measurement=meas,
                 horizon_diag=horizon_diag,
-            ))
+            )
+            self._ensure_tracking_state()
+            self._track_obs_history.setdefault(tid, []).append(hz_obs.to_dict())
+            if self.cfg.quality.enabled and self._track_registry.get(tid):
+                self._track_registry[tid].quality_summary = build_track_quality_summary(
+                    self._track_obs_history[tid], cfg=self.cfg.quality
+                )
+            hazards.append(hz_obs)
 
         perf.extract_ms = round((time.perf_counter() - t4) * 1000.0, 2)
         perf.total_frame_ms = round((time.perf_counter() - t_frame_start) * 1000.0, 2)
+        self._current_depth_map = None
+        self._current_img_bgr = None
 
         return hazards, perf
+
+    @staticmethod
+    def _atomic_write_text(path: Path, text: str) -> None:
+        tmp = path.with_name(f".{path.name}.{uuid.uuid4().hex[:8]}.tmp")
+        tmp.write_text(text, encoding="utf-8")
+        os.replace(tmp, path)
+
+    @staticmethod
+    def _transcode_video_h264(vid_path: Path) -> Tuple[bool, str, str]:
+        """
+        Attempt browser-compatible H.264 transcode using bundled imageio-ffmpeg.
+        Returns (success, codec_name, note).
+        """
+        try:
+            import imageio_ffmpeg
+
+            ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+            tmp_h264 = vid_path.with_name(f".{vid_path.stem}_h264_{uuid.uuid4().hex[:6]}.mp4")
+            cmd = [
+                ffmpeg_exe,
+                "-y",
+                "-i",
+                str(vid_path),
+                "-c:v",
+                "libx264",
+                "-preset",
+                "veryfast",
+                "-pix_fmt",
+                "yuv420p",
+                "-movflags",
+                "+faststart",
+                str(tmp_h264),
+            ]
+            res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=180)
+            if res.returncode == 0 and tmp_h264.exists() and tmp_h264.stat().st_size > 256:
+                cap_chk = cv2.VideoCapture(str(tmp_h264))
+                ok_open = cap_chk.isOpened()
+                ok_read, _ = cap_chk.read() if ok_open else (False, None)
+                cap_chk.release()
+                if ok_open and ok_read:
+                    os.replace(tmp_h264, vid_path)
+                    return True, "h264", "libx264_yuv420p_faststart"
+            if tmp_h264.exists():
+                tmp_h264.unlink(missing_ok=True)
+            return False, "mp4v", "h264_transcode_unverified"
+        except Exception as exc:
+            return False, "mp4v", f"h264_transcode_skipped:{type(exc).__name__}"
 
     def process_video(
         self,
@@ -710,6 +907,13 @@ class RoadVisionV2Pipeline:
         diagnostics: bool = False,
         max_frames: Optional[int] = None,
         stem_override: Optional[str] = None,
+        on_init: Optional[Callable[[Dict[str, Any]], None]] = None,
+        on_progress: Optional[Callable[[Dict[str, Any]], None]] = None,
+        should_cancel: Optional[Callable[[], bool]] = None,
+        on_warning: Optional[Callable[[str], None]] = None,
+        on_complete: Optional[Callable[[Dict[str, Any]], None]] = None,
+        transcode_h264: bool = False,
+        write_empty_frames_json: bool = False,
     ) -> Dict[str, Any]:
         """
         Process a video file end-to-end.
@@ -720,113 +924,264 @@ class RoadVisionV2Pipeline:
         mode_tag = self.cfg.mode
         out_dir = Path(output_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
+        self._ensure_tracking_state()
+        geom_cfg = getattr(self.cfg, "geometry_snapshot", None)
+        if geom_cfg is not None and geom_cfg.enabled:
+            self._geometry_manager = GeometrySnapshotManager(
+                session_id=self.session_id,
+                output_dir=out_dir,
+                mode=mode_tag,
+                stem=stem,
+                cfg=geom_cfg,
+            )
+        else:
+            self._geometry_manager = None
 
         cap = cv2.VideoCapture(str(source_path))
         if not cap.isOpened():
             raise RuntimeError(f"Cannot open video: {source}")
 
-        fps_src = cap.get(cv2.CAP_PROP_FPS) or 25.0
-        total_frames_src = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        H = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-        # Output writers
         vid_writer = None
-        if save_video:
-            vid_path = str(out_dir / f"phase8a_{mode_tag}_{stem}_annotated.mp4")
-            fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-            vid_writer = cv2.VideoWriter(vid_path, fourcc, fps_src, (W, H))
+        vid_path: Optional[Path] = None
+        vid_tmp_path: Optional[Path] = None
 
         all_hazards: List[Dict[str, Any]] = []
         all_perfs: List[Dict[str, Any]] = []
-        scheduling_log: List[Dict[str, Any]] = []
-
+        state_counts: Dict[str, int] = {s: 0 for s in MEASUREMENT_STATES}
+        actual_depth_calls = 0
+        failed_depth_inferences = 0
+        warnings_emitted: List[str] = []
         frame_idx = 0
+        cancelled = False
+        depth_load_err = getattr(self, "_depth_load_error", None)
+        model_init_sec = getattr(self, "_model_init_sec", None)
+
+        # Reset CUDA peak stats before video loop for clean job-scoped telemetry
+        cuda_stats_available = False
+        if self.device == "cuda":
+            try:
+                import torch
+                if torch.cuda.is_available():
+                    torch.cuda.reset_peak_memory_stats()
+                    cuda_stats_available = True
+            except Exception:
+                cuda_stats_available = False
+
         t_pipeline_start = time.perf_counter()
-        last_sched_dict: Dict[str, Any] = {}
+        fps_src = float(cap.get(cv2.CAP_PROP_FPS) or 25.0)
+        if fps_src <= 0.0 or fps_src > 240.0:
+            fps_src = 25.0
+        raw_total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        reliable_total_frames: Optional[int] = raw_total_frames if raw_total_frames > 0 else None
+        if reliable_total_frames is not None and max_frames is not None:
+            reliable_total_frames = min(reliable_total_frames, int(max_frames))
+        W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        H = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-        while True:
-            ok, frame = cap.read()
-            if not ok:
-                break
-            if max_frames is not None and frame_idx >= max_frames:
-                break
+        try:
+            if depth_load_err:
+                msg = f"Depth model unavailable; explicit fallback active ({depth_load_err})"
+                warnings_emitted.append(msg)
+                if on_warning is not None:
+                    on_warning(msg)
 
-            ts_sec = float(frame_idx) / max(fps_src, 1.0)
-            hazards, perf = self.process_frame(
-                frame, frame_idx, ts_sec,
-                camera_profile="sedan_dashcam",
-            )
+            if save_video:
+                vid_path = out_dir / f"phase8a_{mode_tag}_{stem}_annotated.mp4"
+                vid_tmp_path = out_dir / f".phase8a_{mode_tag}_{stem}_annotated_{uuid.uuid4().hex[:6]}.mp4"
+                fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+                vid_writer = cv2.VideoWriter(str(vid_tmp_path), fourcc, fps_src, (W, H))
 
-            if save_json:
-                for hz in hazards:
-                    all_hazards.append(hz.to_dict())
-            if save_csv:
-                all_perfs.append(perf.to_dict())
+            if on_init is not None:
+                on_init({
+                    "total_frames": reliable_total_frames,
+                    "source_fps": fps_src,
+                    "width": W,
+                    "height": H,
+                })
 
-            # Annotate video
-            if save_video and vid_writer is not None:
-                ann = _annotate_frame(
-                    frame, hazards, last_sched_dict, perf,
-                    show_timing_hud=self.cfg.diagnostics.show_timing_hud,
-                    show_rejection_reasons=self.cfg.diagnostics.show_rejection_reasons and diagnostics,
+            while True:
+                if should_cancel is not None and should_cancel():
+                    cancelled = True
+                    break
+                if max_frames is not None and frame_idx >= max_frames:
+                    break
+                ok, frame = cap.read()
+                if not ok:
+                    break
+
+                ts_sec = float(frame_idx) / max(fps_src, 1.0)
+                hazards, perf = self.process_frame(
+                    frame, frame_idx, ts_sec,
+                    camera_profile="sedan_dashcam",
                 )
-                vid_writer.write(ann)
 
-            frame_idx += 1
+                if getattr(self, "_last_depth_attempt_ran", False):
+                    if getattr(self, "_last_depth_attempt_ok", False):
+                        actual_depth_calls += 1
+                    else:
+                        failed_depth_inferences += 1
+                        last_d_err = getattr(self, "_last_depth_error", None)
+                        if last_d_err and on_warning is not None:
+                            on_warning(f"Depth inference failed on frame {frame_idx}: {last_d_err}")
 
-        cap.release()
-        if vid_writer is not None:
-            vid_writer.release()
+                for hz in hazards:
+                    st = hz.measurement.measurement_state
+                    state_counts[st] = state_counts.get(st, 0) + 1
+                    if save_json:
+                        all_hazards.append(hz.to_dict())
 
-        elapsed_total = time.perf_counter() - t_pipeline_start
-        end_fps = frame_idx / max(elapsed_total, 1e-6)
+                if save_csv:
+                    all_perfs.append(perf.to_dict())
 
+                if save_video and vid_writer is not None:
+                    ann = _annotate_frame(
+                        frame, hazards, getattr(self, "_last_sched_decision", {}), perf,
+                        show_timing_hud=self.cfg.diagnostics.show_timing_hud,
+                        show_rejection_reasons=self.cfg.diagnostics.show_rejection_reasons and diagnostics,
+                    )
+                    vid_writer.write(ann)
+
+                frame_idx += 1
+
+                if on_progress is not None:
+                    elapsed_now = max(time.perf_counter() - t_pipeline_start, 1e-6)
+                    on_progress({
+                        "processed_frames": frame_idx,
+                        "total_frames": reliable_total_frames,
+                        "detection_observation_count": len(all_hazards) if save_json else sum(state_counts.values()),
+                        "unique_candidate_track_count": len(self._track_registry),
+                        "depth_invocation_count": actual_depth_calls,
+                        "scheduler_request_count": self._scheduler.depth_calls,
+                        "failed_depth_count": failed_depth_inferences,
+                        "measurement_state_counts": dict(state_counts),
+                        "throughput_fps": round(frame_idx / elapsed_now, 2),
+                    })
+        finally:
+            cap.release()
+            if vid_writer is not None:
+                vid_writer.release()
+
+        elapsed_processing = time.perf_counter() - t_pipeline_start
+        end_fps = frame_idx / max(elapsed_processing, 1e-6)
+
+        peak_alloc_mb: Optional[float] = None
+        peak_reserved_mb: Optional[float] = None
+        if cuda_stats_available:
+            try:
+                import torch
+                peak_alloc_mb = round(torch.cuda.max_memory_allocated() / (1024.0 * 1024.0), 2)
+                peak_reserved_mb = round(torch.cuda.max_memory_reserved() / (1024.0 * 1024.0), 2)
+            except Exception:
+                pass
+
+        t_artifact_start = time.perf_counter()
+        video_codec: Optional[str] = None
+        video_browser_compatible: Optional[bool] = None
+        video_transcode_note: Optional[str] = None
+        if save_video and vid_path is not None and vid_tmp_path is not None and vid_tmp_path.exists():
+            if frame_idx > 0:
+                os.replace(vid_tmp_path, vid_path)
+                video_codec = "mp4v"
+                video_browser_compatible = False
+                if transcode_h264 and not cancelled:
+                    ok_h264, codec_name, note = self._transcode_video_h264(vid_path)
+                    video_codec = codec_name
+                    video_browser_compatible = ok_h264
+                    video_transcode_note = note
+                else:
+                    # Verify OpenCV readability of generated MP4
+                    cap_v = cv2.VideoCapture(str(vid_path))
+                    if cap_v.isOpened():
+                        cap_v.release()
+                    else:
+                        video_transcode_note = "opencv_video_unreadable"
+            else:
+                vid_tmp_path.unlink(missing_ok=True)
+
+        self._ensure_tracking_state()
+        total_obs_count = sum(state_counts.values())
+        all_obs_for_summary = all_hazards if all_hazards else [
+            obs for obs_list in self._track_obs_history.values() for obs in obs_list
+        ]
+        track_q_summaries = [
+            t.quality_summary for t in self._track_registry.values() if t.quality_summary
+        ]
+        session_quality_summary = (
+            summarize_session_quality(all_obs_for_summary, track_q_summaries)
+            if self.cfg.quality.enabled
+            else None
+        )
         summary = {
             "session_id": self.session_id,
             "mode": self.cfg.mode,
             "source": str(source_path),
             "total_frames": frame_idx,
             "source_fps": fps_src,
-            "elapsed_sec": round(elapsed_total, 3),
+            "elapsed_sec": round(elapsed_processing, 3),
             "end_to_end_fps": round(end_fps, 2),
             "depth_enabled": self.cfg.depth.enabled,
             "depth_model_id": self._depth_model_id,
             "depth_input_size": self._depth_input_size,
             "scheduler_strategy": self.cfg.scheduler.strategy,
-            "depth_calls": self._scheduler.depth_calls,
+            "scheduler_depth_requests": self._scheduler.depth_calls,
+            "depth_calls": actual_depth_calls,
+            "failed_depth_inferences": failed_depth_inferences,
             "budget_skips": self._scheduler.budget_skips,
             "depth_invocation_rate": round(
-                self._scheduler.depth_calls / max(frame_idx, 1), 4
+                actual_depth_calls / max(frame_idx, 1), 4
             ),
             "unique_tracks": len(self._track_registry),
-            "total_hazard_observations": len(all_hazards),
+            "total_hazard_observations": total_obs_count,
+            "measurement_state_counts": dict(state_counts),
+            "cancelled": cancelled,
+            "fallback_used": bool(depth_load_err),
+            "fallback_reason": depth_load_err,
+            "model_init_sec": model_init_sec,
+            "peak_allocated_gpu_mb": peak_alloc_mb,
+            "peak_reserved_gpu_mb": peak_reserved_mb,
+            "video_codec": video_codec,
+            "video_browser_compatible": video_browser_compatible,
+            "video_transcode_note": video_transcode_note,
+            "quality_summary": session_quality_summary,
+            "geometry_recording_enabled": bool(self._geometry_manager is not None),
+            "geometry_snapshot_count": len(self._geometry_manager.snapshots_meta) if self._geometry_manager is not None else 0,
         }
 
-        # --- Write outputs ---
-        if save_json and all_hazards:
+        if self._geometry_manager is not None:
+            try:
+                self._geometry_manager.write_manifest()
+            except Exception as exc:
+                logger.warning("Failed to write geometry manifest: %s", exc)
+
+        # --- Write outputs atomically ---
+        if save_json and (all_hazards or write_empty_frames_json):
             jpath = out_dir / f"phase8a_{mode_tag}_{stem}_frames.json"
-            jpath.write_text(json.dumps(all_hazards, indent=2), encoding="utf-8")
+            self._atomic_write_text(jpath, json.dumps(all_hazards, indent=2, allow_nan=False))
             logger.info("Wrote %d hazard records → %s", len(all_hazards), jpath)
 
         if save_json:
-            # Per-track summary
             track_summary = {
                 str(tid): obs.to_dict() for tid, obs in self._track_registry.items()
             }
             tp = out_dir / f"phase8a_{mode_tag}_{stem}_tracks.json"
-            tp.write_text(json.dumps(track_summary, indent=2), encoding="utf-8")
+            self._atomic_write_text(tp, json.dumps(track_summary, indent=2, allow_nan=False))
 
         if save_csv and all_perfs:
             cp = out_dir / f"phase8a_{mode_tag}_{stem}_performance.csv"
-            with open(cp, "w", newline="", encoding="utf-8") as fh:
+            tmp_cp = cp.with_name(f".{cp.name}.{uuid.uuid4().hex[:8]}.tmp")
+            with open(tmp_cp, "w", newline="", encoding="utf-8") as fh:
                 writer = csv.DictWriter(fh, fieldnames=list(all_perfs[0].keys()))
                 writer.writeheader()
                 writer.writerows(all_perfs)
+            os.replace(tmp_cp, cp)
 
-        # Session summary JSON always written
+        summary["artifact_generation_sec"] = round(time.perf_counter() - t_artifact_start, 4)
+
         sp = out_dir / f"phase8a_{mode_tag}_{stem}_session_summary.json"
-        sp.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+        self._atomic_write_text(sp, json.dumps(summary, indent=2, allow_nan=False))
+
+        if on_complete is not None and not cancelled:
+            on_complete(summary)
 
         return summary
 
@@ -834,6 +1189,10 @@ class RoadVisionV2Pipeline:
         """Reset per-session state (track registry, scheduler, cache) for a new video."""
         self._frame_generation += 1
         self._track_registry.clear()
+        self._ensure_tracking_state()
+        self._track_obs_history.clear()
+        self._track_last_fresh_quality.clear()
+        self._geometry_manager = None
         self._scheduler.reset_for_new_video(
             video_session_id=f"{self.session_id}_g{self._frame_generation}",
             reason=reason,

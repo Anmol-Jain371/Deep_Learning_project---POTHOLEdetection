@@ -1,0 +1,149 @@
+{
+  "evaluation_manifest_csv": "evaluation_manifest.csv",
+  "total_manifest_entries": 3782,
+  "dataset_split_summaries": [
+    {
+      "dataset": "dataset_unified",
+      "split": "train",
+      "image_count": 1294,
+      "annotated_files_nonempty": 1292,
+      "total_annotation_instances": 2798,
+      "role": "development_train",
+      "independent_heldout": false,
+      "provenance_note": "Model training split (RDD/pothole unified)"
+    },
+    {
+      "dataset": "dataset_unified",
+      "split": "val",
+      "image_count": 153,
+      "annotated_files_nonempty": 153,
+      "total_annotation_instances": 311,
+      "role": "development_validation",
+      "independent_heldout": false,
+      "provenance_note": "Used for checkpoint selection and hyperparameter tuning"
+    },
+    {
+      "dataset": "dataset_unified",
+      "split": "test",
+      "image_count": 153,
+      "annotated_files_nonempty": 153,
+      "total_annotation_instances": 322,
+      "role": "exploratory_contaminated_test",
+      "independent_heldout": false,
+      "provenance_note": "Inspected during Phase 2; cross-split near-duplicates reported"
+    },
+    {
+      "dataset": "dataset_unified",
+      "split": "external_rangoon",
+      "image_count": 35,
+      "annotated_files_nonempty": 35,
+      "total_annotation_instances": 76,
+      "role": "exploratory_external_clip",
+      "independent_heldout": false,
+      "provenance_note": "35 continuous frames from Rangoon clip with incomplete annotations"
+    },
+    {
+      "dataset": "dataset_pothole440_seg_grouped",
+      "split": "train",
+      "image_count": 301,
+      "annotated_files_nonempty": 301,
+      "total_annotation_instances": 321,
+      "role": "segmentation_train",
+      "independent_heldout": false,
+      "provenance_note": "Grouped base captures (301 imgs)"
+    },
+    {
+      "dataset": "dataset_pothole440_seg_grouped",
+      "split": "val",
+      "image_count": 15,
+      "annotated_files_nonempty": 15,
+      "total_annotation_instances": 15,
+      "role": "segmentation_val",
+      "independent_heldout": false,
+      "provenance_note": "Grouped unaugmented originals (15 imgs)"
+    },
+    {
+      "dataset": "dataset_pothole440_seg_grouped",
+      "split": "test",
+      "image_count": 15,
+      "annotated_files_nonempty": 15,
+      "total_annotation_instances": 15,
+      "role": "segmentation_reconstructed_test",
+      "independent_heldout": false,
+      "provenance_note": "Regrouped unaugmented originals (15 imgs); domain-shifted closeups"
+    },
+    {
+      "dataset": "dataset_rdd_india_potholes",
+      "split": "train",
+      "image_count": 1369,
+      "annotated_files_nonempty": 1369,
+      "total_annotation_instances": 2946,
+      "role": "legacy_rdd_train",
+      "independent_heldout": false,
+      "provenance_note": "Legacy RDD India train split"
+    },
+    {
+      "dataset": "dataset_rdd_india_potholes",
+      "split": "val",
+      "image_count": 229,
+      "annotated_files_nonempty": 229,
+      "total_annotation_instances": 485,
+      "role": "legacy_rdd_val",
+      "independent_heldout": false,
+      "provenance_note": "Legacy RDD India val split"
+    },
+    {
+      "dataset": "dataset_phone_potholes",
+      "split": "train",
+      "image_count": 56,
+      "annotated_files_nonempty": 54,
+      "total_annotation_instances": 192,
+      "role": "legacy_phone_train",
+      "independent_heldout": false,
+      "provenance_note": "Small exploratory phone dataset"
+    },
+    {
+      "dataset": "dataset_phone_potholes",
+      "split": "val",
+      "image_count": 14,
+      "annotated_files_nonempty": 14,
+      "total_annotation_instances": 52,
+      "role": "legacy_phone_val",
+      "independent_heldout": false,
+      "provenance_note": "Small exploratory phone dataset"
+    },
+    {
+      "dataset": "dataset_combined_v2",
+      "split": "train",
+      "image_count": 84,
+      "annotated_files_nonempty": 82,
+      "total_annotation_instances": 255,
+      "role": "legacy_combined_train",
+      "independent_heldout": false,
+      "provenance_note": "Legacy combined dataset"
+    },
+    {
+      "dataset": "dataset_combined_v2",
+      "split": "val",
+      "image_count": 21,
+      "annotated_files_nonempty": 21,
+      "total_annotation_instances": 65,
+      "role": "legacy_combined_val",
+      "independent_heldout": false,
+      "provenance_note": "Legacy combined val dataset"
+    }
+  ],
+  "evaluation_ground_truth_status": {
+    "frames_found": 40,
+    "nonempty_label_files": 0,
+    "status": "BLOCKED"
+  },
+  "dataset_unified_cross_split_audit": {
+    "exact_sha256_cross_split_matches": 0,
+    "dhash_hamming_le_6_cross_split_pairs": 328,
+    "dhash_hamming_le_2_cross_split_pairs": 15
+  },
+  "independent_annotated_test_set_available": false,
+  "independent_detection_generalization_status": "BLOCKED",
+  "verdict": "No untouched independent annotated pothole detection test dataset exists in the repository. dataset_unified/test (153 imgs) and external_rangoon (35 imgs) were previously inspected and exhibit cross-split perceptual near-duplicates or incomplete clip annotations; evaluation/ground_truth_labels/ has 0 annotated boxes. Detection metrics are therefore strictly reported as EXPLORATORY."
+}

@@ -1,0 +1,69 @@
+{
+  "pothole_best.pt": {
+    "size": 24480547,
+    "sha256": "0b8cf7570db7cfe2fd09a3ba0831f4851768e97dd8cfd11d65ac53000ebb5919"
+  },
+  "pothole_rdd_india_best.pt": {
+    "size": 6247466,
+    "sha256": "fad79114d66afa6abd15518946590168faa79ea6f2e82278c93f86e641afe3d4"
+  },
+  "mobile_sam.pt": {
+    "size": 40728226,
+    "sha256": "6dbb90523a35330fedd7f1d3dfc66f995213d81b29a5ca8108dbcdd4e37d6c2f"
+  },
+  "yolov8n.pt": {
+    "size": 6549796,
+    "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36"
+  },
+  "yolov8s.pt": {
+    "size": 22588772,
+    "sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a"
+  },
+  "yolov8n-seg.pt": {
+    "size": 7071756,
+    "sha256": "a7cd8f929e1903d78a12a48efecab430209f18dc46cb96c3599a5980c63c423c"
+  },
+  "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt": {
+    "size": 6512419,
+    "sha256": "ddd6a5be27ac21f3ef17ffe17fbac5ea901cf2a7f7706956c5e551a669490343"
+  },
+  "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt": {
+    "size": 22523107,
+    "sha256": "038863b8542ceb8d9e4d3e9eb28612abed64ada940921f3db7c0b8742281309c"
+  },
+  "runs/detect/pothole_rdd1666_50e/weights/best.pt": {
+    "size": 6249123,
+    "sha256": "614881da4a42b444bd30c3c4f7a2d71124986ae2c3a0188bcfcaa419314ecc4e"
+  },
+  "runs/detect/pothole_rdd1666_50e/weights/best.onnx": {
+    "size": 12265714,
+    "sha256": "921a594eb2912dad9e981a372d8c4cd4ab745e4ee68b746fd3d46688d2af921f"
+  },
+  "runs/detect/pothole_unified_100e/weights/best.pt": {
+    "size": 6255587,
+    "sha256": "adc51953f53301465d77873dd07b673545a3f963bcb2288bb155998e8304a55c"
+  },
+  "runs/detect/pothole_combined_v2_50e/weights/best.pt": {
+    "size": 6312355,
+    "sha256": "0134fbcff9929612469949ae6f099917017436806c2ee4f1697859593651304b"
+  },
+  "runs/segment/pothole440_yolov8n_seg_v1/weights/best.pt": {
+    "size": 7026861,
+    "sha256": "73f525322681468322dd129589279b016eeeab1197879a8876e3071e8e0d6d6d"
+  },
+  "config/roadvision_v2.yaml": {
+    "size": 5164,
+    "sha256": "7226773c366e520bf88407f83501da6f6af9b5a98001cff8e434659b77b4b5f0"
+  },
+  "config/roadvision_api_v2.yaml": {
+    "size": 1308,
+    "sha256": "03840cad459265c629b024aeda22d0d202394a5514d50d52025e6ab7d1a98b6b"
+  },
+  "dataset_unified/dataset_manifest.json": {
+    "missing": true
+  },
+  "runs/evaluation/phase13/phase13_full_20261127/evaluation_manifest.csv": {
+    "size": 1207256,
+    "sha256": "4c9308c9f817c85290eb414d731ef50f753e487c42eee76de38116c8bf4b23e5"
+  }
+}

@@ -1,0 +1,1031 @@
+{
+  "run_id": "phase13_full_20261127",
+  "mode": "full",
+  "device": "cuda",
+  "dataset_audit": {
+    "evaluation_manifest_csv": "evaluation_manifest.csv",
+    "total_manifest_entries": 3782,
+    "dataset_split_summaries": [
+      {
+        "dataset": "dataset_unified",
+        "split": "train",
+        "image_count": 1294,
+        "annotated_files_nonempty": 1292,
+        "total_annotation_instances": 2798,
+        "role": "development_train",
+        "independent_heldout": false,
+        "provenance_note": "Model training split (RDD/pothole unified)"
+      },
+      {
+        "dataset": "dataset_unified",
+        "split": "val",
+        "image_count": 153,
+        "annotated_files_nonempty": 153,
+        "total_annotation_instances": 311,
+        "role": "development_validation",
+        "independent_heldout": false,
+        "provenance_note": "Used for checkpoint selection and hyperparameter tuning"
+      },
+      {
+        "dataset": "dataset_unified",
+        "split": "test",
+        "image_count": 153,
+        "annotated_files_nonempty": 153,
+        "total_annotation_instances": 322,
+        "role": "exploratory_contaminated_test",
+        "independent_heldout": false,
+        "provenance_note": "Inspected during Phase 2; cross-split near-duplicates reported"
+      },
+      {
+        "dataset": "dataset_unified",
+        "split": "external_rangoon",
+        "image_count": 35,
+        "annotated_files_nonempty": 35,
+        "total_annotation_instances": 76,
+        "role": "exploratory_external_clip",
+        "independent_heldout": false,
+        "provenance_note": "35 continuous frames from Rangoon clip with incomplete annotations"
+      },
+      {
+        "dataset": "dataset_pothole440_seg_grouped",
+        "split": "train",
+        "image_count": 301,
+        "annotated_files_nonempty": 301,
+        "total_annotation_instances": 321,
+        "role": "segmentation_train",
+        "independent_heldout": false,
+        "provenance_note": "Grouped base captures (301 imgs)"
+      },
+      {
+        "dataset": "dataset_pothole440_seg_grouped",
+        "split": "val",
+        "image_count": 15,
+        "annotated_files_nonempty": 15,
+        "total_annotation_instances": 15,
+        "role": "segmentation_val",
+        "independent_heldout": false,
+        "provenance_note": "Grouped unaugmented originals (15 imgs)"
+      },
+      {
+        "dataset": "dataset_pothole440_seg_grouped",
+        "split": "test",
+        "image_count": 15,
+        "annotated_files_nonempty": 15,
+        "total_annotation_instances": 15,
+        "role": "segmentation_reconstructed_test",
+        "independent_heldout": false,
+        "provenance_note": "Regrouped unaugmented originals (15 imgs); domain-shifted closeups"
+      },
+      {
+        "dataset": "dataset_rdd_india_potholes",
+        "split": "train",
+        "image_count": 1369,
+        "annotated_files_nonempty": 1369,
+        "total_annotation_instances": 2946,
+        "role": "legacy_rdd_train",
+        "independent_heldout": false,
+        "provenance_note": "Legacy RDD India train split"
+      },
+      {
+        "dataset": "dataset_rdd_india_potholes",
+        "split": "val",
+        "image_count": 229,
+        "annotated_files_nonempty": 229,
+        "total_annotation_instances": 485,
+        "role": "legacy_rdd_val",
+        "independent_heldout": false,
+        "provenance_note": "Legacy RDD India val split"
+      },
+      {
+        "dataset": "dataset_phone_potholes",
+        "split": "train",
+        "image_count": 56,
+        "annotated_files_nonempty": 54,
+        "total_annotation_instances": 192,
+        "role": "legacy_phone_train",
+        "independent_heldout": false,
+        "provenance_note": "Small exploratory phone dataset"
+      },
+      {
+        "dataset": "dataset_phone_potholes",
+        "split": "val",
+        "image_count": 14,
+        "annotated_files_nonempty": 14,
+        "total_annotation_instances": 52,
+        "role": "legacy_phone_val",
+        "independent_heldout": false,
+        "provenance_note": "Small exploratory phone dataset"
+      },
+      {
+        "dataset": "dataset_combined_v2",
+        "split": "train",
+        "image_count": 84,
+        "annotated_files_nonempty": 82,
+        "total_annotation_instances": 255,
+        "role": "legacy_combined_train",
+        "independent_heldout": false,
+        "provenance_note": "Legacy combined dataset"
+      },
+      {
+        "dataset": "dataset_combined_v2",
+        "split": "val",
+        "image_count": 21,
+        "annotated_files_nonempty": 21,
+        "total_annotation_instances": 65,
+        "role": "legacy_combined_val",
+        "independent_heldout": false,
+        "provenance_note": "Legacy combined val dataset"
+      }
+    ],
+    "evaluation_ground_truth_status": {
+      "frames_found": 40,
+      "nonempty_label_files": 0,
+      "status": "BLOCKED"
+    },
+    "dataset_unified_cross_split_audit": {
+      "exact_sha256_cross_split_matches": 0,
+      "dhash_hamming_le_6_cross_split_pairs": 328,
+      "dhash_hamming_le_2_cross_split_pairs": 15
+    },
+    "independent_annotated_test_set_available": false,
+    "independent_detection_generalization_status": "BLOCKED",
+    "verdict": "No untouched independent annotated pothole detection test dataset exists in the repository. dataset_unified/test (153 imgs) and external_rangoon (35 imgs) were previously inspected and exhibit cross-split perceptual near-duplicates or incomplete clip annotations; evaluation/ground_truth_labels/ has 0 annotated boxes. Detection metrics are therefore strictly reported as EXPLORATORY."
+  },
+  "detection": {
+    "status": "COMPLETED",
+    "independent_generalization_status": "BLOCKED",
+    "independent_generalization_reason": "No untouched independent annotated pothole detection dataset exists (evaluation/ground_truth_labels/ has 0 annotations and dataset_unified contains cross-split perceptual near-duplicates). Reported dataset_unified metrics are EXPLORATORY ONLY.",
+    "evaluation_settings": {
+      "conf_threshold": 0.25,
+      "iou_threshold": 0.5,
+      "imgsz": 640,
+      "device": "cuda"
+    },
+    "models": {
+      "yolov8n_100e_sgd": {
+        "checkpoint": "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt",
+        "parameters": 3138003,
+        "splits": {
+          "dataset_unified_val": {
+            "role": "development_validation",
+            "independent": false,
+            "precision": 0.5236,
+            "recall": 0.3569,
+            "f1_score": 0.4245,
+            "map50": 0.2533,
+            "map50_95": 0.0884,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "dataset_unified_test": {
+            "role": "exploratory_contaminated_test",
+            "independent": false,
+            "precision": 0.61,
+            "recall": 0.4565,
+            "f1_score": 0.5222,
+            "map50": 0.3643,
+            "map50_95": 0.1442,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "dataset_unified_external_rangoon": {
+            "role": "exploratory_external_video",
+            "independent": false,
+            "precision": 0.5588,
+            "recall": 0.25,
+            "f1_score": 0.3455,
+            "map50": 0.156,
+            "map50_95": 0.0493,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "runtime_benchmark": {
+          "n": 60,
+          "mean_ms": 12.383,
+          "median_ms": 11.021,
+          "p95_ms": 18.955,
+          "throughput_fps": 80.75,
+          "peak_allocated_mb": 68.49,
+          "peak_reserved_mb": 646.0
+        }
+      },
+      "yolov8s_100e": {
+        "checkpoint": "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt",
+        "parameters": 11135987,
+        "splits": {
+          "dataset_unified_val": {
+            "role": "development_validation",
+            "independent": false,
+            "precision": 0.4888,
+            "recall": 0.4212,
+            "f1_score": 0.4525,
+            "map50": 0.2885,
+            "map50_95": 0.1073,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "dataset_unified_test": {
+            "role": "exploratory_contaminated_test",
+            "independent": false,
+            "precision": 0.5404,
+            "recall": 0.4783,
+            "f1_score": 0.5074,
+            "map50": 0.3581,
+            "map50_95": 0.1427,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "dataset_unified_external_rangoon": {
+            "role": "exploratory_external_video",
+            "independent": false,
+            "precision": 0.5366,
+            "recall": 0.2895,
+            "f1_score": 0.3761,
+            "map50": 0.1728,
+            "map50_95": 0.0541,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "runtime_benchmark": {
+          "n": 60,
+          "mean_ms": 25.71,
+          "median_ms": 24.629,
+          "p95_ms": 33.058,
+          "throughput_fps": 38.9,
+          "peak_allocated_mb": 200.77,
+          "peak_reserved_mb": 1074.0
+        }
+      }
+    },
+    "qualitative_exploratory_proposals": [
+      {
+        "source_id": "rangoon_clip",
+        "frame_idx": 60,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 3,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.467,
+        "min_conf": 0.3797,
+        "potential_failure_tags": "water/shadow/urban_boundary",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "rangoon_clip",
+        "frame_idx": 150,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 0,
+        "clipped_boundary_proposals": 0,
+        "small_distant_proposals": 0,
+        "max_conf": null,
+        "min_conf": null,
+        "potential_failure_tags": "water/shadow/urban_boundary",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "rangoon_clip",
+        "frame_idx": 330,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 1,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.4393,
+        "min_conf": 0.4393,
+        "potential_failure_tags": "water/shadow/urban_boundary",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "rangoon_clip",
+        "frame_idx": 500,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 1,
+        "clipped_boundary_proposals": 0,
+        "small_distant_proposals": 0,
+        "max_conf": 0.6893,
+        "min_conf": 0.6893,
+        "potential_failure_tags": "water/shadow/urban_boundary",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "ruralRoad_202f",
+        "frame_idx": 15,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 1,
+        "clipped_boundary_proposals": 0,
+        "small_distant_proposals": 0,
+        "max_conf": 0.3278,
+        "min_conf": 0.3278,
+        "potential_failure_tags": "unpaved_texture/distant_small",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "ruralRoad_202f",
+        "frame_idx": 60,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 2,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.7034,
+        "min_conf": 0.6037,
+        "potential_failure_tags": "unpaved_texture/distant_small",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "ruralRoad_202f",
+        "frame_idx": 120,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 4,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.8779,
+        "min_conf": 0.3092,
+        "potential_failure_tags": "unpaved_texture/distant_small",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "ruralRoad_202f",
+        "frame_idx": 175,
+        "frame_wh": [
+          640,
+          360
+        ],
+        "proposal_count": 5,
+        "clipped_boundary_proposals": 2,
+        "small_distant_proposals": 0,
+        "max_conf": 0.7604,
+        "min_conf": 0.4617,
+        "potential_failure_tags": "unpaved_texture/distant_small",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "rawSurvey_160f",
+        "frame_idx": 20,
+        "frame_wh": [
+          1280,
+          720
+        ],
+        "proposal_count": 3,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.7558,
+        "min_conf": 0.4863,
+        "potential_failure_tags": "road_patch/roadside_shadow",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "rawSurvey_160f",
+        "frame_idx": 75,
+        "frame_wh": [
+          1280,
+          720
+        ],
+        "proposal_count": 2,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.3262,
+        "min_conf": 0.319,
+        "potential_failure_tags": "road_patch/roadside_shadow",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      },
+      {
+        "source_id": "rawSurvey_160f",
+        "frame_idx": 130,
+        "frame_wh": [
+          1280,
+          720
+        ],
+        "proposal_count": 3,
+        "clipped_boundary_proposals": 1,
+        "small_distant_proposals": 0,
+        "max_conf": 0.8031,
+        "min_conf": 0.338,
+        "potential_failure_tags": "road_patch/roadside_shadow",
+        "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+      }
+    ]
+  },
+  "geometry": {
+    "status": "COMPLETED",
+    "reference_plane_ablation": {
+      "A_legacy_annular": {
+        "total_cases": 45,
+        "valid_count": 45,
+        "gate_concordance_pct": 77.78,
+        "invalid_rejection_rate_pct": 0.0,
+        "mean_plane_rmse": null,
+        "outlier_mean_plane_rmse": null,
+        "mean_inlier_ratio": null,
+        "mean_latency_ms": 0.638,
+        "median_latency_ms": 0.529
+      },
+      "B_ols_plane": {
+        "total_cases": 45,
+        "valid_count": 35,
+        "gate_concordance_pct": 100.0,
+        "invalid_rejection_rate_pct": 100.0,
+        "mean_plane_rmse": 0.00063,
+        "outlier_mean_plane_rmse": 0.001065,
+        "mean_inlier_ratio": 0.9839,
+        "mean_latency_ms": 2.67,
+        "median_latency_ms": 2.207
+      },
+      "C_ransac_baseline": {
+        "total_cases": 45,
+        "valid_count": 35,
+        "gate_concordance_pct": 100.0,
+        "invalid_rejection_rate_pct": 100.0,
+        "mean_plane_rmse": 0.000285,
+        "outlier_mean_plane_rmse": 2.9e-05,
+        "mean_inlier_ratio": 0.9965,
+        "mean_latency_ms": 9.014,
+        "median_latency_ms": 8.221
+      },
+      "D_optimized_msac_ransac": {
+        "total_cases": 45,
+        "valid_count": 35,
+        "gate_concordance_pct": 100.0,
+        "invalid_rejection_rate_pct": 100.0,
+        "mean_plane_rmse": 0.000396,
+        "outlier_mean_plane_rmse": 0.000131,
+        "mean_inlier_ratio": 0.9961,
+        "mean_latency_ms": 4.514,
+        "median_latency_ms": 4.233
+      }
+    },
+    "phase10_geometry_evaluation": {
+      "raw_mean_residual": 0.010664,
+      "downsampled_mean_residual": 0.011059,
+      "mean_resampling_abs_diff": 0.000396,
+      "raw_min_max": [
+        -0.010703,
+        0.23785
+      ],
+      "downsampled_min_max": [
+        -0.003422,
+        0.23148
+      ],
+      "reference_mask_true_cells": 1141,
+      "cavity_mask_true_cells": 304,
+      "null_cells_preserved": 9,
+      "cross_section_gap_preserved": true,
+      "snapshot_json_kb": 91.03,
+      "generation_overhead_ms": 98.38,
+      "extra_depth_inference_calls": 0,
+      "note": "Corrected reference_mask_grid (>0 cells) verified on new snapshots; 42 historical snapshots remain unmasked legacy artifacts."
+    },
+    "synthetic_disclaimer": "Synthetic reference-plane RMSE tests geometric plane recovery ONLY; it does NOT establish physical metric pothole depth accuracy."
+  },
+  "depth_cavity": {
+    "status": "COMPLETED",
+    "depth_model_and_resolution_ablation": {
+      "dav2_518_fp16": {
+        "model_id": "depth_anything_v2_small",
+        "input_size": 518,
+        "precision": "fp16_autocast",
+        "init_warmup_ms": 1443.6,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 28,
+        "fresh_valid_coverage_pct": 66.67,
+        "mean_inlier_ratio": 0.8398,
+        "relative_score_cv": 1.0543,
+        "mean_spearman_vs_dav2_518": 1.0,
+        "inference_ms_mean": 147.008,
+        "inference_ms_median": 146.935,
+        "inference_ms_p95": 147.389,
+        "total_ms_mean": 184.586,
+        "peak_allocated_mb": 409.69,
+        "peak_reserved_mb": 526.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 10,
+          "low_inlier_ratio": 2,
+          "suspected_water_reflection": 3
+        }
+      },
+      "midas_256_fp32": {
+        "model_id": "midas_small",
+        "input_size": 256,
+        "precision": "fp32",
+        "init_warmup_ms": 2893.2,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 12,
+        "fresh_valid_coverage_pct": 28.57,
+        "mean_inlier_ratio": 0.6357,
+        "relative_score_cv": 1.243,
+        "mean_spearman_vs_dav2_518": 0.9794,
+        "inference_ms_mean": 16.451,
+        "inference_ms_median": 16.12,
+        "inference_ms_p95": 20.903,
+        "total_ms_mean": 29.083,
+        "peak_allocated_mb": 127.43,
+        "peak_reserved_mb": 152.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 23,
+          "low_inlier_ratio": 10,
+          "suspected_water_reflection": 3
+        }
+      },
+      "midas_256_fp16": {
+        "model_id": "midas_small",
+        "input_size": 256,
+        "precision": "fp16_autocast",
+        "init_warmup_ms": 1110.7,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 12,
+        "fresh_valid_coverage_pct": 28.57,
+        "mean_inlier_ratio": 0.643,
+        "relative_score_cv": 1.2281,
+        "mean_spearman_vs_dav2_518": 0.9795,
+        "inference_ms_mean": 21.41,
+        "inference_ms_median": 21.019,
+        "inference_ms_p95": 27.77,
+        "total_ms_mean": 29.338,
+        "peak_allocated_mb": 163.49,
+        "peak_reserved_mb": 184.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 23,
+          "low_inlier_ratio": 10,
+          "suspected_water_reflection": 3
+        }
+      },
+      "dav2_266_fp16": {
+        "model_id": "depth_anything_v2_small",
+        "input_size": 266,
+        "precision": "fp16_autocast",
+        "init_warmup_ms": 1022.5,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 21,
+        "fresh_valid_coverage_pct": 50.0,
+        "mean_inlier_ratio": 0.7919,
+        "relative_score_cv": 0.8286,
+        "mean_spearman_vs_dav2_518": 0.9987,
+        "inference_ms_mean": 25.801,
+        "inference_ms_median": 24.551,
+        "inference_ms_p95": 30.503,
+        "total_ms_mean": 40.327,
+        "peak_allocated_mb": 243.42,
+        "peak_reserved_mb": 280.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 19,
+          "low_inlier_ratio": 2,
+          "suspected_water_reflection": 3
+        }
+      },
+      "dav2_336_fp16": {
+        "model_id": "depth_anything_v2_small",
+        "input_size": 336,
+        "precision": "fp16_autocast",
+        "init_warmup_ms": 855.3,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 25,
+        "fresh_valid_coverage_pct": 59.52,
+        "mean_inlier_ratio": 0.7993,
+        "relative_score_cv": 1.0424,
+        "mean_spearman_vs_dav2_518": 0.9992,
+        "inference_ms_mean": 48.175,
+        "inference_ms_median": 48.051,
+        "inference_ms_p95": 48.681,
+        "total_ms_mean": 67.431,
+        "peak_allocated_mb": 274.69,
+        "peak_reserved_mb": 312.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 15,
+          "low_inlier_ratio": 1,
+          "suspected_water_reflection": 3
+        }
+      },
+      "dav2_336_fp32": {
+        "model_id": "depth_anything_v2_small",
+        "input_size": 336,
+        "precision": "fp32",
+        "init_warmup_ms": 833.2,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 26,
+        "fresh_valid_coverage_pct": 61.9,
+        "mean_inlier_ratio": 0.8111,
+        "relative_score_cv": 1.0477,
+        "mean_spearman_vs_dav2_518": 0.9992,
+        "inference_ms_mean": 60.256,
+        "inference_ms_median": 60.27,
+        "inference_ms_p95": 60.438,
+        "total_ms_mean": 82.306,
+        "peak_allocated_mb": 218.41,
+        "peak_reserved_mb": 254.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 13,
+          "low_inlier_ratio": 1,
+          "suspected_water_reflection": 3
+        }
+      },
+      "dav2_392_fp16": {
+        "model_id": "depth_anything_v2_small",
+        "input_size": 392,
+        "precision": "fp16_autocast",
+        "init_warmup_ms": 900.4,
+        "n_frames": 17,
+        "n_boxes": 42,
+        "fresh_valid_count": 28,
+        "fresh_valid_coverage_pct": 66.67,
+        "mean_inlier_ratio": 0.8146,
+        "relative_score_cv": 1.2121,
+        "mean_spearman_vs_dav2_518": 0.9995,
+        "inference_ms_mean": 68.817,
+        "inference_ms_median": 68.792,
+        "inference_ms_p95": 69.134,
+        "total_ms_mean": 92.831,
+        "peak_allocated_mb": 313.59,
+        "peak_reserved_mb": 354.0,
+        "top_rejections": {
+          "unexpected_residual_polarity": 11,
+          "low_inlier_ratio": 1,
+          "suspected_water_reflection": 3
+        }
+      }
+    },
+    "cavity_extraction_ablation": {
+      "full_box": {
+        "n_boxes": 42,
+        "valid_count": 26,
+        "validity_coverage_pct": 61.9,
+        "mean_inlier_ratio": 0.7993,
+        "relative_score_cv": 1.0196,
+        "mean_extraction_ms": 7.49
+      },
+      "rect_trim_20": {
+        "n_boxes": 42,
+        "valid_count": 26,
+        "validity_coverage_pct": 61.9,
+        "mean_inlier_ratio": 0.7993,
+        "relative_score_cv": 1.1304,
+        "mean_extraction_ms": 5.671
+      },
+      "elliptical_core": {
+        "n_boxes": 42,
+        "valid_count": 25,
+        "validity_coverage_pct": 59.52,
+        "mean_inlier_ratio": 0.7993,
+        "relative_score_cv": 1.0424,
+        "mean_extraction_ms": 6.686
+      }
+    },
+    "segmentation_grouped_test_evaluation": {
+      "status": "COMPLETED",
+      "benchmark_name": "dataset_pothole440_seg_grouped_test (reconstructed_grouped_originals)",
+      "n_images": 15,
+      "mean_mask_iou": 0.5977,
+      "median_mask_iou": 0.6906,
+      "mean_dice": 0.6763,
+      "domain_shift_note": "Pothole440 contains close-up overhead pothole images domain-shifted from dashcam road scenes (N=15 unaugmented originals). Improved mask IoU does NOT prove physical depth accuracy."
+    },
+    "scientific_caveat": "DAv2 518 serves strictly as a higher-resolution relative consistency reference, NOT physical metric ground truth. MiDaS and DAv2 raw residual magnitudes are not directly comparable."
+  },
+  "scheduler_temporal": {
+    "status": "COMPLETED",
+    "source_video": "uploads/upload_1794847200_ruralRoad_potHoles.mp4",
+    "frozen_stream_frames": 150,
+    "frozen_det_mean_ms": 15.004,
+    "frozen_depth_mean_ms": 65.592,
+    "scheduling_ablation": {
+      "A_always_on": {
+        "frames_processed": 150,
+        "scheduler_requests": 150,
+        "actual_depth_calls": 150,
+        "depth_calls_per_frame": 1.0,
+        "depth_call_reduction_vs_always_on_pct": 0.0,
+        "total_observations": 464,
+        "fresh_valid_count": 309,
+        "cached_valid_count": 0,
+        "fresh_invalid_count": 155,
+        "expired_count": 0,
+        "not_evaluated_count": 0,
+        "fresh_valid_coverage_pct": 66.59,
+        "effective_availability_pct": 66.59,
+        "mean_age_sec": 0.0,
+        "track_starvation_count": 5,
+        "simulated_frame_ms_mean": 86.94,
+        "simulated_frame_ms_median": 84.07,
+        "simulated_frame_ms_p95": 96.79,
+        "simulated_sustained_fps": 11.5,
+        "peak_gpu_allocated_mb": 287.46
+      },
+      "B_candidate_gated": {
+        "frames_processed": 150,
+        "scheduler_requests": 150,
+        "actual_depth_calls": 144,
+        "depth_calls_per_frame": 0.96,
+        "depth_call_reduction_vs_always_on_pct": 4.0,
+        "total_observations": 464,
+        "fresh_valid_count": 309,
+        "cached_valid_count": 0,
+        "fresh_invalid_count": 155,
+        "expired_count": 0,
+        "not_evaluated_count": 0,
+        "fresh_valid_coverage_pct": 66.59,
+        "effective_availability_pct": 66.59,
+        "mean_age_sec": 0.0,
+        "track_starvation_count": 5,
+        "simulated_frame_ms_mean": 84.3,
+        "simulated_frame_ms_median": 84.06,
+        "simulated_frame_ms_p95": 97.13,
+        "simulated_sustained_fps": 11.86,
+        "peak_gpu_allocated_mb": 287.46
+      },
+      "C_fixed_interval": {
+        "frames_processed": 150,
+        "scheduler_requests": 150,
+        "actual_depth_calls": 48,
+        "depth_calls_per_frame": 0.32,
+        "depth_call_reduction_vs_always_on_pct": 68.0,
+        "total_observations": 464,
+        "fresh_valid_count": 103,
+        "cached_valid_count": 214,
+        "fresh_invalid_count": 54,
+        "expired_count": 39,
+        "not_evaluated_count": 54,
+        "fresh_valid_coverage_pct": 22.2,
+        "effective_availability_pct": 68.32,
+        "mean_age_sec": 0.0515,
+        "track_starvation_count": 7,
+        "simulated_frame_ms_mean": 38.09,
+        "simulated_frame_ms_median": 15.9,
+        "simulated_frame_ms_p95": 91.57,
+        "simulated_sustained_fps": 26.25,
+        "peak_gpu_allocated_mb": 287.46
+      },
+      "D_track_aware": {
+        "frames_processed": 150,
+        "scheduler_requests": 150,
+        "actual_depth_calls": 95,
+        "depth_calls_per_frame": 0.6333,
+        "depth_call_reduction_vs_always_on_pct": 36.67,
+        "total_observations": 464,
+        "fresh_valid_count": 213,
+        "cached_valid_count": 110,
+        "fresh_invalid_count": 130,
+        "expired_count": 0,
+        "not_evaluated_count": 11,
+        "fresh_valid_coverage_pct": 45.91,
+        "effective_availability_pct": 69.61,
+        "mean_age_sec": 0.022,
+        "track_starvation_count": 5,
+        "simulated_frame_ms_mean": 60.96,
+        "simulated_frame_ms_median": 82.05,
+        "simulated_frame_ms_p95": 95.43,
+        "simulated_sustained_fps": 16.4,
+        "peak_gpu_allocated_mb": 287.46
+      },
+      "E_budget_aware": {
+        "frames_processed": 150,
+        "scheduler_requests": 150,
+        "actual_depth_calls": 80,
+        "depth_calls_per_frame": 0.5333,
+        "depth_call_reduction_vs_always_on_pct": 46.67,
+        "total_observations": 464,
+        "fresh_valid_count": 168,
+        "cached_valid_count": 163,
+        "fresh_invalid_count": 116,
+        "expired_count": 0,
+        "not_evaluated_count": 17,
+        "fresh_valid_coverage_pct": 36.21,
+        "effective_availability_pct": 71.34,
+        "mean_age_sec": 0.0387,
+        "track_starvation_count": 5,
+        "simulated_frame_ms_mean": 53.67,
+        "simulated_frame_ms_median": 80.2,
+        "simulated_frame_ms_p95": 92.58,
+        "simulated_sustained_fps": 18.63,
+        "peak_gpu_allocated_mb": 287.46
+      }
+    },
+    "temporal_filtering_ablation": {
+      "raw": {
+        "mean_step_to_step_diff": 0.035,
+        "step_response_at_f12_target_0_22": 0.235,
+        "expired_gap_masked_null_count": 2,
+        "hides_expired_as_numeric": false
+      },
+      "legacy_ema_zero_clamp": {
+        "mean_step_to_step_diff": 0.02563,
+        "step_response_at_f12_target_0_22": 0.17854,
+        "expired_gap_masked_null_count": 0,
+        "hides_expired_as_numeric": true
+      },
+      "validity_aware_ema": {
+        "mean_step_to_step_diff": 0.00862,
+        "step_response_at_f12_target_0_22": 0.18572,
+        "expired_gap_masked_null_count": 2,
+        "hides_expired_as_numeric": false
+      },
+      "rolling_median_validity_ema": {
+        "mean_step_to_step_diff": 0.00574,
+        "step_response_at_f12_target_0_22": 0.13294,
+        "expired_gap_masked_null_count": 2,
+        "hides_expired_as_numeric": false
+      }
+    }
+  },
+  "quality_geo_maint": {
+    "status": "COMPLETED",
+    "phase9_quality_ablation": {
+      "synthetic_probes": [
+        {
+          "case": "ideal_full_evidence",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.972,
+          "D_missing_penalized": "HIGH_QUALITY",
+          "D_idx": 0.972,
+          "E_conservative_gated": "HIGH_QUALITY",
+          "E_idx": 0.972
+        },
+        {
+          "case": "low_det_conf_boundary_clipped_missing_temporal",
+          "A_det_only": "LOW_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.8161,
+          "D_missing_penalized": "MODERATE_QUALITY",
+          "D_idx": 0.6937,
+          "E_conservative_gated": "MODERATE_QUALITY",
+          "E_idx": 0.6937
+        },
+        {
+          "case": "invalid_high_det_confidence",
+          "A_det_only": "INVALID",
+          "B_geom_only": "INVALID",
+          "C_deployed": "INVALID",
+          "C_idx": null,
+          "D_missing_penalized": "INVALID",
+          "D_idx": null,
+          "E_conservative_gated": "INVALID",
+          "E_idx": null
+        },
+        {
+          "case": "expired_cached_observation",
+          "A_det_only": "INVALID",
+          "B_geom_only": "INVALID",
+          "C_deployed": "INVALID",
+          "C_idx": null,
+          "D_missing_penalized": "INVALID",
+          "D_idx": null,
+          "E_conservative_gated": "INVALID",
+          "E_idx": null
+        }
+      ],
+      "real_exploratory_0f286074_n_obs": 300,
+      "real_exploratory_distributions": {
+        "C_deployed": {
+          "INVALID": 73,
+          "INSUFFICIENT_EVIDENCE": 31,
+          "HIGH_QUALITY": 145,
+          "MODERATE_QUALITY": 51
+        },
+        "D_missing_penalized": {
+          "INVALID": 73,
+          "INSUFFICIENT_EVIDENCE": 31,
+          "MODERATE_QUALITY": 38,
+          "HIGH_QUALITY": 158
+        },
+        "E_conservative_gated": {
+          "INVALID": 73,
+          "INSUFFICIENT_EVIDENCE": 31,
+          "MODERATE_QUALITY": 91,
+          "HIGH_QUALITY": 105
+        }
+      }
+    },
+    "phase11_geospatial_synthetic_eval": {
+      "field_validation_status": "BLOCKED",
+      "field_validation_reason": "Genuine multi-trip synchronized dashcam GPS logs with verified candidate matches are unavailable.",
+      "duplicate_timestamps_merged": 1,
+      "interpolation_status_at_0_5s": "INTERPOLATED",
+      "gap_rejection_status_at_3_0s": "UNAVAILABLE",
+      "haversine_10m_check_m": 9.969,
+      "synthetic_clusters_count": 3,
+      "synthetic_cluster_statuses": [
+        "POTENTIAL_MATCH",
+        "UNMATCHED",
+        "UNMATCHED"
+      ]
+    },
+    "phase12_maintenance_eval": {
+      "validation_status": "DETERMINISTIC_VERIFIED_SYNTHETIC_AND_ARTIFACTS",
+      "expert_severity_validation_status": "BLOCKED",
+      "expert_severity_reason": "No civil-engineering priority/PCI ground-truth labels exist."
+    },
+    "negative_controls_and_failures": {
+      "failure_cases_csv": "failure_cases.csv",
+      "count": 5,
+      "cases": [
+        {
+          "experiment_id": "NC_blank_video",
+          "source_sample": "synthetic_blank_8f.mp4",
+          "configuration": "balanced_check",
+          "expected_outcome": "0 candidate tracks / 0 false depth failures",
+          "actual_outcome": "Verified via TestVideoProcessingSmoke + isolated MP4 fixture",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Short blank frame check only"
+        },
+        {
+          "experiment_id": "NC_corrupted_gps",
+          "source_sample": "lat=999.0_bad.csv",
+          "configuration": "parse_gps_telemetry",
+          "expected_outcome": "Reject invalid WGS84 latitude with ValueError",
+          "actual_outcome": "Rejected cleanly",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Format check only"
+        },
+        {
+          "experiment_id": "FC_p9_low_conf_high_quality",
+          "source_sample": "0f286074/snap_t15_g0_f000048",
+          "configuration": "QualityConfig(v1_deployed)",
+          "expected_outcome": "Low det_quality (0.41) + missing temporal should cap below HIGH_QUALITY",
+          "actual_outcome": "Assigned HIGH_QUALITY (0.8516) due to available_weight renormalization",
+          "failure_category": "estimator_limitation",
+          "known_limitations": "Preserved unmodified in deployed app per constraint; ablated in D/E"
+        },
+        {
+          "experiment_id": "FC_p10_legacy_empty_ref_mask",
+          "source_sample": "artifacts_v2/*/geometry/snap_*.json (42 legacy files)",
+          "configuration": "Pre-fix build_relative_surface_snapshot",
+          "expected_outcome": "reference_mask_grid > 0 cells",
+          "actual_outcome": "0 True cells across all 42 historical snapshots due to valid_ring key mismatch",
+          "failure_category": "artifact_key_mismatch_fixed",
+          "known_limitations": "Fixed for all new snapshots; 42 historical files remain legacy"
+        },
+        {
+          "experiment_id": "FC_independent_detection_eval",
+          "source_sample": "evaluation/ground_truth_labels/*.txt",
+          "configuration": "Phase 13 detection benchmark",
+          "expected_outcome": "Annotated bounding boxes for independent test set",
+          "actual_outcome": "40 files present, all 0 bytes (empty)",
+          "failure_category": "blocked_missing_ground_truth",
+          "known_limitations": "Requires external manual annotation before independent accuracy claims"
+        }
+      ]
+    }
+  },
+  "generated_figures": [
+    {
+      "png": "figures/fig1_detection_comparison.png",
+      "svg": "figures/fig1_detection_comparison.svg",
+      "data": "figures/fig1_detection_comparison_data.json"
+    },
+    {
+      "png": "figures/fig2_ref_plane_ablation.png",
+      "svg": "figures/fig2_ref_plane_ablation.svg",
+      "data": "figures/fig2_ref_plane_ablation_data.json"
+    },
+    {
+      "png": "figures/fig3_depth_resolution_ablation.png",
+      "svg": "figures/fig3_depth_resolution_ablation.svg",
+      "data": "figures/fig3_depth_resolution_ablation_data.json"
+    },
+    {
+      "png": "figures/fig4_scheduler_tradeoff.png",
+      "svg": "figures/fig4_scheduler_tradeoff.svg",
+      "data": "figures/fig4_scheduler_tradeoff_data.json"
+    },
+    {
+      "png": "figures/fig5_quality_estimator_ablation.png",
+      "svg": "figures/fig5_quality_estimator_ablation.svg",
+      "data": "figures/fig5_quality_estimator_ablation_data.json"
+    }
+  ],
+  "completed_at": "2026-11-27T05:50:05.809259+00:00"
+}

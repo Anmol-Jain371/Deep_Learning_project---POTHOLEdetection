@@ -1,0 +1,101 @@
+GIT_HEAD=50d37f37f24f28976ca8124ba2027d020f3b0ef3
+
+=== GIT LOG ===
+50d37f3 Add Phase 8A V2 package and related experiments, docs, benchmarks
+15d6274 feat(phases3a-6b): segmentation experiments, adaptive RANSAC relative depth, and DAv2 resolution scaling
+66ebd74 feat(phase2): controlled YOLOv8n vs YOLOv8s evaluation, frozen dataset manifest, and comparison reports
+6238bb6 feat(training): add zero-leakage unified dataset builder, cosine LR support, and 100-epoch YOLOv8n training run
+65e27e1 feat: candidate-gated depth inference, FP16 autocast, and temporal moving-median outlier suppression with volumetric estimation
+88a9420 ci: add .vercelignore to exclude heavy video outputs
+77d0e71 ci: add vercel.json for SPA routing
+256e4dd refactor: eliminate hardcoded paths, URLs, ports, and geometry constants across pipeline and dashboard
+8abc453 feat(edge): Export model to ONNX and benchmark edge embedded hardware runtimes (FP16/TensorRT)
+9fc4604 feat(calibration): Decouple camera geometry with multi-vehicle profiles and sensitivity analysis
+1600610 feat(validation): Certified physical depth validation (MAE: 0.56 cm, Concordance: 100%, Status: VALIDATED)
+61d8e86 feat: Integrate Faster R-CNN benchmark, RDD1666 dataset, 84.7% mAP50 model, and dashboard comparison tab
+f3ae74c docs: clean developer README and add requirements.txt
+d7dfd87 feat: RoadVision AI — Autonomous road defect detection, 3D depth profiling & municipal audit platform
+816d945 Initial commit
+
+=== GIT STATUS --SHORT ===
+ M .gitignore
+ M README_v2.md
+ M config/roadvision_v2.yaml
+ M roadvision-dashboard/src/App.jsx
+ M roadvision-dashboard/src/components/Footer.jsx
+ M roadvision-dashboard/vite.config.js
+ M roadvision_v2/config.py
+ M roadvision_v2/geometry/__init__.py
+ M roadvision_v2/pipeline.py
+ M roadvision_v2/quality/__init__.py
+ M roadvision_v2/schemas.py
+ M server.py
+ M tests/test_roadvision_v2_pipeline.py
+ M tests/test_shadow_depth_pipeline.py
+?? RoadVision_Research_Package/
+?? config/roadvision_api_v2.yaml
+?? experiments/phase13/
+?? reports/FINAL_PROJECT_AUDIT/
+?? reports/phase10_relative_3d_visualization.md
+?? reports/phase11_geospatial_intelligence.md
+?? reports/phase12_maintenance_intelligence.md
+?? reports/phase13_ablation_studies.md
+?? reports/phase13_detection_evaluation.md
+?? reports/phase13_evaluation_protocol.md
+?? reports/phase13_evidence_audit.md
+?? reports/phase13_failure_analysis.md
+?? reports/phase13_final_results.md
+?? reports/phase13_quality_evaluation.md
+?? reports/phase13_runtime_analysis.md
+?? reports/phase13_scientific_limitations.md
+?? reports/phase8b2_job_management.md
+?? reports/phase8b3_video_processing.md
+?? reports/phase8b4_api_contracts.md
+?? reports/phase8b5_security_and_testing.md
+?? reports/phase8b_checklist.md
+?? reports/phase8b_legacy_compatibility.md
+?? reports/phase9_uncertainty_assessment.md
+?? roadvision-dashboard/src/api/
+?? roadvision-dashboard/src/components/InspectionSelector.jsx
+?? roadvision-dashboard/src/components/Sidebar.jsx
+?? roadvision-dashboard/src/components/StateBanner.jsx
+?? roadvision-dashboard/src/components/TopBar.jsx
+?? roadvision-dashboard/src/pages/
+?? roadvision-dashboard/src/styles/
+?? roadvision-dashboard/src/utils/
+?? roadvision_api_v2/
+?? roadvision_v2/geometry/surface.py
+?? roadvision_v2/geospatial/
+?? roadvision_v2/maintenance/
+?? roadvision_v2/quality/assessment.py
+?? runs/benchmark/phase8b_api_results.json
+?? runs/evaluation/
+?? tests/test_phase10_geometry_visualization.py
+?? tests/test_phase11_geospatial_intelligence.py
+?? tests/test_phase12_maintenance_intelligence.py
+?? tests/test_phase13_evaluation_harness.py
+?? tests/test_phase9_quality_assessment.py
+?? tests/test_v2_api.py
+?? tests/test_v2_api_artifacts.py
+?? tests/test_v2_api_foundation.py
+?? tests/test_v2_api_security.py
+?? tests/test_v2_api_uploads.py
+?? tests/test_v2_job_manager.py
+?? tests/test_v2_worker.py
+
+=== GIT DIFF --STAT ===
+ .gitignore                                     |  12 +
+ README_v2.md                                   | 114 +++++-
+ config/roadvision_v2.yaml                      |  48 +++
+ roadvision-dashboard/src/App.jsx               | 315 ++++++++++-----
+ roadvision-dashboard/src/components/Footer.jsx |   4 +-
+ roadvision-dashboard/vite.config.js            |  12 +-
+ roadvision_v2/config.py                        |  94 +++++
+ roadvision_v2/geometry/__init__.py             |  16 +-
+ roadvision_v2/pipeline.py                      | 529 +++++++++++++++++++++----
+ roadvision_v2/quality/__init__.py              |  24 +-
+ roadvision_v2/schemas.py                       |  11 +-
+ server.py                                      |  38 +-
+ tests/test_roadvision_v2_pipeline.py           |  60 ++-
+ tests/test_shadow_depth_pipeline.py            |  14 +-
+ 14 files changed, 1080 insertions(+), 211 deletions(-)

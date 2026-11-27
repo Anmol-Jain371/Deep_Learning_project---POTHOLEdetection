@@ -1,0 +1,14 @@
+eval/ground_truth_labels: total=40, nonzero=0 ([])
+  dataset_unified/train: imgs=1294, lbls=1294, empty_lbls=2
+  dataset_unified/val: imgs=153, lbls=153, empty_lbls=0
+  dataset_unified/test: imgs=153, lbls=153, empty_lbls=0
+  dataset_unified/external_rangoon: imgs=35, lbls=35, empty_lbls=0
+  dataset_combined_v2/train: imgs=84, lbls=84, empty_lbls=2
+  dataset_combined_v2/val: imgs=21, lbls=21, empty_lbls=0
+  dataset_pothole440_seg_grouped/train: imgs=301, lbls=301, empty_lbls=0
+  dataset_pothole440_seg_grouped/val: imgs=15, lbls=15, empty_lbls=0
+  dataset_pothole440_seg_grouped/test: imgs=15, lbls=15, empty_lbls=0
+  dataset_rdd_india_potholes/train: imgs=1369, lbls=1369, empty_lbls=0
+  dataset_rdd_india_potholes/val: imgs=229, lbls=229, empty_lbls=0
+  dataset_phone_potholes/train: imgs=56, lbls=56, empty_lbls=2
+  dataset_phone_potholes/val: imgs=14, lbls=14, empty_lbls=0

@@ -1,0 +1,42 @@
+# RoadVision AI 2.0 Backend API Configuration
+# Keep enabled: false as the committed default.
+# Can be explicitly enabled by setting enabled: true or ROADVISION_V2_ENABLED=true.
+
+enabled: false
+host: "127.0.0.1"
+port: 5000
+
+# Persistent SQLite database and isolated per-job storage
+database_path: "runs/v2_api/roadvision_v2_jobs.db"
+upload_directory: "uploads_v2"
+artifact_directory: "artifacts_v2"
+
+# Upload & media safety limits (conservative defaults for RTX 2050 4 GB laptop)
+maximum_upload_size: 268435456        # 256 MiB in bytes
+allowed_video_formats:
+  - ".mp4"
+  - ".avi"
+  - ".mov"
+  - ".mkv"
+maximum_video_resolution:
+  - 1920
+  - 1080
+maximum_video_duration: 300.0         # 5 minutes max
+maximum_processed_frames: 9000        # Hard frame processing cap per job
+
+# Bounded queue & worker controls
+max_queued_jobs: 5
+max_gpu_concurrency: 1
+progress_update_interval: 0.5         # Seconds between throttled progress DB writes
+worker_shutdown_timeout: 15.0         # Seconds to wait for cooperative worker shutdown
+artifact_retention_policy: "retain_latest_50"
+
+# CORS & API pagination limits
+allowed_cors_origins:
+  - "http://localhost:3000"
+  - "http://127.0.0.1:3000"
+  - "http://localhost:5173"
+  - "http://127.0.0.1:5173"
+default_page_size: 100
+max_page_size: 500
+enable_h264_transcode: true

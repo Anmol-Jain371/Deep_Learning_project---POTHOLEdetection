@@ -1,0 +1,66 @@
+=== raw_metrics.csv ===
+experiment,arm,metric,value,note
+detection,yolov8n_100e_sgd/dataset_unified_val,map50,0.2533,exploratory
+detection,yolov8n_100e_sgd/dataset_unified_test,map50,0.3643,exploratory
+detection,yolov8n_100e_sgd/dataset_unified_external_rangoon,map50,0.156,exploratory
+detection,yolov8s_100e/dataset_unified_val,map50,0.2885,exploratory
+detection,yolov8s_100e/dataset_unified_test,map50,0.3581,exploratory
+detection,yolov8s_100e/dataset_unified_external_rangoon,map50,0.1728,exploratory
+reference_plane,A_legacy_annular,outlier_mean_plane_rmse,,synthetic
+reference_plane,B_ols_plane,outlier_mean_plane_rmse,0.001065,synthetic
+reference_plane,C_ransac_baseline,outlier_mean_plane_rmse,2.9e-05,synthetic
+reference_plane,D_optimized_msac_ransac,outlier_mean_plane_rmse,0.000131,synthetic
+depth,dav2_518_fp16,inference_ms_mean,147.008,exploratory_rtx2050
+depth,midas_256_fp32,inference_ms_mean,16.451,exploratory_rtx2050
+depth,midas_256_fp16,inference_ms_mean,21.41,exploratory_rtx2050
+depth,dav2_266_fp16,inference_ms_mean,25.801,exploratory_rtx2050
+depth,dav2_336_fp16,inference_ms_mean,48.175,exploratory_rtx2050
+depth,dav2_336_fp32,inference_ms_mean,60.256,exploratory_rtx2050
+depth,dav2_392_fp16,inference_ms_mean,68.817,exploratory_rtx2050
+scheduler,A_always_on,depth_call_reduction_pct,0.0,frozen_stream
+scheduler,B_candidate_gated,depth_call_reduction_pct,4.0,frozen_stream
+scheduler,C_fixed_interval,depth_call_reduction_pct,68.0,frozen_stream
+scheduler,D_track_aware,depth_call_reduction_pct,36.67,frozen_stream
+scheduler,E_budget_aware,depth_call_reduction_pct,46.67,frozen_stream
+
+=== failure_cases.csv ===
+experiment_id,source_sample,configuration,expected_outcome,actual_outcome,failure_category,known_limitations
+NC_blank_video,synthetic_blank_8f.mp4,balanced_check,0 candidate tracks / 0 false depth failures,Verified via TestVideoProcessingSmoke + isolated MP4 fixture,negative_control_passed,Short blank frame check only
+NC_corrupted_gps,lat=999.0_bad.csv,parse_gps_telemetry,Reject invalid WGS84 latitude with ValueError,Rejected cleanly,negative_control_passed,Format check only
+FC_p9_low_conf_high_quality,0f286074/snap_t15_g0_f000048,QualityConfig(v1_deployed),Low det_quality (0.41) + missing temporal should cap below HIGH_QUALITY,Assigned HIGH_QUALITY (0.8516) due to available_weight renormalization,estimator_limitation,Preserved unmodified in deployed app per constraint; ablated in D/E
+FC_p10_legacy_empty_ref_mask,artifacts_v2/*/geometry/snap_*.json (42 legacy files),Pre-fix build_relative_surface_snapshot,reference_mask_grid > 0 cells,0 True cells across all 42 historical snapshots due to valid_ring key mismatch,artifact_key_mismatch_fixed,Fixed for all new snapshots; 42 historical files remain legacy
+FC_independent_detection_eval,evaluation/ground_truth_labels/*.txt,Phase 13 detection benchmark,Annotated bounding boxes for independent test set,"40 files present, all 0 bytes (empty)",blocked_missing_ground_truth,Requires external manual annotation before independent accuracy claims
+
+=== detection_comparison.csv ===
+model,split,independent,precision,recall,f1_score,map50,map50_95,mean_ms,fps,peak_vram_mb
+yolov8n_100e_sgd,dataset_unified_val,False,0.5236,0.3569,0.4245,0.2533,0.0884,12.383,80.75,68.49
+yolov8n_100e_sgd,dataset_unified_test,False,0.61,0.4565,0.5222,0.3643,0.1442,12.383,80.75,68.49
+yolov8n_100e_sgd,dataset_unified_external_rangoon,False,0.5588,0.25,0.3455,0.156,0.0493,12.383,80.75,68.49
+yolov8s_100e,dataset_unified_val,False,0.4888,0.4212,0.4525,0.2885,0.1073,25.71,38.9,200.77
+yolov8s_100e,dataset_unified_test,False,0.5404,0.4783,0.5074,0.3581,0.1427,25.71,38.9,200.77
+yolov8s_100e,dataset_unified_external_rangoon,False,0.5366,0.2895,0.3761,0.1728,0.0541,25.71,38.9,200.77
+
+=== reference_plane_ablation.csv ===
+method,total_cases,valid_count,gate_concordance_pct,invalid_rejection_rate_pct,mean_plane_rmse,outlier_mean_plane_rmse,mean_inlier_ratio,mean_latency_ms,median_latency_ms
+A_legacy_annular,45,45,77.78,0.0,,,,0.638,0.529
+B_ols_plane,45,35,100.0,100.0,0.00063,0.001065,0.9839,2.67,2.207
+C_ransac_baseline,45,35,100.0,100.0,0.000285,2.9e-05,0.9965,9.014,8.221
+D_optimized_msac_ransac,45,35,100.0,100.0,0.000396,0.000131,0.9961,4.514,4.233
+
+=== depth_resolution_ablation.csv ===
+arm,model_id,input_size,precision,init_warmup_ms,n_frames,n_boxes,fresh_valid_count,fresh_valid_coverage_pct,mean_inlier_ratio,relative_score_cv,mean_spearman_vs_dav2_518,inference_ms_mean,inference_ms_median,inference_ms_p95,total_ms_mean,peak_allocated_mb,peak_reserved_mb,top_rejections
+dav2_518_fp16,depth_anything_v2_small,518,fp16_autocast,1443.6,17,42,28,66.67,0.8398,1.0543,1.0,147.008,146.935,147.389,184.586,409.69,526.0,"{'unexpected_residual_polarity': 10, 'low_inlier_ratio': 2, 'suspected_water_reflection': 3}"
+midas_256_fp32,midas_small,256,fp32,2893.2,17,42,12,28.57,0.6357,1.243,0.9794,16.451,16.12,20.903,29.083,127.43,152.0,"{'unexpected_residual_polarity': 23, 'low_inlier_ratio': 10, 'suspected_water_reflection': 3}"
+midas_256_fp16,midas_small,256,fp16_autocast,1110.7,17,42,12,28.57,0.643,1.2281,0.9795,21.41,21.019,27.77,29.338,163.49,184.0,"{'unexpected_residual_polarity': 23, 'low_inlier_ratio': 10, 'suspected_water_reflection': 3}"
+dav2_266_fp16,depth_anything_v2_small,266,fp16_autocast,1022.5,17,42,21,50.0,0.7919,0.8286,0.9987,25.801,24.551,30.503,40.327,243.42,280.0,"{'unexpected_residual_polarity': 19, 'low_inlier_ratio': 2, 'suspected_water_reflection': 3}"
+dav2_336_fp16,depth_anything_v2_small,336,fp16_autocast,855.3,17,42,25,59.52,0.7993,1.0424,0.9992,48.175,48.051,48.681,67.431,274.69,312.0,"{'unexpected_residual_polarity': 15, 'low_inlier_ratio': 1, 'suspected_water_reflection': 3}"
+dav2_336_fp32,depth_anything_v2_small,336,fp32,833.2,17,42,26,61.9,0.8111,1.0477,0.9992,60.256,60.27,60.438,82.306,218.41,254.0,"{'unexpected_residual_polarity': 13, 'low_inlier_ratio': 1, 'suspected_water_reflection': 3}"
+dav2_392_fp16,depth_anything_v2_small,392,fp16_autocast,900.4,17,42,28,66.67,0.8146,1.2121,0.9995,68.817,68.792,69.134,92.831,313.59,354.0,"{'unexpected_residual_polarity': 11, 'low_inlier_ratio': 1, 'suspected_water_reflection': 3}"
+
+=== scheduler_ablation.csv ===
+strategy,frames_processed,scheduler_requests,actual_depth_calls,depth_calls_per_frame,depth_call_reduction_vs_always_on_pct,total_observations,fresh_valid_count,cached_valid_count,fresh_invalid_count,expired_count,not_evaluated_count,fresh_valid_coverage_pct,effective_availability_pct,mean_age_sec,track_starvation_count,simulated_frame_ms_mean,simulated_frame_ms_median,simulated_frame_ms_p95,simulated_sustained_fps,peak_gpu_allocated_mb
+A_always_on,150,150,150,1.0,0.0,464,309,0,155,0,0,66.59,66.59,0.0,5,86.94,84.07,96.79,11.5,287.46
+B_candidate_gated,150,150,144,0.96,4.0,464,309,0,155,0,0,66.59,66.59,0.0,5,84.3,84.06,97.13,11.86,287.46
+C_fixed_interval,150,150,48,0.32,68.0,464,103,214,54,39,54,22.2,68.32,0.0515,7,38.09,15.9,91.57,26.25,287.46
+D_track_aware,150,150,95,0.6333,36.67,464,213,110,130,0,11,45.91,69.61,0.022,5,60.96,82.05,95.43,16.4,287.46
+E_budget_aware,150,150,80,0.5333,46.67,464,168,163,116,0,17,36.21,71.34,0.0387,5,53.67,80.2,92.58,18.63,287.46

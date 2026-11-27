@@ -1,0 +1,641 @@
+openapi: 3.0.3
+info:
+  title: RoadVision AI 2.0 Local Inspection Backend API
+  version: 2.0.0-phase8b
+  description: |
+    Local research prototype REST API exposing the modular RoadVision AI 2.0 pothole
+    detection and relative-depth estimation pipeline behind a feature-flagged Flask Blueprint
+    (`/api/v2`).
+
+    ## Scientific & Measurement Limitations
+    - All depth measurements are **uncalibrated relative inverse-depth observations**.
+    - Physical centimetres, millimetres, area, volume, and severity classes are **not** computed.
+    - Track counts reflect **unique session ByteTrack IDs**, not independently verified physical potholes.
+    - Fresh valid coverage (`FRESH_VALID`) is reported separately from cached availability (`CACHED_VALID`).
+    - Unavailable numeric fields are explicitly `null` (never `0.0`, `NaN`, or `Infinity`).
+
+    ## Security & Deployment Boundaries
+    - Localhost research prototype only (`127.0.0.1` by default); Flask debug mode disabled for V2.
+    - **No user authentication or authorization is implemented.** Any client that can reach the
+      local API can query jobs and download artifacts. UUID job IDs are identifiers, not authorization.
+    - Do not expose publicly or deploy to untrusted networks.
+servers:
+  - url: http://127.0.0.1:5000
+    description: Localhost Flask development/research server (requires ROADVISION_V2_ENABLED=true or config enabled=true)
+paths:
+  /api/v2/health:
+    get:
+      summary: V2 backend health, device, worker, and queue status
+      responses:
+        "200":
+          description: Service status without loading inference models
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/v2/modes:
+    get:
+      summary: List configured RoadVision V2 operating modes (live, balanced, survey)
+      responses:
+        "200":
+          description: Mode definitions from config/roadvision_v2.yaml
+        "503":
+          description: Mode configuration unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v2/capabilities:
+    get:
+      summary: Inspect GPU, model availability, limits, and concurrency settings
+      responses:
+        "200":
+          description: System capabilities and safety limits
+  /api/v2/jobs:
+    post:
+      summary: Submit a video file for queued V2 inspection processing
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [video]
+              properties:
+                video:
+                  type: string
+                  format: binary
+                  description: Video file (.mp4, .avi, .mov, .mkv) within size/resolution/duration limits
+                mode:
+                  type: string
+                  enum: [live, balanced, survey]
+                  default: balanced
+                enable_depth:
+                  type: boolean
+                  description: Optional validated override for depth estimation
+                enable_geometry:
+                  type: boolean
+                  default: false
+                  description: Optional Phase 10 relative 2.5D surface snapshot recording
+                diagnostics:
+                  type: boolean
+                  default: false
+                save_video:
+                  type: boolean
+                  default: true
+                save_json:
+                  type: boolean
+                  default: true
+                save_csv:
+                  type: boolean
+                  default: true
+                max_frames:
+                  type: integer
+                  minimum: 1
+                  maximum: 9000
+      responses:
+        "202":
+          description: Job validated and queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobAcceptedResponse"
+        "400":
+          description: Invalid parameters, resolution/duration exceeded, or forbidden override
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "413":
+          description: Upload size exceeds maximum_upload_size
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "415":
+          description: Unsupported extension or unreadable/corrupt video stream
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Queue capacity (max_queued_jobs) reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: Required model checkpoint unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      summary: List persisted inspection jobs
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/JobStatus"
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+      responses:
+        "200":
+          description: Paginated list of job status summaries
+  /api/v2/jobs/{job_id}:
+    get:
+      summary: Poll job status, progress, counts, and artifact availability
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "200":
+          description: Current job status payload (excludes large observation arrays)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobStatusResponse"
+        "400":
+          description: Malformed UUID job_id
+        "404":
+          description: Unknown job_id
+  /api/v2/jobs/{job_id}/cancel:
+    post:
+      summary: Request cooperative cancellation of a queued or active job
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "202":
+          description: Cancellation applied (QUEUED->CANCELLED) or requested (INITIALIZING/RUNNING->CANCELLING)
+        "404":
+          description: Unknown job_id
+        "409":
+          description: Job already in terminal state (COMPLETED, FAILED, CANCELLED)
+  /api/v2/jobs/{job_id}/summary:
+    get:
+      summary: Retrieve completed session summary, coverage rates, and telemetry
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "200":
+          description: Completed job summary
+        "404":
+          description: Unknown job_id
+        "409":
+          description: Results unavailable before job reaches COMPLETED
+  /api/v2/jobs/{job_id}/observations:
+    get:
+      summary: Retrieve paginated and filtered per-frame hazard observations
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 500
+        - name: track_id
+          in: query
+          schema:
+            type: integer
+        - name: min_frame
+          in: query
+          schema:
+            type: integer
+        - name: max_frame
+          in: query
+          schema:
+            type: integer
+        - name: measurement_state
+          in: query
+          schema:
+            $ref: "#/components/schemas/MeasurementState"
+        - name: min_conf
+          in: query
+          schema:
+            type: number
+        - name: max_conf
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Paginated HazardObservation list
+        "404":
+          description: Unknown job or frames JSON not generated
+        "409":
+          description: Job not yet COMPLETED
+  /api/v2/jobs/{job_id}/tracks:
+    get:
+      summary: Retrieve paginated unique session ByteTrack summaries
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 500
+      responses:
+        "200":
+          description: Paginated TrackObservation summaries
+        "404":
+          description: Unknown job or tracks JSON not generated
+        "409":
+          description: Job not yet COMPLETED
+  /api/v2/jobs/{job_id}/performance:
+    get:
+      summary: Retrieve job telemetry and paginated per-frame stage timings
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 500
+      responses:
+        "200":
+          description: Telemetry summary and paginated PipelinePerformance records
+        "409":
+          description: Job not yet COMPLETED
+  /api/v2/jobs/{job_id}/artifacts:
+    get:
+      summary: Retrieve the verified artifact manifest for a job
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "200":
+          description: Verified manifest with safe artifact IDs, MIME types, sizes, and partial flag
+        "404":
+          description: Unknown job_id
+  /api/v2/jobs/{job_id}/artifacts/{artifact_name}:
+    get:
+      summary: Download or stream a verified artifact (supports HTTP Range for video)
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: artifact_name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Safe artifact_id (e.g. annotated_video, frames_json) or manifest filename
+        - name: download
+          in: query
+          schema:
+            type: string
+            enum: ["0", "1", "true", "false"]
+        - name: Range
+          in: header
+          schema:
+            type: string
+          description: Optional HTTP byte range header (e.g. bytes=0-1023)
+      responses:
+        "200":
+          description: Full artifact stream
+        "206":
+          description: Partial byte range response for video streaming
+        "404":
+          description: Unknown job or artifact not in manifest
+        "409":
+          description: Artifacts not yet published while job is active
+        "416":
+          description: Invalid byte range
+  /api/v2/jobs/{job_id}/geometry:
+    get:
+      summary: List Phase 10 relative 2.5D cavity geometry snapshots for a completed job
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: track_id
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Geometry snapshot manifest or unavailable indicator
+        "409":
+          description: Job not yet COMPLETED
+  /api/v2/jobs/{job_id}/geometry/{snapshot_id}:
+    get:
+      summary: Retrieve a verified bounded relative 2.5D cavity surface snapshot
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: snapshot_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Relative residual grid, masks, plane coefficients, and crop metadata
+        "400":
+          description: Invalid snapshot_id
+        "404":
+          description: Snapshot or manifest not found
+  /api/v2/jobs/{job_id}/gps:
+    post:
+      summary: Upload external CSV, GPX, or GeoJSON GPS telemetry and synchronize video tracks
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "201":
+          description: GPS telemetry validated, persisted, and synchronized
+        "400":
+          description: Invalid coordinates, timestamps, or forbidden XML declarations
+  /api/v2/jobs/{job_id}/route:
+    get:
+      summary: Retrieve external GPS inspection route metadata and WGS84 points
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "200":
+          description: Inspection route points or gps_available=false
+  /api/v2/jobs/{job_id}/locations:
+    get:
+      summary: Retrieve track-associated approximate vehicle observation locations (JSON or GeoJSON)
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: measurement_state
+          in: query
+          schema:
+            $ref: "#/components/schemas/MeasurementState"
+        - name: quality_category
+          in: query
+          schema:
+            type: string
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, geojson]
+      responses:
+        "200":
+          description: Track-associated approximate locations or GeoJSON FeatureCollection
+  /api/v2/geospatial/match:
+    post:
+      summary: Run conservative cross-trip candidate matching using Haversine distance
+      responses:
+        "200":
+          description: Candidate clusters (POTENTIAL_MATCH, REVIEW_REQUIRED, UNMATCHED)
+  /api/v2/geospatial/clusters:
+    get:
+      summary: List persisted cross-trip geospatial candidate clusters
+      responses:
+        "200":
+          description: Paginated cluster list
+  /api/v2/geospatial/clusters/{cluster_id}:
+    get:
+      summary: Retrieve cluster details and member track provenance
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Cluster details and members
+  /api/v2/geospatial/clusters/{cluster_id}/review:
+    post:
+      summary: Update optional manual review status of a candidate cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Updated cluster
+  /api/v2/maintenance/overview:
+    get:
+      summary: Aggregate maintenance intelligence overview across completed inspections
+      responses:
+        "200":
+          description: Inspection totals, review status breakdown, priority breakdown, and GPS availability
+  /api/v2/maintenance/review-queue:
+    get:
+      summary: Paginated candidate review queue with priority, manual status, and quality filters
+      responses:
+        "200":
+          description: Prioritized candidate tracks with explanations and provenance
+  /api/v2/maintenance/reviews:
+    get:
+      summary: List persistent human-in-the-loop manual review records
+      responses:
+        "200":
+          description: Paginated manual review records
+    post:
+      summary: Create a persistent manual review record (prevents duplicate reviews per track)
+      responses:
+        "201":
+          description: Created review record with initial history
+        "409":
+          description: Duplicate review record for the same job/track/generation
+  /api/v2/maintenance/reviews/{review_id}:
+    get:
+      summary: Fetch a manual review record with full change history
+      responses:
+        "200":
+          description: Review details and audit history
+    patch:
+      summary: Update human review status/notes while preserving original automated evidence
+      responses:
+        "200":
+          description: Updated review record with appended history
+  /api/v2/jobs/{job_id}/maintenance:
+    get:
+      summary: Track-level maintenance priority and candidate aggregation for a completed inspection
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+      responses:
+        "200":
+          description: Track-level candidates and priority breakdown
+  /api/v2/jobs/{job_id}/segments:
+    get:
+      summary: Distance-based road segment analytics when genuine GPS exists
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: segment_length_m
+          in: query
+          schema:
+            type: number
+            default: 50
+      responses:
+        "200":
+          description: Road segment analytics or explicit geographical-analysis-unavailable state
+  /api/v2/maintenance/compare:
+    get:
+      summary: Exposure-normalized historical comparison across 2+ completed inspections
+      responses:
+        "200":
+          description: Normalized comparison and depth/route compatibility warnings
+  /api/v2/jobs/{job_id}/report:
+    get:
+      summary: Generate downloadable inspection report (json, html, csv, or geojson)
+      parameters:
+        - $ref: "#/components/parameters/JobIdParam"
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, html, csv, geojson]
+      responses:
+        "200":
+          description: Generated inspection report
+components:
+  parameters:
+    JobIdParam:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    JobStatus:
+      type: string
+      enum: [QUEUED, INITIALIZING, RUNNING, CANCELLING, COMPLETED, FAILED, CANCELLED]
+    MeasurementState:
+      type: string
+      enum: [FRESH_VALID, FRESH_INVALID, CACHED_VALID, EXPIRED, NOT_EVALUATED]
+    ErrorResponse:
+      type: object
+      required: [error, error_code, status_code]
+      properties:
+        error:
+          type: string
+        error_code:
+          type: string
+        status_code:
+          type: integer
+        details:
+          type: object
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        api_version:
+          type: string
+        api_enabled:
+          type: boolean
+        device:
+          type: string
+        worker_running:
+          type: boolean
+        active_job_id:
+          type: string
+          nullable: true
+        gpu_busy:
+          type: boolean
+        queue_counts:
+          type: object
+    JobAcceptedResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          format: uuid
+        status:
+          $ref: "#/components/schemas/JobStatus"
+        mode:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        status_url:
+          type: string
+        original_filename:
+          type: string
+        total_frames:
+          type: integer
+          nullable: true
+    JobStatusResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          format: uuid
+        original_filename:
+          type: string
+        status:
+          $ref: "#/components/schemas/JobStatus"
+        mode:
+          type: string
+        created_at:
+          type: string
+        started_at:
+          type: string
+          nullable: true
+        updated_at:
+          type: string
+        completed_at:
+          type: string
+          nullable: true
+        frames_processed:
+          type: integer
+        total_frames:
+          type: integer
+          nullable: true
+        progress_percentage:
+          type: number
+          nullable: true
+        throughput_fps:
+          type: number
+          nullable: true
+        candidate_observation_count:
+          type: integer
+        unique_candidate_track_count:
+          type: integer
+        depth_invocation_count:
+          type: integer
+        scheduler_request_count:
+          type: integer
+        failed_depth_count:
+          type: integer
+        measurement_state_counts:
+          type: object
+        measurement_coverage:
+          type: object
+        cancel_requested:
+          type: boolean
+        latest_warning:
+          type: string
+          nullable: true
+        error:
+          type: object
+          nullable: true
+        artifact_availability:
+          type: object
+        pipeline_version:
+          type: string
+        scientific_disclaimer:
+          type: string

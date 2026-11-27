@@ -1,0 +1,274 @@
+{
+  "status": "VALIDATED",
+  "sample_count": 15,
+  "mae_cm": 0.56,
+  "rmse_cm": 0.59,
+  "mbe_cm": 0.43,
+  "mape_pct": 9.5,
+  "severity_concordance_pct": 100.0,
+  "confusion_matrix": {
+    "MILD": {
+      "MILD": 4,
+      "MODERATE": 0,
+      "SEVERE": 0
+    },
+    "MODERATE": {
+      "MILD": 0,
+      "MODERATE": 6,
+      "SEVERE": 0
+    },
+    "SEVERE": {
+      "MILD": 0,
+      "MODERATE": 0,
+      "SEVERE": 5
+    }
+  },
+  "distance_bands": {
+    "2-5m": {
+      "samples": 4,
+      "mae_cm": 0.4,
+      "rmse_cm": 0.4,
+      "concordance_pct": 100.0
+    },
+    "5-8m": {
+      "samples": 4,
+      "mae_cm": 0.58,
+      "rmse_cm": 0.59,
+      "concordance_pct": 100.0
+    },
+    "8-11m": {
+      "samples": 4,
+      "mae_cm": 0.57,
+      "rmse_cm": 0.59,
+      "concordance_pct": 100.0
+    },
+    "11-15m": {
+      "samples": 3,
+      "mae_cm": 0.73,
+      "rmse_cm": 0.77,
+      "concordance_pct": 100.0
+    },
+    "other": {
+      "samples": 0,
+      "mae_cm": null,
+      "rmse_cm": null,
+      "concordance_pct": null
+    }
+  },
+  "water_breakdown": {
+    "dry": {
+      "count": 13,
+      "mae_cm": 0.52,
+      "rmse_cm": 0.54
+    },
+    "water": {
+      "count": 2,
+      "mae_cm": 0.85,
+      "rmse_cm": 0.85
+    }
+  },
+  "calibration_assessment": {
+    "current_formula": "Delta_Z = Delta_d_raw * (Z_road ^ 1.35) * 0.082",
+    "current_k_disp": 0.082,
+    "optimal_linear_scaling_factor": 0.9346,
+    "suggested_k_disp": 0.07664,
+    "mean_bias_direction": "BALANCED"
+  },
+  "eval_rows": [
+    {
+      "id": "P01",
+      "distance_m": 3.2,
+      "physical_cm": 3.0,
+      "estimated_cm": 3.4,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": 0.4,
+      "relative_error_pct": 13.3,
+      "true_category": "MILD",
+      "pred_category": "MILD",
+      "category_match": true
+    },
+    {
+      "id": "P02",
+      "distance_m": 4.1,
+      "physical_cm": 5.5,
+      "estimated_cm": 5.1,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": -0.4,
+      "relative_error_pct": 7.3,
+      "true_category": "MODERATE",
+      "pred_category": "MODERATE",
+      "category_match": true
+    },
+    {
+      "id": "P03",
+      "distance_m": 4.8,
+      "physical_cm": 2.8,
+      "estimated_cm": 3.2,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": 0.4,
+      "relative_error_pct": 14.3,
+      "true_category": "MILD",
+      "pred_category": "MILD",
+      "category_match": true
+    },
+    {
+      "id": "P04",
+      "distance_m": 3.6,
+      "physical_cm": 8.5,
+      "estimated_cm": 8.9,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": 0.4,
+      "relative_error_pct": 4.7,
+      "true_category": "SEVERE",
+      "pred_category": "SEVERE",
+      "category_match": true
+    },
+    {
+      "id": "P05",
+      "distance_m": 5.4,
+      "physical_cm": 6.2,
+      "estimated_cm": 6.8,
+      "water": false,
+      "abs_error_cm": 0.6,
+      "signed_error_cm": 0.6,
+      "relative_error_pct": 9.7,
+      "true_category": "MODERATE",
+      "pred_category": "MODERATE",
+      "category_match": true
+    },
+    {
+      "id": "P06",
+      "distance_m": 6.1,
+      "physical_cm": 4.5,
+      "estimated_cm": 4.9,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": 0.4,
+      "relative_error_pct": 8.9,
+      "true_category": "MODERATE",
+      "pred_category": "MODERATE",
+      "category_match": true
+    },
+    {
+      "id": "P07",
+      "distance_m": 6.9,
+      "physical_cm": 7.2,
+      "estimated_cm": 7.7,
+      "water": false,
+      "abs_error_cm": 0.5,
+      "signed_error_cm": 0.5,
+      "relative_error_pct": 6.9,
+      "true_category": "MODERATE",
+      "pred_category": "MODERATE",
+      "category_match": true
+    },
+    {
+      "id": "P08",
+      "distance_m": 7.8,
+      "physical_cm": 11.0,
+      "estimated_cm": 11.8,
+      "water": true,
+      "abs_error_cm": 0.8,
+      "signed_error_cm": 0.8,
+      "relative_error_pct": 7.3,
+      "true_category": "SEVERE",
+      "pred_category": "SEVERE",
+      "category_match": true
+    },
+    {
+      "id": "P09",
+      "distance_m": 8.6,
+      "physical_cm": 3.5,
+      "estimated_cm": 3.9,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": 0.4,
+      "relative_error_pct": 11.4,
+      "true_category": "MILD",
+      "pred_category": "MILD",
+      "category_match": true
+    },
+    {
+      "id": "P10",
+      "distance_m": 9.2,
+      "physical_cm": 5.8,
+      "estimated_cm": 5.2,
+      "water": false,
+      "abs_error_cm": 0.6,
+      "signed_error_cm": -0.6,
+      "relative_error_pct": 10.3,
+      "true_category": "MODERATE",
+      "pred_category": "MODERATE",
+      "category_match": true
+    },
+    {
+      "id": "P11",
+      "distance_m": 10.1,
+      "physical_cm": 9.0,
+      "estimated_cm": 9.7,
+      "water": false,
+      "abs_error_cm": 0.7,
+      "signed_error_cm": 0.7,
+      "relative_error_pct": 7.8,
+      "true_category": "SEVERE",
+      "pred_category": "SEVERE",
+      "category_match": true
+    },
+    {
+      "id": "P12",
+      "distance_m": 10.7,
+      "physical_cm": 6.5,
+      "estimated_cm": 7.1,
+      "water": false,
+      "abs_error_cm": 0.6,
+      "signed_error_cm": 0.6,
+      "relative_error_pct": 9.2,
+      "true_category": "MODERATE",
+      "pred_category": "MODERATE",
+      "category_match": true
+    },
+    {
+      "id": "P13",
+      "distance_m": 11.8,
+      "physical_cm": 10.5,
+      "estimated_cm": 11.4,
+      "water": false,
+      "abs_error_cm": 0.9,
+      "signed_error_cm": 0.9,
+      "relative_error_pct": 8.6,
+      "true_category": "SEVERE",
+      "pred_category": "SEVERE",
+      "category_match": true
+    },
+    {
+      "id": "P14",
+      "distance_m": 12.6,
+      "physical_cm": 3.2,
+      "estimated_cm": 3.6,
+      "water": false,
+      "abs_error_cm": 0.4,
+      "signed_error_cm": 0.4,
+      "relative_error_pct": 12.5,
+      "true_category": "MILD",
+      "pred_category": "MILD",
+      "category_match": true
+    },
+    {
+      "id": "P15",
+      "distance_m": 13.5,
+      "physical_cm": 8.2,
+      "estimated_cm": 9.1,
+      "water": true,
+      "abs_error_cm": 0.9,
+      "signed_error_cm": 0.9,
+      "relative_error_pct": 11.0,
+      "true_category": "SEVERE",
+      "pred_category": "SEVERE",
+      "category_match": true
+    }
+  ]
+}
