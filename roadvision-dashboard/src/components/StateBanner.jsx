@@ -9,11 +9,23 @@ import {
 } from 'lucide-react';
 import {
   MEASUREMENT_STATES,
+  gpsProvenanceTone,
+  inspectionProvenanceTone,
   matchStatusTone,
   measurementStateTone,
   qualityCategoryTone,
   statusTone,
 } from '../utils/formatters';
+
+export function ProvenanceBadge({ provenance }) {
+  const label = provenance || 'UNKNOWN';
+  return <span className={`rv-badge rv-badge-${inspectionProvenanceTone(label)}`}>{label}</span>;
+}
+
+export function GpsProvenanceBadge({ gpsProvenance, isSynthetic = false }) {
+  const label = isSynthetic ? 'SYNTHETIC' : (gpsProvenance || 'UNKNOWN');
+  return <span className={`rv-badge rv-badge-${gpsProvenanceTone(label, isSynthetic)}`}>{label}</span>;
+}
 
 export function StatusBadge({ status }) {
   const label = status || 'UNKNOWN';

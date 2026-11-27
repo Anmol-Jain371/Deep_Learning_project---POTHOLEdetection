@@ -111,7 +111,19 @@ def compute_review_priority(
     depth_enabled = bool(candidate.get("depth_enabled", False))
 
     distinct_trips = int(candidate.get("cluster_distinct_trip_count") or 0)
-    contains_synth_gps = bool(candidate.get("contains_synthetic_gps", False))
+    gps_prov = str(candidate.get("gps_provenance") or "").upper()
+    cluster_prov = str(candidate.get("cluster_provenance") or "").upper()
+    contains_synth_gps = bool(candidate.get("contains_synthetic_gps", False)) or (gps_prov == "SYNTHETIC")
+    contains_unknown_gps = (
+        bool(candidate.get("cluster_contains_unknown_gps", False))
+        or gps_prov == "UNKNOWN"
+        or "UNKNOWN" in cluster_prov
+    )
+    allow_cross_trip_boost = (
+        distinct_trips >= 2
+        and not contains_synth_gps
+        and not contains_unknown_gps
+    )
     gps_sync_q = candidate.get("gps_sync_quality")
     review_status = str(candidate.get("review_status") or "PENDING_REVIEW")
 
@@ -126,7 +138,7 @@ def compute_review_priority(
         else None
     )
     c_temp = _clamp01(1.0 - min(1.0, temporal_var)) if temporal_var is not None else None
-    if distinct_trips >= 2 and not contains_synth_gps:
+    if allow_cross_trip_boost:
         c_cross = _clamp01((distinct_trips - 1) / 2.0)
     elif candidate.get("has_gps"):
         c_cross = 0.0
@@ -209,13 +221,13 @@ def compute_review_priority(
             )
         elif (
             (priority_index is not None and priority_index >= cfg.priority_review_min)
-            or (distinct_trips >= 2 and not contains_synth_gps)
+            or allow_cross_trip_boost
         ):
             category = "PRIORITY_REVIEW"
             reasons.append(
                 f"Composite review-priority index ({priority_index}) meets PRIORITY_REVIEW threshold ({cfg.priority_review_min})."
             )
-            if distinct_trips >= 2 and not contains_synth_gps:
+            if allow_cross_trip_boost:
                 reasons.append(f"Repeated candidate across {distinct_trips} GPS-matched inspection sessions.")
         else:
             category = "STANDARD_REVIEW"
@@ -229,6 +241,8 @@ def compute_review_priority(
         reasons.append("No depth frames evaluated on this track (scheduler/horizon skipped).")
     if contains_synth_gps:
         reasons.append("Associated geospatial cluster includes synthetic GPS fixture data; excluded from automated cross-trip boost.")
+    if contains_unknown_gps:
+        reasons.append("Associated geospatial record has unknown GPS provenance; excluded from automated cross-trip priority boost.")
 
     return {
         "review_priority_category": category,
@@ -423,10 +437,19 @@ def aggregate_job_maintenance(
             "gps_sync_quality": geo.get("sync_quality") if geo else None,
             "interpolation_status": geo.get("interpolation_status") if geo else None,
             "gps_provenance_label": geo.get("provenance_label") if geo else None,
+            "gps_provenance": geo.get("gps_provenance") if geo else None,
             "cluster_id": cl.get("cluster_id") if cl else None,
             "cluster_distinct_trip_count": int(cl.get("distinct_trip_count", 0)) if cl else 0,
             "cluster_match_status": cl.get("match_status") if cl else None,
-            "contains_synthetic_gps": bool(cl.get("contains_synthetic", False)) if cl else False,
+            "cluster_provenance": cl.get("cluster_provenance") if cl else None,
+            "contains_synthetic_gps": (
+                bool(cl.get("contains_synthetic", False)) if cl else bool(geo and geo.get("is_synthetic", False))
+            ),
+            "cluster_contains_unknown_gps": (
+                bool(cl.get("contains_unknown_provenance", False))
+                if cl
+                else bool(geo and str(geo.get("gps_provenance") or "").upper() == "UNKNOWN")
+            ),
             "review_id": mrev.get("review_id") if mrev else None,
             "review_status": mrev.get("review_status") if mrev else "PENDING_REVIEW",
             "reviewer_label": mrev.get("reviewer_label") if mrev else None,

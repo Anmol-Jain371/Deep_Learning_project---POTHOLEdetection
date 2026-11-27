@@ -1,0 +1,14 @@
+{
+  "experiments/phase13/__init__.py": "9177ace0d8b72c8ebca13ba49cec93be0e91aca55ba24e4086133089b4f55c2d",
+  "experiments/phase13/dataset_audit.py": "2a57906aac45c2ff025ab841644096de01f2abcb511296ff0b4d41be4e160b90",
+  "experiments/phase13/depth_cavity_ablation.py": "075cdc05fc571dea1442ff691ce33701c12e7e564cb5a22aef5b54ab2d25a77c",
+  "experiments/phase13/detection_evaluation.py": "c782234d3e6a6903b75b82fe43a7bd1009b1cd8f18ea8fdee5dcefb2695aef88",
+  "experiments/phase13/generate_figures.py": "21a86928f651bf10e8da8483a21fef4f26a218e372279c6d3b10a72d4b6d8537",
+  "experiments/phase13/geometry_ablation.py": "468a3982fd8c6cce625af2289659037065830c4280a6455e3b9721aed6604518",
+  "experiments/phase13/quality_geo_maint_eval.py": "3272a9f941b02a0f2b996fde2bdb851e7a933b4b495596302e5add1355de6c86",
+  "experiments/phase13/run_evaluation.py": "5726aab5c8b9aeef5cc25c18799e8386d154db9a5ec726099a6531753f0ed2e9",
+  "experiments/phase13/scheduler_temporal_ablation.py": "9092b920118e17c5ae67aacc336f18e888098d8d80e41fbd7cd61ca490e682a6",
+  "experiments/phase13/statistics.py": "9929f5c8b279d3cb8d0635fe5fd4c268105388bbc9a8a21d63f811b90a78e60e",
+  "experiments/phase13/evaluation_config.yaml": "2e3d29f98d317d0ee3657b6552df42590b30ad2c075c2e4bfec0a6fe090403ef",
+  "experiments/track_depth_cache.py": "e181dd6ac8f5ec83c3ed0d402567f257b30d0eda48f0cf4839693169c5fa565d"
+}

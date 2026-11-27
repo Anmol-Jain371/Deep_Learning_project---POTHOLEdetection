@@ -143,7 +143,7 @@ def main() -> int:
         cfg = yaml.safe_load(fh)
 
     run_id = args.run_id or f"phase13_{args.mode}_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
-    out_dir = os.path.join(project_root, "runs", "evaluation", "phase13", run_id)
+    out_dir = os.path.join(project_root, "runs", "evaluation", "phase13b", run_id)
     if os.path.exists(out_dir) and not args.resume:
         raise FileExistsError(f"Output directory '{out_dir}' already exists; pass --resume or choose a unique --run-id.")
     os.makedirs(out_dir, exist_ok=True)

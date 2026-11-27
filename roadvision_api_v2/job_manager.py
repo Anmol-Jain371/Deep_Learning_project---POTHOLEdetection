@@ -10,6 +10,11 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
+from roadvision_v2.schemas import (
+    INSPECTION_PROVENANCE_CATEGORIES,
+    NON_GENUINE_INSPECTION_PROVENANCE,
+)
+
 from .errors import (
     BadRequestError,
     InvalidJobStateError,
@@ -151,6 +156,8 @@ class JobManager:
             "summary": summary,
             "telemetry": telemetry,
             "pipeline_version": d["pipeline_version"],
+            "provenance": d.get("provenance") or "USER_INSPECTION",
+            "provenance_reason": d.get("provenance_reason"),
         }
         if include_internal_paths:
             out["validated_input_path"] = d["validated_input_path"]
@@ -168,9 +175,18 @@ class JobManager:
         output_dir: str,
         total_frames: Optional[int] = None,
         pipeline_version: str = PIPELINE_VERSION,
+        provenance: str = "USER_INSPECTION",
+        provenance_reason: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Atomically enforce queue limit and persist a new QUEUED job."""
         jid = validate_uuid(job_id) if job_id else str(uuid.uuid4())
+        prov_norm = str(provenance or "USER_INSPECTION").strip().upper()
+        if prov_norm not in INSPECTION_PROVENANCE_CATEGORIES:
+            raise BadRequestError(
+                f"Unsupported inspection provenance '{prov_norm}'",
+                error_code="INVALID_PROVENANCE",
+                details={"allowed_provenances": list(INSPECTION_PROVENANCE_CATEGORIES)},
+            )
         now = utc_now_iso()
         state_counts_json = json.dumps(empty_measurement_state_counts(), allow_nan=False)
         config_json = json.dumps(sanitize_json_value(config_snapshot), allow_nan=False)
@@ -199,7 +215,7 @@ class JobManager:
                     measurement_state_counts_json, progress_percentage, throughput_fps,
                     output_dir, cancel_requested, error_code, error_message, latest_warning,
                     artifact_manifest_json, artifact_availability_json, summary_json,
-                    telemetry_json, pipeline_version
+                    telemetry_json, pipeline_version, provenance, provenance_reason
                 ) VALUES (
                     ?, ?, ?, ?, ?,
                     ?, ?, NULL, NULL, ?,
@@ -209,7 +225,7 @@ class JobManager:
                     ?, NULL, NULL,
                     ?, 0, NULL, NULL, NULL,
                     NULL, ?, NULL,
-                    NULL, ?
+                    NULL, ?, ?, ?
                 )
                 """,
                 (
@@ -226,6 +242,8 @@ class JobManager:
                     output_dir,
                     avail_json,
                     pipeline_version,
+                    prov_norm,
+                    provenance_reason,
                 ),
             )
             row = conn.execute(
@@ -248,12 +266,18 @@ class JobManager:
         self,
         *,
         status: Optional[str] = None,
+        provenance: Optional[str] = None,
+        include_provenances: Optional[List[str]] = None,
+        exclude_non_genuine: bool = False,
         limit: int = 50,
         offset: int = 0,
     ) -> Dict[str, Any]:
-        """List jobs ordered newest first with optional status filter and pagination."""
+        """List jobs ordered newest first with optional status/provenance filters and pagination."""
         limit = max(1, min(int(limit), 200))
         offset = max(0, int(offset))
+        clauses: List[str] = []
+        params: List[Any] = []
+
         if status is not None:
             status = status.upper().strip()
             if status not in ALL_JOB_STATUSES:
@@ -261,24 +285,46 @@ class JobManager:
                     f"Unsupported status filter '{status}'",
                     error_code="INVALID_STATUS_FILTER",
                 )
+            clauses.append("status = ?")
+            params.append(status)
+
+        if provenance is not None:
+            prov_norm = provenance.upper().strip()
+            if prov_norm not in INSPECTION_PROVENANCE_CATEGORIES:
+                raise BadRequestError(
+                    f"Unsupported provenance filter '{prov_norm}'",
+                    error_code="INVALID_PROVENANCE_FILTER",
+                    details={"allowed_provenances": list(INSPECTION_PROVENANCE_CATEGORIES)},
+                )
+            clauses.append("provenance = ?")
+            params.append(prov_norm)
+        elif include_provenances:
+            clean_provs = []
+            for p in include_provenances:
+                pn = str(p).upper().strip()
+                if pn not in INSPECTION_PROVENANCE_CATEGORIES:
+                    raise BadRequestError(f"Unsupported provenance filter '{pn}'", error_code="INVALID_PROVENANCE_FILTER")
+                if pn not in clean_provs:
+                    clean_provs.append(pn)
+            if clean_provs:
+                placeholders = ",".join("?" for _ in clean_provs)
+                clauses.append(f"provenance IN ({placeholders})")
+                params.extend(clean_provs)
+        elif exclude_non_genuine:
+            placeholders = ",".join("?" for _ in NON_GENUINE_INSPECTION_PROVENANCE)
+            clauses.append(f"provenance NOT IN ({placeholders}) AND provenance = 'USER_INSPECTION'")
+
+        where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
 
         with self.db.read_connection() as conn:
-            if status is not None:
-                total_row = conn.execute(
-                    "SELECT COUNT(*) AS cnt FROM inspection_jobs WHERE status = ?", (status,)
-                ).fetchone()
-                rows = conn.execute(
-                    "SELECT * FROM inspection_jobs WHERE status = ? ORDER BY created_at DESC LIMIT ? OFFSET ?",
-                    (status, limit, offset),
-                ).fetchall()
-            else:
-                total_row = conn.execute(
-                    "SELECT COUNT(*) AS cnt FROM inspection_jobs"
-                ).fetchone()
-                rows = conn.execute(
-                    "SELECT * FROM inspection_jobs ORDER BY created_at DESC LIMIT ? OFFSET ?",
-                    (limit, offset),
-                ).fetchall()
+            total_row = conn.execute(
+                f"SELECT COUNT(*) AS cnt FROM inspection_jobs {where_sql}",
+                tuple(params),
+            ).fetchone()
+            rows = conn.execute(
+                f"SELECT * FROM inspection_jobs {where_sql} ORDER BY created_at DESC LIMIT ? OFFSET ?",
+                tuple([*params, limit, offset]),
+            ).fetchall()
 
         total = int(total_row["cnt"]) if total_row else 0
         return {
@@ -288,15 +334,48 @@ class JobManager:
             "offset": offset,
         }
 
-    def count_jobs_by_status(self) -> Dict[str, int]:
-        """Return counts grouped by lifecycle status."""
+    def count_jobs_by_status(
+        self,
+        *,
+        include_provenances: Optional[List[str]] = None,
+        exclude_non_genuine: bool = False,
+    ) -> Dict[str, int]:
+        """Return counts grouped by lifecycle status with optional provenance scoping."""
         counts = {s: 0 for s in ALL_JOB_STATUSES}
+        clauses: List[str] = []
+        params: List[Any] = []
+        if include_provenances:
+            placeholders = ",".join("?" for _ in include_provenances)
+            clauses.append(f"provenance IN ({placeholders})")
+            params.extend(include_provenances)
+        elif exclude_non_genuine:
+            clauses.append("provenance = 'USER_INSPECTION'")
+        where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
         with self.db.read_connection() as conn:
             rows = conn.execute(
-                "SELECT status, COUNT(*) AS cnt FROM inspection_jobs GROUP BY status"
+                f"SELECT status, COUNT(*) AS cnt FROM inspection_jobs {where_sql} GROUP BY status",
+                tuple(params),
             ).fetchall()
         for r in rows:
             counts[r["status"]] = int(r["cnt"])
+        return counts
+
+    def count_jobs_by_provenance(self, *, status: Optional[str] = None) -> Dict[str, int]:
+        """Return inspection counts grouped by provenance category."""
+        counts = {p: 0 for p in INSPECTION_PROVENANCE_CATEGORIES}
+        where_sql = ""
+        params: List[Any] = []
+        if status is not None:
+            where_sql = "WHERE status = ?"
+            params.append(status.upper().strip())
+        with self.db.read_connection() as conn:
+            rows = conn.execute(
+                f"SELECT provenance, COUNT(*) AS cnt FROM inspection_jobs {where_sql} GROUP BY provenance",
+                tuple(params),
+            ).fetchall()
+        for r in rows:
+            key = str(r["provenance"] or "UNKNOWN").upper()
+            counts[key] = counts.get(key, 0) + int(r["cnt"])
         return counts
 
     def claim_next_job(self) -> Optional[Dict[str, Any]]:

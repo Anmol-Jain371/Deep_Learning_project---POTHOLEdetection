@@ -13,6 +13,7 @@ import {
 import {
   StatePanel,
   StatusBadge,
+  ProvenanceBadge,
   ScientificDisclaimer,
   MeasurementStateDistribution,
 } from '../components/StateBanner';
@@ -22,6 +23,7 @@ export default function Overview({ onNavigate }) {
   const [health, setHealth] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [totalJobsCount, setTotalJobsCount] = useState(0);
+  const [provenanceScope, setProvenanceScope] = useState('genuine');
   const [capabilities, setCapabilities] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +34,7 @@ export default function Overview({ onNavigate }) {
     try {
       const [h, j, cap] = await Promise.all([
         getHealth(),
-        listJobs({ page: 1, page_size: 20 }),
+        listJobs({ page: 1, page_size: 20, scope: provenanceScope }),
         getCapabilities().catch(() => null),
       ]);
       setHealth(h);
@@ -44,7 +46,7 @@ export default function Overview({ onNavigate }) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [provenanceScope]);
 
   useEffect(() => {
     loadData();
@@ -92,7 +94,15 @@ export default function Overview({ onNavigate }) {
     );
   }
 
-  const queueCounts = health?.queue_counts || {};
+  const queueCounts =
+    provenanceScope === 'genuine'
+      ? (health?.queue_counts || {})
+      : jobs.reduce((acc, j) => {
+          acc[j.status] = (acc[j.status] || 0) + 1;
+          return acc;
+        }, {});
+  const provCounts = health?.provenance_counts || {};
+  const excludedNonGenuine = health?.non_genuine_excluded_count ?? 0;
   const completedCount = queueCounts.COMPLETED || 0;
   const failedCount = queueCounts.FAILED || 0;
   const cancelledCount = queueCounts.CANCELLED || 0;
@@ -126,10 +136,20 @@ export default function Overview({ onNavigate }) {
         <div>
           <h2 className="rv-page-title">Inspection Command Overview</h2>
           <p className="rv-page-subtitle">
-            Bounded GPU worker status, inspection queue metrics, and recent relative-depth audits.
+            Bounded GPU worker status, provenance-isolated aggregates, and recent relative-depth audits.
           </p>
         </div>
         <div className="rv-header-actions">
+          <select
+            aria-label="Provenance aggregate filter"
+            className="rv-select"
+            value={provenanceScope}
+            onChange={(e) => setProvenanceScope(e.target.value)}
+          >
+            <option value="genuine">Genuine Inspections Only ({provCounts.USER_INSPECTION ?? 0})</option>
+            <option value="exploratory">Include Exploratory Research ({(provCounts.USER_INSPECTION ?? 0) + (provCounts.RESEARCH_EXPLORATORY ?? 0)})</option>
+            <option value="all">All Stored Records (incl. {excludedNonGenuine} Non-Genuine)</option>
+          </select>
           <button type="button" className="rv-btn rv-btn-ghost rv-btn-sm" onClick={loadData} disabled={loading}>
             <RefreshCw size={14} className={loading ? 'rv-spin' : ''} /> Refresh
           </button>
@@ -139,14 +159,26 @@ export default function Overview({ onNavigate }) {
         </div>
       </div>
 
+      {provenanceScope === 'genuine' && excludedNonGenuine > 0 && (
+        <div className="rv-disclaimer" role="note" style={{ marginBottom: 14 }}>
+          <span>
+            Default genuine aggregate excludes <strong>{excludedNonGenuine}</strong> non-genuine/exploratory record(s):{' '}
+            Exploratory: {provCounts.RESEARCH_EXPLORATORY ?? 0} · Test Fixtures: {provCounts.TEST_FIXTURE ?? 0} ·{' '}
+            Synthetic: {provCounts.SYNTHETIC_EXPERIMENT ?? 0} · Unknown: {provCounts.UNKNOWN ?? 0}.
+          </span>
+        </div>
+      )}
+
       <div className="rv-kpi-grid">
         <div className="rv-kpi-card">
           <div className="rv-kpi-top">
-            <span>Total Inspections</span>
+            <span>Inspections in Scope</span>
             <Layers size={16} className="rv-icon-cyan" />
           </div>
           <div className="rv-kpi-val">{totalJobsCount}</div>
-          <div className="rv-kpi-sub">Persisted in SQLite job store</div>
+          <div className="rv-kpi-sub">
+            {provenanceScope === 'genuine' ? 'USER_INSPECTION only' : `Scope: ${provenanceScope.toUpperCase()}`}
+          </div>
         </div>
 
         <div className="rv-kpi-card">
@@ -264,6 +296,7 @@ export default function Overview({ onNavigate }) {
               <thead>
                 <tr>
                   <th>Inspection File</th>
+                  <th>Provenance</th>
                   <th>Mode</th>
                   <th>Status</th>
                   <th>Frames</th>
@@ -285,6 +318,9 @@ export default function Overview({ onNavigate }) {
                       <div className="rv-mono" style={{ color: 'var(--rv-text-muted)', fontSize: 11 }}>
                         {job.job_id}
                       </div>
+                    </td>
+                    <td>
+                      <ProvenanceBadge provenance={job.provenance} />
                     </td>
                     <td>
                       <span className="rv-badge rv-badge-neutral">{(job.mode || '').toUpperCase()}</span>

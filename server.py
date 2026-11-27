@@ -1,3 +1,5 @@
+import json
+import math
 import os
 import sys
 import time
@@ -16,10 +18,23 @@ from roadvision_api_v2 import (
     stop_v2_worker,
 )
 
-app = Flask(__name__)
-CORS(app)
-
 api_cfg = load_api_config()
+allowed_legacy_origins = list(api_cfg.allowed_cors_origins)
+
+app = Flask(__name__)
+# Restrict legacy CORS strictly to explicit localhost/loopback origins and non-V2 routes
+# so app.after_request can never override V2 Blueprint origin restrictions.
+CORS(
+    app,
+    resources={
+        r"/api/health": {"origins": allowed_legacy_origins},
+        r"/api/benchmark": {"origins": allowed_legacy_origins},
+        r"/api/camera-config": {"origins": allowed_legacy_origins},
+        r"/api/detect": {"origins": allowed_legacy_origins},
+        r"/outputs/.*": {"origins": allowed_legacy_origins},
+    },
+)
+
 if api_cfg.enabled:
     register_v2_api(app, api_cfg)
     print("✅ RoadVision V2 API registered under /api/v2 (worker starts on server run)")
@@ -34,24 +49,38 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "roadvision-dashboard", "public", "outputs")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Initialize Deep Learning Engine with upgraded production detector (RDD1666 50-Epoch, 84.7% mAP50)
+# Initialize Deep Learning Engine (Legacy V1 compatibility checkpoint selection)
 UPGRADED_RDD_WEIGHTS = os.path.join(BASE_DIR, "runs", "detect", "pothole_rdd1666_50e", "weights", "best.pt")
 PROD_V2_50E = os.path.join(BASE_DIR, "runs", "detect", "pothole_combined_v2_50e", "weights", "best.pt")
 PROD_WEIGHTS = os.path.join(BASE_DIR, "runs", "detect", "pothole_combined_v2", "weights", "best.pt")
 BASELINE_WEIGHTS = os.path.join(BASE_DIR, "pothole_best.pt")
 
+
+def _describe_checkpoint_arch(weights_path: str) -> str:
+    if not os.path.exists(weights_path):
+        return "architecture unavailable (checkpoint missing)"
+    try:
+        from ultralytics import YOLO
+        m = YOLO(weights_path)
+        n_params = sum(int(p.numel()) for p in m.model.parameters())
+        arch_hint = "YOLOv8n-scale" if n_params < 5_000_000 else ("YOLOv8s-scale" if n_params < 18_000_000 else "YOLOv8-variant")
+        return f"{arch_hint}, {n_params / 1e6:.2f}M params"
+    except Exception:
+        return "architecture verification unavailable"
+
+
 if os.path.exists(UPGRADED_RDD_WEIGHTS):
     WEIGHTS_PATH = UPGRADED_RDD_WEIGHTS
-    MODEL_LABEL = "Model #3 (RDD1666-Expanded 50e, 84.7% mAP50, 92.4% Precision)"
+    MODEL_LABEL = f"Legacy V1 (pothole_rdd1666_50e, {_describe_checkpoint_arch(UPGRADED_RDD_WEIGHTS)} — historical benchmark verification unavailable)"
 elif os.path.exists(PROD_V2_50E):
     WEIGHTS_PATH = PROD_V2_50E
-    MODEL_LABEL = "Model #2b (Combined-V2 50e, 76.2% mAP50)"
+    MODEL_LABEL = f"Legacy V1 (pothole_combined_v2_50e, {_describe_checkpoint_arch(PROD_V2_50E)} — historical benchmark verification unavailable)"
 elif os.path.exists(PROD_WEIGHTS):
     WEIGHTS_PATH = PROD_WEIGHTS
-    MODEL_LABEL = "Model #2 (pothole_combined_v2 25e)"
+    MODEL_LABEL = f"Legacy V1 (pothole_combined_v2, {_describe_checkpoint_arch(PROD_WEIGHTS)})"
 else:
     WEIGHTS_PATH = BASELINE_WEIGHTS
-    MODEL_LABEL = "Baseline (pothole_best.pt)"
+    MODEL_LABEL = f"Legacy V1 Baseline (pothole_best.pt, {_describe_checkpoint_arch(BASELINE_WEIGHTS)})"
 
 print(f"🚀 Initializing Python Flask Backend Server...")
 print(f"📦 Production Detector Checkpoint: {WEIGHTS_PATH}")
@@ -72,16 +101,81 @@ def health_check():
         "timestamp": time.time()
     })
 
+def _opt_round(val, ndigits: int):
+    """Round genuinely computed values while preserving 0.0 and returning None when missing/non-finite."""
+    if val is None or isinstance(val, bool):
+        return None
+    try:
+        f = float(val)
+    except (TypeError, ValueError):
+        return None
+    if math.isnan(f) or math.isinf(f):
+        return None
+    return round(f, ndigits)
+
+
+LEGACY_PHYSICAL_DISCLAIMER = (
+    "Uncalibrated experimental estimate — physical accuracy not established."
+)
+
+
+def build_legacy_audit_records(records: dict, display_id_map: dict, has_gps: bool) -> list:
+    """Format legacy V1 smoother records without substituting artificial numeric defaults."""
+    audit_records = []
+    for tid, data in records.items():
+        disp_id = display_id_map.get(tid, tid)
+        sev = data.get("severity")
+        is_water = (data.get("water_votes") or 0) > 0
+
+        if is_water or (isinstance(sev, str) and "WATER" in sev):
+            status = "Aquaplaning Risk / Drain Clearing"
+        elif isinstance(sev, str) and "SEVERE" in sev:
+            status = "Experimental Legacy Severe Tier (Unvalidated)"
+        elif isinstance(sev, str) and "MODERATE" in sev:
+            status = "Experimental Legacy Moderate Tier (Unvalidated)"
+        else:
+            status = "Experimental Legacy Logged Entry (Unvalidated)"
+
+        raw_lat = data.get("lat")
+        raw_lon = data.get("lon")
+        record = {
+            "id": f"P-{disp_id:03d}" if isinstance(disp_id, int) else f"P-{disp_id}",
+            "timestamp": _opt_round(data.get("timestamp"), 1),
+            "severity": sev,
+            "depth_cm": _opt_round(data.get("smooth_cm"), 1),
+            "width_cm": _opt_round(data.get("smooth_width_cm"), 1),
+            "length_cm": _opt_round(data.get("smooth_length_cm"), 1),
+            "volume_liters": _opt_round(data.get("volume_liters"), 2),
+            "asphalt_kg": _opt_round(data.get("asphalt_kg"), 1),
+            "confidence": _opt_round(data.get("confidence"), 2),
+            "water": is_water,
+            "lat": _opt_round(raw_lat, 5) if (has_gps and raw_lat is not None) else None,
+            "lng": _opt_round(raw_lon, 5) if (has_gps and raw_lon is not None) else None,
+            "status": status,
+            "physical_accuracy_validated": False,
+            "physical_measurement_status": LEGACY_PHYSICAL_DISCLAIMER,
+        }
+        audit_records.append(record)
+    return audit_records
+
+
 @app.route("/api/benchmark", methods=["GET"])
 def get_benchmark():
     benchmark_file = os.path.join(BASE_DIR, "runs", "benchmark", "yolo_rdd1666_vs_faster_rcnn.json")
     if not os.path.exists(benchmark_file):
         benchmark_file = os.path.join(BASE_DIR, "runs", "benchmark", "yolo_vs_faster_rcnn.json")
-    
+
     if os.path.exists(benchmark_file):
-        import json
-        with open(benchmark_file, "r") as f:
-            return jsonify(json.load(f))
+        with open(benchmark_file, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+        return jsonify({
+            "archive_notice": "Legacy V1 research archive — historical benchmark verification unavailable.",
+            "verified": False,
+            "model_metadata_note": (
+                "Checkpoint pothole_rdd1666_50e (~3.01M params, YOLOv8n architecture) was previously mislabeled as YOLOv8s in raw historical JSON."
+            ),
+            "historical_raw": raw,
+        })
     return jsonify({"error": "Benchmark data not generated yet"}), 404
 
 @app.route("/api/camera-config", methods=["GET"])
@@ -136,41 +230,8 @@ def process_video_upload():
         if not verified:
             verified = pipeline.smoother.records
 
-        has_gps = results.get("has_gps", False)
-
-        for tid, data in verified.items():
-            disp_id = pipeline.display_id_map.get(tid, tid)
-            sev = data.get("severity", "MODERATE")
-            is_water = data.get("water_votes", 0) > 0
-
-            if is_water or "WATER" in sev:
-                status = "Aquaplaning Risk / Drain Clearing"
-            elif "SEVERE" in sev:
-                status = "Urgent Work Order Dispatched"
-            elif "MODERATE" in sev:
-                status = "Scheduled Inspection"
-            else:
-                status = "Logged / Routine Maintenance"
-
-            # Only include GPS coordinates when real GPS data exists
-            raw_lat = data.get("lat")
-            raw_lon = data.get("lon")
-            record = {
-                "id": f"P-{disp_id:03d}",
-                "timestamp": round(data.get("timestamp", 0.0), 1),
-                "severity": sev,
-                "depth_cm": round(data.get("smooth_cm", 6.5), 1),
-                "width_cm": round(data.get("smooth_width_cm", 30.0), 1),
-                "length_cm": round(data.get("smooth_length_cm", 25.0), 1),
-                "volume_liters": round(data.get("volume_liters", 1.0), 2),
-                "asphalt_kg": round(data.get("asphalt_kg", 2.3), 1),
-                "confidence": round(data.get("confidence", 0.85), 2),
-                "water": is_water,
-                "lat": round(raw_lat, 5) if (has_gps and raw_lat is not None) else None,
-                "lng": round(raw_lon, 5) if (has_gps and raw_lon is not None) else None,
-                "status": status
-            }
-            audit_records.append(record)
+        has_gps = bool(results.get("has_gps", False))
+        audit_records = build_legacy_audit_records(verified, pipeline.display_id_map, has_gps)
 
         print(f"✅ PyTorch Inference Completed! {len(audit_records)} hazards registered.")
         print(f"🎥 Output video saved to: {output_path}")
@@ -181,7 +242,9 @@ def process_video_upload():
             "videoUrl": f"/outputs/{output_filename}",
             "stats": results,
             "auditRecords": audit_records,
-            "hasGPS": has_gps
+            "hasGPS": has_gps,
+            "physical_accuracy_validated": False,
+            "physical_measurement_status": LEGACY_PHYSICAL_DISCLAIMER,
         })
 
     except Exception as e:

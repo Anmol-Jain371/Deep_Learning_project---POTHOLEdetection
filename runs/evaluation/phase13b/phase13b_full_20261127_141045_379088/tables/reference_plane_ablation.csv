@@ -1,0 +1,5 @@
+method,scope,unique_cases,timed_trials,valid_count,gate_concordance_pct,invalid_rejection_rate_pct,mean_plane_rmse,outlier_mean_plane_rmse,mean_inlier_ratio,mean_latency_ms,median_latency_ms,p95_latency_ms
+A_legacy_annular,scalar_donut_delta_only,45,135,45,77.78,0.0,,,,0.5,0.422,0.849
+B_ols_plane,full_per_region_extraction (region_build + plane_fit + cavity_extract),45,135,35,100.0,100.0,0.00063,0.001065,0.9839,2.279,2.078,4.117
+C_ransac_baseline,full_per_region_extraction (region_build + plane_fit + cavity_extract),45,135,35,100.0,100.0,0.000285,2.9e-05,0.9965,8.397,7.448,14.025
+D_optimized_msac_ransac,full_per_region_extraction (region_build + plane_fit + cavity_extract),45,135,35,100.0,100.0,0.000396,0.000131,0.9961,2.407,2.077,4.433

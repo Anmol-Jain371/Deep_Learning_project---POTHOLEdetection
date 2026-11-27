@@ -1,0 +1,36 @@
+{
+  "run_id": "phase13b_quality_smoke_20261127_133421_443198",
+  "mode": "smoke",
+  "modules": {
+    "dataset_audit": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:04:29.990791+00:00",
+      "reason": null
+    },
+    "detection": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:04:29.990791+00:00",
+      "reason": null
+    },
+    "geometry": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:04:29.990791+00:00",
+      "reason": null
+    },
+    "depth_cavity": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:04:29.990791+00:00",
+      "reason": null
+    },
+    "scheduler_temporal": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:04:29.990791+00:00",
+      "reason": null
+    },
+    "quality_geo_maint": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:04:33.643790+00:00",
+      "reason": null
+    }
+  }
+}

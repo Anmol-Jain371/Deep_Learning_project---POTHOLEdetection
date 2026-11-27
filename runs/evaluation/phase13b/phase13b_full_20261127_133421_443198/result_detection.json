@@ -1,0 +1,543 @@
+{
+  "status": "COMPLETED",
+  "independent_generalization_status": "BLOCKED",
+  "independent_generalization_reason": "No untouched independent annotated pothole detection dataset exists (evaluation/ground_truth_labels/ has 0 annotations and dataset_unified contains 328 suspected cross-split near-duplicate pairs dHash<=6). All dataset_unified and external_rangoon metrics are EXPLORATORY ONLY.",
+  "software_versions": {
+    "ultralytics": "8.4.211",
+    "torch": "2.6.0+cu124",
+    "cuda": "12.4"
+  },
+  "evaluation_settings": {
+    "standard_ap_conf_threshold": 0.001,
+    "operating_point_conf_threshold": 0.25,
+    "nms_iou_threshold": 0.5,
+    "matching_iou_threshold": 0.5,
+    "imgsz": 640,
+    "device": "cuda"
+  },
+  "models": {
+    "yolov8n_100e_sgd": {
+      "checkpoint": "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt",
+      "checkpoint_sha256": "ddd6a5be27ac21f3ef17ffe17fbac5ea901cf2a7f7706956c5e551a669490343",
+      "parameters": 3138003,
+      "splits": {
+        "dataset_unified_val": {
+          "role": "development_validation (EXPLORATORY ONLY)",
+          "independent": false,
+          "ap_eval_conf_0_001": {
+            "conf_threshold": 0.001,
+            "nms_iou": 0.5,
+            "map50": 0.3933,
+            "map50_95": 0.1256,
+            "library_best_f1_precision": 0.4099,
+            "library_best_f1_recall": 0.4758
+          },
+          "thresholded_val_conf_0_25": {
+            "conf_threshold": 0.25,
+            "iou": 0.5,
+            "map50": 0.2533,
+            "map50_95": 0.0884,
+            "library_best_f1_precision": 0.5236,
+            "library_best_f1_recall": 0.3569,
+            "library_f1": 0.4245
+          },
+          "operating_point_exact_matching": {
+            "images_evaluated": 0,
+            "gt_boxes": 0,
+            "pred_boxes": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "duplicate_fp": 0,
+            "background_fp": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "matching_protocol": {
+              "conf_threshold": 0.25,
+              "nms_iou_threshold": 0.5,
+              "matching_iou_threshold": 0.5,
+              "class_matching": "exact_class_id",
+              "one_to_one_greedy_by_confidence": true
+            }
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "map50": 0.3933,
+          "map50_conf_0_25": 0.2533,
+          "map50_95": 0.1256,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "duplicate_fp": 0,
+          "background_fp": 0,
+          "gt_boxes": 0,
+          "images_evaluated": 0
+        },
+        "dataset_unified_test": {
+          "role": "exploratory_contaminated_test (EXPLORATORY ONLY)",
+          "independent": false,
+          "ap_eval_conf_0_001": {
+            "conf_threshold": 0.001,
+            "nms_iou": 0.5,
+            "map50": 0.5002,
+            "map50_95": 0.1882,
+            "library_best_f1_precision": 0.5665,
+            "library_best_f1_recall": 0.4907
+          },
+          "thresholded_val_conf_0_25": {
+            "conf_threshold": 0.25,
+            "iou": 0.5,
+            "map50": 0.3643,
+            "map50_95": 0.1442,
+            "library_best_f1_precision": 0.61,
+            "library_best_f1_recall": 0.4565,
+            "library_f1": 0.5222
+          },
+          "operating_point_exact_matching": {
+            "images_evaluated": 0,
+            "gt_boxes": 0,
+            "pred_boxes": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "duplicate_fp": 0,
+            "background_fp": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "matching_protocol": {
+              "conf_threshold": 0.25,
+              "nms_iou_threshold": 0.5,
+              "matching_iou_threshold": 0.5,
+              "class_matching": "exact_class_id",
+              "one_to_one_greedy_by_confidence": true
+            }
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "map50": 0.5002,
+          "map50_conf_0_25": 0.3643,
+          "map50_95": 0.1882,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "duplicate_fp": 0,
+          "background_fp": 0,
+          "gt_boxes": 0,
+          "images_evaluated": 0
+        },
+        "dataset_unified_external_rangoon": {
+          "role": "exploratory_external_video (EXPLORATORY ONLY)",
+          "independent": false,
+          "ap_eval_conf_0_001": {
+            "conf_threshold": 0.001,
+            "nms_iou": 0.5,
+            "map50": 0.2573,
+            "map50_95": 0.0767,
+            "library_best_f1_precision": 0.4756,
+            "library_best_f1_recall": 0.3158
+          },
+          "thresholded_val_conf_0_25": {
+            "conf_threshold": 0.25,
+            "iou": 0.5,
+            "map50": 0.156,
+            "map50_95": 0.0493,
+            "library_best_f1_precision": 0.5588,
+            "library_best_f1_recall": 0.25,
+            "library_f1": 0.3455
+          },
+          "operating_point_exact_matching": {
+            "images_evaluated": 0,
+            "gt_boxes": 0,
+            "pred_boxes": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "duplicate_fp": 0,
+            "background_fp": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "matching_protocol": {
+              "conf_threshold": 0.25,
+              "nms_iou_threshold": 0.5,
+              "matching_iou_threshold": 0.5,
+              "class_matching": "exact_class_id",
+              "one_to_one_greedy_by_confidence": true
+            }
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "map50": 0.2573,
+          "map50_conf_0_25": 0.156,
+          "map50_95": 0.0767,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "duplicate_fp": 0,
+          "background_fp": 0,
+          "gt_boxes": 0,
+          "images_evaluated": 0
+        }
+      },
+      "runtime_benchmark": {
+        "n": 60,
+        "mean_ms": 13.48,
+        "median_ms": 11.502,
+        "p95_ms": 19.195,
+        "throughput_fps": 74.19,
+        "peak_allocated_mb": 92.21,
+        "peak_reserved_mb": 668.0
+      }
+    },
+    "yolov8s_100e": {
+      "checkpoint": "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt",
+      "checkpoint_sha256": "038863b8542ceb8d9e4d3e9eb28612abed64ada940921f3db7c0b8742281309c",
+      "parameters": 11135987,
+      "splits": {
+        "dataset_unified_val": {
+          "role": "development_validation (EXPLORATORY ONLY)",
+          "independent": false,
+          "ap_eval_conf_0_001": {
+            "conf_threshold": 0.001,
+            "nms_iou": 0.5,
+            "map50": 0.3692,
+            "map50_95": 0.1294,
+            "library_best_f1_precision": 0.466,
+            "library_best_f1_recall": 0.4266
+          },
+          "thresholded_val_conf_0_25": {
+            "conf_threshold": 0.25,
+            "iou": 0.5,
+            "map50": 0.2885,
+            "map50_95": 0.1073,
+            "library_best_f1_precision": 0.4888,
+            "library_best_f1_recall": 0.4212,
+            "library_f1": 0.4525
+          },
+          "operating_point_exact_matching": {
+            "images_evaluated": 0,
+            "gt_boxes": 0,
+            "pred_boxes": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "duplicate_fp": 0,
+            "background_fp": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "matching_protocol": {
+              "conf_threshold": 0.25,
+              "nms_iou_threshold": 0.5,
+              "matching_iou_threshold": 0.5,
+              "class_matching": "exact_class_id",
+              "one_to_one_greedy_by_confidence": true
+            }
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "map50": 0.3692,
+          "map50_conf_0_25": 0.2885,
+          "map50_95": 0.1294,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "duplicate_fp": 0,
+          "background_fp": 0,
+          "gt_boxes": 0,
+          "images_evaluated": 0
+        },
+        "dataset_unified_test": {
+          "role": "exploratory_contaminated_test (EXPLORATORY ONLY)",
+          "independent": false,
+          "ap_eval_conf_0_001": {
+            "conf_threshold": 0.001,
+            "nms_iou": 0.5,
+            "map50": 0.4662,
+            "map50_95": 0.1747,
+            "library_best_f1_precision": 0.5338,
+            "library_best_f1_recall": 0.4845
+          },
+          "thresholded_val_conf_0_25": {
+            "conf_threshold": 0.25,
+            "iou": 0.5,
+            "map50": 0.3581,
+            "map50_95": 0.1427,
+            "library_best_f1_precision": 0.5404,
+            "library_best_f1_recall": 0.4783,
+            "library_f1": 0.5074
+          },
+          "operating_point_exact_matching": {
+            "images_evaluated": 0,
+            "gt_boxes": 0,
+            "pred_boxes": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "duplicate_fp": 0,
+            "background_fp": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "matching_protocol": {
+              "conf_threshold": 0.25,
+              "nms_iou_threshold": 0.5,
+              "matching_iou_threshold": 0.5,
+              "class_matching": "exact_class_id",
+              "one_to_one_greedy_by_confidence": true
+            }
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "map50": 0.4662,
+          "map50_conf_0_25": 0.3581,
+          "map50_95": 0.1747,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "duplicate_fp": 0,
+          "background_fp": 0,
+          "gt_boxes": 0,
+          "images_evaluated": 0
+        },
+        "dataset_unified_external_rangoon": {
+          "role": "exploratory_external_video (EXPLORATORY ONLY)",
+          "independent": false,
+          "ap_eval_conf_0_001": {
+            "conf_threshold": 0.001,
+            "nms_iou": 0.5,
+            "map50": 0.3038,
+            "map50_95": 0.0844,
+            "library_best_f1_precision": 0.5038,
+            "library_best_f1_recall": 0.3289
+          },
+          "thresholded_val_conf_0_25": {
+            "conf_threshold": 0.25,
+            "iou": 0.5,
+            "map50": 0.1728,
+            "map50_95": 0.0541,
+            "library_best_f1_precision": 0.5366,
+            "library_best_f1_recall": 0.2895,
+            "library_f1": 0.3761
+          },
+          "operating_point_exact_matching": {
+            "images_evaluated": 0,
+            "gt_boxes": 0,
+            "pred_boxes": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "duplicate_fp": 0,
+            "background_fp": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "matching_protocol": {
+              "conf_threshold": 0.25,
+              "nms_iou_threshold": 0.5,
+              "matching_iou_threshold": 0.5,
+              "class_matching": "exact_class_id",
+              "one_to_one_greedy_by_confidence": true
+            }
+          },
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "map50": 0.3038,
+          "map50_conf_0_25": 0.1728,
+          "map50_95": 0.0844,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "duplicate_fp": 0,
+          "background_fp": 0,
+          "gt_boxes": 0,
+          "images_evaluated": 0
+        }
+      },
+      "runtime_benchmark": {
+        "n": 60,
+        "mean_ms": 18.948,
+        "median_ms": 18.743,
+        "p95_ms": 20.062,
+        "throughput_fps": 52.78,
+        "peak_allocated_mb": 352.98,
+        "peak_reserved_mb": 1272.0
+      }
+    }
+  },
+  "qualitative_exploratory_proposals": [
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 60,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 3,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.467,
+      "min_conf": 0.3797,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 150,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 0,
+      "clipped_boundary_proposals": 0,
+      "small_distant_proposals": 0,
+      "max_conf": null,
+      "min_conf": null,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 330,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 1,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.4393,
+      "min_conf": 0.4393,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rangoon_clip",
+      "frame_idx": 500,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 1,
+      "clipped_boundary_proposals": 0,
+      "small_distant_proposals": 0,
+      "max_conf": 0.6893,
+      "min_conf": 0.6893,
+      "potential_failure_tags": "water/shadow/urban_boundary",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 15,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 1,
+      "clipped_boundary_proposals": 0,
+      "small_distant_proposals": 0,
+      "max_conf": 0.3278,
+      "min_conf": 0.3278,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 60,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 2,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.7034,
+      "min_conf": 0.6037,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 120,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 4,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.8779,
+      "min_conf": 0.3092,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "ruralRoad_202f",
+      "frame_idx": 175,
+      "frame_wh": [
+        640,
+        360
+      ],
+      "proposal_count": 5,
+      "clipped_boundary_proposals": 2,
+      "small_distant_proposals": 0,
+      "max_conf": 0.7604,
+      "min_conf": 0.4617,
+      "potential_failure_tags": "unpaved_texture/distant_small",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rawSurvey_160f",
+      "frame_idx": 20,
+      "frame_wh": [
+        1280,
+        720
+      ],
+      "proposal_count": 3,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.7558,
+      "min_conf": 0.4863,
+      "potential_failure_tags": "road_patch/roadside_shadow",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rawSurvey_160f",
+      "frame_idx": 75,
+      "frame_wh": [
+        1280,
+        720
+      ],
+      "proposal_count": 2,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.3262,
+      "min_conf": 0.319,
+      "potential_failure_tags": "road_patch/roadside_shadow",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    },
+    {
+      "source_id": "rawSurvey_160f",
+      "frame_idx": 130,
+      "frame_wh": [
+        1280,
+        720
+      ],
+      "proposal_count": 3,
+      "clipped_boundary_proposals": 1,
+      "small_distant_proposals": 0,
+      "max_conf": 0.8031,
+      "min_conf": 0.338,
+      "potential_failure_tags": "road_patch/roadside_shadow",
+      "note": "Unlabeled exploratory proposal inspection only (not ground-truth verified)."
+    }
+  ]
+}

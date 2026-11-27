@@ -1,0 +1,36 @@
+{
+  "run_id": "qcsmoke_20231127",
+  "mode": "smoke",
+  "modules": {
+    "dataset_audit": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:00:28.230270+00:00",
+      "reason": null
+    },
+    "detection": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:00:28.230270+00:00",
+      "reason": null
+    },
+    "geometry": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:00:28.230270+00:00",
+      "reason": null
+    },
+    "depth_cavity": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:00:28.230270+00:00",
+      "reason": null
+    },
+    "scheduler_temporal": {
+      "status": "NOT_RUN",
+      "updated_at": "2026-11-27T08:00:28.230270+00:00",
+      "reason": null
+    },
+    "quality_geo_maint": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:00:30.627044+00:00",
+      "reason": null
+    }
+  }
+}

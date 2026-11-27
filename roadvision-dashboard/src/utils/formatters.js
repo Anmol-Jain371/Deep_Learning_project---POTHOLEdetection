@@ -32,6 +32,51 @@ export const REVIEW_PRIORITY_CATEGORIES = [
   'REVIEWED',
 ];
 
+export const INSPECTION_PROVENANCE_CATEGORIES = [
+  'USER_INSPECTION',
+  'RESEARCH_EXPLORATORY',
+  'TEST_FIXTURE',
+  'SYNTHETIC_EXPERIMENT',
+  'DEMONSTRATION',
+  'UNKNOWN',
+];
+
+export const GPS_PROVENANCE_CATEGORIES = [
+  'USER_SUPPLIED_UNVERIFIED',
+  'VERIFIED_FIELD_LOG',
+  'SYNTHETIC',
+  'UNKNOWN',
+];
+
+export function inspectionProvenanceTone(prov) {
+  switch (prov) {
+    case 'USER_INSPECTION':
+      return 'success';
+    case 'RESEARCH_EXPLORATORY':
+      return 'info';
+    case 'TEST_FIXTURE':
+    case 'SYNTHETIC_EXPERIMENT':
+    case 'DEMONSTRATION':
+      return 'warning';
+    case 'UNKNOWN':
+    default:
+      return 'muted';
+  }
+}
+
+export function gpsProvenanceTone(prov, isSynthetic = false) {
+  if (isSynthetic || prov === 'SYNTHETIC') return 'warning';
+  switch (prov) {
+    case 'VERIFIED_FIELD_LOG':
+      return 'success';
+    case 'USER_SUPPLIED_UNVERIFIED':
+      return 'info';
+    case 'UNKNOWN':
+    default:
+      return 'muted';
+  }
+}
+
 export const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export function isValidUuid(value) {

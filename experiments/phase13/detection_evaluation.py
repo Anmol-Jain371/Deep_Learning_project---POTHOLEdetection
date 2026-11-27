@@ -1,28 +1,208 @@
 """
-Phase 13 Step 13: Controlled Detection Model Evaluation (YOLOv8n vs YOLOv8s).
+Phase 13 / 13B: Controlled Detection Model Evaluation (YOLOv8n vs YOLOv8s).
 
-Evaluates existing frozen checkpoints under identical settings (`conf=0.25`, `iou=0.50`,
-`imgsz=640`) on `dataset_unified` annotated splits (`val`, `test`, `external_rangoon`),
-records GPU latency/throughput/VRAM, collects qualitative failure examples from exploratory
-footage, and reports independent detection generalization as BLOCKED when no untouched
-annotated test split exists.
+Separates:
+  A. Standard AP Evaluation (`conf=0.001`, `iou=0.50`, `imgsz=640`) for PR-curve integration.
+  B. Fixed Operating-Point Evaluation (`conf=0.25`, `nms_iou=0.50`, `matching_iou=0.50`)
+     computing exact one-to-one IoU prediction-to-GT matching counts (TP, FP, FN) and
+     mathematically reconciled Precision, Recall, and F1 without artificial zero counts.
 """
 
 from __future__ import annotations
 
+import hashlib
 import os
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import cv2
 import numpy as np
 import torch
+import ultralytics
+import yaml
 from ultralytics import YOLO
 
 
 def _cuda_sync(device: str) -> None:
     if device == "cuda" and torch.cuda.is_available():
         torch.cuda.synchronize()
+
+
+def _sha256_file(path: str) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(512 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _box_iou_xyxy(box_a: np.ndarray, box_b: np.ndarray) -> float:
+    ax1, ay1, ax2, ay2 = float(box_a[0]), float(box_a[1]), float(box_a[2]), float(box_a[3])
+    bx1, by1, bx2, by2 = float(box_b[0]), float(box_b[1]), float(box_b[2]), float(box_b[3])
+    ix1 = max(ax1, bx1)
+    iy1 = max(ay1, by1)
+    ix2 = min(ax2, bx2)
+    iy2 = min(ay2, by2)
+    iw = max(0.0, ix2 - ix1)
+    ih = max(0.0, iy2 - iy1)
+    inter = iw * ih
+    if inter <= 0.0:
+        return 0.0
+    area_a = max(0.0, ax2 - ax1) * max(0.0, ay2 - ay1)
+    area_b = max(0.0, bx2 - bx1) * max(0.0, by2 - by1)
+    denom = area_a + area_b - inter
+    return float(inter / denom) if denom > 0.0 else 0.0
+
+
+def _resolve_split_image_paths(data_yaml: str, split_name: str) -> List[str]:
+    with open(data_yaml, "r", encoding="utf-8") as fh:
+        d = yaml.safe_load(fh) or {}
+    base_dir = os.path.dirname(os.path.abspath(data_yaml))
+    root_val = d.get("path")
+    root_dir = (
+        root_val
+        if (root_val and os.path.isabs(str(root_val)))
+        else os.path.normpath(os.path.join(base_dir, str(root_val or ".")))
+    )
+    split_rel = d.get(split_name)
+    if not split_rel:
+        return []
+    target_dir = split_rel if os.path.isabs(str(split_rel)) else os.path.normpath(os.path.join(root_dir, str(split_rel)))
+    if not os.path.isdir(target_dir):
+        return []
+    exts = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
+    return [
+        os.path.join(target_dir, fn)
+        for fn in sorted(os.listdir(target_dir))
+        if os.path.splitext(fn)[1].lower() in exts
+    ]
+
+
+def _load_gt_boxes_xyxy(img_path: str, img_w: int, img_h: int) -> List[Tuple[int, np.ndarray]]:
+    """Load YOLO normalized ground-truth boxes for an image path."""
+    norm_p = img_path.replace("\\", "/")
+    if "/images/" in norm_p:
+        lbl_p = norm_p.replace("/images/", "/labels/", 1)
+    else:
+        lbl_p = norm_p
+    lbl_p = os.path.splitext(lbl_p)[0] + ".txt"
+    if not os.path.isfile(lbl_p):
+        return []
+    gts: List[Tuple[int, np.ndarray]] = []
+    with open(lbl_p, "r", encoding="utf-8") as fh:
+        for line in fh:
+            parts = line.strip().split()
+            if len(parts) < 5:
+                continue
+            cls_id = int(float(parts[0]))
+            xc, yc, bw, bh = float(parts[1]), float(parts[2]), float(parts[3]), float(parts[4])
+            x1 = (xc - 0.5 * bw) * img_w
+            y1 = (yc - 0.5 * bh) * img_h
+            x2 = (xc + 0.5 * bw) * img_w
+            y2 = (yc + 0.5 * bh) * img_h
+            gts.append((cls_id, np.array([x1, y1, x2, y2], dtype=np.float64)))
+    return gts
+
+
+def _evaluate_fixed_operating_point(
+    model: YOLO,
+    img_paths: List[str],
+    *,
+    conf_threshold: float,
+    nms_iou: float,
+    matching_iou: float,
+    imgsz: int,
+    device: str,
+) -> Dict[str, Any]:
+    """
+    Explicit one-to-one greedy IoU prediction-to-ground-truth matching at fixed confidence.
+    Rules:
+      - Predictions above conf_threshold (post-NMS at nms_iou) are sorted by confidence descending.
+      - Each prediction matches at most one unmatched GT box of identical class with IoU >= matching_iou.
+      - Duplicate predictions targeting an already-matched GT box and unmatched background predictions count as FP.
+      - Unmatched GT boxes count as FN.
+    """
+    tp = fp = fn = 0
+    dup_fp = bg_fp = gt_total = pred_total = images_eval = 0
+
+    for im_p in img_paths:
+        img = cv2.imread(im_p)
+        if img is None:
+            continue
+        H, W = img.shape[:2]
+        gts = _load_gt_boxes_xyxy(im_p, W, H)
+        gt_total += len(gts)
+        matched_gt = [False] * len(gts)
+        images_eval += 1
+
+        res = model.predict(
+            img,
+            imgsz=imgsz,
+            conf=conf_threshold,
+            iou=nms_iou,
+            device=device,
+            verbose=False,
+        )[0]
+        preds: List[Tuple[float, int, np.ndarray]] = []
+        if res.boxes is not None and len(res.boxes) > 0:
+            xyxys = res.boxes.xyxy.cpu().numpy()
+            confs = res.boxes.conf.cpu().numpy()
+            clss = res.boxes.cls.cpu().numpy()
+            for bx, cf, cl in zip(xyxys, confs, clss):
+                preds.append((float(cf), int(cl), np.asarray(bx, dtype=np.float64)))
+        preds.sort(key=lambda item: -item[0])
+        pred_total += len(preds)
+
+        for _, pred_cls, pred_box in preds:
+            best_idx = -1
+            best_iou = -1.0
+            best_any_matched_iou = -1.0
+            for gi, (gt_cls, gt_box) in enumerate(gts):
+                if gt_cls != pred_cls:
+                    continue
+                ov = _box_iou_xyxy(pred_box, gt_box)
+                if matched_gt[gi]:
+                    if ov > best_any_matched_iou:
+                        best_any_matched_iou = ov
+                    continue
+                if ov >= matching_iou and ov > best_iou:
+                    best_iou = ov
+                    best_idx = gi
+            if best_idx >= 0:
+                matched_gt[best_idx] = True
+                tp += 1
+            else:
+                fp += 1
+                if best_any_matched_iou >= matching_iou:
+                    dup_fp += 1
+                else:
+                    bg_fp += 1
+
+        fn += sum(1 for m in matched_gt if not m)
+
+    prec = (tp / (tp + fp)) if (tp + fp) > 0 else 0.0
+    rec = (tp / (tp + fn)) if (tp + fn) > 0 else 0.0
+    f1 = (2.0 * prec * rec / (prec + rec)) if (prec + rec) > 0 else 0.0
+    return {
+        "images_evaluated": images_eval,
+        "gt_boxes": gt_total,
+        "pred_boxes": pred_total,
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "duplicate_fp": dup_fp,
+        "background_fp": bg_fp,
+        "precision": round(prec, 4),
+        "recall": round(rec, 4),
+        "f1_score": round(f1, 4),
+        "matching_protocol": {
+            "conf_threshold": conf_threshold,
+            "nms_iou_threshold": nms_iou,
+            "matching_iou_threshold": matching_iou,
+            "class_matching": "exact_class_id",
+            "one_to_one_greedy_by_confidence": True,
+        },
+    }
 
 
 def _benchmark_detector_latency(
@@ -37,7 +217,6 @@ def _benchmark_detector_latency(
     if not img_paths:
         return {"n": 0, "mean_ms": None, "median_ms": None, "p95_ms": None, "fps": None, "peak_allocated_mb": None}
 
-    # Warmup on synthetic frame
     dummy = np.zeros((360, 640, 3), dtype=np.uint8)
     for _ in range(3):
         model.predict(dummy, imgsz=imgsz, conf=conf, iou=iou, device=device, verbose=False)
@@ -88,10 +267,6 @@ def _collect_qualitative_candidates(
     imgsz: int,
     device: str,
 ) -> List[Dict[str, Any]]:
-    """
-    Collect qualitative detector proposal observations (NOT ground-truth accuracy!) from
-    exploratory road clips for manual failure taxonomy.
-    """
     examples: List[Dict[str, Any]] = []
     sources = [
         ("rangoon_clip", "Watch Video_ Terrible potholes in Rangoon Road.mp4", [60, 150, 330, 500], "water/shadow/urban_boundary"),
@@ -140,8 +315,10 @@ def run_detection_evaluation(
     device: str = "cpu",
 ) -> Dict[str, Any]:
     det_cfg = cfg["detection_eval"]
-    conf = float(det_cfg["conf_threshold"])
-    iou = float(det_cfg["iou_threshold"])
+    op_conf = float(det_cfg["conf_threshold"])  # 0.25 fixed operating point
+    ap_conf = float(det_cfg.get("ap_conf_threshold", 0.001))
+    matching_iou = float(det_cfg["iou_threshold"])  # 0.50
+    nms_iou = float(det_cfg.get("nms_iou_threshold", 0.50))
     imgsz = int(det_cfg["imgsz"])
     lat_cap = 16 if smoke else 60
 
@@ -162,6 +339,7 @@ def run_detection_evaluation(
             models_out[model_name] = {"status": "BLOCKED", "reason": f"Missing checkpoint {rel_ckpt}"}
             continue
 
+        ckpt_sha = _sha256_file(ckpt_path)
         model = YOLO(ckpt_path)
         splits_metrics: Dict[str, Any] = {}
         splits_to_run = det_cfg["splits"][:2] if smoke else det_cfg["splits"]
@@ -171,58 +349,103 @@ def run_detection_evaluation(
             data_yaml = os.path.join(project_root, sp["data_yaml"])
             if not os.path.isfile(data_yaml):
                 continue
-            val_res = model.val(
+
+            # A. Standard PR-curve AP evaluation (low conf=0.001, ap_iou=0.50 vs default 0.70 documented)
+            val_std = model.val(
                 data=data_yaml,
                 split=sp["split"],
                 imgsz=imgsz,
-                conf=conf,
-                iou=iou,
+                conf=ap_conf,
+                iou=matching_iou,
                 device=device,
                 workers=0,
                 verbose=False,
                 plots=False,
             )
-            box = val_res.box
-            prec = float(box.mp)
-            rec = float(box.mr)
-            f1 = (2 * prec * rec / (prec + rec)) if (prec + rec) > 0 else 0.0
-            cm = getattr(val_res, "confusion_matrix", None)
-            fp_cnt = fn_cnt = tp_cnt = None
-            if cm is not None and getattr(cm, "matrix", None) is not None:
-                mat = cm.matrix
-                if mat.shape[0] >= 2 and mat.shape[1] >= 2:
-                    tp_cnt = int(mat[0, 0])
-                    fp_cnt = int(mat[0, 1])
-                    fn_cnt = int(mat[1, 0])
+            box_std = val_std.box
+
+            # B. Thresholded val(conf=0.25) for reconciliation with Phase 13
+            val_op = model.val(
+                data=data_yaml,
+                split=sp["split"],
+                imgsz=imgsz,
+                conf=op_conf,
+                iou=matching_iou,
+                device=device,
+                workers=0,
+                verbose=False,
+                plots=False,
+            )
+            box_op = val_op.box
+            op_prec_lib = float(box_op.mp)
+            op_rec_lib = float(box_op.mr)
+            op_f1_lib = (2 * op_prec_lib * op_rec_lib / (op_prec_lib + op_rec_lib)) if (op_prec_lib + op_rec_lib) > 0 else 0.0
+
+            # C. Explicit one-to-one IoU matching for exact TP / FP / FN at conf=0.25, nms_iou=0.50, match_iou=0.50
+            sp_imgs = _resolve_split_image_paths(data_yaml, sp["split"])
+            op_counts = _evaluate_fixed_operating_point(
+                model,
+                sp_imgs,
+                conf_threshold=op_conf,
+                nms_iou=nms_iou,
+                matching_iou=matching_iou,
+                imgsz=imgsz,
+                device=device,
+            )
 
             splits_metrics[sp_id] = {
-                "role": sp["role"],
+                "role": f"{sp['role']} (EXPLORATORY ONLY)",
                 "independent": bool(sp["independent"]),
-                "precision": round(prec, 4),
-                "recall": round(rec, 4),
-                "f1_score": round(f1, 4),
-                "map50": round(float(box.map50), 4),
-                "map50_95": round(float(box.map), 4),
-                "tp": tp_cnt,
-                "fp": fp_cnt,
-                "fn": fn_cnt,
+                "ap_eval_conf_0_001": {
+                    "conf_threshold": ap_conf,
+                    "nms_iou": matching_iou,
+                    "map50": round(float(box_std.map50), 4),
+                    "map50_95": round(float(box_std.map), 4),
+                    "library_best_f1_precision": round(float(box_std.mp), 4),
+                    "library_best_f1_recall": round(float(box_std.mr), 4),
+                },
+                "thresholded_val_conf_0_25": {
+                    "conf_threshold": op_conf,
+                    "iou": matching_iou,
+                    "map50": round(float(box_op.map50), 4),
+                    "map50_95": round(float(box_op.map), 4),
+                    "library_best_f1_precision": round(op_prec_lib, 4),
+                    "library_best_f1_recall": round(op_rec_lib, 4),
+                    "library_f1": round(op_f1_lib, 4),
+                },
+                "operating_point_exact_matching": op_counts,
+                # Top-level canonical fixed-operating-point metrics derived directly from TP/FP/FN
+                "precision": op_counts["precision"],
+                "recall": op_counts["recall"],
+                "f1_score": op_counts["f1_score"],
+                "map50": round(float(box_std.map50), 4),
+                "map50_conf_0_25": round(float(box_op.map50), 4),
+                "map50_95": round(float(box_std.map), 4),
+                "tp": op_counts["tp"],
+                "fp": op_counts["fp"],
+                "fn": op_counts["fn"],
+                "duplicate_fp": op_counts["duplicate_fp"],
+                "background_fp": op_counts["background_fp"],
+                "gt_boxes": op_counts["gt_boxes"],
+                "images_evaluated": op_counts["images_evaluated"],
             }
 
         latency_stats = _benchmark_detector_latency(
             model,
             sample_img_paths,
-            conf=conf,
-            iou=iou,
+            conf=op_conf,
+            iou=nms_iou,
             imgsz=imgsz,
             device=device,
         )
         if model_name == "yolov8n_100e_sgd":
             qualitative = _collect_qualitative_candidates(
-                project_root, model, conf=conf, iou=iou, imgsz=imgsz, device=device
+                project_root, model, conf=op_conf, iou=nms_iou, imgsz=imgsz, device=device
             )
 
         models_out[model_name] = {
             "checkpoint": rel_ckpt,
+            "checkpoint_sha256": ckpt_sha,
             "parameters": int(sum(p.numel() for p in model.model.parameters())),
             "splits": splits_metrics,
             "runtime_benchmark": latency_stats,
@@ -236,10 +459,22 @@ def run_detection_evaluation(
         "independent_generalization_status": "BLOCKED",
         "independent_generalization_reason": (
             "No untouched independent annotated pothole detection dataset exists (evaluation/ground_truth_labels/ "
-            "has 0 annotations and dataset_unified contains cross-split perceptual near-duplicates). "
-            "Reported dataset_unified metrics are EXPLORATORY ONLY."
+            "has 0 annotations and dataset_unified contains 328 suspected cross-split near-duplicate pairs dHash<=6). "
+            "All dataset_unified and external_rangoon metrics are EXPLORATORY ONLY."
         ),
-        "evaluation_settings": {"conf_threshold": conf, "iou_threshold": iou, "imgsz": imgsz, "device": device},
+        "software_versions": {
+            "ultralytics": ultralytics.__version__,
+            "torch": torch.__version__,
+            "cuda": torch.version.cuda,
+        },
+        "evaluation_settings": {
+            "standard_ap_conf_threshold": ap_conf,
+            "operating_point_conf_threshold": op_conf,
+            "nms_iou_threshold": nms_iou,
+            "matching_iou_threshold": matching_iou,
+            "imgsz": imgsz,
+            "device": device,
+        },
         "models": models_out,
         "qualitative_exploratory_proposals": qualitative,
     }

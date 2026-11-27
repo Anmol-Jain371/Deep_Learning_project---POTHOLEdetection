@@ -58,12 +58,12 @@ export default function Hero({ onExplore }) {
           <div className="intro-header">
             <span className="intro-tag">PLATFORM CAPABILITIES</span>
             <h2 className="intro-title">
-              Millimeter-calibrated road surface auditing from standard edge video.
+              Legacy V1 road surface inspection archive (uncalibrated experimental prototype).
             </h2>
             <p className="intro-lead">
-              RoadVision AI bridges optical computer vision and physical infrastructure engineering.
-              By combining fine-tuned spatial detection, Kalman-filter tracking, and monocular 3D depth geometry,
-              it transforms raw dashcam recordings into automated municipal maintenance work orders without expensive LiDAR arrays.
+              RoadVision V1 combined YOLOv8 localization, ByteTrack tracking, and uncalibrated monocular MiDaS scaling
+              (`k_disp=0.082`). Physical centimetre, volume, and material outputs in V1 are unvalidated experimental
+              estimates; use RoadVision AI 2.0 Command Center for uncertainty-aware relative-depth analysis.
             </p>
           </div>
 
@@ -92,9 +92,9 @@ export default function Hero({ onExplore }) {
               <div className="intro-card-icon">
                 <Layers size={20} />
               </div>
-              <h3>MiDaS 3D Metric Calibration</h3>
+              <h3>MiDaS Experimental Scaling</h3>
               <p>
-                Calculates relative disparity maps, calibrated against camera optics and annular road-rim baselines to estimate physical centimeter depth.
+                Computes relative disparity and experimental V1 scaling heuristics; physical centimetre accuracy is not independently established.
               </p>
             </div>
 

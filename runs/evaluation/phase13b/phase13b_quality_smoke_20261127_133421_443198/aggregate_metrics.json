@@ -1,0 +1,355 @@
+{
+  "run_id": "phase13b_quality_smoke_20261127_133421_443198",
+  "mode": "smoke",
+  "device": "cuda",
+  "quality_geo_maint": {
+    "status": "COMPLETED",
+    "phase9_quality_ablation": {
+      "synthetic_probes": [
+        {
+          "case": "ideal_full_evidence",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.972,
+          "D_missing_penalized": "HIGH_QUALITY",
+          "D_idx": 0.972,
+          "E_conservative_gated": "HIGH_QUALITY",
+          "E_idx": 0.972
+        },
+        {
+          "case": "missing_temporal_history_only",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.9848,
+          "D_missing_penalized": "HIGH_QUALITY",
+          "D_idx": 0.837,
+          "E_conservative_gated": "MODERATE_QUALITY",
+          "E_idx": 0.837
+        },
+        {
+          "case": "low_det_conf_boundary_clipped_missing_temporal",
+          "A_det_only": "LOW_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.8161,
+          "D_missing_penalized": "MODERATE_QUALITY",
+          "D_idx": 0.6937,
+          "E_conservative_gated": "MODERATE_QUALITY",
+          "E_idx": 0.6937
+        },
+        {
+          "case": "poor_geometric_reference",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "LOW_QUALITY",
+          "C_deployed": "MODERATE_QUALITY",
+          "C_idx": 0.7345,
+          "D_missing_penalized": "MODERATE_QUALITY",
+          "D_idx": 0.7345,
+          "E_conservative_gated": "MODERATE_QUALITY",
+          "E_idx": 0.7345
+        },
+        {
+          "case": "weak_cavity_support",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.8006,
+          "D_missing_penalized": "MODERATE_QUALITY",
+          "D_idx": 0.6805,
+          "E_conservative_gated": "MODERATE_QUALITY",
+          "E_idx": 0.6805
+        },
+        {
+          "case": "invalid_high_det_confidence",
+          "A_det_only": "INVALID",
+          "B_geom_only": "INVALID",
+          "C_deployed": "INVALID",
+          "C_idx": null,
+          "D_missing_penalized": "INVALID",
+          "D_idx": null,
+          "E_conservative_gated": "INVALID",
+          "E_idx": null
+        },
+        {
+          "case": "expired_cached_observation",
+          "A_det_only": "INVALID",
+          "B_geom_only": "INVALID",
+          "C_deployed": "INVALID",
+          "C_idx": null,
+          "D_missing_penalized": "INVALID",
+          "D_idx": null,
+          "E_conservative_gated": "INVALID",
+          "E_idx": null
+        },
+        {
+          "case": "cached_valid_reuse",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "MODERATE_QUALITY",
+          "C_idx": 0.7431,
+          "D_missing_penalized": "MODERATE_QUALITY",
+          "D_idx": 0.7431,
+          "E_conservative_gated": "MODERATE_QUALITY",
+          "E_idx": 0.7431
+        },
+        {
+          "case": "missing_environmental_evidence",
+          "A_det_only": "HIGH_QUALITY",
+          "B_geom_only": "HIGH_QUALITY",
+          "C_deployed": "HIGH_QUALITY",
+          "C_idx": 0.9494,
+          "D_missing_penalized": "HIGH_QUALITY",
+          "D_idx": 0.8545,
+          "E_conservative_gated": "HIGH_QUALITY",
+          "E_idx": 0.8545
+        }
+      ],
+      "exploratory_0f286074_full": {
+        "evaluated_observations": 784,
+        "total_artifact_observations": 784,
+        "max_d_minus_c_index": 0.0,
+        "distributions": {
+          "A_det_only": {
+            "INVALID": 212,
+            "LOW_QUALITY": 105,
+            "MODERATE_QUALITY": 156,
+            "HIGH_QUALITY": 311
+          },
+          "B_geom_only": {
+            "INVALID": 212,
+            "HIGH_QUALITY": 566,
+            "MODERATE_QUALITY": 6
+          },
+          "C_deployed": {
+            "INVALID": 177,
+            "INSUFFICIENT_EVIDENCE": 35,
+            "HIGH_QUALITY": 408,
+            "MODERATE_QUALITY": 164
+          },
+          "D_missing_penalized": {
+            "INVALID": 177,
+            "INSUFFICIENT_EVIDENCE": 35,
+            "MODERATE_QUALITY": 211,
+            "HIGH_QUALITY": 361
+          },
+          "E_conservative_gated": {
+            "INVALID": 177,
+            "INSUFFICIENT_EVIDENCE": 35,
+            "MODERATE_QUALITY": 323,
+            "HIGH_QUALITY": 249
+          }
+        },
+        "transitions_C_to_D": {
+          "INVALID -> INVALID": 177,
+          "INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE": 35,
+          "HIGH_QUALITY -> MODERATE_QUALITY": 47,
+          "HIGH_QUALITY -> HIGH_QUALITY": 361,
+          "MODERATE_QUALITY -> MODERATE_QUALITY": 164
+        },
+        "transitions_C_to_E": {
+          "INVALID -> INVALID": 177,
+          "INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE": 35,
+          "HIGH_QUALITY -> MODERATE_QUALITY": 159,
+          "MODERATE_QUALITY -> MODERATE_QUALITY": 164,
+          "HIGH_QUALITY -> HIGH_QUALITY": 249
+        }
+      },
+      "exploratory_2932b2b3_live_full": {
+        "evaluated_observations": 784,
+        "total_artifact_observations": 784,
+        "max_d_minus_c_index": 0.0,
+        "distributions": {
+          "A_det_only": {
+            "INVALID": 784
+          },
+          "B_geom_only": {
+            "INVALID": 784
+          },
+          "C_deployed": {
+            "INSUFFICIENT_EVIDENCE": 784
+          },
+          "D_missing_penalized": {
+            "INSUFFICIENT_EVIDENCE": 784
+          },
+          "E_conservative_gated": {
+            "INSUFFICIENT_EVIDENCE": 784
+          }
+        },
+        "transitions_C_to_D": {
+          "INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE": 784
+        },
+        "transitions_C_to_E": {
+          "INSUFFICIENT_EVIDENCE -> INSUFFICIENT_EVIDENCE": 784
+        }
+      },
+      "variant_d_monotonicity_verified": true,
+      "note": "Previously 158 vs 145 occurred because Phase 13 Variant D skipped CACHED_VALID freshness caps when recomputing scores. Phase 13B Variant D enforces the matched baseline CACHED_VALID bound so D_idx <= C_idx always holds across all 784 observations."
+    },
+    "phase11_geospatial_synthetic_eval": {
+      "field_validation_status": "BLOCKED",
+      "field_validation_reason": "Genuine multi-trip synchronized dashcam GPS logs with verified candidate matches are unavailable.",
+      "duplicate_timestamps_merged": 1,
+      "interpolation_status_at_0_5s": "INTERPOLATED",
+      "gap_rejection_status_at_3_0s": "UNAVAILABLE",
+      "haversine_10m_check_m": 9.969,
+      "synthetic_clusters_count": 3,
+      "synthetic_cluster_statuses": [
+        "POTENTIAL_MATCH",
+        "POTENTIAL_MATCH",
+        "UNMATCHED"
+      ],
+      "all_clusters_contains_synthetic": true,
+      "max_cluster_diameter_m": 13.343,
+      "unknown_provenance_cluster_status": "REVIEW_REQUIRED",
+      "unknown_provenance_forces_review_required": true
+    },
+    "phase12_maintenance_eval": {
+      "validation_status": "VERIFIED_ISOLATED_SYNTHETIC_AND_WORKFLOW",
+      "expert_severity_validation_status": "BLOCKED",
+      "expert_severity_reason": "No civil-engineering priority/PCI ground-truth labels exist.",
+      "deterministic_priority_identical": true,
+      "missing_evidence_track2_priority": "MANUAL_VERIFICATION_REQUIRED",
+      "synthetic_gps_cross_trip_boost_blocked": false,
+      "default_genuine_overview_excluded_synthetic_job": true,
+      "review_create_status": 201,
+      "duplicate_review_status": 409,
+      "review_update_history_len": 2,
+      "report_matches_candidate_count": false,
+      "missing_gps_segment_unavailable": true
+    },
+    "negative_controls_and_failures": {
+      "blank_video_real_pipeline": {
+        "source_fixture": "synthetic_blank_8f.mp4",
+        "classification": "SYSTEM_VERIFICATION_SYNTHETIC",
+        "decoded_frames": 8,
+        "pipeline_total_frames": 8,
+        "detector_executed": true,
+        "detections": 0,
+        "tracks": 0,
+        "scheduler_requests": 0,
+        "depth_executions": 0,
+        "measurement_state_counts": {
+          "FRESH_VALID": 0,
+          "FRESH_INVALID": 0,
+          "CACHED_VALID": 0,
+          "EXPIRED": 0,
+          "NOT_EVALUATED": 0
+        },
+        "artifacts_generated": [
+          "phase8a_balanced_blank_negative_control_frames.json",
+          "phase8a_balanced_blank_negative_control_performance.csv",
+          "phase8a_balanced_blank_negative_control_session_summary.json",
+          "phase8a_balanced_blank_negative_control_tracks.json"
+        ],
+        "passed": true
+      },
+      "failure_cases_csv": "failure_cases.csv",
+      "count": 11,
+      "cases": [
+        {
+          "experiment_id": "NC_blank_video",
+          "source_sample": "synthetic_blank_8f.mp4 (SYSTEM_VERIFICATION)",
+          "configuration": "RoadVisionV2Pipeline(balanced, device=cuda)",
+          "expected_outcome": "decoded=8, detections=0, tracks=0, depth_calls=0",
+          "actual_outcome": "decoded=8, det=0, tracks=0, depth_calls=0",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Synthetic all-black frame pipeline verification"
+        },
+        {
+          "experiment_id": "NC_flat_surface",
+          "source_sample": "synthetic_flat_plane",
+          "configuration": "extract_cavity_with_strategy(elliptical_core)",
+          "expected_outcome": "is_valid=False (no depression)",
+          "actual_outcome": "is_valid=False, reasons=['unexpected_residual_polarity']",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Synthetic planar surface verification"
+        },
+        {
+          "experiment_id": "NC_raised_region",
+          "source_sample": "synthetic_raised_protrusion",
+          "configuration": "extract_cavity_with_strategy(elliptical_core)",
+          "expected_outcome": "is_valid=False (negative depression / protrusion rejected)",
+          "actual_outcome": "is_valid=False, reasons=['unexpected_residual_polarity']",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Synthetic protrusion verification"
+        },
+        {
+          "experiment_id": "NC_insufficient_ref_support",
+          "source_sample": "synthetic_occluded_annulus",
+          "configuration": "extract_cavity_with_strategy(neighbors_masked)",
+          "expected_outcome": "is_valid=False",
+          "actual_outcome": "is_valid=False, reasons=['poor_spatial_support', 'overlapping_neighbors_insufficient_pavement', 'unexpected_residual_polarity']",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Synthetic occlusion verification"
+        },
+        {
+          "experiment_id": "NC_expired_temporal_cache",
+          "source_sample": "synthetic_cache_age_0.80s > 0.25s",
+          "configuration": "TrackDepthCache(max_cache_age_sec=0.25)",
+          "expected_outcome": "state=EXPIRED, value=None",
+          "actual_outcome": "state=EXPIRED, value=None",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Synthetic cache expiration check"
+        },
+        {
+          "experiment_id": "NC_corrupted_gps",
+          "source_sample": "lat=999.0_bad.csv",
+          "configuration": "parse_gps_telemetry",
+          "expected_outcome": "Reject invalid WGS84 latitude with ValueError",
+          "actual_outcome": "Rejected cleanly",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Format bounds verification"
+        },
+        {
+          "experiment_id": "NC_missing_gps",
+          "source_sample": "empty_gps_samples",
+          "configuration": "synchronize_timestamp_to_gps",
+          "expected_outcome": "available=False, lat=None, lon=None",
+          "actual_outcome": "available=False, lat=None, lon=None",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "System verification"
+        },
+        {
+          "experiment_id": "NC_incompatible_comparison",
+          "source_sample": "336px_vs_518px",
+          "configuration": "compare_inspections",
+          "expected_outcome": "relative_depth_compatible=False with warnings",
+          "actual_outcome": "compatible=False, warnings=2",
+          "failure_category": "negative_control_passed",
+          "known_limitations": "Compatibility guard verification"
+        },
+        {
+          "experiment_id": "FC_p9_low_conf_high_quality",
+          "source_sample": "0f286074/snap_t15_g0_f000048",
+          "configuration": "QualityConfig(v1_deployed)",
+          "expected_outcome": "Low det_quality (0.41) + missing temporal should cap below HIGH_QUALITY",
+          "actual_outcome": "Assigned HIGH_QUALITY (0.8516) due to available_weight renormalization",
+          "failure_category": "estimator_limitation",
+          "known_limitations": "Preserved unmodified in deployed app per constraint; ablated in D/E"
+        },
+        {
+          "experiment_id": "FC_p10_legacy_empty_ref_mask",
+          "source_sample": "artifacts_v2/*/geometry/snap_*.json (42 legacy files)",
+          "configuration": "Pre-fix build_relative_surface_snapshot",
+          "expected_outcome": "reference_mask_grid > 0 cells",
+          "actual_outcome": "0 True cells across all 42 historical snapshots due to valid_ring key mismatch",
+          "failure_category": "artifact_key_mismatch_fixed",
+          "known_limitations": "Labeled HISTORICAL_EMPTY_REFERENCE_MASK via API/UI without fabricating cells"
+        },
+        {
+          "experiment_id": "FC_independent_detection_eval",
+          "source_sample": "evaluation/ground_truth_labels/*.txt",
+          "configuration": "Phase 13B detection benchmark",
+          "expected_outcome": "Annotated bounding boxes for independent test set",
+          "actual_outcome": "40 files present, all 0 bytes (empty)",
+          "failure_category": "blocked_missing_ground_truth",
+          "known_limitations": "Requires external human annotation before independent accuracy claims"
+        }
+      ]
+    }
+  },
+  "generated_figures": [],
+  "completed_at": "2026-11-27T08:04:33.649549+00:00"
+}

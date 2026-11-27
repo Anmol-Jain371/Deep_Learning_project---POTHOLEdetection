@@ -764,6 +764,30 @@ export default function Relative3DAnalysis({ selectedJobId, onSelectJob, onNavig
             <StatePanel variant="loading" title="Loading surface grid" message="Fetching verified residual snapshot…" />
           ) : snapshot && (
             <>
+              {snapshot.geometry_artifact_status === 'HISTORICAL_EMPTY_REFERENCE_MASK' && (
+                <div
+                  role="alert"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 10,
+                    padding: '10px 14px',
+                    borderRadius: 8,
+                    border: '1px solid rgba(251, 191, 36, 0.45)',
+                    background: 'rgba(120, 53, 15, 0.22)',
+                    color: '#fde68a',
+                    fontSize: 12,
+                  }}
+                >
+                  <AlertTriangle size={16} style={{ marginTop: 2, flexShrink: 0, color: '#fbbf24' }} />
+                  <div>
+                    <strong>Historical Pre-Fix Geometry Artifact:</strong>{' '}
+                    {snapshot.geometry_artifact_warning ||
+                      'This historical snapshot has 0 recorded reference_mask_grid cells from before the Phase 10B reference-mask fix. Missing mask cells are intentionally preserved as unavailable.'}
+                  </div>
+                </div>
+              )}
+
               {(reliefDiagnostics?.isNearPlanar || reliefDiagnostics?.isGloballyCompressed) && (
                 <div
                   role="alert"

@@ -273,8 +273,12 @@ export async function reviewGeospatialCluster(clusterId, reviewStatus, options =
 }
 
 // Phase 12: Road Maintenance Intelligence, Manual Reviews, Segments, Comparison & Reports
-export async function getMaintenanceOverview(options = {}) {
-  return requestJson('/maintenance/overview', options);
+export async function getMaintenanceOverview(params = {}, options = {}) {
+  const clean = Object.fromEntries(
+    Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== '')
+  );
+  const qs = new URLSearchParams(clean).toString();
+  return requestJson(`/maintenance/overview${qs ? `?${qs}` : ''}`, options);
 }
 
 export async function getMaintenanceReviewQueue(params = {}, options = {}) {

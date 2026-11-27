@@ -1,0 +1,9 @@
+COMMAND: ['C:\\Users\\Asus\\AppData\\Local\\Programs\\Python\\Python312\\python.exe', '-u', '-m', 'experiments.phase13.run_evaluation', '--mode', 'smoke', '--run-id', 'phase13b_quality_smoke_20261127_141045_379088', '--experiments', 'quality_geo_maint']
+xFormers not available
+xFormers not available
+[quality_geo_maint] RUNNING...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[quality_geo_maint] COMPLETED
+Phase 13 evaluation complete: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\runs\evaluation\phase13b\phase13b_quality_smoke_20261127_141045_379088
+
+EXIT_CODE=0

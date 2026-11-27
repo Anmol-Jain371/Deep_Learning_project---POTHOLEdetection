@@ -10,24 +10,29 @@ export default function KPICards({ data = [], stats = {} }) {
   const waterHazards = stats.water_count ?? safeData.filter(d => d.water || (d.severity || '').includes('WATER')).length;
 
   const depths = safeData
-    .map(d => Number(d.depth_cm))
-    .filter(val => typeof val === 'number' && !isNaN(val) && isFinite(val));
-  const maxDepth = depths.length > 0 ? Math.max(...depths) : 0;
+    .map((d) => (d.depth_cm === null || d.depth_cm === undefined ? null : Number(d.depth_cm)))
+    .filter((val) => val !== null && !Number.isNaN(val) && Number.isFinite(val));
+  const hasDepth = depths.length > 0;
+  const maxDepth = hasDepth ? Math.max(...depths) : null;
 
-  // Road Quality Index: 100 minus weighted penalties for crater severities
+  // Legacy experimental summary index (not calibrated engineering PCI)
   const rqi = safeData.length === 0
     ? 100
-    : Math.max(0, Math.min(100, Math.round(100 - (severe * 14) - (moderate * 6) - (maxDepth * 0.7))));
+    : hasDepth
+      ? Math.max(0, Math.min(100, Math.round(100 - (severe * 14) - (moderate * 6) - (maxDepth * 0.7))))
+      : null;
 
   const surveyDuration = safeData.length > 0
-    ? Math.round(safeData[safeData.length - 1]?.timestamp || 0)
-    : (stats.processing_time_sec ? Math.round(stats.processing_time_sec) : 0);
+    ? Math.round(Number(safeData[safeData.length - 1]?.timestamp ?? 0))
+    : (stats.processing_time_sec !== null && stats.processing_time_sec !== undefined ? Math.round(stats.processing_time_sec) : 0);
+
+  const hasValidConf = stats?.avg_confidence !== null && stats?.avg_confidence !== undefined && !Number.isNaN(Number(stats.avg_confidence));
 
   const cards = [
     {
       icon: Target,
       value: total,
-      label: 'Total Hazards',
+      label: 'Total Legacy Detections',
       sub: total === 0 ? 'No defects registered' : `Logged across ${surveyDuration}s survey`,
       color: '#e8651a',
       bg: 'rgba(232, 101, 26, 0.08)',
@@ -35,25 +40,25 @@ export default function KPICards({ data = [], stats = {} }) {
     {
       icon: AlertTriangle,
       value: severe,
-      label: 'Severe Defects (≥ 8.0 cm)',
-      sub: severe > 0 ? `${severe} crater${severe > 1 ? 's' : ''} require urgent patching` : 'No critical structural cavities',
+      label: 'Legacy Experimental Tier (Severe)',
+      sub: severe > 0 ? `${severe} legacy tier flags — physical accuracy not established` : 'No legacy severe tier flags',
       color: severe > 0 ? '#dc2626' : '#16a34a',
       bg: severe > 0 ? 'rgba(220, 38, 38, 0.08)' : 'rgba(22, 163, 74, 0.08)',
     },
     {
       icon: Gauge,
-      value: `${rqi}/100`,
-      label: 'Road Quality Index',
-      sub: rqi < 65 ? 'Urgent maintenance required' : rqi < 85 ? 'Routine repairs scheduled' : 'Optimal pavement integrity',
-      color: rqi < 65 ? '#dc2626' : rqi < 85 ? '#d97706' : '#16a34a',
-      bg: rqi < 65 ? 'rgba(220, 38, 38, 0.08)' : rqi < 85 ? 'rgba(217, 119, 6, 0.08)' : 'rgba(22, 163, 74, 0.08)',
+      value: rqi !== null ? `${rqi}/100` : 'Unavailable',
+      label: 'Legacy Experimental Index',
+      sub: 'Uncalibrated experimental estimate — physical accuracy not established.',
+      color: rqi === null ? '#64748b' : rqi < 65 ? '#dc2626' : rqi < 85 ? '#d97706' : '#16a34a',
+      bg: 'rgba(100, 116, 139, 0.08)',
     },
     {
       icon: ArrowDown,
-      value: maxDepth > 0 ? `${maxDepth.toFixed(1)} cm` : '0.0 cm',
-      label: 'Peak Estimated Depth',
-      sub: maxDepth > 0 ? 'Calibrated monocular depth' : 'Flat pavement baseline',
-      color: maxDepth > 8.0 ? '#dc2626' : maxDepth > 4.0 ? '#d97706' : '#16a34a',
+      value: hasDepth ? `${maxDepth.toFixed(1)} cm (uncal.)` : 'Unavailable',
+      label: 'Legacy Peak Estimate',
+      sub: 'Uncalibrated experimental estimate — physical accuracy not established.',
+      color: !hasDepth ? '#64748b' : maxDepth > 8.0 ? '#dc2626' : maxDepth > 4.0 ? '#d97706' : '#16a34a',
       bg: 'rgba(232, 101, 26, 0.08)',
     },
   ];
@@ -94,7 +99,12 @@ export default function KPICards({ data = [], stats = {} }) {
             <span>Frames: <strong>{stats.total_frames || 0}</strong></span>
           </div>
           <div className="bench-pill">
-            <span>AI Confidence: <strong>{Math.round((stats.avg_confidence || 0.85) * 100)}%</strong></span>
+            <span>
+              AI Confidence:{' '}
+              <strong>
+                {hasValidConf ? `${Math.round(Number(stats.avg_confidence) * 100)}%` : 'Unavailable'}
+              </strong>
+            </span>
           </div>
           {waterHazards > 0 && (
             <div className="bench-pill water-alert">

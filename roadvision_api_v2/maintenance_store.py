@@ -210,8 +210,29 @@ class MaintenanceStore:
             segment_length_m=segment_length_m,
         )
 
-    def get_overview(self) -> Dict[str, Any]:
-        res = self.job_manager.list_jobs(status=JOB_STATUS_COMPLETED, limit=100, offset=0)
+    def get_overview(
+        self,
+        *,
+        include_provenances: Optional[Sequence[str]] = None,
+        exclude_non_genuine: bool = True,
+    ) -> Dict[str, Any]:
+        provenance_counts = self.job_manager.count_jobs_by_provenance(status=JOB_STATUS_COMPLETED)
+        if include_provenances:
+            eff_provs: Optional[List[str]] = list(include_provenances)
+            scope_label = ",".join(eff_provs)
+        elif exclude_non_genuine:
+            eff_provs = ["USER_INSPECTION"]
+            scope_label = "USER_INSPECTION_ONLY"
+        else:
+            eff_provs = None
+            scope_label = "ALL"
+
+        res = self.job_manager.list_jobs(
+            status=JOB_STATUS_COMPLETED,
+            include_provenances=eff_provs,
+            limit=100,
+            offset=0,
+        )
         completed_jobs = res.get("jobs") or []
 
         total_tracks = 0
@@ -246,6 +267,7 @@ class MaintenanceStore:
                     "job_id": jid,
                     "original_filename": j.get("original_filename"),
                     "mode": j.get("mode"),
+                    "provenance": j.get("provenance") or "USER_INSPECTION",
                     "completed_at": j.get("completed_at"),
                     "candidate_count": cand_cnt,
                     "total_observations": obs_cnt,
@@ -256,8 +278,14 @@ class MaintenanceStore:
                 }
             )
 
+        total_completed_all = sum(provenance_counts.values())
         return {
             "completed_inspection_count": len(completed_jobs),
+            "provenance_scope": scope_label,
+            "completed_counts_by_provenance": provenance_counts,
+            "total_completed_all_provenances": total_completed_all,
+            "excluded_completed_count": max(0, total_completed_all - len(completed_jobs)),
+            "exploratory_completed_count": int(provenance_counts.get("RESEARCH_EXPLORATORY", 0)),
             "jobs_with_gps_count": jobs_with_gps,
             "total_session_candidate_tracks": total_tracks,
             "total_candidate_observations": total_obs,
@@ -276,6 +304,8 @@ class MaintenanceStore:
         priority_category: Optional[str] = None,
         review_status: Optional[str] = None,
         quality_category: Optional[str] = None,
+        include_provenances: Optional[Sequence[str]] = None,
+        exclude_non_genuine: bool = True,
         page: int = 1,
         page_size: int = 50,
     ) -> Dict[str, Any]:
@@ -300,13 +330,23 @@ class MaintenanceStore:
                     error_code="RESULTS_UNAVAILABLE",
                 )
         else:
-            target_jobs = (self.job_manager.list_jobs(status=JOB_STATUS_COMPLETED, limit=50, offset=0)).get("jobs") or []
+            eff_provs = list(include_provenances) if include_provenances else (["USER_INSPECTION"] if exclude_non_genuine else None)
+            target_jobs = (
+                self.job_manager.list_jobs(
+                    status=JOB_STATUS_COMPLETED,
+                    include_provenances=eff_provs,
+                    limit=50,
+                    offset=0,
+                )
+            ).get("jobs") or []
 
         all_candidates: List[Dict[str, Any]] = []
         for j in target_jobs:
             try:
                 maint = self.get_job_maintenance(j["job_id"])
-                all_candidates.extend(maint.get("candidates") or [])
+                for cand in maint.get("candidates") or []:
+                    cand["job_provenance"] = j.get("provenance") or "USER_INSPECTION"
+                    all_candidates.append(cand)
             except Exception:
                 continue
 

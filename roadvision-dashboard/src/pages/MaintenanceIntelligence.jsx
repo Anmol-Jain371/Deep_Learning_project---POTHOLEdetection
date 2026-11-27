@@ -27,6 +27,7 @@ import InspectionSelector from '../components/InspectionSelector';
 import {
   StatePanel,
   QualityBadge,
+  ProvenanceBadge,
   QualityBreakdownCard,
   ScientificDisclaimer,
 } from '../components/StateBanner';
@@ -117,6 +118,7 @@ function SegmentRouteSvg({ routePoints, segments }) {
 
 export default function MaintenanceIntelligence({ selectedJobId, onSelectJob, onNavigate }) {
   const [subTab, setSubTab] = useState('overview'); // overview | queue | segments | compare
+  const [provenanceScope, setProvenanceScope] = useState('genuine'); // genuine | exploratory | all
 
   // Overview state
   const [overview, setOverview] = useState(null);
@@ -155,20 +157,21 @@ export default function MaintenanceIntelligence({ selectedJobId, onSelectJob, on
     setLoadingOverview(true);
     setError(null);
     try {
-      const ov = await getMaintenanceOverview();
+      const ov = await getMaintenanceOverview({ scope: provenanceScope });
       setOverview(ov);
     } catch (err) {
       setError(err);
     } finally {
       setLoadingOverview(false);
     }
-  }, []);
+  }, [provenanceScope]);
 
   const loadQueue = useCallback(async () => {
     setLoadingQueue(true);
     setError(null);
     try {
       const res = await getMaintenanceReviewQueue({
+        scope: provenanceScope,
         ...(isValidUuid(selectedJobId) ? { job_id: selectedJobId } : {}),
         ...(priorityFilter ? { priority_category: priorityFilter } : {}),
         ...(reviewFilter ? { review_status: reviewFilter } : {}),
@@ -182,7 +185,7 @@ export default function MaintenanceIntelligence({ selectedJobId, onSelectJob, on
     } finally {
       setLoadingQueue(false);
     }
-  }, [selectedJobId, priorityFilter, reviewFilter, qualityFilter]);
+  }, [selectedJobId, priorityFilter, reviewFilter, qualityFilter, provenanceScope]);
 
   const loadSegments = useCallback(async () => {
     if (!selectedJobId || !isValidUuid(selectedJobId)) return;
@@ -321,6 +324,16 @@ export default function MaintenanceIntelligence({ selectedJobId, onSelectJob, on
           </p>
         </div>
         <div className="rv-header-actions">
+          <select
+            aria-label="Maintenance provenance scope"
+            className="rv-select"
+            value={provenanceScope}
+            onChange={(e) => setProvenanceScope(e.target.value)}
+          >
+            <option value="genuine">Genuine Only (Default)</option>
+            <option value="exploratory">Include Exploratory</option>
+            <option value="all">All (incl. Test/Synthetic)</option>
+          </select>
           <button
             type="button"
             className={`rv-btn rv-btn-sm ${subTab === 'overview' ? 'rv-btn-primary' : 'rv-btn-ghost'}`}
@@ -369,9 +382,11 @@ export default function MaintenanceIntelligence({ selectedJobId, onSelectJob, on
             <>
               <div className="rv-kpi-grid">
                 <div className="rv-kpi-card">
-                  <span className="rv-kpi-label">Completed Inspections</span>
+                  <span className="rv-kpi-label">Completed Inspections ({overview.provenance_scope})</span>
                   <strong className="rv-kpi-value">{overview.completed_inspection_count ?? 0}</strong>
-                  <span className="rv-kpi-sub">{overview.jobs_with_gps_count ?? 0} with genuine GPS</span>
+                  <span className="rv-kpi-sub">
+                    {overview.jobs_with_gps_count ?? 0} with GPS · {overview.excluded_completed_count ?? 0} non-genuine excluded
+                  </span>
                 </div>
                 <div className="rv-kpi-card">
                   <span className="rv-kpi-label">Pending Review</span>
@@ -464,7 +479,10 @@ export default function MaintenanceIntelligence({ selectedJobId, onSelectJob, on
                       <tbody>
                         {overview.inspections.map((ins) => (
                           <tr key={ins.job_id}>
-                            <td>{ins.original_filename || ins.job_id.slice(0, 8)}</td>
+                            <td>
+                              {ins.original_filename || ins.job_id.slice(0, 8)}{' '}
+                              <ProvenanceBadge provenance={ins.provenance} />
+                            </td>
                             <td><span className="rv-badge rv-badge-neutral">{(ins.mode || '').toUpperCase()}</span></td>
                             <td className="rv-mono">{ins.candidate_count}</td>
                             <td className="rv-mono">{ins.total_observations}</td>

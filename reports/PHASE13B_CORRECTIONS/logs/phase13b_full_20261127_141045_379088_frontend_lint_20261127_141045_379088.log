@@ -1,0 +1,577 @@
+COMMAND: ['C:\\Program Files\\nodejs\\npm.cmd', 'run', 'lint']
+
+> roadvision-dashboard@0.0.0 lint
+> oxlint
+
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/History.jsx:40:5]
+ 38 | 
+ 39 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 40 |     loadHistory();
+    :     ^^^^^|^^^^^
+    :          `-- Avoid calling setState() directly within an effect
+ 41 |   }, [loadHistory]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/Performance.jsx:43:5]
+ 41 | 
+ 42 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 43 |     setPage(1);
+    :     ^^^|^^^
+    :        `-- Avoid calling setState() directly within an effect
+ 44 |   }, [selectedJobId]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/Performance.jsx:47:5]
+ 45 | 
+ 46 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 47 |     loadPerf();
+    :     ^^^^|^^^
+    :         `-- Avoid calling setState() directly within an effect
+ 48 |   }, [loadPerf]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/components/InspectionSelector.jsx:35:5]
+ 33 | 
+ 34 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 35 |     loadJobs();
+    :     ^^^^|^^^
+    :         `-- Avoid calling setState() directly within an effect
+ 36 |   }, [loadJobs]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! eslint(no-unused-vars): Identifier 'AlertTriangle' is imported but never used.
+   ,-[src/components/BenchmarkComparison.jsx:2:17]
+ 1 | import React, { useState, useEffect } from 'react';
+ 2 | import { Scale, AlertTriangle, Info, ShieldAlert, Cpu } from 'lucide-react';
+   :                 ^^^^^^|^^^^^^
+   :                       `-- 'AlertTriangle' is imported here
+ 3 | 
+   `----
+  help: Consider removing this import.
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/HazardExplorer.jsx:58:5]
+ 56 | 
+ 57 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 58 |     setPage(1);
+    :     ^^^|^^^
+    :        `-- Avoid calling setState() directly within an effect
+ 59 |   }, [selectedJobId]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/HazardExplorer.jsx:62:5]
+ 60 | 
+ 61 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 62 |     loadObservations();
+    :     ^^^^^^^^|^^^^^^^
+    :             `-- Avoid calling setState() directly within an effect
+ 63 |   }, [loadObservations]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! eslint(no-unused-vars): Identifier 'motion' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:2:10]
+ 1 | import React, { useState, useRef, useEffect } from 'react';
+ 2 | import { motion, AnimatePresence } from 'framer-motion';
+   :          ^^^|^^
+   :             `-- 'motion' is imported here
+ 3 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'AnimatePresence' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:2:18]
+ 1 | import React, { useState, useRef, useEffect } from 'react';
+ 2 | import { motion, AnimatePresence } from 'framer-motion';
+   :                  ^^^^^^^|^^^^^^^
+   :                         `-- 'AnimatePresence' is imported here
+ 3 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Sparkles' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:5:46]
+ 4 |   Upload, Download, Play, Pause, RotateCcw, Maximize, Minimize,
+ 5 |   Volume2, VolumeX, Gauge, Check, FileVideo, Sparkles,
+   :                                              ^^^^|^^^
+   :                                                  `-- 'Sparkles' is imported here
+ 6 |   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Cpu' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:6:3]
+ 5 |   Volume2, VolumeX, Gauge, Check, FileVideo, Sparkles,
+ 6 |   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
+   :   ^|^
+   :    `-- 'Cpu' is imported here
+ 7 | } from 'lucide-react';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Activity' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:6:8]
+ 5 |   Volume2, VolumeX, Gauge, Check, FileVideo, Sparkles,
+ 6 |   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
+   :        ^^^^|^^^
+   :            `-- 'Activity' is imported here
+ 7 | } from 'lucide-react';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Layers' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:6:18]
+ 5 |   Volume2, VolumeX, Gauge, Check, FileVideo, Sparkles,
+ 6 |   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
+   :                  ^^^|^^
+   :                     `-- 'Layers' is imported here
+ 7 | } from 'lucide-react';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ShieldAlert' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:6:26]
+ 5 |   Volume2, VolumeX, Gauge, Check, FileVideo, Sparkles,
+ 6 |   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
+   :                          ^^^^^|^^^^^
+   :                               `-- 'ShieldAlert' is imported here
+ 7 | } from 'lucide-react';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'CheckCircle2' is imported but never used.
+   ,-[src/components/VideoUploadAnalysis.jsx:6:39]
+ 5 |   Volume2, VolumeX, Gauge, Check, FileVideo, Sparkles,
+ 6 |   Cpu, Activity, Layers, ShieldAlert, CheckCircle2, AlertCircle
+   :                                       ^^^^^^|^^^^^
+   :                                             `-- 'CheckCircle2' is imported here
+ 7 | } from 'lucide-react';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'hasAnalyzed' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/VideoUploadAnalysis.jsx:28:10]
+ 27 |   const [analysisError, setAnalysisError] = useState(null);
+ 28 |   const [hasAnalyzed, setHasAnalyzed] = useState(false);
+    :          ^^^^^|^^^^^
+    :               `-- 'hasAnalyzed' is declared here
+ 29 | 
+    `----
+  help: Consider removing this declaration.
+
+  ! react(immutability): Cannot access variable while it is being initialized
+    ,-[src/components/VideoUploadAnalysis.jsx:60:9]
+ 59 |         e.preventDefault();
+ 60 |         togglePlay();
+    :         ^^^^^|^^^^
+    :              `-- `togglePlay` is read during its own initialization
+ 61 |       } else if (e.code === 'KeyF') {
+    `----
+  help: `togglePlay` is read while its declaration is still being initialized. Move the access after initialization. For a recursive callback, use a named function expression or restructure the callback so it does not capture itself during initialization
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/immutability
+
+  ! react(immutability): Cannot access variable while it is being initialized
+    ,-[src/components/VideoUploadAnalysis.jsx:66:9]
+ 65 |         e.preventDefault();
+ 66 |         seekRelative(5);
+    :         ^^^^^^|^^^^^
+    :               `-- `seekRelative` is read during its own initialization
+ 67 |       } else if (e.code === 'ArrowLeft') {
+    `----
+  help: `seekRelative` is read while its declaration is still being initialized. Move the access after initialization. For a recursive callback, use a named function expression or restructure the callback so it does not capture itself during initialization
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/immutability
+
+  ! react(immutability): Cannot access variable while it is being initialized
+    ,-[src/components/VideoUploadAnalysis.jsx:63:9]
+ 62 |         e.preventDefault();
+ 63 |         toggleFullscreen();
+    :         ^^^^^^^^|^^^^^^^
+    :                 `-- `toggleFullscreen` is read during its own initialization
+ 64 |       } else if (e.code === 'ArrowRight') {
+    `----
+  help: `toggleFullscreen` is read while its declaration is still being initialized. Move the access after initialization. For a recursive callback, use a named function expression or restructure the callback so it does not capture itself during initialization
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/immutability
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/components/VideoUploadAnalysis.jsx:81:5]
+ 77 |   // Meaningful processing phase progression while awaiting backend response
+ 78 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 79 |     if (!isAnalyzing) return;
+ 80 | 
+ 81 |     setProcessingStatus('Preparing survey footage for perception pipeline...');
+    :     ^^^^^^^^^|^^^^^^^^^
+    :              `-- Avoid calling setState() directly within an effect
+ 82 | 
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react-hooks(exhaustive-deps): React Hook useEffect has missing dependencies: 'seekRelative', and 'togglePlay'
+    ,-[src/components/VideoUploadAnalysis.jsx:75:6]
+ 59 |         e.preventDefault();
+ 60 |         togglePlay();
+    :         ^^^^^^^^^^
+ 61 |       } else if (e.code === 'KeyF') {
+ 62 |         e.preventDefault();
+ 63 |         toggleFullscreen();
+ 64 |       } else if (e.code === 'ArrowRight') {
+ 65 |         e.preventDefault();
+ 66 |         seekRelative(5);
+    :         ^^^^^^^^^^^^
+ 67 |       } else if (e.code === 'ArrowLeft') {
+ 68 |         e.preventDefault();
+ 69 |         seekRelative(-5);
+ 70 |       }
+ 71 |     };
+ 72 | 
+ 73 |     window.addEventListener('keydown', handleKeyDown);
+ 74 |     return () => window.removeEventListener('keydown', handleKeyDown);
+ 75 |   }, [isPlaying, duration]);
+    :      ^^^^^^^^^^^^^^^^^^^^^
+ 76 | 
+    `----
+  help: Either include it or remove the dependency array.
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/TrackAnalysis.jsx:72:5]
+ 70 | 
+ 71 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 72 |     setPage(1);
+    :     ^^^|^^^
+    :        `-- Avoid calling setState() directly within an effect
+ 73 |     setSelectedTrackId(null);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/TrackAnalysis.jsx:78:5]
+ 76 | 
+ 77 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 78 |     loadTracks();
+    :     ^^^^^|^^^^
+    :          `-- Avoid calling setState() directly within an effect
+ 79 |   }, [loadTracks]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/TrackAnalysis.jsx:84:7]
+ 80 | 
+ 81 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 82 |     let mounted = true;
+ 83 |     if (!selectedJobId || !isValidUuid(selectedJobId) || selectedTrackId === null) {
+ 84 |       setTrackObs([]);
+    :       ^^^^^|^^^^^
+    :            `-- Avoid calling setState() directly within an effect
+ 85 |       return undefined;
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/NewInspection.jsx:65:7]
+ 61 | 
+ 62 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 63 |     if (!initialPreset) return;
+ 64 |     if (initialPreset.enableDepth !== undefined) {
+ 65 |       setEnableDepth(Boolean(initialPreset.enableDepth));
+    :       ^^^^^^^|^^^^^^
+    :              `-- Avoid calling setState() directly within an effect
+ 66 |     }
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/Reports.jsx:87:5]
+ 85 | 
+ 86 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 87 |     loadReport();
+    :     ^^^^^|^^^^
+    :          `-- Avoid calling setState() directly within an effect
+ 88 |   }, [loadReport]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/components/TopBar.jsx:56:7]
+ 52 | 
+ 53 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 54 |     let mounted = true;
+ 55 |     if (!selectedJobId) {
+ 56 |       setActiveJob(null);
+    :       ^^^^^^|^^^^^
+    :             `-- Avoid calling setState() directly within an effect
+ 57 |       return undefined;
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/Settings.jsx:34:5]
+ 32 | 
+ 33 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 34 |     loadSettings();
+    :     ^^^^^^|^^^^^
+    :           `-- Avoid calling setState() directly within an effect
+ 35 |   }, [loadSettings]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+    ,-[src/pages/Overview.jsx:52:5]
+ 50 | 
+ 51 |   useEffect(() => {
+    :   ^^^^|^^^^
+    :       `-- This is the containing effect
+ 52 |     loadData();
+    :     ^^^^|^^^
+    :         `-- Avoid calling setState() directly within an effect
+ 53 |   }, [loadData]);
+    `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+     ,-[src/pages/Workspace.jsx:105:5]
+ 102 | 
+ 103 |   useEffect(() => {
+     :   ^^^^|^^^^
+     :       `-- This is the containing effect
+ 104 |     stopPolling();
+ 105 |     setError(null);
+     :     ^^^^|^^^
+     :         `-- Avoid calling setState() directly within an effect
+ 106 |     setDownloadError(null);
+     `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+     ,-[src/pages/GeospatialIntelligence.jsx:175:5]
+ 173 | 
+ 174 |   useEffect(() => {
+     :   ^^^^|^^^^
+     :       `-- This is the containing effect
+ 175 |     loadGeoData();
+     :     ^^^^^|^^^^^
+     :          `-- Avoid calling setState() directly within an effect
+ 176 |   }, [loadGeoData]);
+     `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! eslint(no-unused-vars): Identifier 'motion' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:2:10]
+ 1 | import React, { useState } from 'react';
+ 2 | import { motion, AnimatePresence } from 'framer-motion';
+   :          ^^^|^^
+   :             `-- 'motion' is imported here
+ 3 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'AnimatePresence' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:2:18]
+ 1 | import React, { useState } from 'react';
+ 2 | import { motion, AnimatePresence } from 'framer-motion';
+   :                  ^^^^^^^|^^^^^^^
+   :                         `-- 'AnimatePresence' is imported here
+ 3 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ShieldCheck' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:5:15]
+ 4 |   Target, Activity, Layers, Disc, Compass, Droplet, Sliders,
+ 5 |   ArrowRight, ShieldCheck, Cpu, GitBranch, Terminal, CheckCircle2,
+   :               ^^^^^|^^^^^
+   :                    `-- 'ShieldCheck' is imported here
+ 6 |   ChevronRight, Info, AlertTriangle
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Cpu' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:5:28]
+ 4 |   Target, Activity, Layers, Disc, Compass, Droplet, Sliders,
+ 5 |   ArrowRight, ShieldCheck, Cpu, GitBranch, Terminal, CheckCircle2,
+   :                            ^|^
+   :                             `-- 'Cpu' is imported here
+ 6 |   ChevronRight, Info, AlertTriangle
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'GitBranch' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:5:33]
+ 4 |   Target, Activity, Layers, Disc, Compass, Droplet, Sliders,
+ 5 |   ArrowRight, ShieldCheck, Cpu, GitBranch, Terminal, CheckCircle2,
+   :                                 ^^^^|^^^^
+   :                                     `-- 'GitBranch' is imported here
+ 6 |   ChevronRight, Info, AlertTriangle
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Terminal' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:5:44]
+ 4 |   Target, Activity, Layers, Disc, Compass, Droplet, Sliders,
+ 5 |   ArrowRight, ShieldCheck, Cpu, GitBranch, Terminal, CheckCircle2,
+   :                                            ^^^^|^^^
+   :                                                `-- 'Terminal' is imported here
+ 6 |   ChevronRight, Info, AlertTriangle
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'CheckCircle2' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:5:54]
+ 4 |   Target, Activity, Layers, Disc, Compass, Droplet, Sliders,
+ 5 |   ArrowRight, ShieldCheck, Cpu, GitBranch, Terminal, CheckCircle2,
+   :                                                      ^^^^^^|^^^^^
+   :                                                            `-- 'CheckCircle2' is imported here
+ 6 |   ChevronRight, Info, AlertTriangle
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'AlertTriangle' is imported but never used.
+   ,-[src/components/PipelineSection.jsx:6:23]
+ 5 |   ArrowRight, ShieldCheck, Cpu, GitBranch, Terminal, CheckCircle2,
+ 6 |   ChevronRight, Info, AlertTriangle
+   :                       ^^^^^^|^^^^^^
+   :                             `-- 'AlertTriangle' is imported here
+ 7 | } from 'lucide-react';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'expanded' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/PipelineSection.jsx:632:43]
+ 631 | // ======================================================================================
+ 632 | export default function PipelineSection({ expanded = false }) {
+     :                                           ^^^^|^^^
+     :                                               `-- 'expanded' is declared here
+ 633 |   const [selectedStage, setSelectedStage] = useState(pipelineStages[0]);
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Variable 'ActiveIcon' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/PipelineSection.jsx:635:9]
+ 634 |   const ActiveVisual = stageVisuals[selectedStage.id] || Stage01Visual;
+ 635 |   const ActiveIcon = selectedStage.icon;
+     :         ^^^^^|^^^^
+     :              `-- 'ActiveIcon' is declared here
+ 636 | 
+     `----
+  help: Consider removing this declaration.
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+     ,-[src/pages/MaintenanceIntelligence.jsx:223:32]
+ 221 | 
+ 222 |   useEffect(() => {
+     :   ^^^^|^^^^
+     :       `-- This is the containing effect
+ 223 |     if (subTab === 'overview') loadOverview();
+     :                                ^^^^^^|^^^^^
+     :                                      `-- Avoid calling setState() directly within an effect
+ 224 |     if (subTab === 'queue') loadQueue();
+     `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+     ,-[src/pages/Relative3DAnalysis.jsx:298:7]
+ 294 | 
+ 295 |   useEffect(() => {
+     :   ^^^^|^^^^
+     :       `-- This is the containing effect
+ 296 |     let mounted = true;
+ 297 |     if (!selectedJobId || !isValidUuid(selectedJobId)) {
+ 298 |       setManifest(null);
+     :       ^^^^^|^^^^^
+     :            `-- Avoid calling setState() directly within an effect
+ 299 |       setSnapshot(null);
+     `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+     ,-[src/pages/Relative3DAnalysis.jsx:339:7]
+ 336 | 
+ 337 |   useEffect(() => {
+     :   ^^^^|^^^^
+     :       `-- This is the containing effect
+ 338 |     if (filteredSnapshots.length > 0 && !filteredSnapshots.some((s) => s.snapshot_id === selectedSnapshotId)) {
+ 339 |       setSelectedSnapshotId(filteredSnapshots[0].snapshot_id);
+     :       ^^^^^^^^^^|^^^^^^^^^^
+     :                 `-- Avoid calling setState() directly within an effect
+ 340 |     }
+     `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+  ! react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders
+     ,-[src/pages/Relative3DAnalysis.jsx:346:7]
+ 342 | 
+ 343 |   useEffect(() => {
+     :   ^^^^|^^^^
+     :       `-- This is the containing effect
+ 344 |     let mounted = true;
+ 345 |     if (!selectedJobId || !selectedSnapshotId) {
+ 346 |       setSnapshot(null);
+     :       ^^^^^|^^^^^
+     :            `-- Avoid calling setState() directly within an effect
+ 347 |       return undefined;
+     `----
+  help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.
+  note: React Compiler skipped optimizing this component or hook. Additional guidance: https://react.dev/reference/eslint-plugin-react-hooks/lints/set-state-in-effect
+
+Found 45 warnings and 0 errors.
+Finished in 103ms on 30 files with 104 rules using 12 threads.
+
+EXIT_CODE=0

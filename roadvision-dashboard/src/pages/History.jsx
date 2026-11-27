@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { listJobs } from '../api/client';
 import { RefreshCw, ChevronLeft, ChevronRight, PlusCircle } from 'lucide-react';
-import { StatePanel, StatusBadge } from '../components/StateBanner';
-import { formatDateTime, formatNullable } from '../utils/formatters';
+import { StatePanel, StatusBadge, ProvenanceBadge } from '../components/StateBanner';
+import { INSPECTION_PROVENANCE_CATEGORIES, formatDateTime, formatNullable } from '../utils/formatters';
 
 const JOB_STATUSES = ['QUEUED', 'INITIALIZING', 'RUNNING', 'CANCELLING', 'COMPLETED', 'FAILED', 'CANCELLED'];
 
@@ -12,6 +12,7 @@ export default function History({ onNavigate, selectedJobId }) {
   const [page, setPage] = useState(1);
   const [pageSize] = useState(15);
   const [statusFilter, setStatusFilter] = useState('');
+  const [provenanceFilter, setProvenanceFilter] = useState('');
   const [modeFilter, setModeFilter] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,6 +25,7 @@ export default function History({ onNavigate, selectedJobId }) {
         page,
         page_size: pageSize,
         ...(statusFilter ? { status: statusFilter } : {}),
+        ...(provenanceFilter ? { provenance: provenanceFilter } : {}),
       });
       setJobs(resp?.jobs || []);
       setTotal(resp?.total ?? 0);
@@ -32,7 +34,7 @@ export default function History({ onNavigate, selectedJobId }) {
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, statusFilter]);
+  }, [page, pageSize, statusFilter, provenanceFilter]);
 
   useEffect(() => {
     loadHistory();
@@ -84,6 +86,24 @@ export default function History({ onNavigate, selectedJobId }) {
           </div>
 
           <div className="rv-field">
+            <label className="rv-field-label" htmlFor="rv-hist-prov">Provenance</label>
+            <select
+              id="rv-hist-prov"
+              className="rv-select"
+              value={provenanceFilter}
+              onChange={(e) => {
+                setProvenanceFilter(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="">All Provenances</option>
+              {INSPECTION_PROVENANCE_CATEGORIES.map((pv) => (
+                <option key={pv} value={pv}>{pv}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="rv-field">
             <label className="rv-field-label" htmlFor="rv-hist-mode">Mode (current page)</label>
             <select
               id="rv-hist-mode"
@@ -120,6 +140,7 @@ export default function History({ onNavigate, selectedJobId }) {
                 <thead>
                   <tr>
                     <th>Filename</th>
+                    <th>Provenance</th>
                     <th>Mode</th>
                     <th>Status</th>
                     <th>Frames</th>
@@ -143,6 +164,7 @@ export default function History({ onNavigate, selectedJobId }) {
                           {job.job_id}
                         </div>
                       </td>
+                      <td><ProvenanceBadge provenance={job.provenance} /></td>
                       <td><span className="rv-badge rv-badge-neutral">{(job.mode || '').toUpperCase()}</span></td>
                       <td><StatusBadge status={job.status} /></td>
                       <td className="rv-mono">

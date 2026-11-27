@@ -16,6 +16,7 @@ from roadvision_v2.geospatial import (
     export_locations_geojson,
     synchronize_timestamp_to_gps,
 )
+from roadvision_v2.schemas import GPS_PROVENANCE_CATEGORIES
 
 from .artifacts import resolve_artifact_entry
 from .configuration import APIConfig
@@ -27,6 +28,35 @@ from .storage import JobDatabase
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def _resolve_gps_provenance(
+    *,
+    original_filename: str,
+    requested_provenance: Optional[str] = None,
+    requested_is_synthetic: Optional[bool] = None,
+    verified_evidence: bool = False,
+) -> tuple:
+    low_name = (original_filename or "").lower()
+    raw_prov = str(requested_provenance or "").strip().upper() if requested_provenance else ""
+    if raw_prov and raw_prov not in GPS_PROVENANCE_CATEGORIES:
+        raise BadRequestError(
+            f"Unsupported gps_provenance '{raw_prov}'",
+            error_code="INVALID_GPS_PROVENANCE",
+            details={"allowed_gps_provenances": list(GPS_PROVENANCE_CATEGORIES)},
+        )
+
+    is_synth = bool(requested_is_synthetic) or (raw_prov == "SYNTHETIC") or ("synthetic" in low_name)
+    if is_synth:
+        return True, "SYNTHETIC"
+    if raw_prov == "UNKNOWN":
+        return False, "UNKNOWN"
+    if raw_prov == "VERIFIED_FIELD_LOG":
+        if verified_evidence:
+            return False, "VERIFIED_FIELD_LOG"
+        # Unverified external uploads are never auto-promoted to VERIFIED_FIELD_LOG
+        return False, "USER_SUPPLIED_UNVERIFIED"
+    return False, "USER_SUPPLIED_UNVERIFIED"
 
 
 class GeospatialStore:
@@ -43,10 +73,19 @@ class GeospatialStore:
         parsed_track: Dict[str, Any],
         original_filename: str,
         max_sync_gap_sec: float = 2.0,
+        is_synthetic: Optional[bool] = None,
+        gps_provenance: Optional[str] = None,
+        verified_evidence: bool = False,
     ) -> Dict[str, Any]:
         jid = validate_uuid(job_id)
         now = _utc_now()
         samples = parsed_track.get("samples") or []
+        eff_synth, eff_prov = _resolve_gps_provenance(
+            original_filename=original_filename,
+            requested_provenance=gps_provenance,
+            requested_is_synthetic=is_synthetic,
+            verified_evidence=verified_evidence,
+        )
         with self.db.transaction(immediate=True) as conn:
             conn.execute("DELETE FROM inspection_gps_samples WHERE job_id = ?", (jid,))
             conn.execute("DELETE FROM inspection_gps_tracks WHERE job_id = ?", (jid,))
@@ -58,8 +97,8 @@ class GeospatialStore:
                     job_id, source_format, original_filename, time_mode,
                     sync_offset_sec, max_sync_gap_sec, sample_count,
                     duplicate_timestamps_merged, out_of_order_count,
-                    min_ts_sec, max_ts_sec, uploaded_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    min_ts_sec, max_ts_sec, is_synthetic, gps_provenance, uploaded_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     jid,
@@ -73,6 +112,8 @@ class GeospatialStore:
                     int(parsed_track.get("out_of_order_count", 0)),
                     parsed_track.get("min_ts_sec"),
                     parsed_track.get("max_ts_sec"),
+                    1 if eff_synth else 0,
+                    eff_prov,
                     now,
                 ),
             )
@@ -166,6 +207,8 @@ class GeospatialStore:
         track_list = list(raw_tracks.values()) if isinstance(raw_tracks, dict) else []
         synced_rows: List[Dict[str, Any]] = []
         source_label = f"{meta['source_format']}:{meta['original_filename']}"
+        track_is_synth = bool(meta.get("is_synthetic")) or (str(meta.get("gps_provenance") or "").upper() == "SYNTHETIC")
+        track_gps_prov = str(meta.get("gps_provenance") or ("SYNTHETIC" if track_is_synth else "USER_SUPPLIED_UNVERIFIED"))
 
         for trk in track_list:
             tid = int(trk["track_id"])
@@ -232,6 +275,8 @@ class GeospatialStore:
                     "depth_model_id": depth_model_id,
                     "depth_input_resolution": depth_res,
                     "measurement_state": trk.get("latest_state"),
+                    "is_synthetic": track_is_synth,
+                    "gps_provenance": track_gps_prov,
                 }
             )
 
@@ -246,8 +291,9 @@ class GeospatialStore:
                         original_gps_timestamp, sync_offset_sec, interpolation_status,
                         time_diff_sec, sync_quality, gps_source, provenance_label,
                         quality_category, quality_index, median_relative_score,
-                        depth_model_id, depth_input_resolution, measurement_state
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        depth_model_id, depth_input_resolution, measurement_state,
+                        is_synthetic, gps_provenance
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     [
                         (
@@ -272,6 +318,8 @@ class GeospatialStore:
                             r["depth_model_id"],
                             r["depth_input_resolution"],
                             r["measurement_state"],
+                            1 if r["is_synthetic"] else 0,
+                            r["gps_provenance"],
                         )
                         for r in synced_rows
                     ],
@@ -447,7 +495,12 @@ class GeospatialStore:
             else:
                 rows = conn.execute("SELECT * FROM track_geolocations").fetchall()
 
-        candidates = [dict(r) for r in rows]
+        candidates = []
+        for r in rows:
+            cand = dict(r)
+            cand["is_synthetic"] = bool(cand.get("is_synthetic")) or (str(cand.get("gps_provenance") or "").upper() == "SYNTHETIC")
+            cand["gps_provenance"] = str(cand.get("gps_provenance") or ("SYNTHETIC" if cand["is_synthetic"] else "UNKNOWN"))
+            candidates.append(cand)
         result = cluster_geospatial_candidates(candidates, cfg=geo_cfg)
         now = _utc_now()
 
@@ -468,8 +521,9 @@ class GeospatialStore:
                     INSERT INTO geospatial_clusters (
                         cluster_id, created_at, updated_at, centroid_lat, centroid_lon,
                         diameter_m, match_status, review_status, member_count,
-                        distinct_trip_count, contains_synthetic, diagnostics_json
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        distinct_trip_count, contains_synthetic, contains_unknown_provenance,
+                        cluster_provenance, diagnostics_json
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         cl["cluster_id"],
@@ -483,6 +537,8 @@ class GeospatialStore:
                         cl["member_count"],
                         cl["distinct_trip_count"],
                         1 if cl.get("contains_synthetic") else 0,
+                        1 if cl.get("contains_unknown_provenance") else 0,
+                        cl.get("cluster_provenance") or "UNKNOWN",
                         diag_blob,
                     ),
                 )
@@ -509,40 +565,44 @@ class GeospatialStore:
         self,
         *,
         match_status: Optional[str] = None,
+        exclude_synthetic: bool = False,
         page: int = 1,
         page_size: int = 50,
     ) -> Dict[str, Any]:
+        clauses: List[str] = []
+        params: List[Any] = []
+        if match_status:
+            clauses.append("match_status = ?")
+            params.append(match_status)
+        if exclude_synthetic:
+            clauses.append("contains_synthetic = 0")
+        where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
+
         with self.db.read_connection() as conn:
-            if match_status:
-                total = conn.execute(
-                    "SELECT COUNT(*) AS c FROM geospatial_clusters WHERE match_status = ?",
-                    (match_status,),
-                ).fetchone()["c"]
-                rows = conn.execute(
-                    """
-                    SELECT * FROM geospatial_clusters
-                    WHERE match_status = ?
-                    ORDER BY member_count DESC, updated_at DESC
-                    LIMIT ? OFFSET ?
-                    """,
-                    (match_status, page_size, (page - 1) * page_size),
-                ).fetchall()
-            else:
-                total = conn.execute("SELECT COUNT(*) AS c FROM geospatial_clusters").fetchone()["c"]
-                rows = conn.execute(
-                    """
-                    SELECT * FROM geospatial_clusters
-                    ORDER BY member_count DESC, updated_at DESC
-                    LIMIT ? OFFSET ?
-                    """,
-                    (page_size, (page - 1) * page_size),
-                ).fetchall()
+            total = conn.execute(
+                f"SELECT COUNT(*) AS c FROM geospatial_clusters {where_sql}",
+                tuple(params),
+            ).fetchone()["c"]
+            synth_total = conn.execute(
+                "SELECT COUNT(*) AS c FROM geospatial_clusters WHERE contains_synthetic = 1"
+            ).fetchone()["c"]
+            rows = conn.execute(
+                f"""
+                SELECT * FROM geospatial_clusters
+                {where_sql}
+                ORDER BY member_count DESC, updated_at DESC
+                LIMIT ? OFFSET ?
+                """,
+                tuple([*params, page_size, (page - 1) * page_size]),
+            ).fetchall()
 
         clusters = []
         for r in rows:
             d = dict(r)
             diag = json.loads(d.pop("diagnostics_json") or "{}")
             d["contains_synthetic"] = bool(d.get("contains_synthetic"))
+            d["contains_unknown_provenance"] = bool(d.get("contains_unknown_provenance"))
+            d["cluster_provenance"] = d.get("cluster_provenance") or "UNKNOWN"
             d["match_reasons"] = diag.get("match_reasons") or []
             clusters.append(d)
 
@@ -550,6 +610,8 @@ class GeospatialStore:
             {
                 "clusters": clusters,
                 "total": int(total),
+                "synthetic_cluster_count": int(synth_total),
+                "exclude_synthetic": bool(exclude_synthetic),
                 "page": page,
                 "page_size": page_size,
                 "scientific_disclaimer": (
@@ -575,12 +637,16 @@ class GeospatialStore:
         d = dict(row)
         diag = json.loads(d.pop("diagnostics_json") or "{}")
         d["contains_synthetic"] = bool(d.get("contains_synthetic"))
+        d["contains_unknown_provenance"] = bool(d.get("contains_unknown_provenance"))
+        d["cluster_provenance"] = d.get("cluster_provenance") or "UNKNOWN"
         d["match_reasons"] = diag.get("match_reasons") or []
         d["thresholds"] = diag.get("thresholds") or {}
         members = []
         for mr in member_rows:
             md = json.loads(mr["member_metadata_json"] or "{}")
             md["distance_to_centroid_m"] = mr["distance_to_centroid_m"]
+            md["is_synthetic"] = bool(md.get("is_synthetic"))
+            md["gps_provenance"] = md.get("gps_provenance") or ("SYNTHETIC" if md["is_synthetic"] else "UNKNOWN")
             members.append(md)
         d["members"] = members
         return sanitize_json_value(d)

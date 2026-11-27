@@ -1,16 +1,14 @@
 """
-Phase 13 Steps 14 & 20: Reference-Plane Estimation Ablation & Relative Geometry Evaluation.
+Phase 13B: Corrected Reference-Plane Estimation Ablation & Relative Geometry Evaluation.
 
-Compares A: legacy_annular, B: ols_plane, C: ransac_baseline, D: optimized_msac_ransac
-on deterministic synthetic scenarios (flat, sloped, depression, raised, structured_noise,
-outliers 10/25/40%, low_support, boundary_truncation) and validates Phase 10 relative 2.5D
-snapshot downsampling fidelity, reference_mask_grid recovery, polarity, and null gaps.
+Fixes ISS-008: eliminates duplicate Method D call so every method executes ONCE per timed trial
+across equivalent full per-region processing scope, plus separate sub-stage breakdown for
+reference-region construction, plane fitting, and cavity extraction.
 """
 
 from __future__ import annotations
 
 import json
-import os
 import time
 from typing import Any, Dict, List
 
@@ -80,7 +78,6 @@ def _make_synthetic_case(
 
     neighbors = []
     if scenario == "low_support":
-        # Mask out most of the surround using synthetic neighbor boxes
         neighbors = [
             (30.0, 20.0, 210.0, 82.0),
             (30.0, 82.0, 108.0, 170.0),
@@ -97,6 +94,23 @@ def _make_synthetic_case(
         "neighbors": neighbors,
         "expect_valid": expect_valid,
     }
+
+
+def _evaluate_method_d_once(
+    dmap: np.ndarray,
+    box: Any,
+    neighbors: Any,
+    opt_cfg: OptimizedDepthConfig,
+) -> Dict[str, Any]:
+    """Single-call Method D execution wrapper returning arrays without duplicate plane fit."""
+    return extract_cavity_with_strategy(
+        dmap,
+        box,
+        strategy="elliptical_core",
+        opt_cfg=opt_cfg,
+        neighbor_boxes=neighbors,
+        return_arrays=True,
+    )
 
 
 def run_geometry_ablation(
@@ -117,6 +131,7 @@ def run_geometry_ablation(
         "boundary_truncated",
     ]
     repeats = 2 if smoke else 5
+    timing_trials = 1 if smoke else 3
     cases: List[Dict[str, Any]] = []
     for sc in scenarios:
         for r in range(repeats):
@@ -125,102 +140,158 @@ def run_geometry_ablation(
     rob_cfg = RobustDepthConfig(seed=seed)
     opt_cfg = OptimizedDepthConfig(seed=seed)
 
+    # Consistent untimed warm-up on the first case
+    if cases:
+        w = cases[0]
+        wbx = [int(v) for v in w["box"]]
+        for _ in range(3):
+            AnnularDonutDepthExtractor.extract_depth_disparity(w["depth_map"], wbx[0], wbx[1], wbx[2], wbx[3])
+            extract_relative_depth_for_box(w["depth_map"], w["box"], method="ols_plane", cfg=rob_cfg, neighbor_boxes=w["neighbors"], return_arrays=True)
+            extract_relative_depth_for_box(w["depth_map"], w["box"], method="ransac_plane", cfg=rob_cfg, neighbor_boxes=w["neighbors"], return_arrays=True)
+            _evaluate_method_d_once(w["depth_map"], w["box"], w["neighbors"], opt_cfg)
+
     methods = ("A_legacy_annular", "B_ols_plane", "C_ransac_baseline", "D_optimized_msac_ransac")
-    per_method: Dict[str, List[Dict[str, Any]]] = {m: [] for m in methods}
+    per_method_metrics: Dict[str, List[Dict[str, Any]]] = {m: [] for m in methods}
+    all_trial_records: List[Dict[str, Any]] = []
+    d_substage_region_ms: List[float] = []
+    d_substage_fit_ms: List[float] = []
+    d_substage_total_ms: List[float] = []
 
-    for case in cases:
-        dmap = case["depth_map"]
-        gt = case["gt_plane"]
-        bx1, by1, bx2, by2 = [int(v) for v in case["box"]]
-        gt_crater = gt[by1:by2, bx1:bx2]
+    for trial_idx in range(timing_trials):
+        for case in cases:
+            dmap = case["depth_map"]
+            gt = case["gt_plane"]
+            bx1, by1, bx2, by2 = [int(v) for v in case["box"]]
+            gt_crater = gt[by1:by2, bx1:bx2]
 
-        # A: Legacy annular (static extract_depth_disparity: scalar disparity only, no plane gate)
-        t0 = time.perf_counter()
-        raw_disp = AnnularDonutDepthExtractor.extract_depth_disparity(dmap, bx1, by1, bx2, by2)
-        dt_a = (time.perf_counter() - t0) * 1000.0
-        per_method["A_legacy_annular"].append({
-            "scenario": case["scenario"],
-            "is_valid": bool(raw_disp > 0.0),
-            "expect_valid": case["expect_valid"],
-            "plane_rmse": None,
-            "inlier_ratio": None,
-            "score": float(raw_disp),
-            "latency_ms": dt_a,
-        })
+            # A: Legacy annular scalar-only extractor (smaller scope noted explicitly)
+            t0 = time.perf_counter()
+            raw_disp = AnnularDonutDepthExtractor.extract_depth_disparity(dmap, bx1, by1, bx2, by2)
+            dt_a = (time.perf_counter() - t0) * 1000.0
+            row_a = {
+                "trial": trial_idx,
+                "case_id": case["case_id"],
+                "scenario": case["scenario"],
+                "is_valid": bool(raw_disp > 0.0),
+                "expect_valid": case["expect_valid"],
+                "plane_rmse": None,
+                "inlier_ratio": None,
+                "score": float(raw_disp),
+                "latency_ms": dt_a,
+            }
+            if trial_idx == 0:
+                per_method_metrics["A_legacy_annular"].append(row_a)
+            all_trial_records.append({"method": "A_legacy_annular", **row_a})
 
-        # B: OLS plane
-        t0 = time.perf_counter()
-        out_ols = extract_relative_depth_for_box(dmap, case["box"], method="ols_plane", cfg=rob_cfg, neighbor_boxes=case["neighbors"], return_arrays=True)
-        dt_b = (time.perf_counter() - t0) * 1000.0
-        ols_plane = (out_ols.get("arrays") or {}).get("ref_plane_crater")
-        ols_gt_rmse = (
-            float(np.sqrt(np.mean((ols_plane - gt_crater) ** 2)))
-            if (ols_plane is not None and ols_plane.shape == gt_crater.shape)
-            else None
-        )
-        per_method["B_ols_plane"].append({
-            "scenario": case["scenario"],
-            "is_valid": bool(out_ols["is_valid"]),
-            "expect_valid": case["expect_valid"],
-            "plane_rmse": ols_gt_rmse,
-            "inlier_ratio": (out_ols.get("ref_diagnostics") or {}).get("inlier_ratio"),
-            "score": (out_ols.get("relative_cavity_stats") or {}).get("p75_residual"),
-            "latency_ms": dt_b,
-        })
+            # B: OLS full per-region processing
+            t0 = time.perf_counter()
+            out_ols = extract_relative_depth_for_box(
+                dmap, case["box"], method="ols_plane", cfg=rob_cfg, neighbor_boxes=case["neighbors"], return_arrays=True
+            )
+            dt_b = (time.perf_counter() - t0) * 1000.0
+            ols_plane = (out_ols.get("arrays") or {}).get("ref_plane_crater")
+            ols_gt_rmse = (
+                float(np.sqrt(np.mean((ols_plane - gt_crater) ** 2)))
+                if (ols_plane is not None and ols_plane.shape == gt_crater.shape)
+                else None
+            )
+            row_b = {
+                "trial": trial_idx,
+                "case_id": case["case_id"],
+                "scenario": case["scenario"],
+                "is_valid": bool(out_ols["is_valid"]),
+                "expect_valid": case["expect_valid"],
+                "plane_rmse": ols_gt_rmse,
+                "inlier_ratio": (out_ols.get("ref_diagnostics") or {}).get("inlier_ratio"),
+                "score": (out_ols.get("relative_cavity_stats") or {}).get("p75_residual"),
+                "latency_ms": dt_b,
+            }
+            if trial_idx == 0:
+                per_method_metrics["B_ols_plane"].append(row_b)
+            all_trial_records.append({"method": "B_ols_plane", **row_b})
 
-        # C: Baseline RANSAC (Phase 5A)
-        t0 = time.perf_counter()
-        out_ran = extract_relative_depth_for_box(dmap, case["box"], method="ransac_plane", cfg=rob_cfg, neighbor_boxes=case["neighbors"], return_arrays=True)
-        dt_c = (time.perf_counter() - t0) * 1000.0
-        ran_plane = (out_ran.get("arrays") or {}).get("ref_plane_crater")
-        ran_gt_rmse = (
-            float(np.sqrt(np.mean((ran_plane - gt_crater) ** 2)))
-            if (ran_plane is not None and ran_plane.shape == gt_crater.shape)
-            else None
-        )
-        per_method["C_ransac_baseline"].append({
-            "scenario": case["scenario"],
-            "is_valid": bool(out_ran["is_valid"]),
-            "expect_valid": case["expect_valid"],
-            "plane_rmse": ran_gt_rmse,
-            "inlier_ratio": (out_ran.get("ref_diagnostics") or {}).get("inlier_ratio"),
-            "score": (out_ran.get("relative_cavity_stats") or {}).get("p75_residual"),
-            "latency_ms": dt_c,
-        })
+            # C: Baseline RANSAC full per-region processing
+            t0 = time.perf_counter()
+            out_ran = extract_relative_depth_for_box(
+                dmap, case["box"], method="ransac_plane", cfg=rob_cfg, neighbor_boxes=case["neighbors"], return_arrays=True
+            )
+            dt_c = (time.perf_counter() - t0) * 1000.0
+            ran_plane = (out_ran.get("arrays") or {}).get("ref_plane_crater")
+            ran_gt_rmse = (
+                float(np.sqrt(np.mean((ran_plane - gt_crater) ** 2)))
+                if (ran_plane is not None and ran_plane.shape == gt_crater.shape)
+                else None
+            )
+            row_c = {
+                "trial": trial_idx,
+                "case_id": case["case_id"],
+                "scenario": case["scenario"],
+                "is_valid": bool(out_ran["is_valid"]),
+                "expect_valid": case["expect_valid"],
+                "plane_rmse": ran_gt_rmse,
+                "inlier_ratio": (out_ran.get("ref_diagnostics") or {}).get("inlier_ratio"),
+                "score": (out_ran.get("relative_cavity_stats") or {}).get("p75_residual"),
+                "latency_ms": dt_c,
+            }
+            if trial_idx == 0:
+                per_method_metrics["C_ransac_baseline"].append(row_c)
+            all_trial_records.append({"method": "C_ransac_baseline", **row_c})
 
-        # D: Optimized adaptive MSAC/RANSAC (Phase 5B/V2)
-        t0 = time.perf_counter()
-        reg = build_and_sample_annular_region(dmap, case["box"], neighbor_boxes=case["neighbors"], cfg=opt_cfg)
-        fit_out = fit_ransac_optimized(dmap, reg, cfg=opt_cfg)
-        ref_crater = fit_out.get("ref_plane_crater")
-        gt_err_rmse = (
-            float(np.sqrt(np.mean((ref_crater - gt_crater) ** 2)))
-            if (ref_crater is not None and ref_crater.shape == gt_crater.shape)
-            else None
-        )
-        cav_out = extract_cavity_with_strategy(dmap, case["box"], strategy="elliptical_core", opt_cfg=opt_cfg, neighbor_boxes=case["neighbors"])
-        dt_d = (time.perf_counter() - t0) * 1000.0
-        per_method["D_optimized_msac_ransac"].append({
-            "scenario": case["scenario"],
-            "is_valid": bool(cav_out["is_valid"]),
-            "expect_valid": case["expect_valid"],
-            "plane_rmse": gt_err_rmse,
-            "inlier_ratio": fit_out.get("inlier_ratio"),
-            "score": cav_out.get("raw_relative_cavity_score"),
-            "latency_ms": dt_d,
-        })
+            # D: Optimized MSAC/RANSAC full per-region processing (SINGLE execution per trial!)
+            t0 = time.perf_counter()
+            cav_out = _evaluate_method_d_once(dmap, case["box"], case["neighbors"], opt_cfg)
+            dt_d = (time.perf_counter() - t0) * 1000.0
+            fit_out = (cav_out.get("arrays") or {}).get("fit_out") or {}
+            ref_crater = fit_out.get("ref_plane_crater")
+            gt_err_rmse = (
+                float(np.sqrt(np.mean((ref_crater - gt_crater) ** 2)))
+                if (ref_crater is not None and ref_crater.shape == gt_crater.shape)
+                else None
+            )
+            row_d = {
+                "trial": trial_idx,
+                "case_id": case["case_id"],
+                "scenario": case["scenario"],
+                "is_valid": bool(cav_out["is_valid"]),
+                "expect_valid": case["expect_valid"],
+                "plane_rmse": gt_err_rmse,
+                "inlier_ratio": fit_out.get("inlier_ratio"),
+                "score": cav_out.get("raw_relative_cavity_score"),
+                "latency_ms": dt_d,
+            }
+            if trial_idx == 0:
+                per_method_metrics["D_optimized_msac_ransac"].append(row_d)
+            all_trial_records.append({"method": "D_optimized_msac_ransac", **row_d})
+
+            # Separate sub-stage micro-benchmark (region construction vs plane fit) outside Method D main timer
+            tr0 = time.perf_counter()
+            reg_sub = build_and_sample_annular_region(dmap, case["box"], neighbor_boxes=case["neighbors"], cfg=opt_cfg)
+            tr1 = time.perf_counter()
+            fit_ransac_optimized(dmap, reg_sub, cfg=opt_cfg)
+            tr2 = time.perf_counter()
+            d_substage_region_ms.append((tr1 - tr0) * 1000.0)
+            d_substage_fit_ms.append((tr2 - tr1) * 1000.0)
+            d_substage_total_ms.append(dt_d)
 
     ref_plane_summary: Dict[str, Any] = {}
-    for m, rows in per_method.items():
+    for m in methods:
+        rows = per_method_metrics[m]
         rmses = [r["plane_rmse"] for r in rows if r["plane_rmse"] is not None]
         outlier_rmses = [r["plane_rmse"] for r in rows if r["plane_rmse"] is not None and r["scenario"].startswith("outliers_")]
         inliers = [r["inlier_ratio"] for r in rows if r["inlier_ratio"] is not None]
-        lats = [r["latency_ms"] for r in rows]
+        lats = [r["latency_ms"] for r in all_trial_records if r["method"] == m]
         correct_gate = sum(1 for r in rows if r["is_valid"] == r["expect_valid"])
         invalid_rej = sum(1 for r in rows if (not r["expect_valid"]) and (not r["is_valid"]))
         invalid_tot = sum(1 for r in rows if not r["expect_valid"])
+        scope_note = (
+            "scalar_donut_delta_only"
+            if m == "A_legacy_annular"
+            else "full_per_region_extraction (region_build + plane_fit + cavity_extract)"
+        )
         ref_plane_summary[m] = {
-            "total_cases": len(rows),
+            "scope": scope_note,
+            "unique_cases": len(rows),
+            "timed_trials": len(lats),
             "valid_count": sum(1 for r in rows if r["is_valid"]),
             "gate_concordance_pct": round((correct_gate / len(rows)) * 100.0, 2),
             "invalid_rejection_rate_pct": round((invalid_rej / max(1, invalid_tot)) * 100.0, 2),
@@ -229,17 +300,35 @@ def run_geometry_ablation(
             "mean_inlier_ratio": round(float(np.mean(inliers)), 4) if inliers else None,
             "mean_latency_ms": round(float(np.mean(lats)), 3),
             "median_latency_ms": round(float(np.median(lats)), 3),
+            "p95_latency_ms": round(float(np.percentile(lats, 95.0)), 3),
         }
 
-    # Phase 10 Relative Geometry Visualization Fidelity Check (fixed valid_ring_mask)
+    c_mean = ref_plane_summary["C_ransac_baseline"]["mean_latency_ms"]
+    d_mean = ref_plane_summary["D_optimized_msac_ransac"]["mean_latency_ms"]
+    c_med = ref_plane_summary["C_ransac_baseline"]["median_latency_ms"]
+    d_med = ref_plane_summary["D_optimized_msac_ransac"]["median_latency_ms"]
+
+    speedup_summary = {
+        "speedup_D_vs_C_mean": round(c_mean / d_mean, 3) if d_mean > 0 else None,
+        "speedup_D_vs_C_median": round(c_med / d_med, 3) if d_med > 0 else None,
+        "d_substage_breakdown_ms": {
+            "region_construction_mean_ms": round(float(np.mean(d_substage_region_ms)), 3),
+            "plane_fitting_mean_ms": round(float(np.mean(d_substage_fit_ms)), 3),
+            "cavity_extraction_remainder_mean_ms": round(max(0.0, float(np.mean(d_substage_total_ms) - np.mean(d_substage_region_ms) - np.mean(d_substage_fit_ms))), 3),
+            "full_region_processing_mean_ms": round(float(np.mean(d_substage_total_ms)), 3),
+        },
+        "duplicate_call_fixed": True,
+    }
+
+    # Phase 10 Relative Geometry Visualization Fidelity Check
     synth_case = _make_synthetic_case("sloped", 0, rng)
     d_synth = synth_case["depth_map"].copy()
-    d_synth[88:98, 112:124] = np.nan  # Inject missing block (~10x12 px so downsampled cells are strictly invalid)
+    d_synth[88:98, 112:124] = np.nan
     ext = extract_cavity_with_strategy(d_synth, synth_case["box"], strategy="elliptical_core", opt_cfg=opt_cfg, return_arrays=True)
     t0 = time.perf_counter()
     snap = build_relative_surface_snapshot(
-        snapshot_id="phase13_fidelity_test",
-        session_id="phase13",
+        snapshot_id="phase13b_fidelity_test",
+        session_id="phase13b",
         frame_idx=0,
         timestamp_sec=0.0,
         track_id=1,
@@ -280,12 +369,15 @@ def run_geometry_ablation(
         "snapshot_json_kb": round(json_bytes / 1024.0, 2),
         "generation_overhead_ms": round(snap_ms, 2),
         "extra_depth_inference_calls": 0,
-        "note": "Corrected reference_mask_grid (>0 cells) verified on new snapshots; 42 historical snapshots remain unmasked legacy artifacts.",
+        "geometry_schema_version": snap.get("geometry_schema_version"),
+        "reference_mask_status": snap.get("reference_mask_status"),
     }
 
     return {
         "status": "COMPLETED",
         "reference_plane_ablation": ref_plane_summary,
+        "latency_speedup_summary": speedup_summary,
+        "per_trial_timings": all_trial_records,
         "phase10_geometry_evaluation": phase10_eval,
-        "synthetic_disclaimer": "Synthetic reference-plane RMSE tests geometric plane recovery ONLY; it does NOT establish physical metric pothole depth accuracy.",
+        "synthetic_disclaimer": "Synthetic reference-plane RMSE and timings reflect analytic surface recovery and CPU latency ONLY; they do NOT establish physical metric pothole depth accuracy.",
     }

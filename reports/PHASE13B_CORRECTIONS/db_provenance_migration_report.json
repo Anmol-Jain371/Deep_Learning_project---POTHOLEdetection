@@ -1,0 +1,221 @@
+{
+  "before_mixed_aggregate_jobs": 16,
+  "before_completed_aggregate_jobs": 14,
+  "after_counts_by_provenance": {
+    "USER_INSPECTION": 0,
+    "RESEARCH_EXPLORATORY": 2,
+    "TEST_FIXTURE": 11,
+    "SYNTHETIC_EXPERIMENT": 2,
+    "DEMONSTRATION": 0,
+    "UNKNOWN": 1
+  },
+  "after_default_genuine_aggregate_jobs": 0,
+  "pre_migration_cluster_contains_synthetic": [
+    [
+      "648c2b99-65e4-5a02-9f32-5cf742f79b9d",
+      0
+    ]
+  ],
+  "post_migration_clusters": [
+    {
+      "cluster_id": "648c2b99-65e4-5a02-9f32-5cf742f79b9d",
+      "created_at": "2026-11-27T06:43:26.079077+00:00",
+      "updated_at": "2026-11-27T06:43:26.079077+00:00",
+      "centroid_lat": 12.9716125,
+      "centroid_lon": 77.594605,
+      "diameter_m": 2.984,
+      "match_status": "POTENTIAL_MATCH",
+      "review_status": "PENDING_REVIEW",
+      "member_count": 2,
+      "distinct_trip_count": 2,
+      "contains_synthetic": true,
+      "contains_unknown_provenance": false,
+      "cluster_provenance": "SYNTHETIC",
+      "match_reasons": [
+        "contains_synthetic_gps_fixture"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "record_type": "inspection_job",
+      "record_id": "179cfb20-a52c-4cf8-9c9f-ee15b860efce",
+      "filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Recorded in runs/benchmark/phase8b_api_results.json (runs.live_no_depth, max_frames=40)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "19f45bcf-ef32-4ab8-932f-46768cabb910",
+      "filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Recorded in runs/benchmark/phase8b_api_results.json (runs.live_midas, max_frames=40)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "71dad45f-7ac2-4cc2-89b0-2411331a7925",
+      "filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Recorded in runs/benchmark/phase8b_api_results.json (runs.balanced_dav2_336, max_frames=40)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "be7d6bb9-ef85-41fd-937e-d46c78296bc5",
+      "filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Recorded in runs/benchmark/phase8b_api_results.json (runs.survey_dav2_518, max_frames=40)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "3b454cb8-2d13-4058-b024-2e17f03bdd85",
+      "filename": "blank_negative_control.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Recorded in runs/benchmark/phase8b_api_results.json (blank negative control max_frames=20)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "760b3f15-1a47-4677-8b68-652af61ee434",
+      "filename": "Watch_Video__Terrible_potholes_in_Rangoon_Road.mp4",
+      "status": "CANCELLED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Recorded in runs/benchmark/phase8b_api_results.json (cooperative cancellation benchmark test, not merely status)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "c05be2f5-5553-4a35-bb0b-dc17ebe1b4f9",
+      "filename": "ruralRoad_potHoles.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "UNKNOWN",
+      "evidence": "Created 2026-11-27T04:37:32 UTC prior to 04:38 test batch with no provenance manifest or report citation",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "80108309-4c50-433e-90cb-2f12745fe666",
+      "filename": "upload_1794546659_test_clip.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Clipped 25f smoke fixture (max_frames=30) created during Phase 8B/C test session 04:38 UTC",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "d78512bb-dae1-4b95-8934-7528bbc3ef55",
+      "filename": "cancel_test.mp4",
+      "status": "CANCELLED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Dedicated cancellation smoke fixture created immediately after 80108309 during 04:38 UTC test batch",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "7b84f325-3c7a-4c43-85fc-2d2b416b96cc",
+      "filename": "upload_1794546659_test_clip.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "SYNTHETIC_EXPERIMENT",
+      "evidence": "Matched with synthetic GPS fixture synthetic_trip_a.csv for Phase 11 live two-trip cluster test",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "e122ded7-cc03-4708-b7c5-0b3a09e80cee",
+      "filename": "upload_1794546659_test_clip.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "SYNTHETIC_EXPERIMENT",
+      "evidence": "Matched with synthetic GPS fixture synthetic_trip_b.csv for Phase 11 live two-trip cluster test",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "2bb2533b-df50-45b6-9c95-fff9f706e3e6",
+      "filename": "clip.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Paired 25f baseline run in Phase 10 geometry overhead smoke test (reports/phase10_relative_3d_visualization.md)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "b3043fd0-a178-485e-bcae-a780bbc46a21",
+      "filename": "clip.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "Paired 25f geometry run in Phase 10 overhead smoke test (reports/phase10_relative_3d_visualization.md)",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "acc1a7dd-04b3-415a-84a5-18e327199062",
+      "filename": "clip.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "TEST_FIXTURE",
+      "evidence": "60f clipped geometry smoke run during 05:07 UTC Phase 10 test batch",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "2932b2b3-092a-47f4-bff4-37dc774ac7e3",
+      "filename": "ruralRoad_potHoles.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "RESEARCH_EXPLORATORY",
+      "evidence": "Full 202f ruralRoad_potHoles exploratory comparison (LIVE mode) paired with 0f286074",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "inspection_job",
+      "record_id": "0f286074-9655-4d5a-abb8-fab934954e84",
+      "filename": "ruralRoad_potHoles.mp4",
+      "status": "COMPLETED",
+      "previous_provenance": "UNTRACKED_LEGACY_DEFAULT",
+      "new_provenance": "RESEARCH_EXPLORATORY",
+      "evidence": "Documented full 202f ruralRoad_potHoles exploratory run evaluated in Phase 9/10/13 & FINAL_AUDIT_REPORT.md",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "gps_track",
+      "record_id": "7b84f325-3c7a-4c43-85fc-2d2b416b96cc",
+      "filename": "synthetic_trip_a.csv",
+      "status": "MIGRATED",
+      "previous_provenance": "UNTRACKED_CONTAINS_SYNTHETIC_0",
+      "new_provenance": "SYNTHETIC",
+      "evidence": "Known synthetic GPS fixture (synthetic_trip_a.csv) used in Phase 11 live test",
+      "included_in_default_genuine_aggregate": false
+    },
+    {
+      "record_type": "gps_track",
+      "record_id": "e122ded7-cc03-4708-b7c5-0b3a09e80cee",
+      "filename": "synthetic_trip_b.csv",
+      "status": "MIGRATED",
+      "previous_provenance": "UNTRACKED_CONTAINS_SYNTHETIC_0",
+      "new_provenance": "SYNTHETIC",
+      "evidence": "Known synthetic GPS fixture (synthetic_trip_b.csv) used in Phase 11 live test",
+      "included_in_default_genuine_aggregate": false
+    }
+  ]
+}

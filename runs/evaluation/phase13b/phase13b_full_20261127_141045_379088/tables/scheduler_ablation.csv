@@ -1,0 +1,6 @@
+strategy,frames_processed,scheduler_requests,actual_depth_calls,depth_calls_per_frame,depth_call_reduction_vs_always_on_pct,total_observations,fresh_valid_count,cached_valid_count,fresh_invalid_count,expired_count,not_evaluated_count,fresh_valid_coverage_pct,effective_availability_pct,mean_age_sec,track_starvation_count,simulated_frame_ms_mean,simulated_frame_ms_median,simulated_frame_ms_p95,simulated_sustained_fps,peak_gpu_allocated_mb
+A_always_on,150,150,150,1.0,0.0,464,309,0,155,0,0,66.59,66.59,0.0,5,83.52,81.4,94.46,11.97,287.46
+B_candidate_gated,150,150,144,0.96,4.0,464,309,0,155,0,0,66.59,66.59,0.0,5,80.49,80.94,93.62,12.42,287.46
+C_fixed_interval,150,150,48,0.32,68.0,464,103,214,54,39,54,22.2,68.32,0.0515,7,36.85,15.48,91.51,27.13,287.46
+D_track_aware,150,150,95,0.6333,36.67,464,213,110,130,0,11,45.91,69.61,0.022,5,58.61,78.23,92.49,17.06,287.46
+E_budget_aware,150,150,82,0.5467,45.33,464,173,156,117,0,18,37.28,70.91,0.0366,5,52.08,74.37,89.64,19.2,287.46

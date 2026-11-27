@@ -45,7 +45,9 @@ CREATE TABLE IF NOT EXISTS inspection_jobs (
     artifact_availability_json TEXT NOT NULL,
     summary_json TEXT,
     telemetry_json TEXT,
-    pipeline_version TEXT NOT NULL
+    pipeline_version TEXT NOT NULL,
+    provenance TEXT NOT NULL DEFAULT 'USER_INSPECTION',
+    provenance_reason TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_jobs_status ON inspection_jobs(status);
@@ -64,6 +66,8 @@ CREATE TABLE IF NOT EXISTS inspection_gps_tracks (
     out_of_order_count INTEGER NOT NULL DEFAULT 0,
     min_ts_sec REAL,
     max_ts_sec REAL,
+    is_synthetic INTEGER NOT NULL DEFAULT 0,
+    gps_provenance TEXT NOT NULL DEFAULT 'USER_SUPPLIED_UNVERIFIED',
     uploaded_at TEXT NOT NULL
 );
 
@@ -106,6 +110,8 @@ CREATE TABLE IF NOT EXISTS track_geolocations (
     depth_model_id TEXT,
     depth_input_resolution INTEGER,
     measurement_state TEXT,
+    is_synthetic INTEGER NOT NULL DEFAULT 0,
+    gps_provenance TEXT NOT NULL DEFAULT 'USER_SUPPLIED_UNVERIFIED',
     UNIQUE(job_id, track_id, track_generation_id)
 );
 
@@ -124,6 +130,8 @@ CREATE TABLE IF NOT EXISTS geospatial_clusters (
     member_count INTEGER NOT NULL DEFAULT 1,
     distinct_trip_count INTEGER NOT NULL DEFAULT 1,
     contains_synthetic INTEGER NOT NULL DEFAULT 0,
+    contains_unknown_provenance INTEGER NOT NULL DEFAULT 0,
+    cluster_provenance TEXT NOT NULL DEFAULT 'USER_SUPPLIED_UNVERIFIED',
     diagnostics_json TEXT NOT NULL
 );
 
@@ -220,8 +228,41 @@ class JobDatabase:
                 conn.execute("PRAGMA synchronous=NORMAL;")
                 conn.executescript(SCHEMA_SQL)
                 self._apply_migrations(conn)
+                self._ensure_provenance_columns(conn)
             finally:
                 conn.close()
+
+    @staticmethod
+    def _ensure_provenance_columns(conn: sqlite3.Connection) -> None:
+        """Add Phase 13B provenance columns safely to pre-existing SQLite DBs."""
+        def _cols(table_name: str) -> set:
+            return {str(r[1]) for r in conn.execute(f"PRAGMA table_info({table_name})").fetchall()}
+
+        job_cols = _cols("inspection_jobs")
+        if "provenance" not in job_cols:
+            # Pre-13B rows lacking recorded provenance default conservatively to UNKNOWN
+            conn.execute("ALTER TABLE inspection_jobs ADD COLUMN provenance TEXT NOT NULL DEFAULT 'UNKNOWN'")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_jobs_provenance ON inspection_jobs(provenance)")
+        if "provenance_reason" not in job_cols:
+            conn.execute("ALTER TABLE inspection_jobs ADD COLUMN provenance_reason TEXT")
+
+        gps_cols = _cols("inspection_gps_tracks")
+        if "is_synthetic" not in gps_cols:
+            conn.execute("ALTER TABLE inspection_gps_tracks ADD COLUMN is_synthetic INTEGER NOT NULL DEFAULT 0")
+        if "gps_provenance" not in gps_cols:
+            conn.execute("ALTER TABLE inspection_gps_tracks ADD COLUMN gps_provenance TEXT NOT NULL DEFAULT 'UNKNOWN'")
+
+        tg_cols = _cols("track_geolocations")
+        if "is_synthetic" not in tg_cols:
+            conn.execute("ALTER TABLE track_geolocations ADD COLUMN is_synthetic INTEGER NOT NULL DEFAULT 0")
+        if "gps_provenance" not in tg_cols:
+            conn.execute("ALTER TABLE track_geolocations ADD COLUMN gps_provenance TEXT NOT NULL DEFAULT 'UNKNOWN'")
+
+        cl_cols = _cols("geospatial_clusters")
+        if "contains_unknown_provenance" not in cl_cols:
+            conn.execute("ALTER TABLE geospatial_clusters ADD COLUMN contains_unknown_provenance INTEGER NOT NULL DEFAULT 0")
+        if "cluster_provenance" not in cl_cols:
+            conn.execute("ALTER TABLE geospatial_clusters ADD COLUMN cluster_provenance TEXT NOT NULL DEFAULT 'UNKNOWN'")
 
     def _apply_migrations(self, conn: sqlite3.Connection) -> None:
         """Apply additive, idempotent SQLite schema migrations safely."""

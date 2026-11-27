@@ -18,7 +18,10 @@ from flask import Blueprint, Response, current_app, request
 
 from roadvision_v2.geospatial import parse_gps_telemetry
 from roadvision_v2.maintenance import render_inspection_report_csv, render_inspection_report_html
-from roadvision_v2.schemas import MEASUREMENT_STATES
+from roadvision_v2.schemas import (
+    INSPECTION_PROVENANCE_CATEGORIES,
+    MEASUREMENT_STATES,
+)
 
 from .artifacts import resolve_artifact_entry, serve_artifact_response
 from .configuration import APIConfig, PROJECT_ROOT
@@ -45,7 +48,7 @@ from .schemas import (
     compute_measurement_coverage,
     sanitize_json_value,
 )
-from .validation import save_and_validate_upload, validate_job_options
+from .validation import parse_optional_bool, save_and_validate_upload, validate_job_options
 
 v2_bp = Blueprint("roadvision_v2_api", __name__)
 register_v2_error_handlers(v2_bp)
@@ -98,6 +101,53 @@ def _get_pagination_params(cfg: APIConfig) -> Tuple[int, int]:
     return page, page_size
 
 
+def _parse_provenance_scope(default_scope: str = "all") -> Tuple[Optional[List[str]], bool, str]:
+    """Parse ?provenance=... and ?scope=genuine|exploratory|all cleanly."""
+    raw_prov = request.args.get("provenance")
+    if raw_prov is not None and str(raw_prov).strip() != "":
+        prov_norm = str(raw_prov).strip().upper()
+        if prov_norm not in INSPECTION_PROVENANCE_CATEGORIES:
+            raise BadRequestError(
+                f"Unsupported provenance filter '{prov_norm}'",
+                error_code="INVALID_FILTER",
+                details={"allowed_provenances": list(INSPECTION_PROVENANCE_CATEGORIES)},
+            )
+        return [prov_norm], False, prov_norm
+
+    scope = (request.args.get("scope") or default_scope).strip().lower()
+    if scope == "genuine":
+        return ["USER_INSPECTION"], True, "genuine"
+    if scope == "exploratory":
+        return ["USER_INSPECTION", "RESEARCH_EXPLORATORY"], False, "exploratory"
+    if scope == "all":
+        return None, False, "all"
+    raise BadRequestError(
+        f"Unsupported provenance scope '{scope}'; expected genuine, exploratory, or all",
+        error_code="INVALID_FILTER",
+    )
+
+
+def _classify_geometry_snapshot_artifact(snap: Dict[str, Any]) -> Tuple[str, Optional[str], int]:
+    """Inspect reference_mask_grid without fabricating any mask cells."""
+    ref_grid = snap.get("reference_mask_grid") or []
+    ref_true = sum(1 for row in ref_grid for cell in (row or []) if bool(cell))
+    schema_ver = str(snap.get("geometry_schema_version") or "")
+    explicit_status = str(snap.get("reference_mask_status") or "")
+    if ref_true > 0:
+        return "CURRENT_VALID_REFERENCE_MASK", None, ref_true
+    if schema_ver == "10b" or explicit_status in ("POPULATED", "EMPTY"):
+        return (
+            "GENUINE_EMPTY_REFERENCE_MASK",
+            "Reference ring mask is genuinely empty due to scene occlusion or boundary constraints; no synthetic mask cells were added.",
+            0,
+        )
+    return (
+        "HISTORICAL_EMPTY_REFERENCE_MASK",
+        "Historical geometry snapshot saved prior to the Phase 10B reference-mask fix; annular reference mask is unavailable in this stored artifact.",
+        0,
+    )
+
+
 def _format_job_status_payload(
     job: Dict[str, Any],
     geo_store: Optional[GeospatialStore] = None,
@@ -119,6 +169,8 @@ def _format_job_status_payload(
         "original_filename": job.get("original_filename"),
         "status": job["status"],
         "mode": job["mode"],
+        "provenance": job.get("provenance") or "USER_INSPECTION",
+        "provenance_reason": job.get("provenance_reason"),
         "created_at": job["created_at"],
         "started_at": job.get("started_at"),
         "updated_at": job["updated_at"],
@@ -181,7 +233,11 @@ def health():
     cfg: APIConfig = rt["config"]
     jm: JobManager = rt["job_manager"]
     worker = rt.get("worker")
-    status_counts = jm.count_jobs_by_status()
+    genuine_counts = jm.count_jobs_by_status(exclude_non_genuine=True)
+    all_counts = jm.count_jobs_by_status(exclude_non_genuine=False)
+    prov_counts = jm.count_jobs_by_provenance()
+    total_all = sum(all_counts.values())
+    total_genuine = sum(genuine_counts.values())
     return _strict_json_response(
         {
             "status": "online",
@@ -191,7 +247,10 @@ def health():
             "worker_running": bool(worker and worker.is_running),
             "active_job_id": worker.active_job_id if worker else None,
             "gpu_busy": is_gpu_busy(),
-            "queue_counts": status_counts,
+            "queue_counts": genuine_counts,
+            "all_queue_counts": all_counts,
+            "provenance_counts": prov_counts,
+            "non_genuine_excluded_count": max(0, total_all - total_genuine),
         },
         200,
     )
@@ -294,6 +353,8 @@ def submit_job():
             output_dir=output_dir,
             total_frames=effective_total,
             pipeline_version=PIPELINE_VERSION,
+            provenance=validated_opts.provenance,
+            provenance_reason="API upload",
         )
     except Exception:
         shutil.rmtree(media.upload_job_dir, ignore_errors=True)
@@ -308,6 +369,7 @@ def submit_job():
             "job_id": job["job_id"],
             "status": job["status"],
             "mode": job["mode"],
+            "provenance": job.get("provenance", "USER_INSPECTION"),
             "created_at": job["created_at"],
             "status_url": f"/api/v2/jobs/{job['job_id']}",
             "original_filename": job["original_filename"],
@@ -325,12 +387,22 @@ def list_jobs_route():
     geo_store: Optional[GeospatialStore] = rt.get("geospatial_store")
     page, page_size = _get_pagination_params(cfg)
     status_filter = request.args.get("status")
+    include_provs, excl_non_genuine, scope_label = _parse_provenance_scope(default_scope="all")
     offset = (page - 1) * page_size
-    res = jm.list_jobs(status=status_filter, limit=page_size, offset=offset)
+    res = jm.list_jobs(
+        status=status_filter,
+        include_provenances=include_provs,
+        exclude_non_genuine=excl_non_genuine,
+        limit=page_size,
+        offset=offset,
+    )
+    prov_counts = jm.count_jobs_by_provenance(status=status_filter.upper().strip() if status_filter else None)
     return _strict_json_response(
         {
             "jobs": [_format_job_status_payload(j, geo_store=geo_store) for j in res["jobs"]],
             "total": res["total"],
+            "scope": scope_label,
+            "provenance_counts": prov_counts,
             "page": page,
             "page_size": page_size,
         },
@@ -673,18 +745,40 @@ def list_job_geometry_snapshots(job_id: str):
     if track_filter is not None:
         snaps = [s for s in snaps if int(s.get("track_id", -1)) == track_filter]
 
+    real_job_dir = os.path.realpath(job.get("output_dir") or "")
+    enriched_snaps = []
+    historical_empty_ref_count = 0
+    for s in snaps:
+        item = dict(s)
+        art_status = "UNKNOWN"
+        if real_job_dir and item.get("relative_path"):
+            cand_p = os.path.realpath(os.path.join(real_job_dir, item["relative_path"]))
+            if os.path.commonpath([real_job_dir, cand_p]) == real_job_dir and os.path.isfile(cand_p):
+                try:
+                    with open(cand_p, "r", encoding="utf-8") as sfh:
+                        snap_obj = json.load(sfh)
+                    art_status, _, ref_cnt = _classify_geometry_snapshot_artifact(snap_obj)
+                    item["reference_mask_cell_count"] = ref_cnt
+                except Exception:
+                    art_status = "UNKNOWN"
+        item["geometry_artifact_status"] = art_status
+        if art_status == "HISTORICAL_EMPTY_REFERENCE_MASK":
+            historical_empty_ref_count += 1
+        enriched_snaps.append(item)
+
     return _strict_json_response(
         {
             "job_id": job["job_id"],
             "geometry_available": True,
-            "snapshot_count": len(snaps),
-            "total_job_snapshots": manifest.get("snapshot_count", len(snaps)),
+            "snapshot_count": len(enriched_snaps),
+            "historical_empty_reference_mask_count": historical_empty_ref_count,
+            "total_job_snapshots": manifest.get("snapshot_count", len(enriched_snaps)),
             "max_grid_size": manifest.get("max_grid_size"),
             "residual_polarity": manifest.get("residual_polarity"),
             "residual_units": manifest.get("residual_units"),
             "global_min_residual": manifest.get("global_min_residual"),
             "global_max_residual": manifest.get("global_max_residual"),
-            "snapshots": snaps,
+            "snapshots": enriched_snaps,
             "scientific_disclaimer": manifest.get("scientific_disclaimer") or SCIENTIFIC_MEASUREMENT_DISCLAIMER,
         },
         200,
@@ -740,6 +834,10 @@ def get_job_geometry_snapshot(job_id: str, snapshot_id: str):
         snap_payload = json.load(fh)
     snap_payload["global_min_residual"] = manifest.get("global_min_residual")
     snap_payload["global_max_residual"] = manifest.get("global_max_residual")
+    artifact_status, artifact_warning, ref_true_count = _classify_geometry_snapshot_artifact(snap_payload)
+    snap_payload["geometry_artifact_status"] = artifact_status
+    snap_payload["geometry_artifact_warning"] = artifact_warning
+    snap_payload["reference_mask_cell_count"] = ref_true_count
     return _strict_json_response(snap_payload, 200)
 
 
@@ -807,11 +905,15 @@ def upload_job_gps(job_id: str):
         raise BadRequestError(str(exc), error_code="INVALID_GPS_TELEMETRY") from exc
 
     safe_name = os.path.basename(raw_name.replace("\\", "/"))[:160] or "telemetry"
+    gps_is_synth = parse_optional_bool(request.form.get("is_synthetic"), None, "is_synthetic")
+    gps_prov = request.form.get("gps_provenance")
     route_payload = gs.save_job_gps_telemetry(
         job["job_id"],
         parsed,
         original_filename=safe_name,
         max_sync_gap_sec=max_sync_gap_sec,
+        is_synthetic=gps_is_synth,
+        gps_provenance=gps_prov,
     )
 
     synced_count = 0
@@ -896,8 +998,14 @@ def list_geospatial_clusters():
     status_filter = request.args.get("match_status")
     if status_filter:
         status_filter = status_filter.strip().upper()
+    exclude_synth = bool(parse_optional_bool(request.args.get("exclude_synthetic"), False, "exclude_synthetic"))
     return _strict_json_response(
-        gs.list_clusters(match_status=status_filter, page=page, page_size=page_size),
+        gs.list_clusters(
+            match_status=status_filter,
+            exclude_synthetic=exclude_synth,
+            page=page,
+            page_size=page_size,
+        ),
         200,
     )
 
@@ -939,7 +1047,11 @@ def _get_maint_store() -> MaintenanceStore:
 @v2_bp.route("/maintenance/overview", methods=["GET"])
 def maintenance_overview():
     ms = _get_maint_store()
-    return _strict_json_response(ms.get_overview(), 200)
+    include_provs, excl_non_genuine, _ = _parse_provenance_scope(default_scope="genuine")
+    return _strict_json_response(
+        ms.get_overview(include_provenances=include_provs, exclude_non_genuine=excl_non_genuine),
+        200,
+    )
 
 
 @v2_bp.route("/maintenance/review-queue", methods=["GET"])
@@ -952,12 +1064,15 @@ def maintenance_review_queue():
     priority_cat = (request.args.get("priority_category") or "").strip().upper() or None
     review_status = (request.args.get("review_status") or "").strip().upper() or None
     quality_cat = (request.args.get("quality_category") or "").strip().upper() or None
+    include_provs, excl_non_genuine, _ = _parse_provenance_scope(default_scope="genuine")
     return _strict_json_response(
         ms.get_review_queue(
             job_id=job_id,
             priority_category=priority_cat,
             review_status=review_status,
             quality_category=quality_cat,
+            include_provenances=include_provs,
+            exclude_non_genuine=excl_non_genuine,
             page=page,
             page_size=page_size,
         ),

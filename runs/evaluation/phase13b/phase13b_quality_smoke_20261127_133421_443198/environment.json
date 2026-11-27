@@ -1,0 +1,28 @@
+{
+  "run_id": "phase13b_quality_smoke_20261127_133421_443198",
+  "mode": "smoke",
+  "started_at": "2026-11-27T08:04:29.947446+00:00",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "torch_version": "2.6.0+cu124",
+  "cuda_available": true,
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 2050",
+  "checkpoint_hashes": {
+    "yolov8n_100e_sgd": {
+      "path": "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt",
+      "sha256": "ddd6a5be27ac21f3ef17ffe17fbac5ea901cf2a7f7706956c5e551a669490343",
+      "bytes": 6512419
+    },
+    "yolov8s_100e": {
+      "path": "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt",
+      "sha256": "038863b8542ceb8d9e4d3e9eb28612abed64ada940921f3db7c0b8742281309c",
+      "bytes": 22523107
+    },
+    "yolov8n_seg": {
+      "path": "runs/segment/pothole440_yolov8n_seg_v1/weights/best.pt",
+      "sha256": "73f525322681468322dd129589279b016eeeab1197879a8876e3071e8e0d6d6d",
+      "bytes": 7026861
+    }
+  }
+}

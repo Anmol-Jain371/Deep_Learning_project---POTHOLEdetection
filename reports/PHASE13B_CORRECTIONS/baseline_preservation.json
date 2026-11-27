@@ -1,0 +1,740 @@
+{
+  "created_at": "2026-11-27T06:24:56.367012+00:00",
+  "git_head": "095e1c4ecd9d592f655c96c1d1eda384df44d67d",
+  "prior_audit_reported_head": "50d37f37f24f28976ca8124ba2027d020f3b0ef3",
+  "git_status_short": "",
+  "tracked_file_count": 1897,
+  "untracked_file_count": 0,
+  "db_backup": {
+    "exists": true,
+    "src_sha256": "1e206454bda66bf73e634d89fca4b616e46396160214ac5a261f202e6bfb77b4",
+    "backup_sha256": "c7f83294b934de517dc8b573d4243b57f60814a35e2f283e4743bf1dafb0c61f",
+    "size_bytes": 274432
+  },
+  "snapshot_zip": {
+    "path": "reports/PHASE13B_CORRECTIONS/pre_correction_source_snapshot.zip",
+    "bytes": 649438,
+    "file_count": 162
+  },
+  "checkpoint_hashes": {
+    "runs/detect/pothole_unified_yolov8n_100e_sgd/weights/best.pt": {
+      "sha256": "ddd6a5be27ac21f3ef17ffe17fbac5ea901cf2a7f7706956c5e551a669490343",
+      "bytes": 6512419
+    },
+    "runs/detect/pothole_unified_yolov8s_100e/weights/best.pt": {
+      "sha256": "038863b8542ceb8d9e4d3e9eb28612abed64ada940921f3db7c0b8742281309c",
+      "bytes": 22523107
+    },
+    "runs/detect/pothole_rdd1666_50e/weights/best.pt": {
+      "sha256": "614881da4a42b444bd30c3c4f7a2d71124986ae2c3a0188bcfcaa419314ecc4e",
+      "bytes": 6249123
+    },
+    "runs/segment/pothole440_yolov8n_seg_v1/weights/best.pt": {
+      "sha256": "73f525322681468322dd129589279b016eeeab1197879a8876e3071e8e0d6d6d",
+      "bytes": 7026861
+    },
+    "runs/detect/pothole_combined_v2/weights/best.pt": {
+      "sha256": "ac5ee424df802213ec6af2b49b34552d6adbae4532bffbc6153df1e825f7ae12",
+      "bytes": 6310954
+    },
+    "runs/detect/pothole_combined_v2_50e/weights/best.pt": {
+      "sha256": "0134fbcff9929612469949ae6f099917017436806c2ee4f1697859593651304b",
+      "bytes": 6312355
+    },
+    "runs/detect/pothole_unified_100e/weights/best.pt": {
+      "sha256": "adc51953f53301465d77873dd07b673545a3f963bcb2288bb155998e8304a55c",
+      "bytes": 6255587
+    }
+  },
+  "manifest_hashes": {
+    "dataset_unified/data.yaml": {
+      "sha256": "01e597ae90bf340b63f347bc4006d214895d5f957e214de1419494af41d01fd0",
+      "bytes": 109
+    },
+    "dataset_pothole440_seg_grouped/manifests/split_manifest.csv": {
+      "sha256": "63b2a1ca49e49b1fd859c8f9b809a9bbba67ff51c629f0092ea0bd7bd8dae643",
+      "bytes": 122268
+    },
+    "dataset_pothole440_seg_grouped/data.yaml": {
+      "sha256": "bd97956a2912ece0a30500ac040c86380aae6b8327d696ec170688a027cb8cfc",
+      "bytes": 124
+    },
+    "depth_ground_truth_manifest.csv": {
+      "sha256": "7f4761a3fbcbb84cc1427f0e95aa6a90d288ace5cb8bbd013d7826e1dc493b48",
+      "bytes": 1907
+    },
+    "dataset_combined_v2/data.yaml": {
+      "sha256": "5f4481013668518e373f0dce6a1d3c5c3e8efbcd5a2e7d5e9cfd284eb0a41f3d",
+      "bytes": 82
+    },
+    "dataset_phone_potholes/data.yaml": {
+      "sha256": "6fecfefae758315fe3abcdc6c1cb4c0e4a8f795b04ab60ddd4581a0743a7762e",
+      "bytes": 140
+    },
+    "dataset_rdd_india_potholes/data.yaml": {
+      "sha256": "8f1b0a7d145c2928001fbea3b39d1b10bcfc2937081805b598fa20f196a4ad7f",
+      "bytes": 95
+    },
+    "dataset_unified/data_external_rangoon.yaml": {
+      "sha256": "71b8ebb5f466af95966f939e8d6a7ba691573b7162622fdd07b9468dc647349a",
+      "bytes": 103
+    }
+  },
+  "frontend_lockfile": {
+    "exists": true,
+    "sha256": "2e00b0c07c66bc9e272481c21d640991296f24f2ca2085ec1ae57d3d16c671be",
+    "bytes": 45177
+  },
+  "source_hashes": {
+    "server.py": {
+      "sha256": "94e8d0382c2172ae0ef3471eaab2e91779fe854a586328c879f22a4770e770fa",
+      "bytes": 8777
+    },
+    "roadvision_engine.py": {
+      "sha256": "3805808750134a38b3fa9bcfc42fb6583a843dda575e70aef28ff205c0e2a51e",
+      "bytes": 45411
+    },
+    "requirements.txt": {
+      "sha256": "f43ff74f79decf0f5087a4c8b5f4b9976c6d24072a7b5d589c007b96e53f63d3",
+      "bytes": 187
+    },
+    "roadvision_v2/__init__.py": {
+      "sha256": "e8f1d99d8da3e7a425141e5deaac6174aa09f92d427a730dbb4c9e3be4c0b8bc",
+      "bytes": 1009
+    },
+    "roadvision_v2/config.py": {
+      "sha256": "fb19bb7dfdb103166d733db9b681459d76fe0ab71d7eeaa1c2e6c37920ae39b6",
+      "bytes": 14330
+    },
+    "roadvision_v2/geometry/__init__.py": {
+      "sha256": "fef672238de29c17373aeb3ebe1378073786169d26045d5830ee1b78b7bba36a",
+      "bytes": 388
+    },
+    "roadvision_v2/geometry/surface.py": {
+      "sha256": "cf726fd99fccce98e659cd14811ae7684e3fb3a0a85777aacbb8a0115fbe3ac0",
+      "bytes": 20039
+    },
+    "roadvision_v2/geospatial/__init__.py": {
+      "sha256": "4ed190d0ff360bc5da687db61c1d95f7ca65a4872dd73ef7023689b04fac8b76",
+      "bytes": 652
+    },
+    "roadvision_v2/geospatial/gps.py": {
+      "sha256": "3b2bb21d7588fd2717a72ac1b4680b377e12a2f11e80f1b9319e1ead13149914",
+      "bytes": 22453
+    },
+    "roadvision_v2/geospatial/matching.py": {
+      "sha256": "24db9216dc6da17cc31483bf8cc3d7085345b175b4e06b5f85b07d8436ba4f5b",
+      "bytes": 14134
+    },
+    "roadvision_v2/maintenance/__init__.py": {
+      "sha256": "aca7dfad60fb18c6119b650563bd0373b89af4346f3c0b59f9a47731f75c8cdf",
+      "bytes": 956
+    },
+    "roadvision_v2/maintenance/analytics.py": {
+      "sha256": "235949d8a88b803da4dcece28ca6279a8d3b3858ad412bbaaf4e1fc4a2e85c0f",
+      "bytes": 38059
+    },
+    "roadvision_v2/maintenance/reports.py": {
+      "sha256": "c0846eb0142a43973f3442936549e8aec26d1d696874f5288291685fe56c8868",
+      "bytes": 14912
+    },
+    "roadvision_v2/perception/__init__.py": {
+      "sha256": "4192858807f689bc1565c4ae5a5dc49a39b6159b13bad096c3b8ab591041e23d",
+      "bytes": 50
+    },
+    "roadvision_v2/pipeline.py": {
+      "sha256": "66a14e26c593ededda7f4e6fd395dd0eacdfdbcb463ca4f1bd8d9974a26852f1",
+      "bytes": 52794
+    },
+    "roadvision_v2/quality/__init__.py": {
+      "sha256": "5cb28d8faef45cd968100abca55b34d3b553e6a4b89e4d97cb5d28b82a779715",
+      "bytes": 627
+    },
+    "roadvision_v2/quality/assessment.py": {
+      "sha256": "817af80f569f8e5a98e4b2ac6db3c84a550fdaf893428b64f44c32c72c3d1b85",
+      "bytes": 35420
+    },
+    "roadvision_v2/scheduling/__init__.py": {
+      "sha256": "b5126997632f965676eb0bb27a830500b2cc6475589b26d667afaff59415dc22",
+      "bytes": 50
+    },
+    "roadvision_v2/schemas.py": {
+      "sha256": "58631fb60fa813c5997c17749b1dff6ca650b896ee269f0ca9c2762b0bec0068",
+      "bytes": 5369
+    },
+    "roadvision_v2/telemetry/__init__.py": {
+      "sha256": "9928a8ed8981b22cf3f502bf07a16a4eabe54af2cd955373241742b22c6f1a31",
+      "bytes": 49
+    },
+    "roadvision_v2/temporal/__init__.py": {
+      "sha256": "afed6a3cfbf1a5fbf5edf2e0ee83993999872460fe28934c87fcb9355fe2ccc2",
+      "bytes": 48
+    },
+    "roadvision_api_v2/__init__.py": {
+      "sha256": "b90271b668a08e00526297bc4b5ea70fe35017bb383f2f1ec87e9a552ccfd62c",
+      "bytes": 2887
+    },
+    "roadvision_api_v2/artifacts.py": {
+      "sha256": "a9d8e5e8f72c4dc2fa8d1d58c37ed0ccc666d84bd6398293049bff6dd1c1d0f8",
+      "bytes": 7642
+    },
+    "roadvision_api_v2/configuration.py": {
+      "sha256": "9695d4459cbac44fa151f9232e7207010d159550b5569bbd19fd132264e0a5b3",
+      "bytes": 10914
+    },
+    "roadvision_api_v2/errors.py": {
+      "sha256": "97391691875894db7aec8866ed5933cb47e5e7a37a837bb20a0c73c5be0f9af4",
+      "bytes": 3423
+    },
+    "roadvision_api_v2/geospatial_store.py": {
+      "sha256": "6bf490b326d7e94058453b328a92e2c6e194dc70ce75eb4bdf639afcd158cd0a",
+      "bytes": 26229
+    },
+    "roadvision_api_v2/gpu_lock.py": {
+      "sha256": "6cd95599cba682310add9c65755fb8c0dddbb6e3743eed9f1348045ee0012043",
+      "bytes": 3328
+    },
+    "roadvision_api_v2/job_manager.py": {
+      "sha256": "05a7708bc30090a46f6ea251a62b3af1a1f94f8765a7314910a16be7fb004deb",
+      "bytes": 38402
+    },
+    "roadvision_api_v2/maintenance_store.py": {
+      "sha256": "98eae130e8d27bd3d02e427f9314310610bd6e1ed810369b839fe919a3b6a43b",
+      "bytes": 28670
+    },
+    "roadvision_api_v2/openapi.yaml": {
+      "sha256": "35541d81cfbb48f99c2e83a8fb85d801baa52b68cc85580ece1ed635d37818c0",
+      "bytes": 20641
+    },
+    "roadvision_api_v2/routes.py": {
+      "sha256": "c1469205ecd5f9ae329ff5a2701d590d73c475addb96ae27dbe7b39c41b4d159",
+      "bytes": 42826
+    },
+    "roadvision_api_v2/schemas.py": {
+      "sha256": "f3a11064f93cdf47c5776cf96147ca84b942c904f842e04f9a337719911f0d0d",
+      "bytes": 3180
+    },
+    "roadvision_api_v2/storage.py": {
+      "sha256": "e861630dc5eda6370523f7cc5e14c5a6ed9ed08deef73777fc5e091a6212172d",
+      "bytes": 10339
+    },
+    "roadvision_api_v2/validation.py": {
+      "sha256": "122e387e0ec60fb9b52152002df39582b19fc801e09abf4c831606bccfb7c715",
+      "bytes": 12069
+    },
+    "roadvision_api_v2/worker.py": {
+      "sha256": "d763f6e6aeaaedf3a567e1ae7a1379acd1e0104f12a9f0f99b0675ad995a78ce",
+      "bytes": 17637
+    },
+    "roadvision-dashboard/src/api/client.js": {
+      "sha256": "6869fbb347b78f102a5cdc1fb14ffe3f8d570f872ebd446585210a4e16aca5d2",
+      "bytes": 11993
+    },
+    "roadvision-dashboard/src/App.css": {
+      "sha256": "a4f8a4cb33976a5207a3ec2d2944a116e4184b5fccc7018b461adf5610b96d07",
+      "bytes": 114302
+    },
+    "roadvision-dashboard/src/App.jsx": {
+      "sha256": "7fe71d4466158d13eb97621f699a12c086d763523f0d7855c55227904c57454a",
+      "bytes": 7781
+    },
+    "roadvision-dashboard/src/assets/react.svg": {
+      "sha256": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5",
+      "bytes": 4126
+    },
+    "roadvision-dashboard/src/assets/vite.svg": {
+      "sha256": "2f1f6c6f90a0ef7422cbb4cfafcd8ad329c507a18afdc34cc21fa72179b9c54a",
+      "bytes": 8710
+    },
+    "roadvision-dashboard/src/components/AuditTable.jsx": {
+      "sha256": "e2581e71e5fe1ad1f39f47fbb10efa9da91205a1700ab076fb81bb730d85270f",
+      "bytes": 6490
+    },
+    "roadvision-dashboard/src/components/BenchmarkComparison.jsx": {
+      "sha256": "7b07dc603f7d19bf56d151c9079f6bd8bb08741564e1e5e90b7cb8f96c9ce347",
+      "bytes": 15512
+    },
+    "roadvision-dashboard/src/components/Footer.jsx": {
+      "sha256": "cd5c0be90f7dc03f2ad67363ddd8909d90f39841423f1da3388e05083ae686c8",
+      "bytes": 387
+    },
+    "roadvision-dashboard/src/components/Hero.jsx": {
+      "sha256": "4169da6b696bc40a1c9dbb65b5c7a61f3e0559ac37582d9f790e9937f7bb9df7",
+      "bytes": 4930
+    },
+    "roadvision-dashboard/src/components/InspectionSelector.jsx": {
+      "sha256": "bacc6511fa3ff2a99c1585042db5b4b86f0a18d8b151b3504b2ddf8389c2900f",
+      "bytes": 3068
+    },
+    "roadvision-dashboard/src/components/KPICards.jsx": {
+      "sha256": "3b97ed28bff7c92a133d8d19a0cb6d474697f5ff1c44c6b52dc4863c7549d607",
+      "bytes": 4645
+    },
+    "roadvision-dashboard/src/components/Navbar.jsx": {
+      "sha256": "d8021e6d7cb8b7d6e9dba9f0c750f62ef4d3d2d8143a7ccf8818e488ec4e9ef8",
+      "bytes": 1664
+    },
+    "roadvision-dashboard/src/components/PipelineSection.jsx": {
+      "sha256": "074c9ef1a43e4cbfc8bc9b93d6d317bd5c5f526a3e274411cf9e4382dc4ac3de",
+      "bytes": 39571
+    },
+    "roadvision-dashboard/src/components/Sidebar.jsx": {
+      "sha256": "0df84fbba2360994a715a5854149baa00859cc2608cc1bffa2e927efc22b03eb",
+      "bytes": 3565
+    },
+    "roadvision-dashboard/src/components/StateBanner.jsx": {
+      "sha256": "32df132b123299ba01884a7c5a8cf140f1bd4b5832863818451f84a27864ee40",
+      "bytes": 7591
+    },
+    "roadvision-dashboard/src/components/StatsRibbon.jsx": {
+      "sha256": "7c70d641d6a9973c842ada428e507983fb4fea2e331106c76f98401cf2620722",
+      "bytes": 1225
+    },
+    "roadvision-dashboard/src/components/TopBar.jsx": {
+      "sha256": "34b0dd77209c0ec424079b2ee7d3d0d8d68b15c537ae1ef42c69932c28cfbffd",
+      "bytes": 4468
+    },
+    "roadvision-dashboard/src/components/VideoUploadAnalysis.jsx": {
+      "sha256": "1fe92aaba529d20800b62a884383f17f7518ebf9ad6e1405b611356211ee6196",
+      "bytes": 19558
+    },
+    "roadvision-dashboard/src/data/sample_demo_potholes.json": {
+      "sha256": "6fa21a3eb0d5158f1680cda6cacff13780a65cf6862ca300a8ada20671b02a1c",
+      "bytes": 1426
+    },
+    "roadvision-dashboard/src/index.css": {
+      "sha256": "b049d1da0c4e51552262d7474049cb4ac4808e924adf0e84a478019d30ccc21a",
+      "bytes": 3678
+    },
+    "roadvision-dashboard/src/main.jsx": {
+      "sha256": "ae81f1c01f2c8018a1ba5cf73171921c8982d90b049bb6b039ea82f8e1dec958",
+      "bytes": 239
+    },
+    "roadvision-dashboard/src/pages/GeospatialIntelligence.jsx": {
+      "sha256": "c7aa610ea1777571ee69cfbca673cd5d92d80e564e82510a9baa5a73ba7401e7",
+      "bytes": 28262
+    },
+    "roadvision-dashboard/src/pages/HazardExplorer.jsx": {
+      "sha256": "4203d06ca5b51cf844dbe91c41f180811e20684a50803340c477c281d8063a1b",
+      "bytes": 11646
+    },
+    "roadvision-dashboard/src/pages/History.jsx": {
+      "sha256": "7aa5dcc7713eac7c5eddbe8fe7173d9b08a917fb00a3b8bfb501fb1ead72153f",
+      "bytes": 8478
+    },
+    "roadvision-dashboard/src/pages/MaintenanceIntelligence.jsx": {
+      "sha256": "6413b65d2f1d79f1df688e2cd66cbea758a6e220b1a0ae49600ddb2552e2d49b",
+      "bytes": 46266
+    },
+    "roadvision-dashboard/src/pages/NewInspection.jsx": {
+      "sha256": "9a5870f6e19a2c991801750674f24dd6a73bc2367e22f30ed610aa67dedd337c",
+      "bytes": 16258
+    },
+    "roadvision-dashboard/src/pages/Overview.jsx": {
+      "sha256": "57d913673fe53d51cee9ac18cf3f2e5f29dc7432cd0a571544a518d6d7ef783b",
+      "bytes": 11984
+    },
+    "roadvision-dashboard/src/pages/Performance.jsx": {
+      "sha256": "fbdddd699f4374dbbd2b796222de315cbe58335647ba5a73dda5b8eb5c3eb210",
+      "bytes": 9366
+    },
+    "roadvision-dashboard/src/pages/Relative3DAnalysis.jsx": {
+      "sha256": "47c9eef7c8894589dc9355f31992c4f43fb34901a23778463329c6b4e2081178",
+      "bytes": 43171
+    },
+    "roadvision-dashboard/src/pages/Reports.jsx": {
+      "sha256": "1b032135b93827fcc3d2552a6996d46c35bcd87fae16eec6cdf7b81f39ecdbb3",
+      "bytes": 18891
+    },
+    "roadvision-dashboard/src/pages/Settings.jsx": {
+      "sha256": "99f0b5461f24c0b2269daf60519eac7392cf2c12bc680212e5579ca7f2500b68",
+      "bytes": 9701
+    },
+    "roadvision-dashboard/src/pages/TrackAnalysis.jsx": {
+      "sha256": "5ddb3cf77bd0726e1f9d3d09f0ca60ca62a7dcaca3aeba92d22017056a112d03",
+      "bytes": 14782
+    },
+    "roadvision-dashboard/src/pages/Workspace.jsx": {
+      "sha256": "6b5bd220e4016cd1257c20c0c7ad32c0918f7f4547930500d931dd01b42cf402",
+      "bytes": 30481
+    },
+    "roadvision-dashboard/src/styles/dashboard.css": {
+      "sha256": "88ecc62389188b3d9f9de392f66c6ae3abedac3af6b92d3af441dd76e5c55168",
+      "bytes": 22777
+    },
+    "roadvision-dashboard/src/utils/formatters.js": {
+      "sha256": "fff74c69622966e7119b8030b980fc9bcb37abc5cb32ef98f93cd62ea71de259",
+      "bytes": 4386
+    },
+    "roadvision-dashboard/package.json": {
+      "sha256": "59b3b2ab9541fb5f824b317283434b2b8a8c82c6bb42cfb844157f28c7dfa0e5",
+      "bytes": 617
+    },
+    "roadvision-dashboard/package-lock.json": {
+      "sha256": "2e00b0c07c66bc9e272481c21d640991296f24f2ca2085ec1ae57d3d16c671be",
+      "bytes": 45177
+    },
+    "roadvision-dashboard/vite.config.js": {
+      "sha256": "54ca3ed8fa99b08ff4877a18075db7ed92bf3ce6132f5cfd726fa682be16e810",
+      "bytes": 595
+    },
+    "roadvision-dashboard/index.html": {
+      "sha256": "fe5ed6685f22428c84110a5935b3a8f2cfa58e44563bd569eb55630b1b76f2ea",
+      "bytes": 935
+    },
+    "experiments/adaptive_depth_scheduler.py": {
+      "sha256": "695a4ce3f6be8861fb3b067e0502edd6952d4f33d79ad4c3c175a12a1a9387e2",
+      "bytes": 20861
+    },
+    "experiments/benchmark_adaptive_depth_scheduler.py": {
+      "sha256": "6e368ce33e7df12224e8aedc649f77aaa52e574592990ea75ad91c3d5d90ff34",
+      "bytes": 52765
+    },
+    "experiments/benchmark_dav2_resolution_scaling.py": {
+      "sha256": "dad5547a3f9c4798eff6a2c02a361a11980242128ca78cf5fcc875d5412ce38b",
+      "bytes": 62407
+    },
+    "experiments/benchmark_dynamic_horizon.py": {
+      "sha256": "84885be5778157dcee7c5b807a97d58eff9aaf1162aa84723ef0068904f5ab22",
+      "bytes": 41165
+    },
+    "experiments/benchmark_optimized_relative_depth.py": {
+      "sha256": "6a8a521b27e11187fee12254fe08355e91ba218afda83e04be611d4a5c035074",
+      "bytes": 65170
+    },
+    "experiments/benchmark_phase6a_depth_comparison.py": {
+      "sha256": "0f562f1adb480ab1b83bd024929c3d6487307511a05d5221be27182a318d3690",
+      "bytes": 45925
+    },
+    "experiments/benchmark_phase8a_integration.py": {
+      "sha256": "e7bfc6e7917dcc901f0560f0dd59016361067a933e37bd19b30c2d99e021a785",
+      "bytes": 9348
+    },
+    "experiments/benchmark_prompt_guided_segmentation.py": {
+      "sha256": "8d524a709595a8a10356143a69bffc9e2c06286d7557f3cf6f4a1668c2df8fd0",
+      "bytes": 23764
+    },
+    "experiments/benchmark_robust_relative_depth.py": {
+      "sha256": "7da00c85598aae96c57a92ba7dc69cadf622e9dff4c974074bb697be5d497016",
+      "bytes": 35827
+    },
+    "experiments/benchmark_roi_segmentation.py": {
+      "sha256": "777b6a1aefbff74590748d74678692dd0989254712a0ebb16297b9bbbfcd9b22",
+      "bytes": 28311
+    },
+    "experiments/benchmark_shadow_depth_pipeline.py": {
+      "sha256": "f6b8862ce284493982754dd5e95fafde4c92f98be4f015e04e3241373c691b99",
+      "bytes": 48504
+    },
+    "experiments/build_pothole440_seg_grouped.py": {
+      "sha256": "9f2f51ae6b0d6be27c47a30bc0d8197cf8473472c2ecc0f0306d53d46adee395",
+      "bytes": 25949
+    },
+    "experiments/core_aware_cavity_extraction.py": {
+      "sha256": "6ea6f4b66a2226a4bbcc3e5260f9333624d7fc0af7bf4f61ef03a86d6739a201",
+      "bytes": 14505
+    },
+    "experiments/dav2_inference_optimization.py": {
+      "sha256": "96b7cc31dbf0cee751ab21cfcd148d1b461e64d89abdeca62371c96f94e95e95",
+      "bytes": 26592
+    },
+    "experiments/dav2_official/dinov2.py": {
+      "sha256": "d22df8d0da44c8525ebed898fd9c33b3acfcda919a84d577cc2a08bfd3d50ac1",
+      "bytes": 15178
+    },
+    "experiments/dav2_official/dinov2_layers/__init__.py": {
+      "sha256": "e3c28c7b775165b6844000eb69f44d104d6c3803ac7da5d59f6ac3ecfb46d9d8",
+      "bytes": 382
+    },
+    "experiments/dav2_official/dinov2_layers/attention.py": {
+      "sha256": "0d2410ce8b8b4499a6b0cdab939ae2bceab8971efd8660d999b0f3088f28cbf7",
+      "bytes": 2343
+    },
+    "experiments/dav2_official/dinov2_layers/block.py": {
+      "sha256": "093266ea08084c7cce7b8ddd779ecfaaa13055735faa8a7d68b5924f385b395b",
+      "bytes": 9332
+    },
+    "experiments/dav2_official/dinov2_layers/drop_path.py": {
+      "sha256": "949100aac4d9c19c9d65319dbd362886c5d46a72d7586ba4fd500e9f1d51570c",
+      "bytes": 1160
+    },
+    "experiments/dav2_official/dinov2_layers/layer_scale.py": {
+      "sha256": "356817b5d1390737128cbcc03a5333fd3060b73beae478772282ccb851d0ef85",
+      "bytes": 823
+    },
+    "experiments/dav2_official/dinov2_layers/mlp.py": {
+      "sha256": "c18c5b3f021408597a473bb710070ec3fb3b39f5a2e42e88ae83ced425a608b5",
+      "bytes": 1272
+    },
+    "experiments/dav2_official/dinov2_layers/patch_embed.py": {
+      "sha256": "b3f82e19926c9cfb63f10136aca5e8a723bde1ad62dae1d04f90d405f9439baf",
+      "bytes": 2832
+    },
+    "experiments/dav2_official/dinov2_layers/swiglu_ffn.py": {
+      "sha256": "df81d9901240214edc1831ce1b77558dcd6227b29a2f000fc5f546df55d2d09a",
+      "bytes": 1859
+    },
+    "experiments/dav2_official/dpt.py": {
+      "sha256": "7cc9a29b41d31e1628e5c8b8705e25ae95bc6490f779dbb695297ce2341566f5",
+      "bytes": 7391
+    },
+    "experiments/dav2_official/util/blocks.py": {
+      "sha256": "351aa24b8af4bef923ebe3bed5e5e8503b08e39bf06ee045d6444a485a2036a8",
+      "bytes": 3987
+    },
+    "experiments/dav2_official/util/transform.py": {
+      "sha256": "a97df1dbb687457a40c387fdc3482edee7ddc5c142c7d2735ca6235a8ae2885f",
+      "bytes": 6075
+    },
+    "experiments/demo_adaptive_depth_scheduler.py": {
+      "sha256": "48e6b367d9b4c60e7f929cbe59bba0340a9c022e759bee116b897c9896c801b8",
+      "bytes": 9049
+    },
+    "experiments/demo_dynamic_horizon.py": {
+      "sha256": "4f58ef83e772a3bc3064621fc784174004b7bcae365e01ad4f94fcf7ceb94bc3",
+      "bytes": 6837
+    },
+    "experiments/demo_pothole_segmentation_video.py": {
+      "sha256": "78c47e3396827be5eee1ea01f385288c4197c4df4d7d0aa3671def83ee4e0aee",
+      "bytes": 8646
+    },
+    "experiments/demo_roi_segmentation_video.py": {
+      "sha256": "ecf6831a2eebafde4e024f0a4822cb72994d9fef5b0341781af7bd747c5848af",
+      "bytes": 7321
+    },
+    "experiments/depth_model_comparison.py": {
+      "sha256": "10e2650b12cf3a4826dbd77701ae4f3c42431b80cbc611d9fffaae40e0bb4694",
+      "bytes": 8463
+    },
+    "experiments/dynamic_horizon_estimator.py": {
+      "sha256": "da1a38f3972e44b9a7dd2a14405f824bc99c57a0a9860ed2bd083d06000f85ab",
+      "bytes": 27446
+    },
+    "experiments/evaluate_dashcam_transfer.py": {
+      "sha256": "9cf858f5de369b27768cb6d59022904b940b466b2a6d014d380be09882554b21",
+      "bytes": 17610
+    },
+    "experiments/evaluate_pothole_segmentation.py": {
+      "sha256": "5cf7bcfd83280ba7a501b5e2b5fdab3b7a0b69b0cbe2f2046b23eee32ab23b47",
+      "bytes": 20926
+    },
+    "experiments/evaluate_pothole_segmentation_test.py": {
+      "sha256": "c2c29e57aaf8009a747cf5a1e19f7d17bae93a5983ab087bec668a8c1043e2c8",
+      "bytes": 28957
+    },
+    "experiments/inspect_pothole440.py": {
+      "sha256": "d760b7bcb8ad7bd4c13881647d01b5a6bc49637332536e17ccba4218afc7eb84",
+      "bytes": 25301
+    },
+    "experiments/optimized_relative_depth.py": {
+      "sha256": "48d36735ad80a1cee584ff40e8bc255ff99d5aeaba4536fb29b97aba9a9f58ff",
+      "bytes": 36638
+    },
+    "experiments/phase13/__init__.py": {
+      "sha256": "9177ace0d8b72c8ebca13ba49cec93be0e91aca55ba24e4086133089b4f55c2d",
+      "bytes": 93
+    },
+    "experiments/phase13/dataset_audit.py": {
+      "sha256": "2a57906aac45c2ff025ab841644096de01f2abcb511296ff0b4d41be4e160b90",
+      "bytes": 10969
+    },
+    "experiments/phase13/depth_cavity_ablation.py": {
+      "sha256": "075cdc05fc571dea1442ff691ce33701c12e7e564cb5a22aef5b54ab2d25a77c",
+      "bytes": 13306
+    },
+    "experiments/phase13/detection_evaluation.py": {
+      "sha256": "da7d40e641dbe575caaf685777e2fc81e724a554dcc3c827d53e1adaa728dbac",
+      "bytes": 9275
+    },
+    "experiments/phase13/evaluation_config.yaml": {
+      "sha256": "2e3d29f98d317d0ee3657b6552df42590b30ad2c075c2e4bfec0a6fe090403ef",
+      "bytes": 1742
+    },
+    "experiments/phase13/generate_figures.py": {
+      "sha256": "21a86928f651bf10e8da8483a21fef4f26a218e372279c6d3b10a72d4b6d8537",
+      "bytes": 8237
+    },
+    "experiments/phase13/geometry_ablation.py": {
+      "sha256": "dbe581de51eb1b325dd8df8b6f8261404b979017412d1568af78dca1d460bb30",
+      "bytes": 12888
+    },
+    "experiments/phase13/quality_geo_maint_eval.py": {
+      "sha256": "2f401f3566e39dadba9557037e601f9786e406bd91e02075adc3c8b49d12edb1",
+      "bytes": 15893
+    },
+    "experiments/phase13/run_evaluation.py": {
+      "sha256": "ed31ece6aa70fff3176eb369ec7dd45259a7004bf3fd0ee42be9c594bcff0071",
+      "bytes": 10914
+    },
+    "experiments/phase13/scheduler_temporal_ablation.py": {
+      "sha256": "9092b920118e17c5ae67aacc336f18e888098d8d80e41fbd7cd61ca490e682a6",
+      "bytes": 12013
+    },
+    "experiments/phase13/statistics.py": {
+      "sha256": "9929f5c8b279d3cb8d0635fe5fd4c268105388bbc9a8a21d63f811b90a78e60e",
+      "bytes": 3752
+    },
+    "experiments/prepare_dashcam_annotation_set.py": {
+      "sha256": "79b812327ae4c1d94ed71f6e18f8458e9aa5f13eb286e737d8a41f8941db00c8",
+      "bytes": 8899
+    },
+    "experiments/prompt_guided_segmentation.py": {
+      "sha256": "3b27bf3914db28f8fe39a17ad0e865eede7484a423198d8fe86a60071a1ffd67",
+      "bytes": 19974
+    },
+    "experiments/robust_relative_depth.py": {
+      "sha256": "41683e8fc78ebb03787570111eefa4aea45128b0e2850849d48870c069770e47",
+      "bytes": 35770
+    },
+    "experiments/roi_guided_segmentation.py": {
+      "sha256": "bb189c81de3db0ee1fe33d58983155fb1133273fbe61f1c3114b2664205336ea",
+      "bytes": 22007
+    },
+    "experiments/shadow_depth_pipeline.py": {
+      "sha256": "7f1335c583e891a41cc02565c2d27572ddd3dc72133016ab9bd5a61a2b1bc1be",
+      "bytes": 26044
+    },
+    "experiments/test_relative_depth_synthetic.py": {
+      "sha256": "2dc3014b6e1b6176ad0b21b982de4942d8af4b8d95c2d93354855dc877eeb92f",
+      "bytes": 10334
+    },
+    "experiments/track_depth_cache.py": {
+      "sha256": "e181dd6ac8f5ec83c3ed0d402567f257b30d0eda48f0cf4839693169c5fa565d",
+      "bytes": 17899
+    },
+    "experiments/train_pothole_segmentation.py": {
+      "sha256": "312daae583622be617b28154d82a85a3dac82589d961c10ba8fbddb232647ae2",
+      "bytes": 13989
+    },
+    "experiments/validate_depth_cross_calibration.py": {
+      "sha256": "c49eabaab0c8b6dbda9ed29a8d0e2ece37bc34ae1ae5feaaf89ea9f443cdc01f",
+      "bytes": 27501
+    },
+    "experiments/validity_aware_temporal_filter.py": {
+      "sha256": "8da5ffbe1f282dc2610798bb6e4dc25c6410f80968156f330f2613a165384fc6",
+      "bytes": 15700
+    },
+    "config/camera_params.json": {
+      "sha256": "0c7633f330a8b5c15a1696b85d81e9ca6d32e3cac1c1c237cfff8e576e789af1",
+      "bytes": 1286
+    },
+    "config/roadvision_api_v2.yaml": {
+      "sha256": "03840cad459265c629b024aeda22d0d202394a5514d50d52025e6ab7d1a98b6b",
+      "bytes": 1308
+    },
+    "config/roadvision_v2.yaml": {
+      "sha256": "7226773c366e520bf88407f83501da6f6af9b5a98001cff8e434659b77b4b5f0",
+      "bytes": 5164
+    },
+    "tests/test_adaptive_depth_scheduler.py": {
+      "sha256": "c0f9095e1c724b360ddf3ecb5f20ac7f345c915d7b8a9bdcbff79c76da702c27",
+      "bytes": 7012
+    },
+    "tests/test_core_aware_cavity_extraction.py": {
+      "sha256": "56749245f505ef5b605af31bead930333f47d1c65efa0f8824c165bbb29da0ff",
+      "bytes": 5999
+    },
+    "tests/test_dav2_resolution_scaling.py": {
+      "sha256": "a62c61cdb561f230f30de42e77c7097e63eb4c68f2159bf6f22a421490e4c9fe",
+      "bytes": 4007
+    },
+    "tests/test_depth_model_comparison.py": {
+      "sha256": "fa1f6ef665204d3617415f44e6cc86aedd8654bdcd53394690ca5ff2aa25745f",
+      "bytes": 1471
+    },
+    "tests/test_dynamic_horizon_estimator.py": {
+      "sha256": "5e3fc574da1936a530d739844d4e65cd387cd7d89b5d23f484b5f1cafee27cdb",
+      "bytes": 7826
+    },
+    "tests/test_optimized_relative_depth.py": {
+      "sha256": "cf18968bf95b058956bb6a1b3b1865e70d8617a4b07403ea05db03814d150966",
+      "bytes": 6232
+    },
+    "tests/test_phase10_geometry_visualization.py": {
+      "sha256": "8497ee306492c4af0f4c0d2366c0f8b7b06e2773a42fc9e6771a502e62c91658",
+      "bytes": 7429
+    },
+    "tests/test_phase11_geospatial_intelligence.py": {
+      "sha256": "7161e4f4029426cf369c23849c26bd81684d97ced4214235ce3040f3a725356b",
+      "bytes": 18466
+    },
+    "tests/test_phase12_maintenance_intelligence.py": {
+      "sha256": "b668d697b44b696ae82519250e69b9d45d3ad60145f46854f9d7aeeec0669fcd",
+      "bytes": 19661
+    },
+    "tests/test_phase13_evaluation_harness.py": {
+      "sha256": "be01cefaca9a7405c7dfcf82a4febbebab62db4991f8d261484eb42c44f43014",
+      "bytes": 3259
+    },
+    "tests/test_phase9_quality_assessment.py": {
+      "sha256": "f66d3cae766ca7ee1552ec4646f61aa0d3d6f00cb4ae542bd56831e1fbd68e6d",
+      "bytes": 16972
+    },
+    "tests/test_prompt_guided_segmentation.py": {
+      "sha256": "3ceb7a898196e304b8f7f34307d73daa427bfe47a365e9c8da8a84cfae3b051d",
+      "bytes": 5027
+    },
+    "tests/test_roadvision_v2_config.py": {
+      "sha256": "f32848d988808b9439c4bdafb8e2164ebc3c2179980d1f5e57b073359ca3665c",
+      "bytes": 11643
+    },
+    "tests/test_roadvision_v2_pipeline.py": {
+      "sha256": "ff8144a6fd7e4957f08c1baa800fad92ca54a0e721bb578bd252ce2b4c98fcd4",
+      "bytes": 17151
+    },
+    "tests/test_roadvision_v2_schemas.py": {
+      "sha256": "9ee70d016d2565c40a0cf0d5114939afd46d140dc54f645bd38eb35cb0e97524",
+      "bytes": 10203
+    },
+    "tests/test_robust_relative_depth.py": {
+      "sha256": "cd3601e2bda9384cbe67e89f97232d3b2cb24f91ebd86224cb314f762f6d71ae",
+      "bytes": 6577
+    },
+    "tests/test_roi_guided_segmentation.py": {
+      "sha256": "1aedf6fef5a9b1920c9f4a4a2ecf140fa0d549719179536613e9a55eb41144f0",
+      "bytes": 7998
+    },
+    "tests/test_shadow_depth_pipeline.py": {
+      "sha256": "a672046e776402cfd0f9e869647dda340f17fcae81d5e4ca1865f5d9c8b47edc",
+      "bytes": 9064
+    },
+    "tests/test_track_depth_cache.py": {
+      "sha256": "6e2fa5ca811653cfc41594fba82a562714cad0a4ddda67ce242a7ccba94cb373",
+      "bytes": 6109
+    },
+    "tests/test_v2_api.py": {
+      "sha256": "022c4ef521d0674801885479ac6b6a73fe96d98ae9955aeac40815597e93c299",
+      "bytes": 12793
+    },
+    "tests/test_v2_api_artifacts.py": {
+      "sha256": "72d67636b7b5c755c4e1ad76c4811e3f4d087005578d87f20506022d18217249",
+      "bytes": 5252
+    },
+    "tests/test_v2_api_foundation.py": {
+      "sha256": "dc3e223c87ce62850e7f0a772c9b114d0cb22a7f8257981001fb0466399d5723",
+      "bytes": 4792
+    },
+    "tests/test_v2_api_security.py": {
+      "sha256": "cebdaba6df2b02d4570080457698202e2583ed7fbbda67367ce0d22fdf65d4db",
+      "bytes": 7202
+    },
+    "tests/test_v2_api_uploads.py": {
+      "sha256": "0e97a31d7f0a26f660c18b7af80ba1becada8cfc3352eec6aca749508194d69b",
+      "bytes": 6335
+    },
+    "tests/test_v2_job_manager.py": {
+      "sha256": "bf6cebf3137f3de67b06a3f4138543fc9905d6be03d57a9cea291cc28fba9c1b",
+      "bytes": 7986
+    },
+    "tests/test_v2_worker.py": {
+      "sha256": "03a50ad28a36eb704b2e246091a56de9d88426a9f8f4cc36b5d41b781105835d",
+      "bytes": 14411
+    },
+    "tests/test_validity_aware_temporal_filter.py": {
+      "sha256": "e35088636d14c9fe475fe062e0b6b4dfeeeac3173fa6e9c6094e52ec7399583b",
+      "bytes": 4576
+    }
+  },
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0"
+}

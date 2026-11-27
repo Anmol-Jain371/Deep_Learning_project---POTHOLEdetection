@@ -302,6 +302,8 @@ def build_relative_surface_snapshot(
 
     return {
         "snapshot_id": snapshot_id,
+        "geometry_schema_version": "10b",
+        "reference_mask_status": "POPULATED" if len(ref_vals) > 0 else "EMPTY",
         "session_id": session_id,
         "frame_idx": int(frame_idx),
         "timestamp_sec": round(float(timestamp_sec), 4),

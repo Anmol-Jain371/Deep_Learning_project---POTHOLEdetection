@@ -52,6 +52,17 @@ def heading_difference_deg(h1: float, h2: float) -> float:
     return float(min(diff, 360.0 - diff))
 
 
+def _normalize_gps_provenance(cand: Dict[str, Any]) -> Tuple[str, bool]:
+    is_synth = bool(cand.get("is_synthetic", False))
+    raw_prov = str(cand.get("gps_provenance") or "").strip().upper()
+    if is_synth or raw_prov == "SYNTHETIC":
+        return "SYNTHETIC", True
+    if raw_prov in ("VERIFIED_FIELD_LOG", "USER_SUPPLIED_UNVERIFIED", "UNKNOWN"):
+        return raw_prov, False
+    # If provenance metadata is absent, mark conservatively as UNKNOWN rather than verified
+    return "UNKNOWN", False
+
+
 def _evaluate_candidate_eligibility(cand: Dict[str, Any], cfg: GeospatialConfig) -> Tuple[bool, List[str]]:
     reasons: List[str] = []
     if cand.get("lat") is None or cand.get("lon") is None:
@@ -191,6 +202,7 @@ def cluster_geospatial_candidates(
             if not elig_ok:
                 rejected_count += 1
             m0 = members[0]
+            prov0, synth0 = _normalize_gps_provenance(m0)
             status_counts["UNMATCHED"] += 1
             clusters_out.append(
                 {
@@ -203,10 +215,14 @@ def cluster_geospatial_candidates(
                     "centroid_lon": m0.get("lon"),
                     "diameter_m": 0.0 if m0.get("lat") is not None else None,
                     "match_reasons": elig_reasons if not elig_ok else ["no_cross_trip_match_within_threshold"],
-                    "contains_synthetic": bool(m0.get("is_synthetic", False)),
+                    "contains_synthetic": synth0,
+                    "contains_unknown_provenance": prov0 == "UNKNOWN",
+                    "cluster_provenance": prov0,
                     "members": [
                         {
                             **m0,
+                            "is_synthetic": synth0,
+                            "gps_provenance": prov0,
                             "distance_to_centroid_m": 0.0 if m0.get("lat") is not None else None,
                         }
                     ],
@@ -241,15 +257,42 @@ def cluster_geospatial_candidates(
             needs_review = True
             all_flags.append(f"cluster_diameter_{max_pair_d:.1f}m_exceeds_pair_dist")
 
+        member_provs = [_normalize_gps_provenance(m) for m in members]
+        contains_synth = any(synth for _, synth in member_provs)
+        contains_unknown = any(prov == "UNKNOWN" for prov, _ in member_provs)
+        distinct_provs = sorted({prov for prov, _ in member_provs})
+        if len(distinct_provs) == 1:
+            cluster_prov = distinct_provs[0]
+        elif contains_synth:
+            cluster_prov = "MIXED_WITH_SYNTHETIC"
+        elif contains_unknown:
+            cluster_prov = "MIXED_WITH_UNKNOWN"
+        else:
+            cluster_prov = "MIXED_FIELD_PROVENANCE"
+
+        if contains_unknown:
+            needs_review = True
+            if "unknown_gps_provenance" not in all_flags:
+                all_flags.append("unknown_gps_provenance")
+        if contains_synth and "contains_synthetic_gps_fixture" not in all_flags:
+            all_flags.append("contains_synthetic_gps_fixture")
+
         match_status = "REVIEW_REQUIRED" if needs_review else "POTENTIAL_MATCH"
         status_counts[match_status] += 1
         trips = sorted({m["job_id"] for m in members})
         seed_str = "|".join(sorted(f"{m['job_id']}:{m['track_id']}" for m in members))
 
         enriched_members = []
-        for m in members:
+        for m, (m_prov, m_synth) in zip(members, member_provs):
             d_cen = round(haversine_distance_m(m["lat"], m["lon"], c_lat, c_lon), 3)
-            enriched_members.append({**m, "distance_to_centroid_m": d_cen})
+            enriched_members.append(
+                {
+                    **m,
+                    "is_synthetic": m_synth,
+                    "gps_provenance": m_prov,
+                    "distance_to_centroid_m": d_cen,
+                }
+            )
 
         clusters_out.append(
             {
@@ -262,7 +305,9 @@ def cluster_geospatial_candidates(
                 "centroid_lon": c_lon,
                 "diameter_m": round(max_pair_d, 3),
                 "match_reasons": all_flags or ["within_haversine_threshold_and_quality_bounds"],
-                "contains_synthetic": any(bool(m.get("is_synthetic", False)) for m in members),
+                "contains_synthetic": contains_synth,
+                "contains_unknown_provenance": contains_unknown,
+                "cluster_provenance": cluster_prov,
                 "members": enriched_members,
             }
         )
@@ -326,6 +371,8 @@ def export_locations_geojson(
                     "interpolation_status": loc.get("interpolation_status"),
                     "sync_quality": loc.get("sync_quality"),
                     "provenance_label": loc.get("provenance_label", "APPROXIMATE_VEHICLE_GPS"),
+                    "gps_provenance": loc.get("gps_provenance", "UNKNOWN"),
+                    "is_synthetic": bool(loc.get("is_synthetic", False)),
                     "quality_category": loc.get("quality_category"),
                     "quality_index": loc.get("quality_index"),
                 },

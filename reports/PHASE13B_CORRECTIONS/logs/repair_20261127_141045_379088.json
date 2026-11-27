@@ -1,0 +1,20 @@
+[
+  {
+    "file": "experiments/phase13/run_evaluation.py",
+    "changed": false,
+    "note": "Phase13b output path already configured.",
+    "sha256": "5726aab5c8b9aeef5cc25c18799e8386d154db9a5ec726099a6531753f0ed2e9"
+  },
+  {
+    "file": "experiments/phase13/quality_geo_maint_eval.py",
+    "changed": false,
+    "note": "Fixed 0 incomplete synthetic cache call(s); removed first-300 truncation: False. Other quality logic requires evidence review.",
+    "sha256": "3272a9f941b02a0f2b996fde2bdb851e7a933b4b495596302e5add1355de6c86"
+  },
+  {
+    "file": "experiments/phase13/geometry_ablation.py",
+    "changed": false,
+    "note": "Original duplicate-call pattern absent; inspect actual benchmark before making speedup claims.",
+    "sha256": "468a3982fd8c6cce625af2289659037065830c4280a6455e3b9721aed6604518"
+  }
+]

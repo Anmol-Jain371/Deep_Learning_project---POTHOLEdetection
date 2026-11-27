@@ -17,6 +17,7 @@ from typing import Any, Dict, Mapping, Optional
 import cv2
 
 from roadvision_v2.config import VALID_MODES, RoadVisionV2Config, load_v2_config
+from roadvision_v2.schemas import INSPECTION_PROVENANCE_CATEGORIES
 
 from .configuration import APIConfig
 from .errors import (
@@ -35,6 +36,7 @@ ALLOWED_FORM_FIELDS = {
     "save_json",
     "save_csv",
     "max_frames",
+    "provenance",
 }
 
 FORBIDDEN_OVERRIDE_FIELDS = {
@@ -65,6 +67,7 @@ class ValidatedJobRequest:
     save_json: bool
     save_csv: bool
     max_frames: Optional[int]
+    provenance: str
     v2_config_snapshot: Dict[str, Any]
 
 
@@ -161,6 +164,13 @@ def validate_job_options(
     save_json = bool(parse_optional_bool(form.get("save_json"), True, "save_json"))
     save_csv = bool(parse_optional_bool(form.get("save_csv"), True, "save_csv"))
     max_frames = parse_optional_max_frames(form.get("max_frames"), api_cfg.maximum_processed_frames)
+    raw_prov = str(form.get("provenance") or "USER_INSPECTION").strip().upper()
+    if raw_prov not in INSPECTION_PROVENANCE_CATEGORIES:
+        raise BadRequestError(
+            f"Unsupported provenance '{raw_prov}'; expected one of {list(INSPECTION_PROVENANCE_CATEGORIES)}",
+            error_code="INVALID_PARAMETER",
+            details={"allowed_provenances": list(INSPECTION_PROVENANCE_CATEGORIES)},
+        )
 
     overrides: Optional[Dict[str, Any]] = None
     if diagnostics or enable_geometry:
@@ -219,6 +229,7 @@ def validate_job_options(
         save_json=save_json,
         save_csv=save_csv,
         max_frames=max_frames,
+        provenance=raw_prov,
         v2_config_snapshot=snap,
     )
 

@@ -14,10 +14,25 @@ export default function AuditTable({ data = [] }) {
     return matchSearch && matchSev;
   });
 
+  const hasNum = (v) => v !== null && v !== undefined && !Number.isNaN(Number(v)) && Number.isFinite(Number(v));
+
   const exportCSV = () => {
-    const headers = 'Pothole_ID,Timestamp_Sec,Severity,Estimated_Depth_cm,Width_cm,Length_cm,Volume_Liters,Asphalt_kg,Water_Hazard,Confidence,Municipal_Status\n';
+    const headers = 'Pothole_ID,Timestamp_Sec,Severity,Experimental_Depth_cm_Uncalibrated,Experimental_Width_cm_Uncalibrated,Experimental_Length_cm_Uncalibrated,Experimental_Volume_Liters_Uncalibrated,Experimental_Asphalt_kg_Uncalibrated,Water_Hazard,Confidence,Physical_Accuracy_Status,Municipal_Status\n';
     const rows = safeData.map(p => {
-      return `${p.id},${p.timestamp || 0},${p.severity},${p.depth_cm},${p.width_cm || ''},${p.length_cm || ''},${p.volume_liters || ''},${p.asphalt_kg || ''},${p.water ? 'YES' : 'NO'},${p.confidence},"${p.status}"`;
+      return [
+        p.id,
+        hasNum(p.timestamp) ? p.timestamp : 'UNAVAILABLE',
+        p.severity || 'UNAVAILABLE',
+        hasNum(p.depth_cm) ? p.depth_cm : 'UNAVAILABLE',
+        hasNum(p.width_cm) ? p.width_cm : 'UNAVAILABLE',
+        hasNum(p.length_cm) ? p.length_cm : 'UNAVAILABLE',
+        hasNum(p.volume_liters) ? p.volume_liters : 'UNAVAILABLE',
+        hasNum(p.asphalt_kg) ? p.asphalt_kg : 'UNAVAILABLE',
+        p.water ? 'YES' : 'NO',
+        hasNum(p.confidence) ? p.confidence : 'UNAVAILABLE',
+        '"Uncalibrated experimental estimate — physical accuracy not established"',
+        `"${p.status || 'Unavailable'}"`,
+      ].join(',');
     }).join('\n');
     const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -117,21 +132,22 @@ export default function AuditTable({ data = [] }) {
                     {p.id}
                   </td>
                   <td className="cell-mono">
-                    {typeof p.timestamp === 'number' ? p.timestamp.toFixed(1) : p.timestamp || '0.0'}s
+                    {hasNum(p.timestamp) ? `${Number(p.timestamp).toFixed(1)}s` : 'Unavailable'}
                   </td>
                   <td>
-                    <span className={`severity-badge ${sevClass(p.severity)}`}>
-                      <span className="sev-dot" style={{ background: sevDotColor(p.severity) }} />
-                      {p.severity}
+                    <span className={`severity-badge ${sevClass(p.severity || '')}`}>
+                      <span className="sev-dot" style={{ background: sevDotColor(p.severity || '') }} />
+                      {p.severity || 'Unavailable'}
                     </span>
                   </td>
                   <td className="cell-depth">
-                    <strong>{p.depth_cm} cm</strong>
-                    {p.width_cm && p.length_cm ? (
-                      <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>
-                        {p.width_cm} × {p.length_cm} cm
-                      </div>
-                    ) : null}
+                    <strong>{hasNum(p.depth_cm) ? `${p.depth_cm} cm (uncal.)` : 'Unavailable'}</strong>
+                    <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '2px' }}>
+                      {hasNum(p.width_cm) && hasNum(p.length_cm)
+                        ? `${p.width_cm} × ${p.length_cm} cm · `
+                        : ''}
+                      Uncalibrated experimental estimate — physical accuracy not established.
+                    </div>
                   </td>
                   <td>
                     {p.water ? (
@@ -144,16 +160,20 @@ export default function AuditTable({ data = [] }) {
                     )}
                   </td>
                   <td>
-                    <div className="confidence-bar-wrap">
-                      <div className="confidence-bar">
-                        <div className="confidence-fill" style={{ width: `${Math.min(100, (p.confidence || 0) * 100)}%` }} />
+                    {hasNum(p.confidence) ? (
+                      <div className="confidence-bar-wrap">
+                        <div className="confidence-bar">
+                          <div className="confidence-fill" style={{ width: `${Math.min(100, Number(p.confidence) * 100)}%` }} />
+                        </div>
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '12px' }}>
+                          {Math.round(Number(p.confidence) * 100)}%
+                        </span>
                       </div>
-                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '12px' }}>
-                        {Math.round((p.confidence || 0) * 100)}%
-                      </span>
-                    </div>
+                    ) : (
+                      <span style={{ color: '#94a3b8', fontSize: '12px' }}>Unavailable</span>
+                    )}
                   </td>
-                  <td><span className="status-tag">{p.status}</span></td>
+                  <td><span className="status-tag">{p.status || 'Unavailable'}</span></td>
                 </tr>
               ))
             )}

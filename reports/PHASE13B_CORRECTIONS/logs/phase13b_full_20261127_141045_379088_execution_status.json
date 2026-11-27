@@ -1,0 +1,50 @@
+{
+  "run_id": "phase13b_full_20261127_141045_379088",
+  "modules": {
+    "dataset_audit": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:41:21.296734+00:00",
+      "reason": null
+    },
+    "detection": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:41:59.913793+00:00",
+      "reason": null
+    },
+    "geometry": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:42:02.171852+00:00",
+      "reason": null
+    },
+    "depth_cavity": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:42:42.022232+00:00",
+      "reason": null
+    },
+    "scheduler_temporal": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:42:58.445751+00:00",
+      "reason": null
+    },
+    "quality_geo_maint": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:42:59.882908+00:00",
+      "reason": null
+    }
+  },
+  "full_evaluation_exit_code": 0,
+  "scientific_review": "PENDING",
+  "warnings": [
+    "Detection AP versus fixed-threshold counts, quality monotonicity, actual blank-video controls, measured multi-video scheduling and remaining audit issues must be verified from the source and result files. A completed harness is not proof of scientific validity.",
+    "Synthetic or exploratory evidence is not independent field validation."
+  ],
+  "python_tests": {
+    "exit_code": 1
+  },
+  "frontend_lint": {
+    "exit_code": 0
+  },
+  "frontend_build": {
+    "exit_code": 0
+  }
+}

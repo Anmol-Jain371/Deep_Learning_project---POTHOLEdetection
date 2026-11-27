@@ -1,0 +1,81 @@
+COMMAND: ['C:\\Users\\Asus\\AppData\\Local\\Programs\\Python\\Python312\\python.exe', '-m', 'unittest', 'discover', '-s', 'tests']
+xFormers not available
+xFormers not available
+Using cache found in C:\Users\Asus/.cache\torch\hub\intel-isl_MiDaS_master
+Using cache found in C:\Users\Asus/.cache\torch\hub\rwightman_gen-efficientnet-pytorch_master
+Using cache found in C:\Users\Asus/.cache\torch\hub\intel-isl_MiDaS_master
+.................Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+....Using cache found in C:\Users\Asus/.cache\torch\hub\intel-isl_MiDaS_master
+Using cache found in C:\Users\Asus/.cache\torch\hub\rwightman_gen-efficientnet-pytorch_master
+Using cache found in C:\Users\Asus/.cache\torch\hub\intel-isl_MiDaS_master
+...................................E.....................................Detection error frame 0: Simulated GPU crash
+.................................................................C:\Users\Asus\AppData\Local\Programs\Python\Python312\Lib\unittest\case.py:589: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\Asus\\AppData\\Local\\Temp\\tmpxaswlx8o\\artifacts\\job_vid\\phase8a_balanced_ffab7c07-ebfb-48f8-9ee7-7ca5fc816fd7_input_annotated.mp4'>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..............................V2 worker job 508cdbd2-3ded-4a02-b34a-c715a3e3f246 failed (PROCESSING_FAILED)
+Traceback (most recent call last):
+  File "D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\roadvision_api_v2\worker.py", line 203, in _execute_job
+    pipeline = self._pipeline_factory(cfg, job_id, self.device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\tests\test_v2_worker.py", line 304, in _missing_factory
+    raise FileNotFoundError("Missing checkpoint runs/detect/missing.pt")
+FileNotFoundError: Missing checkpoint runs/detect/missing.pt
+.V2 worker job 5a053790-c828-4e54-b120-0cc1a39780df failed (GPU_OUT_OF_MEMORY)
+Traceback (most recent call last):
+  File "D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\roadvision_api_v2\worker.py", line 251, in _execute_job
+    summary = pipeline.process_video(
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\tests\test_v2_worker.py", line 76, in process_video
+    raise RuntimeError("CUDA out of memory. Tried to allocate 2.00 GiB")
+RuntimeError: CUDA out of memory. Tried to allocate 2.00 GiB
+..Another V2 worker process already holds the worker lock; refusing duplicate start.
+......
+======================================================================
+ERROR: test_phase13b_corrections (unittest.loader._FailedTest.test_phase13b_corrections)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_phase13b_corrections
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\tests\test_phase13b_corrections.py", line 10, in <module>
+    app = create_app()
+          ^^^^^^^^^^^^
+TypeError: Flask.__call__() missing 2 required positional arguments: 'environ' and 'start_response'
+
+
+----------------------------------------------------------------------
+Ran 198 tests in 16.475s
+
+FAILED (errors=1)
+ℹ️ RoadVision V2 API disabled (feature flag off)
+🚀 Initializing Python Flask Backend Server...
+📦 Production Detector Checkpoint: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\runs\detect\pothole_rdd1666_50e\weights\best.pt
+✨ Active Model: Legacy V1 (pothole_rdd1666_50e, YOLOv8n-scale, 3.01M params — historical benchmark verification unavailable)
+🚀 Initializing RoadVision Engine on [CUDA]...
+📐 Active Vehicle Camera Profile: [sedan_dashcam] (Height: 1.25m, VFOV: 60.0°, Horizon: 0.4)
+⏳ Loading MiDaS 3D Monocular Depth Estimator...
+Loading weights:  None
+✅ MiDaS Depth Estimator online.
+✅ RoadVision AI Engine Online on [CUDA]!
+Loading weights:  None
+ℹ️ RoadVision V2 API disabled (feature flag off)
+🚀 Initializing Python Flask Backend Server...
+📦 Production Detector Checkpoint: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\runs\detect\pothole_rdd1666_50e\weights\best.pt
+✨ Active Model: Legacy V1 (pothole_rdd1666_50e, YOLOv8n-scale, 3.01M params — historical benchmark verification unavailable)
+✅ RoadVision AI Engine Online on [CUDA]!
+✅ RoadVision V2 API registered under /api/v2 (worker starts on server run)
+🚀 Initializing Python Flask Backend Server...
+📦 Production Detector Checkpoint: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\runs\detect\pothole_rdd1666_50e\weights\best.pt
+✨ Active Model: Legacy V1 (pothole_rdd1666_50e, YOLOv8n-scale, 3.01M params — historical benchmark verification unavailable)
+✅ RoadVision AI Engine Online on [CUDA]!
+ℹ️ RoadVision V2 API disabled (feature flag off)
+🚀 Initializing Python Flask Backend Server...
+📦 Production Detector Checkpoint: D:\DeepLearning\Deep_Learning_project---POTHOLEdetection\runs\detect\pothole_rdd1666_50e\weights\best.pt
+✨ Active Model: Legacy V1 (pothole_rdd1666_50e, YOLOv8n-scale, 3.01M params — historical benchmark verification unavailable)
+✅ RoadVision AI Engine Online on [CUDA]!
+[mov,mp4,m4a,3gp,3g2,mj2 @ 000001cc40f64f80] moov atom not found
+
+EXIT_CODE=1

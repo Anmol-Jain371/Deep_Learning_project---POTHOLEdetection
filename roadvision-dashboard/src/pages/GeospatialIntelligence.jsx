@@ -24,6 +24,7 @@ import {
 import InspectionSelector from '../components/InspectionSelector';
 import {
   StatePanel,
+  GpsProvenanceBadge,
   MatchStatusBadge,
   MeasurementStateBadge,
   QualityBadge,
@@ -128,6 +129,8 @@ export default function GeospatialIntelligence({ selectedJobId, onSelectJob, onN
 
   // Cross-trip clustering state
   const [clusters, setClusters] = useState([]);
+  const [excludeSyntheticClusters, setExcludeSyntheticClusters] = useState(true);
+  const [syntheticClusterCount, setSyntheticClusterCount] = useState(0);
   const [selectedCluster, setSelectedCluster] = useState(null);
   const [maxMatchDist, setMaxMatchDist] = useState('15');
   const [maxHorizAcc, setMaxHorizAcc] = useState('25');
@@ -155,17 +158,18 @@ export default function GeospatialIntelligence({ selectedJobId, onSelectJob, onN
           ...(stateFilter ? { measurement_state: stateFilter } : {}),
           ...(qualityFilter ? { quality_category: qualityFilter } : {}),
         }),
-        listGeospatialClusters({ page: 1, page_size: 50 }).catch(() => ({ clusters: [] })),
+        listGeospatialClusters({ page: 1, page_size: 50, exclude_synthetic: excludeSyntheticClusters }).catch(() => ({ clusters: [], synthetic_cluster_count: 0 })),
       ]);
       setRouteData(rResp);
       setLocData(lResp);
       setClusters(cResp?.clusters || []);
+      setSyntheticClusterCount(cResp?.synthetic_cluster_count || 0);
     } catch (err) {
       setError(err);
     } finally {
       setLoading(false);
     }
-  }, [selectedJobId, stateFilter, qualityFilter]);
+  }, [selectedJobId, stateFilter, qualityFilter, excludeSyntheticClusters]);
 
   useEffect(() => {
     loadGeoData();
@@ -429,9 +433,15 @@ export default function GeospatialIntelligence({ selectedJobId, onSelectJob, onN
         <>
           <div className="rv-kpi-grid">
             <div className="rv-kpi-card">
-              <div className="rv-kpi-top"><span>GPS Source</span><MapPin size={15} className="rv-icon-cyan" /></div>
+              <div className="rv-kpi-top"><span>GPS Source &amp; Provenance</span><MapPin size={15} className="rv-icon-cyan" /></div>
               <div className="rv-kpi-val" style={{ fontSize: 15 }}>{routeData.metadata?.original_filename}</div>
-              <div className="rv-kpi-sub">{routeData.metadata?.source_format?.toUpperCase()} · {routeData.metadata?.time_mode}</div>
+              <div className="rv-kpi-sub" style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+                <GpsProvenanceBadge
+                  gpsProvenance={routeData.metadata?.gps_provenance}
+                  isSynthetic={Boolean(routeData.metadata?.is_synthetic)}
+                />
+                <span>{routeData.metadata?.source_format?.toUpperCase()}</span>
+              </div>
             </div>
             <div className="rv-kpi-card">
               <div className="rv-kpi-top"><span>Route Samples</span></div>
@@ -551,6 +561,14 @@ export default function GeospatialIntelligence({ selectedJobId, onSelectJob, onN
         <div className="rv-card-header">
           <h3 className="rv-card-title"><GitMerge size={16} className="rv-icon-cyan" /> Cross-Trip Candidate Deduplication Clusters</h3>
           <div className="rv-header-actions">
+            <label className="rv-checkbox-item" style={{ fontSize: 12 }}>
+              <input
+                type="checkbox"
+                checked={!excludeSyntheticClusters}
+                onChange={(e) => setExcludeSyntheticClusters(!e.target.checked)}
+              />
+              <span>Show Synthetic Fixtures ({syntheticClusterCount})</span>
+            </label>
             <button type="button" className="rv-btn rv-btn-primary rv-btn-sm" onClick={handleRunMatching} disabled={runningMatch}>
               {runningMatch ? <Loader2 size={14} className="rv-spin" /> : <RefreshCw size={14} />}
               <span>Run Cross-Trip Matching</span>
@@ -614,9 +632,12 @@ export default function GeospatialIntelligence({ selectedJobId, onSelectJob, onN
                   >
                     <td className="rv-mono">
                       {cl.cluster_id.slice(0, 8)}
-                      {cl.contains_synthetic && (
-                        <span className="rv-badge rv-badge-warning" style={{ marginLeft: 6 }}>SYNTHETIC</span>
-                      )}
+                      <span style={{ marginLeft: 6 }}>
+                        <GpsProvenanceBadge
+                          gpsProvenance={cl.cluster_provenance}
+                          isSynthetic={Boolean(cl.contains_synthetic)}
+                        />
+                      </span>
                     </td>
                     <td><MatchStatusBadge status={cl.match_status} /></td>
                     <td className="rv-mono">{cl.review_status}</td>

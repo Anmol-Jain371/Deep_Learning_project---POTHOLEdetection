@@ -1,0 +1,36 @@
+{
+  "run_id": "phase13b_run_20261127",
+  "mode": "full",
+  "modules": {
+    "dataset_audit": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T07:38:22.564278+00:00",
+      "reason": null
+    },
+    "detection": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T07:38:55.861447+00:00",
+      "reason": null
+    },
+    "geometry": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T07:38:57.669776+00:00",
+      "reason": null
+    },
+    "depth_cavity": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T07:39:21.764011+00:00",
+      "reason": null
+    },
+    "scheduler_temporal": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T07:39:38.326181+00:00",
+      "reason": null
+    },
+    "quality_geo_maint": {
+      "status": "FAILED",
+      "updated_at": "2026-11-27T07:39:39.882402+00:00",
+      "reason": "TypeError: TrackDepthCache.record_fresh_measurement() missing 3 required positional arguments: 'raw_p75', 'iqr_norm_p75', and 'ref_diagnostics'"
+    }
+  }
+}

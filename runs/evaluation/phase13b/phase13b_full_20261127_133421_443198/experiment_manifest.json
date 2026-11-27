@@ -1,0 +1,36 @@
+{
+  "run_id": "phase13b_full_20261127_133421_443198",
+  "mode": "full",
+  "modules": {
+    "dataset_audit": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:04:49.211810+00:00",
+      "reason": null
+    },
+    "detection": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:05:21.728649+00:00",
+      "reason": null
+    },
+    "geometry": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:05:23.402065+00:00",
+      "reason": null
+    },
+    "depth_cavity": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:05:48.308399+00:00",
+      "reason": null
+    },
+    "scheduler_temporal": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:06:08.637908+00:00",
+      "reason": null
+    },
+    "quality_geo_maint": {
+      "status": "COMPLETED",
+      "updated_at": "2026-11-27T08:06:10.316013+00:00",
+      "reason": null
+    }
+  }
+}

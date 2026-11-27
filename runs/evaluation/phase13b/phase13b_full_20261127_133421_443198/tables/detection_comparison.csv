@@ -1,0 +1,7 @@
+model,split,independent,precision,recall,f1_score,map50,map50_95,mean_ms,fps,peak_vram_mb
+yolov8n_100e_sgd,dataset_unified_val,False,0.0,0.0,0.0,0.3933,0.1256,13.48,74.19,92.21
+yolov8n_100e_sgd,dataset_unified_test,False,0.0,0.0,0.0,0.5002,0.1882,13.48,74.19,92.21
+yolov8n_100e_sgd,dataset_unified_external_rangoon,False,0.0,0.0,0.0,0.2573,0.0767,13.48,74.19,92.21
+yolov8s_100e,dataset_unified_val,False,0.0,0.0,0.0,0.3692,0.1294,18.948,52.78,352.98
+yolov8s_100e,dataset_unified_test,False,0.0,0.0,0.0,0.4662,0.1747,18.948,52.78,352.98
+yolov8s_100e,dataset_unified_external_rangoon,False,0.0,0.0,0.0,0.3038,0.0844,18.948,52.78,352.98

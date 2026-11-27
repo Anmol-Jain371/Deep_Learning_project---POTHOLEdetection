@@ -15,6 +15,7 @@ import InspectionSelector from '../components/InspectionSelector';
 import {
   StatePanel,
   StatusBadge,
+  ProvenanceBadge,
   ScientificDisclaimer,
   MeasurementStateDistribution,
 } from '../components/StateBanner';
@@ -220,8 +221,11 @@ export default function Reports({ selectedJobId, onSelectJob, onNavigate }) {
                 <span className="rv-kv-value">{job.job_id}</span>
               </div>
               <div className="rv-kv-item">
-                <span className="rv-kv-label">Mode / Pipeline</span>
-                <span className="rv-kv-value">{(job.mode || '').toUpperCase()} · v{job.pipeline_version || '2.0'}</span>
+                <span className="rv-kv-label">Mode / Pipeline / Provenance</span>
+                <span className="rv-kv-value" style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <span>{(job.mode || '').toUpperCase()} · v{job.pipeline_version || '2.0'}</span>
+                  <ProvenanceBadge provenance={job.provenance} />
+                </span>
               </div>
               <div className="rv-kv-item">
                 <span className="rv-kv-label">Created / Completed</span>

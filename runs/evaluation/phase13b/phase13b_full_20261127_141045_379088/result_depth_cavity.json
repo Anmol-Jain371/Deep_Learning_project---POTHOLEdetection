@@ -1,0 +1,209 @@
+{
+  "status": "COMPLETED",
+  "depth_model_and_resolution_ablation": {
+    "dav2_518_fp16": {
+      "model_id": "depth_anything_v2_small",
+      "input_size": 518,
+      "precision": "fp16_autocast",
+      "init_warmup_ms": 2678.7,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 28,
+      "fresh_valid_coverage_pct": 66.67,
+      "mean_inlier_ratio": 0.8398,
+      "relative_score_cv": 1.0543,
+      "mean_spearman_vs_dav2_518": 1.0,
+      "inference_ms_mean": 147.015,
+      "inference_ms_median": 146.975,
+      "inference_ms_p95": 147.5,
+      "total_ms_mean": 190.23,
+      "peak_allocated_mb": 408.98,
+      "peak_reserved_mb": 528.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 10,
+        "low_inlier_ratio": 2,
+        "suspected_water_reflection": 3
+      }
+    },
+    "midas_256_fp32": {
+      "model_id": "midas_small",
+      "input_size": 256,
+      "precision": "fp32",
+      "init_warmup_ms": 16728.4,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 12,
+      "fresh_valid_coverage_pct": 28.57,
+      "mean_inlier_ratio": 0.6357,
+      "relative_score_cv": 1.243,
+      "mean_spearman_vs_dav2_518": 0.9794,
+      "inference_ms_mean": 26.946,
+      "inference_ms_median": 16.87,
+      "inference_ms_p95": 88.992,
+      "total_ms_mean": 37.524,
+      "peak_allocated_mb": 127.43,
+      "peak_reserved_mb": 152.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 23,
+        "low_inlier_ratio": 10,
+        "suspected_water_reflection": 3
+      }
+    },
+    "midas_256_fp16": {
+      "model_id": "midas_small",
+      "input_size": 256,
+      "precision": "fp16_autocast",
+      "init_warmup_ms": 1245.3,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 12,
+      "fresh_valid_coverage_pct": 28.57,
+      "mean_inlier_ratio": 0.643,
+      "relative_score_cv": 1.2281,
+      "mean_spearman_vs_dav2_518": 0.9795,
+      "inference_ms_mean": 20.661,
+      "inference_ms_median": 20.586,
+      "inference_ms_p95": 26.542,
+      "total_ms_mean": 28.86,
+      "peak_allocated_mb": 163.49,
+      "peak_reserved_mb": 184.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 23,
+        "low_inlier_ratio": 10,
+        "suspected_water_reflection": 3
+      }
+    },
+    "dav2_266_fp16": {
+      "model_id": "depth_anything_v2_small",
+      "input_size": 266,
+      "precision": "fp16_autocast",
+      "init_warmup_ms": 1139.9,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 21,
+      "fresh_valid_coverage_pct": 50.0,
+      "mean_inlier_ratio": 0.7919,
+      "relative_score_cv": 0.8286,
+      "mean_spearman_vs_dav2_518": 0.9987,
+      "inference_ms_mean": 25.642,
+      "inference_ms_median": 25.069,
+      "inference_ms_p95": 28.953,
+      "total_ms_mean": 40.156,
+      "peak_allocated_mb": 243.42,
+      "peak_reserved_mb": 280.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 19,
+        "low_inlier_ratio": 2,
+        "suspected_water_reflection": 3
+      }
+    },
+    "dav2_336_fp16": {
+      "model_id": "depth_anything_v2_small",
+      "input_size": 336,
+      "precision": "fp16_autocast",
+      "init_warmup_ms": 829.4,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 25,
+      "fresh_valid_coverage_pct": 59.52,
+      "mean_inlier_ratio": 0.7993,
+      "relative_score_cv": 1.0424,
+      "mean_spearman_vs_dav2_518": 0.9992,
+      "inference_ms_mean": 47.954,
+      "inference_ms_median": 47.837,
+      "inference_ms_p95": 48.563,
+      "total_ms_mean": 68.768,
+      "peak_allocated_mb": 274.69,
+      "peak_reserved_mb": 312.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 15,
+        "low_inlier_ratio": 1,
+        "suspected_water_reflection": 3
+      }
+    },
+    "dav2_336_fp32": {
+      "model_id": "depth_anything_v2_small",
+      "input_size": 336,
+      "precision": "fp32",
+      "init_warmup_ms": 935.0,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 26,
+      "fresh_valid_coverage_pct": 61.9,
+      "mean_inlier_ratio": 0.8111,
+      "relative_score_cv": 1.0477,
+      "mean_spearman_vs_dav2_518": 0.9992,
+      "inference_ms_mean": 60.181,
+      "inference_ms_median": 60.203,
+      "inference_ms_p95": 60.247,
+      "total_ms_mean": 79.192,
+      "peak_allocated_mb": 218.41,
+      "peak_reserved_mb": 254.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 13,
+        "low_inlier_ratio": 1,
+        "suspected_water_reflection": 3
+      }
+    },
+    "dav2_392_fp16": {
+      "model_id": "depth_anything_v2_small",
+      "input_size": 392,
+      "precision": "fp16_autocast",
+      "init_warmup_ms": 821.1,
+      "n_frames": 17,
+      "n_boxes": 42,
+      "fresh_valid_count": 28,
+      "fresh_valid_coverage_pct": 66.67,
+      "mean_inlier_ratio": 0.8146,
+      "relative_score_cv": 1.2121,
+      "mean_spearman_vs_dav2_518": 0.9995,
+      "inference_ms_mean": 68.457,
+      "inference_ms_median": 68.435,
+      "inference_ms_p95": 68.609,
+      "total_ms_mean": 88.986,
+      "peak_allocated_mb": 313.59,
+      "peak_reserved_mb": 354.0,
+      "top_rejections": {
+        "unexpected_residual_polarity": 11,
+        "low_inlier_ratio": 1,
+        "suspected_water_reflection": 3
+      }
+    }
+  },
+  "cavity_extraction_ablation": {
+    "full_box": {
+      "n_boxes": 42,
+      "valid_count": 26,
+      "validity_coverage_pct": 61.9,
+      "mean_inlier_ratio": 0.7993,
+      "relative_score_cv": 1.0196,
+      "mean_extraction_ms": 5.146
+    },
+    "rect_trim_20": {
+      "n_boxes": 42,
+      "valid_count": 26,
+      "validity_coverage_pct": 61.9,
+      "mean_inlier_ratio": 0.7993,
+      "relative_score_cv": 1.1304,
+      "mean_extraction_ms": 4.668
+    },
+    "elliptical_core": {
+      "n_boxes": 42,
+      "valid_count": 25,
+      "validity_coverage_pct": 59.52,
+      "mean_inlier_ratio": 0.7993,
+      "relative_score_cv": 1.0424,
+      "mean_extraction_ms": 8.102
+    }
+  },
+  "segmentation_grouped_test_evaluation": {
+    "status": "COMPLETED",
+    "benchmark_name": "dataset_pothole440_seg_grouped_test (reconstructed_grouped_originals)",
+    "n_images": 15,
+    "mean_mask_iou": 0.5977,
+    "median_mask_iou": 0.6906,
+    "mean_dice": 0.6763,
+    "domain_shift_note": "Pothole440 contains close-up overhead pothole images domain-shifted from dashcam road scenes (N=15 unaugmented originals). Improved mask IoU does NOT prove physical depth accuracy."
+  },
+  "scientific_caveat": "DAv2 518 serves strictly as a higher-resolution relative consistency reference, NOT physical metric ground truth. MiDaS and DAv2 raw residual magnitudes are not directly comparable."
+}

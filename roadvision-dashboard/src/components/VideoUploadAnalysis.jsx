@@ -85,7 +85,7 @@ export default function VideoUploadAnalysis({ onAnalysisComplete }) {
     }, 2400);
 
     const timer2 = setTimeout(() => {
-      setProcessingStatus('Associating defect trajectories and calibrating metric severity...');
+      setProcessingStatus('Associating defect trajectories and computing experimental estimates...');
     }, 6000);
 
     return () => {
@@ -343,7 +343,7 @@ export default function VideoUploadAnalysis({ onAnalysisComplete }) {
           </div>
 
           <div className="processing-footnote-row">
-            <span className="processing-footnote">Running PyTorch YOLOv8 defect localization and MiDaS monocular metric depth.</span>
+            <span className="processing-footnote">Legacy V1 endpoint: runs YOLOv8 + MiDaS. Any V1 physical depth estimates remain uncalibrated and unvalidated.</span>
           </div>
         </div>
       )}
